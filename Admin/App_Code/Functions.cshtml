@@ -1,0 +1,7 @@
+﻿@functions {
+    public static bool CheckAllowAction(string controllerName, string actionName)
+    {
+        var memberExtendedInfo = Admin.Helper.SessionHelper.GetUserSession(Context.ApplicationInstance.Context);
+        return memberExtendedInfo.ListMemberAllowedActions.Count(x => x.ControllerName == controllerName && x.ActionName == actionName) > 0;
+    }
+}

@@ -1,0 +1,128 @@
+﻿@model PagingObj
+@{
+    var curAction = ViewContext.RouteData.GetRequiredString("action");
+    var curController = ViewContext.RouteData.GetRequiredString("controller");
+
+    var startIndex = 1;
+    var endIndex = 1;
+    var totalCount = 1;
+    var totalPage = (int)Math.Ceiling((double)Model.TotalCount / Model.RowPerPage);
+
+    startIndex = ((Model.PageNumber - 1) * Model.RowPerPage) + 1;
+    endIndex = startIndex + Model.RowPerPage - 1;
+
+    totalCount = Model.TotalCount;
+
+    endIndex = endIndex >= totalCount ? totalCount : endIndex;
+
+    var startNum = 0;
+    var endNum = 0;
+
+    if (Model.PageNumber < Model.CountShowPage / 2)
+    {
+        startNum = 1;
+        endNum = Model.CountShowPage;
+    }
+    else if (Model.PageNumber > (totalPage - Model.CountShowPage / 2))
+    {
+        endNum = totalPage;
+        startNum = endNum - Model.CountShowPage;
+    }
+    else
+    {
+        startNum = Model.PageNumber - Model.CountShowPage / 2 + 1;
+        endNum = startNum + Model.CountShowPage - 2;
+    }
+
+    if (startNum < 1)
+    {
+        startNum = 1;
+    }
+    if (endNum > totalPage)
+    {
+        endNum = totalPage;
+    }
+
+    var paramDic = new Dictionary<string, object>();
+    foreach (var item in Model.ListParam)
+    {
+        paramDic[item] = Request.Params[item];
+    }
+    int oldPage = 0;
+    oldPage = paramDic[Model.ListParam[0]] != null ? int.Parse(paramDic[Model.ListParam[0]].ToString()) : Model.PageNumber;
+    paramDic[Model.ListParam[0]] = oldPage;
+    paramDic[Model.ListParam[1]] = paramDic[Model.ListParam[1]] != null ? int.Parse(paramDic[Model.ListParam[1]].ToString()) : Model.RowPerPage;
+}
+
+@if (Model.IsShowCount == true && totalPage >= 1)
+{
+    <div class="col-md-5 clearfix">
+        <div class="dataTables_info">Hiển thị từ @startIndex đến @endIndex trong @totalCount bản ghi</div>
+    </div>
+}
+
+@if (totalPage > 1)
+{    
+    <div class="col-md-7 clearfix">
+        <div class="dataTables_paginate paging_simple_numbers">
+            <ul class="pagination pagination-sm">
+                <li class="paginate_button previous @(Model.PageNumber == 1 ? "disabled" : "")">
+                    @{
+                        paramDic[Model.ListParam[0]] = int.Parse(paramDic[Model.ListParam[0]].ToString()) - 1;
+                        <text>
+                            <a @(Model.PageNumber == 1 ? "" : "data-p="+(Model.PageNumber - 1)) href="@(Model.PageNumber == 1 ? "#" : Url.Action(curAction, curController, new RouteValueDictionary(paramDic)))"></a>
+                        </text>
+
+                        paramDic[Model.ListParam[0]] = oldPage;
+                    }
+                </li>
+                @if (startNum > 1)
+                {
+                    paramDic[Model.ListParam[0]] = 1;
+                    <li class="paginate_button"><a data-p="1" href="@Url.Action(curAction, curController, new RouteValueDictionary(paramDic))">1</a></li>
+
+                    if (startNum > 2)
+                    {
+                        <li class="paginate_button disabled"><a>…</a></li>
+                    }
+                }
+                @for (int i = startNum; i <= endNum; i++)
+                {
+                    if (Model.PageNumber == i)
+                    {
+                    <text>
+                        <li class="paginate_button active"><a href="#">@Model.PageNumber</a></li>
+                    </text>
+                    }
+                    else
+                    {
+
+                        paramDic[Model.ListParam[0]] = i;
+                    <text>
+                        <li class="paginate_button"><a data-p="@i" href="@Url.Action(curAction, curController, new RouteValueDictionary(paramDic))">@i</a></li>
+                    </text>
+                    }
+                }
+                @if (endNum < totalPage)
+                {
+                    if (endNum < totalPage - 1)
+                    {
+                    <li class="paginate_button disabled"><a>…</a></li>
+                    }
+
+                    paramDic[Model.ListParam[0]] = totalPage;
+                    <li class="paginate_button"><a data-p="@totalPage" href="@Url.Action(curAction, curController, new RouteValueDictionary(paramDic))">@totalPage</a></li>
+                }
+
+                <li class="paginate_button next @(Model.PageNumber >= totalPage ? "disabled" : "")">
+                    @{
+                        paramDic[Model.ListParam[0]] = oldPage;
+                        paramDic[Model.ListParam[0]] = int.Parse(paramDic["p"].ToString()) + 1;
+                        <a @(Model.PageNumber >= Model.TotalPage ? "" : "data-p="+(Model.PageNumber + 1)) href="@(Model.PageNumber >= totalPage ? "#" : Url.Action(curAction, curController, new RouteValueDictionary(paramDic)))"></a>
+                        paramDic[Model.ListParam[0]] = int.Parse(paramDic["p"].ToString()) - 1;
+                    }
+                </li>
+            </ul>
+        </div>
+    </div>
+}

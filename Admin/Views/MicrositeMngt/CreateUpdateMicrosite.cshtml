@@ -1,0 +1,271 @@
+﻿@using Admin.Models.MicrositeMngt
+@model CreateUpdateMicrositeModel
+@{
+    string errorMessage = ViewBag.ErrorMessage as string;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var listGroup = (List<SelectListItem>)ViewBag.ListType;
+}
+
+<div class="modal_booking modal_booking_iframe">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h2 class="modal-title title-popup">
+            @if (Model == null || (Model != null && Model.MsId == 0))
+            {
+               @(LayoutResource.MicrositeMngt_PopupCreateMicrosite_Title)
+            }
+            else
+            {
+                @(LayoutResource.MicrositeMngt_PopupUpdateMicrosite_Title)
+            }
+        </h2>
+        <p class="place"></p>
+    </div>
+    <div class="modal-body">
+        <div class="body_booking">
+
+            @if (string.IsNullOrEmpty(errorMessage) == false)
+            {
+                @Html.Partial("_ErrorOccur", errorMessage)
+            }
+            else if (Model == null)
+            {
+                @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+            }
+            else
+            {
+                using (Ajax.BeginForm("CreateUpdateMicrosite", "MicrositeMngt", new AjaxOptions { HttpMethod = "Post", OnSuccess = "SaveResult" }, new { onsubmit = "removeDisabled();$('#err_msg').html('').hide();" }))
+                {
+                    @Html.Hidden("Id", Model.Id)
+                    @Html.Hidden("MsId", Model.MsId)
+                    @Html.HiddenFor(r => r.LangShortName)
+                    @Html.AntiForgeryToken()
+
+                    @*<div class="row">
+                        <div class="col-xs-6">
+                            @Html.LabelFor(x => x.LangShortName)
+                            @Html.TextBoxFor(x => x.LangShortName, new { @class = "form-control", disabled = "disabled" })
+                            @Html.ValidationMessageFor(x => x.LangShortName)
+                        </div>
+                        @if (Model.Id > 0)
+                        {
+                            <div class="col-xs-6">
+                                @Html.LabelFor(x => x.ApprovalStatus)
+                                <select class="form-control select2-nosearch select2-offscreen" id="ApprovalStatus" name="ApprovalStatus">
+                                    @if (Model.ListStatus.IsNotNullAndNotEmpty())
+                                    {
+                                        foreach (var status in Model.ListStatus)
+                                        {
+                                            int statusId = int.Parse(status.Value);
+                                            var isSelected = Model.ApprovalStatus == statusId;
+                                            if (isSelected)
+                                            {
+                                                <option value="@status.Value" selected>@StringUtil.GetResourceString(typeof(LayoutResource), status.Text)</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@status.Value">@StringUtil.GetResourceString(typeof(LayoutResource), status.Text)</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                                @Html.ValidationMessageFor(x => x.ApprovalStatus)
+                            </div>
+                        }
+                    </div>*@
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.LabelFor(x => x.Title, new { @class = "req" })
+                            @Html.TextBoxFor(x => x.Title, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Title)
+                        </div>                                      
+                    </div>
+                    <div class="row">                        
+                        <div class="col-xs-12">
+                            @Html.LabelFor(x => x.ReferenceCode)
+                           
+                            @Html.TextBoxFor(x => x.ReferenceCode, new { @class = "form-control" })
+                            
+                            @Html.ValidationMessageFor(x => x.ReferenceCode)
+                        </div>
+                    </div>
+                    @*<div class="row">
+                        <div class="col-xs-12">
+                            @Html.LabelFor(x => x.ShortDescription, new { @class = "req" })
+                            @Html.TextBoxFor(x => x.ShortDescription, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.ShortDescription)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 div_input_form_control_label">
+                            @Html.LabelFor(x => x.Description)
+                            @Html.TextAreaFor(x => x.Description, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Description)
+                        </div>
+                    </div>*@
+
+                    @*<div class="row">
+                        <div class="col-xs-6">
+                            @Html.LabelFor(x => x.ImageUrl)
+                            @Html.HiddenFor(x => x.ImageUrl)
+                            @Html.PreviewUploadImage("microsite_Image", Model.ImageUrl)
+                            
+                            <div class="dropzone vg_dropzone" style="float:left; height:30px; width:100px; cursor:pointer" id="dropzone">
+                                <div class="fallback">
+                                    <input name="file" type="file" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            @Html.LabelFor(x => x.BannerUrl)
+                            @Html.HiddenFor(x => x.BannerUrl)
+                            @Html.PreviewUploadImage("microsite_BannerUrl", Model.BannerUrl)
+                            
+                            <div class="dropzone vg_dropzone" style="float:left; height:30px; width:100px; cursor:pointer" id="dropzoneMobile">
+                                <div class="fallback">
+                                    <input name="file2" type="file" />
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 div_input_form_control_label">
+                            @Html.LabelFor(x => x.Rewrite)
+                            @Html.TextBoxFor(x => x.Rewrite, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Rewrite)
+                        </div>
+                    </div>
+                    
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            @Html.LabelFor(x => x.MetaTitle)
+                            @Html.TextBoxFor(x => x.MetaTitle, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.MetaTitle)
+                        </div>
+                        <div class="col-xs-6">
+                            @Html.LabelFor(x => x.MetaKeyword)
+                            @Html.TextBoxFor(x => x.MetaKeyword, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.MetaKeyword)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 div_input_form_control_label">
+                            @Html.LabelFor(x => x.MetaDescription)
+                            @Html.TextBoxFor(x => x.MetaDescription, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.MetaDescription)
+                        </div>
+                    </div>*@
+
+                    @*<div class="row">
+                        <div class="form-group relative not_input_error not_input_error_popup" style="top: 0;">
+                            @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                            {
+                                <span class="field-validation-error">@ViewData.ModelState[""].Errors[0].ErrorMessage</span>
+                            }
+                        </div>
+                    </div>*@
+                    <div class="row">
+                        <div class="form-group relative not_input_error not_input_error_popup" style="top: 0;">
+                            <span id="err_msg" class="field-validation-error" style="display:none"></span>
+                        </div>
+                    </div>
+                    <div class="btn-wrapper text-right">
+                        <button class="btn btn-accept" tabindex="8" type="submit"><i class="fa fa-save"></i>&nbsp;@LayoutResource.Shared_BtnText_Save</button>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@section styles{
+    <style>
+        .select2-results .select2-disabled {
+            display: none;
+        }
+    </style>
+}
+@section scripts{
+    @if (ViewBag.IsSuccess != null && (bool)ViewBag.IsSuccess)
+    {
+        TempData[AdminGlobal.ActionMessage] = ViewBag.ActionMessage;
+
+        <script type="text/javascript">
+            parent.window.location.reload();
+        </script>
+    }
+
+    <script>
+        $(function () {
+            @*var dropzone = $("div#dropzone").dropzone({
+                url: urlUploadedFile,
+                dictDefaultMessage: "@LayoutResource.Shared_Upload_Image.ToUpper()",
+                thumbnailWidth: 98,
+                thumbnailHeight: 98,
+                maxFiles: 1,
+                acceptedFiles: "@AdminGlobal.AllowUploadImageExt",
+                thumbnailMethod: 'contain',
+                success: function (file) {
+                    var response = JSON.parse(file.xhr.response);
+                    var path = photoDomain + response.Message;
+                    $("#microsite_Image").attr("src", path);
+                    $("#ImageUrl").val(response.Message);
+
+                    Dropzone.forElement("#dropzone").removeAllFiles(true);
+                },
+                error: function (file) {
+                    Dropzone.forElement("#dropzone").removeAllFiles(true);
+                },
+            });
+
+
+
+            var dropzoneMobile = $("div#dropzoneMobile").dropzone({
+                url: urlUploadedFile,
+                dictDefaultMessage: "@LayoutResource.Shared_Upload_Image.ToUpper()",
+                thumbnailWidth: 98,
+                thumbnailHeight: 98,
+                maxFiles: 1,
+                acceptedFiles: "@AdminGlobal.AllowUploadImageExt",
+                thumbnailMethod: 'contain',
+                success: function (file) {
+                    var response = JSON.parse(file.xhr.response);
+                    var path = photoDomain + response.Message;
+                    $("#microsite_BannerUrl").attr("src", path);
+                    $("#BannerUrl").val(response.Message);
+
+                    Dropzone.forElement("#dropzoneMobile").removeAllFiles(true);
+                },
+                error: function (file) {
+                    Dropzone.forElement("#dropzoneMobile").removeAllFiles(true);
+                },
+            });*@
+        });
+
+
+        function removeDisabled() {
+            $("#ApprovalStatus,#ReferenceCode,#MstId").removeAttr("disabled");
+            $("#err_msg").html("").hide();
+        }
+
+        function SaveResult(data){
+            if(!data.Id){
+                $("#err_msg").html(msg_lang.Shared_SystemErrorMessage).show();
+                HideOverlay(0);
+            }
+            else if(data.Id==@((int)ResponseCode.MicrositeMngt_SuccessUpdate) || data.Id == @((int)ResponseCode.MicrositeMngt_SuccessCreate)){
+                parent.window.location.reload();
+            }
+            else{
+                $("#err_msg").html(data.Message).show();
+                HideOverlay(0);
+            }
+        }
+
+
+    </script>
+}

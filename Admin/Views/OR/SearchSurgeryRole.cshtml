@@ -1,0 +1,503 @@
+﻿@using Admin.Models.OR;
+@using Contract.QueuePatient;
+@using Contract.Enum;
+@using Contract.OR;
+@model SearchORAnesthInfoModel
+@{
+    ViewBag.Title = "Tra cứu thông tin mổ";
+    var SessionUserInfo = MvcHelper.GetUserSession(Context.ApplicationInstance.Context);
+
+    var fromdate = Model.FromDate.ToString(StringHelper.DateShortFormat);
+    var todate = Model.ToDate.ToString(StringHelper.DateShortFormat);
+    var hidenFromdate = Model.FromDate.ToString(StringHelper.EnglishDateShortFormat);
+    var hidenTodate = Model.ToDate.ToString(StringHelper.EnglishDateShortFormat);
+
+    var canViewORRegistorInfo = Functions.CheckAllowAction("OR", "ViewORAnesth");
+    var canViewORSurgeryInfo = Functions.CheckAllowAction("OR", "ViewORManagement");
+    var canViewORAnesthInfo = Functions.CheckAllowAction("OR", "ViewORAnesth");
+
+}
+@section styles{
+    @Styles.Render("~/styles_searchfrm")
+    <style>
+        .well.well-sm {
+            display: none;
+        }
+
+        table th {
+            text-align: center;
+        }
+
+        .div_tag_bg {
+            position: relative;
+        }
+
+            .div_tag_bg .bg_div {
+                position: fixed;
+                right: 10px;
+                bottom: 10px;
+                opacity: 0.1;
+                font-size: 160px !important;
+            }
+
+        .well.well-sm {
+            display: none;
+        }
+
+        table.table.table-striped > thead > tr > th {
+            height: 25px;
+            background-color: #dbdbdb;
+        }
+
+
+        .guarantees .bootstrap-themes-icon-check-circle {
+            margin-right: 3px !important;
+            font-size: 12px !important;
+            color: #2AD8A2 !important;
+            margin-top: 0px;
+            margin-bottom: 0px !important;
+            padding-bottom: 0px !important;
+            padding-top: 0px !important;
+        }
+
+        ul, menu, dir {
+            display: block;
+            list-style-type: none;
+            -webkit-margin-before: 1em;
+            -webkit-margin-after: 1em;
+            -webkit-margin-start: 0px;
+            -webkit-margin-end: 0px;
+            -webkit-padding-start: 5px;
+            margin-top: 0px;
+            margin-bottom: 0px !important;
+            padding-bottom: 0px !important;
+            padding-top: 0px !important;
+        }
+
+        li {
+            display: list-item;
+            text-align: -webkit-match-parent;
+        }
+
+        .bootstrap-themes-icon-check-circle:before {
+            content: '\e804';
+        }
+
+        [class^="bootstrap-themes-icon-"]:before, [class*=" bootstrap-themes-icon-"]:before {
+            font-family: "bootstrap-themes" !important font-style: normal;
+            font-weight: normal;
+            speak: none;
+            display: inline-block;
+            text-decoration: inherit;
+            width: 1em;
+            margin-right: .2em;
+            text-align: center;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1em;
+            margin-left: .2em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+}
+<div id="main_wrapper">
+    <div class="page_bar clearfix">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="">
+                    <h1 class="page_title">Tra cứu thông tin mổ</h1>
+                    <span class="text-muted"></span>
+                </div>
+            </div>
+            <div class="col-md-6 text-right">
+                <div class="div_add_fast">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page_content">
+        <div class="bg_page_fix">
+            <i class="fa fa-window-restore"></i>
+        </div>
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.AntiForgeryToken()
+                            <form action="@Url.Action("SearchSurgeryRole", "OR")" method="get" id="searchform">
+                                @Html.Hidden("sourceClientId", Model.sourceClientId)
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label>Cơ sở vinmec</label>
+                                        @Html.DropDownList("siteId", Model.listSites as List<SelectListItem>, new { tabindex = "1", @disabled = "disabled", @class = "form-control select2 select2-offscreen", onchange = "this.form.submit(); ShowOverlay(true);" })
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label>Phòng mổ</label>
+                                        @Html.DropDownList("ORRoomId", Model.listORRooms as List<SelectListItem>, new { tabindex = "2", @class = "form-control select2 select2-offscreen", onchange = "this.form.submit(); ShowOverlay(true);" })
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Dịch vụ</label>
+                                        @Html.DropDownList("HpServiceId", Model.listHpServices as List<SelectListItem>, new { tabindex = "3", @class = "form-control select2 select2-offscreen", onchange = "this.form.submit(); ShowOverlay(true);" })
+                                    </div>
+
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label>Trạng thái</label>
+                                        @Html.DropDownList("State", Model.listStates as List<SelectListItem>, new { tabindex = "4", @class = "form-control select2 select2-offscreen", onchange = "this.form.submit(); ShowOverlay(true);" })
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label>
+                                            @LayoutResource.Shared_FromDateLabel
+                                        </label>
+                                        <input id="from_date" class="form-control" value="@fromdate" data-date-format="@Extension.DateShortFormatJS" data-date-autoclose="true" />
+                                        <input id="hidden_from_date" type="hidden" class="fromDateHidden form-control" value="@hidenFromdate" name="fromDate" />
+                                        <input id="hidden_to_date" type="hidden" class="fromDateHidden form-control" value="@hidenTodate" name="toDate" />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>
+                                            @LayoutResource.Shared_ToDateLabel
+                                        </label>
+                                        <input id="to_date" class="form-control" value="@todate" data-date-format="@Extension.DateShortFormatJS" data-date-autoclose="true" />
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group ">
+                                            <label>Từ khóa</label>
+                                            <input type="text" id="kw" class="form-control" name="kw" tabindex="4" autofocus
+                                                   data-parsley-length="[0, 200]"
+                                                   data-parsley-errors-container="#kw_parsley_container"
+                                                   autocomplete="off"
+                                                   placeholder="PID" value="@HttpUtility.UrlDecode(Request["kw"])" />
+                                            <a id="kwclear" class="glyphicon glyphicon-remove" style="z-index:5;margin-top:-32px;display:inline;float:right;pointer-events:auto; text-decoration: none;cursor: pointer;color:red;line-height:28px;width:20px;position:relative;"></a>
+                                            <div id="kw_parsley_container"></div>
+                                            <span class="input-group-btn">
+                                                <label>&nbsp;</label>
+                                                <button title="@LayoutResource.CMS_ButtonText_Search" tabindex="5"
+                                                        class="Tip_mouse_on_ne btn btn-master btn-search" style="width: 90px" id="searchSubmit">
+                                                    <i class="fa fa-search"></i> @LayoutResource.CMS_ButtonText_Search
+                                                </button>
+                                                @if (Model != null && Model.listData.Count > 0)
+                                                {
+                                                    <button type="submit" class="btn btn-search btn-success linkURL Tip_mouse_on"
+                                                            formtarget="_blank" name="export" value="True" title="Xuất danh sách phiếu hẹn mổ"
+                                                            onclick="HideOverlay(4000)">
+                                                        <i class="fa fa-file-excel-o"></i> DS Hẹn mổ
+                                                    </button>
+                                                }
+                                            </span>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-heading">KẾT QUẢ</div>
+                <div class="panel-body">
+
+
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            @if (Model != null && Model.listData != null && Model.listData.Count > 0)
+                            {
+                                <div class="table-responsive">
+                                    <table class="table table-striped info-table margin_b0 table_booking table_week">
+                                        <thead>
+                                            <tr>
+                                                <th class="col_md sub_col">Phòng mổ</th>
+                                                <th class="col_md sub_col" style="text-align:center;width:5px;">Stt</th>
+                                                <th class="col_md sub_col" style="width:200px;">Thông tin bệnh nhân</th>
+                                                <th class="col_md sub_col" style="width:250px;">Thông tin mổ</th>
+                                                <th class="col_md sub_col" style="width:200px;">Thông tin chỉ định</th>
+                                                <th class="col_md sub_col">Trạng thái</th>
+                                                <th class="col_md sub_col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tlbContent">
+                                            @{
+                                                var rownumber = 0;
+                                                var listPositionIds = Model.listData.Distinct().Select(c => c.ORRoomId);
+                                                var currentRoomId = 0;
+                                                var countPatientInRooms = 0;
+                                            }
+                                            @foreach (var item in Model.listData.OrderBy(c => c.ORRoomId).ToList())
+                                            {
+                                                <tr>
+                                                    @if (@item.ORRoomId != @currentRoomId)
+                                                    {
+                                                        currentRoomId = item.ORRoomId;
+                                                        countPatientInRooms = Model.listData.Where(c => c.ORRoomId == currentRoomId).Count();
+                                                        rownumber = 0;
+                                                        <td class="text-center" rowspan="@countPatientInRooms">
+                                                            <span class="text-center" style="font-weight:bold;">@item.ORRoomName</span>
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        countPatientInRooms = 0;
+                                                    }
+                                                    <td class="sub_col" style="text-align:center;">
+                                                        <span class="text-center">@(++rownumber)</span>
+                                                    </td>
+                                                    <td>
+                                                        <ul class="guarantees">
+                                                            <li><i class="fa fa-plus-circle"></i><span style="font-weight:bold;"> Mã Bệnh Nhân</span>: <span class="badge badge-success"> @(item.PId.Trim()) </span></li>
+                                                            <li style="padding-top:2px!important;"><i class="fa fa-plus-circle"></i><span style="font-weight:bold;"> Tên Bệnh Nhân</span>: <span style="font-weight:bold;color:#1979db;"> @(item.HoTen.Trim()) </span></li>
+                                                            <li>
+                                                                <i class="fa fa-plus-circle"></i><span style="font-weight:bold;"> Tuổi</span>: <span class="badge badge-primary">@item.Ages</span>
+                                                            </li>
+                                                            <li>
+                                                                <i class="fa fa-plus-circle"></i><span style="font-weight:bold;"> Ngày sinh</span>: <span class="badge badge-danger">@(item.NgaySinh!=null?item.NgaySinh.Value.ToString("dd/MM/yyyy"):"")</span>
+                                                            </li>
+                                                            <li><i class="fa fa-plus-circle"></i><span style="font-weight:bold;"> Giới tính</span>: <span>@EnumExtension.GetDescription((SexEnum)@item.Sex)</span></li>
+                                                            @*linhht*@
+                                                            @*<li class="center">
+                                                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#div-patient-info" onclick="getPatientInfo(@item.PId)">
+                                                                        Cập nhật thông tin
+                                                                    </button>
+                                                                </li>*@
+                                                            @*vutv7*@
+                                                            <li>
+                                                                <a class="btn btn-accept" data-bs-toggle="modal" data-bs-target="#div-patient-info" onclick="getPatientInfo(@item.PId)">
+                                                                    <i class="fa fa-plus"></i> Cập nhật thông tin
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        <ul class="guarantees">
+                                                            <li style="padding-top:2px!important;">
+                                                                <i class="fa fa-plus-circle"></i><span style="font-weight:bold;"> ORId</span>: <span class="badge">@item.Id</span>
+                                                            </li>
+                                                            <li>
+                                                                <i class="fa fa-plus-circle"></i><span style="font-weight:bold;"> Dịch vụ</span>: <span class="badge badge-important unset-white-space">@item.HpServiceCode</span> <span class="badge badge-primary unset-white-space">@item.HpServiceName</span>
+                                                            </li>
+                                                            <li><i class="fa fa-plus-circle"></i><span style="font-weight:bold;"> Thời gian gây mê</span>: <span>@item.TimeAnesth</span></li>
+                                                            <li><i class="fa fa-plus-circle"></i><span style="font-weight:bold;"> Thời gian thực hiện</span>: <span>@((item.dtOperation ?? DateTime.Now).ToString("dd/MM/yyyy"))</span></li>
+                                                            <li><i class="fa fa-plus-circle"></i><span style="font-weight:bold;"> Thời gian bắt đầu</span>: <span>@((item.dtStart ?? DateTime.Now).ToString("HH:mm"))</span></li>
+                                                            <li><i class="fa fa-plus-circle"></i><span style="font-weight:bold;"> Thời gian kết thúc</span>: <span>@((item.dtEnd ?? DateTime.Now).ToString("HH:mm"))</span></li>
+                                                            <li><i class="fa fa-plus-circle"></i><span style="font-weight:bold;"> Người đăng ký</span>: <span>(@item.ADCreatedBy) @item.NameCreatedBy</span></li>
+                                                            @if (item.SurgeryDescription != null)
+                                                            {
+                                                                <li>
+                                                                    <i class="fa fa-plus-circle"></i>
+                                                                    <span style="font-weight:bold;"> Ghi chú</span>:
+                                                                    <span>
+                                                                        <i>
+                                                                            @if (item.SurgeryDescription.Length <= 70)
+                                                                            {
+                                                                                @(item.SurgeryDescription)
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                @(item.SurgeryDescription.Substring(0, 70))
+                                                                                <a class="read-more-show hide" href="#">... Read More</a>
+                                                                                <span class="read-more-content">
+                                                                                    @(item.SurgeryDescription.Substring(71, item.SurgeryDescription.Length - 71))
+                                                                                    <a class="read-more-hide hide" href="#">Read Less</a>
+                                                                                </span>
+                                                                            }
+                                                                        </i>
+                                                                    </span>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </td>
+                                                    @*vutv7: thêm thông tin chỉ định*@
+                                                    <td>
+                                                        @if (item.ChargeDate != null && !string.IsNullOrEmpty(item.ChargeBy))
+                                                        {
+                                                            <ul class="guarantees">
+                                                                <li><i class="fa fa-plus-circle"></i><span style="font-weight:bold;"> Nguời chỉ định</span>: <span>@item.ChargeBy</span></li>
+                                                                <li><i class="fa fa-plus-circle"></i><span style="font-weight:bold;"> Thời gian chỉ định</span>: <span>@((item.ChargeDate).Value.ToString("dd/MM/yyyy HH:mm"))</span></li>
+                                                            </ul>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div style="text-align:center">Không có thông tin</div>
+                                                        }
+
+                                                    </td>
+                                                    <td class="sub_col">
+                                                        <div style="font-size: 9px;" class="label label-@Html.StateColorAnesthProgress(@item.State)">@EnumExtension.GetDescription((ORLogStateEnum)@item.State)</div>
+                                                        @if ((string.IsNullOrEmpty(item.ChargeDetailId) || (!string.IsNullOrEmpty(item.ChargeDetailId) && item.State == (int)ORProgressStateEnum.Registor)) && (item.State != (int)ORProgressStateEnum.NoApproveSurgeryManager && item.State != (int)ORProgressStateEnum.CancelAnesthManager))
+                                                        {
+                                                            <br />
+                                                            <div style="font-size: 9px;" class="label label-danger">Chưa ghi nhận ekip</div>
+                                                        }
+                                                    </td>
+                                                    <td class="sub_col">
+                                                        @*@if (canViewORSurgeryInfo && item.State == (int)ORProgressStateEnum.Registor && ((item.dtOperation.HasValue && DateTime.Today.Date <= item.dtOperation.Value) || (item.dtExtend.HasValue && DateTime.Today.Date <= item.dtExtend.Value)))*@
+                                                        @if (canViewORSurgeryInfo && item.State == (int)ORProgressStateEnum.Registor && ((item.dtOperation.HasValue && item.dtOperation.Value.EqualMonth()) || (item.dtExtend.HasValue && DateTime.Today.Date <= item.dtExtend.Value)))
+                                                        {
+                                                            <a class="btn btn-default Tip_mouse_on" style="width:114px;" title="Điều phối mổ" href="@Url.Action("ViewORManagement", "OR", new { Id = item.Id })"> <i class="fa fa-adjust"> Điều phối mổ</i>  </a>
+                                                        }
+                                                        //else if (canViewORSurgeryInfo && (item.State == (int)ORProgressStateEnum.ApproveAnesthManager || item.State == (int)ORProgressStateEnum.ApproveSurgeryManager) && ((item.dtOperation.HasValue && DateTime.Today.Date <= item.dtOperation.Value) || (item.dtExtend.HasValue && DateTime.Today.Date <= item.dtExtend.Value)))
+                                                        else if (canViewORSurgeryInfo && Constant.ListStateAllowCoordinator.Contains(item.State) && ((item.dtOperation.HasValue && item.dtOperation.Value.EqualMonth()) || (item.dtExtend.HasValue && DateTime.Today.Date <= item.dtExtend.Value)))
+                                                        {
+                                                            <a class="btn btn-default Tip_mouse_on" style="width:114px;" title="Điều phối mổ" href="@Url.Action("ViewORManagement", "OR", new { Id = item.Id })"> <i class="fa fa-adjust"> Điều phối mổ</i>  </a>
+                                                        }
+                                                        @if (canViewORSurgeryInfo && (item.State == (int)ORProgressStateEnum.ApproveAnesthManager || item.State == (int)ORProgressStateEnum.ApproveSurgeryManager || item.State == (int)ORLogStateEnum.CancelCharge) && (item.CreatedBy == Model.currentUserId || SessionUserInfo.IsSuperAdmin || SessionUserInfo.IsManageAdminSurgery))
+                                                        {
+                                                            <a class="btn btn-danger Tip_mouse_on" style="width:114px;" data-event="delete-surgery"
+                                                               title="@LayoutResource.OR_DeleteSurgery"
+                                                               data-code="@item.PId" data-service="@item.HpServiceName" data-id="@item.Id">
+                                                                <i class="fa fa-trash-o"> @LayoutResource.OR_DeleteSurgery</i>
+                                                            </a>
+                                                        }
+                                                        @if (item.SurgeryType == 1 && (item.State == (int)ORProgressStateEnum.Registor || item.State == (int)ORProgressStateEnum.AssignEkip || item.State == (int)ORProgressStateEnum.ApproveSurgeryManager || item.State == (int)ORProgressStateEnum.ApproveAnesthManager))
+                                                        {
+                                                            <a class="btn btn-success2 Tip_mouse_on" style="border: 1px solid #c5c5c5 !important;width:114px;" data-event="export-receipt-surgery"
+                                                               title="In @LayoutResource.OR_ReceiptSurgery"
+                                                               data-code="@item.PId" data-service="@item.HpServiceName" data-id="@item.Id">
+                                                                <i class="fa fa-file-text"> @LayoutResource.OR_ReceiptSurgery</i>
+                                                            </a>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                @Helpers.Paging(Model.TotalCount, Model.PageNumber, true, Model.PageCount)
+                            }
+                            else
+                            {
+                                @Html.Partial("_ErrorOccur", "Không có thông tin phòng mổ")
+                            }
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal Phiếu hẹn mổ-->
+@Html.Partial("_PopupPrintReceiptSurgery")
+<!--Modal Xóa ca mổ-->
+@Html.Partial("_PopupConfirmDeleteSurgery")
+@*linhht*@
+@Html.Partial("_PatientInfo")
+@section scripts {
+    @Scripts.Render("~/javas_searchfrm")
+    <script>
+        var _deleteUrl = '@Url.Action("DeleteSurgery", "OR")';
+        $(function () {
+             $("#siteId").select2({
+                allowClear: false
+            })
+
+            $("#ORRoomId").select2({
+                allowClear: false
+            })
+
+            $("#HpServiceId").select2({
+                allowClear: false
+            })
+
+            $("#State").select2({
+                allowClear: false
+            })
+            $("#kw").on("keypress", function (e) {
+                if (e.which == 13) {
+                    $("#searchform").submit();
+                }
+            });
+            $("#searchform").submit(function () {
+                $("#kw").css("color", "white").css("transition-duration", "0").css("-moz-transition-duration", "0").css("-o-transition-duration", "0");
+                $("#kw").val(encodeURIComponent($("#kw").val()));
+            });
+            $("#kw").on("keypress", function (e) {
+                if (e.which == 13) {
+                    return false;
+                }
+            });
+
+            if (($('#from_date').length) && ($('#to_date').length)) {
+            $('#from_date').datepicker({
+                todayHighlight: true,
+                endDate: moment($('#to_date').val(), '@Extension.DateShortFormatJS.ToUpper()', true).toDate()
+            }).on('changeDate', function (e) {
+                $('#to_date').datepicker('setStartDate', e.date);
+                $('#hidden_from_date').val(moment($('#from_date').val(), '@Extension.DateShortFormatJS.ToUpper()', true).format('@Extension.DateSubmitFormatJS.ToUpper()'));
+            });
+            $('#to_date').datepicker({
+                todayHighlight: true,
+                startDate: moment($('#from_date').val(), '@Extension.DateShortFormatJS.ToUpper()', true).toDate(),
+               /* endDate: moment().toDate()*/
+            }).on('changeDate', function (e) {
+                $('#from_date').datepicker('setEndDate', e.date)
+                $('#hidden_to_date').val(moment($('#to_date').val(), '@Extension.DateShortFormatJS.ToUpper()', true).format('@Extension.DateSubmitFormatJS.ToUpper()'));
+            });
+
+            $('#from_date,#to_date').keypress(function (event) {
+                event.preventDefault();
+                return false;
+            });
+
+            $('#from_date,#to_date').bind("cut copy paste", function (e) {
+                e.preventDefault();
+                return false;
+            });
+        }
+
+            //if ($('#ShowFromDate').length > 0) {
+            //    $('#ShowFromDate').datepicker(
+            //    {
+            //        minDate: 0,
+            //        onChangeDateTime: function (dp, $input) {
+            //            var d = moment($input.val(), momentDateFormat);
+            //            $('#FromDate').val(FormatDateTime(d.toDate(), systemDateFormat));
+            //        }
+            //    });
+            //}
+            //if ($('#ShowToDate').length > 0) {
+            //    $('#ShowToDate').datepicker(
+            //    {
+            //        minDate: 0,
+            //        onChangeDateTime: function (dp, $input) {
+            //            var d = moment($input.val(), momentDateFormat);
+            //            $('#ToDate').val(FormatDateTime(d.toDate(), systemDateFormat));
+            //        }
+            //    });
+            //}
+
+
+        //Reset table width if < container width
+        if ($("#tbData").css("width") != undefined) {
+            var curWidth = $("#tbData").css("width").replace("px", "");
+            if ($("#tbData").parent().width() > parseInt(curWidth, 10)) {
+                $("#tbData").css("width", $("#tbData").parent().width()).css("maxWidth", $("#tbData").parent().width());;
+            }
+        }
+        itemManager.init();
+            //linhht
+            $('#close-div-patient-info,#btn-close-div-patient-info').on('click', function () {
+                $('#div-patient-info').hide();
+            });
+        });
+        var itemManager = {
+            init: function () {
+                $("#kwclear").click(itemManager.TextboxSearchClear);
+            },
+            TextboxSearchClear: function () {
+                $('#kw').val('').focus();
+                $(this).show();
+            },
+          };
+
+    </script>
+    @Scripts.Render("~/surgery-manager")
+}

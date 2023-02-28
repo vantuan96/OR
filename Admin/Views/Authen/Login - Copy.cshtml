@@ -1,0 +1,77 @@
+﻿@using Admin.Models.User;
+@using Admin.Resource;
+@model LoginModel
+@{
+    Layout = null;
+    ViewBag.Title = LayoutResource.Shared_ToolTitle_LoginPage;    
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link rel="shortcut icon" href="~/assets/img/favicon.ico" />
+    @Styles.Render("~/authbasecss")
+</head>
+<body style="height: 100%;">
+    <div class="bg_booking"></div>
+    <div class="login_container">
+        <form action="@Url.Action("DoLogin")" method="post">
+            @Html.AntiForgeryToken()
+            
+            <input type="hidden" name="refurl" value="@Request.Params["refurl"]" />
+            <h3 class="login_heading">@ViewBag.Title</h3>
+            
+            <div class="form-group">
+                @Html.LabelFor(x => x.Username)
+                @Html.TextBoxFor(x => x.Username, new { @class = "form-control input-lg" })
+                @Html.ValidationMessageFor(x => x.Username)
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(x => x.Password)
+                @Html.PasswordFor(x => x.Password, new { @class = "form-control input-lg" })
+                @Html.ValidationMessageFor(x => x.Password)
+            </div>
+
+            @if (ViewBag.LoginFailed > 2)
+            {
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Captcha)
+                    @Html.TextBoxFor(x => x.Captcha, new { @class = "form-control input-lg", style = "background-image: url('/Authen/CaptchaImage'); background-repeat: no-repeat; background-position: right;" })
+                    <div style="text-align:right">
+                        <a href="javascript:ReloadCaptcha();">Tải lại</a>
+                    </div>
+                    @Html.ValidationMessageFor(x => x.Captcha)
+                </div>
+            }
+
+            <div class="form-group not_input_error">
+                @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                {
+                    <span class="field-validation-error">@ViewData.ModelState[""].Errors[0].ErrorMessage</span>
+                }
+            </div>
+            <div class="submit_section">
+                <div style="color: red; margin: 5px 0px; text-align: center"></div>
+                <button class="btn btn-lg btn_login btn-danger btn-block linkURL" type="submit">@LayoutResource.Login_BtnText_Submit</button>
+            </div>
+        </form>
+    </div>
+    @Scripts.Render("~/loginvalidator")
+    <script>
+        $(document).ready(function () {
+            if ($(parent.document).find('#iframePopup').length > 0) {
+                parent.window.location.reload();
+            }
+        });
+
+        function ReloadCaptcha()
+        {
+            var t = Math.random();
+            $('#Captcha').css("background-image", "url(/Authen/CaptchaImage?t=" + t + ")");
+        }
+    </script>
+</body>
+</html>

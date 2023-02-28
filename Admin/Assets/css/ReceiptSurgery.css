@@ -1,0 +1,105 @@
+﻿#mainReport {
+    font-family: Times New Roman, sans-serif !important;
+    font-size: 13px !important;
+}
+#mainReport .logo {
+    /*margin-bottom: 30px;*/
+}
+
+#mainReport .logo img {
+    border: none;
+    /*width: 200px;*/
+    /*width: 140px;*/
+}
+#mainReport #reportTitle{
+    top: 20px;
+}
+#mainReport #reportTitle h4{
+    color:blue;
+    font-weight:bold;
+    font-size: 22px;
+    font-family: Times New Roman, sans-serif !important;
+    margin-bottom:unset;
+    margin-top:2px;
+}
+#mainReport .box-paper {
+    margin-top:15px;
+    float:right;
+    width: 145px;
+    height: 80px;
+    display: block;
+    /*border: 1px solid #333;
+    border-bottom: 2px groove #9E9E9E;*/
+}
+#print_content .row{
+    /*margin-top:unset;*/
+    margin-top:2px;
+}
+.print-label {
+    font-size: 13px !important;
+}
+label > i{
+    font-weight:normal;
+}
+label > span {
+    color: #0000ff;
+    font-weight: normal;
+    word-wrap: break-word;
+}
+
+#doctor-signature .signature {
+    text-align: center;
+    float: right;
+    /*width: 50%;*/
+    /*border-bottom: 1px dotted;*/
+    /*margin-top: -10px;*/
+    /*line-height: 50px;*/
+    /*line-height: 30px;
+    height: 30px;*/
+}
+.no-bold{
+    font-weight:normal !important;
+}
+.row {
+    margin-left: unset;
+    margin-right: unset;
+}
+.col-md-3 {
+    width: 25%;
+    float: left;
+}
+.col-md-4 {
+    width: 33.33333333%;
+    float:left;
+}
+.col-md-6 {
+    width: 50%;
+    float: left;
+}
+.col-lg-3 {
+    width: 25%;
+    float:left;
+}
+.col-lg-6 {
+    width: 50%;
+    float: left;
+}
+@media print {
+    body {
+        -webkit-print-color-adjust: exact;
+    }
+    #mainReport #reportTitle h4 {
+        color: blue !important;
+        font-weight: bold;
+        font-size: 22px;
+        font-family: Times New Roman, sans-serif !important;
+        margin-bottom: unset;
+        margin-top: 2px;
+        /*-webkit-print-color-adjust: exact;*/
+    }
+    label > span {
+        color: #0000ff !important;
+        font-weight: normal;
+        word-wrap: break-word;
+    }
+}

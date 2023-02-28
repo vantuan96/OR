@@ -1,0 +1,159 @@
+﻿@*@model Admin.Models.Master.CreateUpdatePnLBuAttributeModel*@
+
+@using Admin.Models.Master
+@model CreateUpdatePnLBuAttributeModel
+@{
+    string errorMessage = ViewBag.ErrorMessage as string;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="modal_booking modal_booking_iframe">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h2 class="modal-title title-popup">
+            @if (Model == null || (Model != null && Model.PnLBuAttributeId == 0))
+            {
+                @(LayoutResource.PnLAttribute_PopupCreate_Title)
+            }
+            else
+            {
+                @(LayoutResource.PnLAttribute_PopupUpdate_Title)
+            }
+        </h2>
+        <p class="place"></p>
+    </div>
+    <div class="modal-body">
+        <div class="body_booking">
+
+            @if (string.IsNullOrEmpty(errorMessage) == false)
+            {
+                @Html.Partial("_ErrorOccur", errorMessage)
+            }
+            else if (Model == null)
+            {
+                @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+            }
+            else
+            {
+                using (Ajax.BeginForm("CreateUpdatePnLBuAttribute", "Master", new AjaxOptions { HttpMethod = "Post", OnSuccess = "SaveResult" }, new { onsubmit = "removeDisabled();$('#err_msg').html('').hide();" }))
+                {
+                    @*@Html.Hidden("Id", Model.Id)*@
+                    @Html.Hidden("PnLBuAttributeId", Model.PnLBuAttributeId)
+                    @Html.AntiForgeryToken()
+
+                    <div class="row">
+                            <div class="col-xs-12">
+                                @Html.LabelFor(x => x.PnLAttributeGroupId, "Nhóm thuộc tính", new { @class = "req" })
+                                @Html.DropDownListFor(x => x.PnLAttributeGroupId, new SelectList(Model.ListPnLAttributeGroup, "PnLBuAttributeGroupId", "PnLBuAttributeGroupName"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.PnLAttributeGroupId)
+                            </div>
+                        </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.LabelFor(x => x.PnLBuAttributeCode, "Code", new { @class = "req" })
+                            @Html.TextBoxFor(x => x.PnLBuAttributeCode, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.PnLBuAttributeCode)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.LabelFor(x => x.PnLBuAttributeName, "Thuộc tính BU", new { @class = "req" })
+                            @Html.TextBoxFor(x => x.PnLBuAttributeName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.PnLBuAttributeName)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.LabelFor(x => x.Description, "Mô tả")
+                            @Html.TextBoxFor(x => x.Description, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.LabelFor(x => x.PnLListId, "PnL Code", new { @class = "req" })
+                            @Html.DropDownListFor(x => x.PnLListId, new SelectList(Model.ListPnLList, "PnLListId", "PnLListName"), "---Select PnL---", new { @class = "form-control", id = "pnlDropDown", onchange = "getPnLCode()" })
+                            @Html.ValidationMessageFor(x => x.PnLListId)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.LabelFor(x => x.PnLBUListId, "PnL BU Code", new { @class = "req" })
+                            @Html.DropDownListFor(x => x.PnLBUListId, new SelectList(Model.ListPnLBuList, "PnLBuListId", "Description"), "---Select PnL BU---", new { @class = "form-control", id = "pnlBuDropDown" })
+                            @Html.ValidationMessageFor(x => x.PnLBUListId)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group relative not_input_error not_input_error_popup" style="top: 0;">
+                            <span id="err_msg" class="field-validation-error" style="display:none"></span>
+                        </div>
+                    </div>
+                    <div class="btn-wrapper text-right">
+                        <button class="btn btn-accept" tabindex="8" type="submit"><i class="fa fa-save"></i>&nbsp;@LayoutResource.Shared_BtnText_Save</button>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@section styles{
+    <style>
+        .select2-results .select2-disabled {
+            display: none;
+        }
+    </style>
+}
+@section scripts{
+    @if (ViewBag.IsSuccess != null && (bool)ViewBag.IsSuccess)
+    {
+        TempData[AdminGlobal.ActionMessage] = ViewBag.ActionMessage;
+
+        <script type="text/javascript">
+            parent.window.location.reload();
+        </script>
+    }
+
+    <script>
+        function SaveResult(data) {
+            console.log(data);
+            if (!data.Id) {
+                $("#err_msg").html(msg_lang.Shared_SystemErrorMessage).show();
+                HideOverlay(0);
+            }
+            else if (data.Id == 200702 || data.Id == 200701) {
+                parent.window.location.reload();
+            }
+            else {
+                $("#err_msg").html(data.Message).show();
+                HideOverlay(0);
+            }
+        }
+        function removeDisabled() {
+            $("#PnLBuAttributeCode,#PnLBuAttributeName,#PnLBuAttributeId,#Description").removeAttr("disabled");
+            $("#err_msg").html("").hide();
+        }
+
+        function getPnLCode() {
+            var stateId = $("#pnlDropDown").val();
+            $.ajax({
+                url: '/Master/GetPnLBuByPnL',
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: JSON.stringify({ stateId: +stateId }),
+                success: function (result) {
+                    if (result.status === 401) {
+                        window.location.href = result.redirect;
+                    }
+                    $("#pnlBuDropDown").html("");
+                    $("#pnlBuDropDown").append
+                        ($('<option></option>').val(null).html("---Select PnL BU---"));
+                    $.each($.parseJSON(result), function (i, PnLBuListContract)
+                    { $("#pnlBuDropDown").append($('<option></option>').val(PnLBuListContract.PnLBuListId).html(PnLBuListContract.Description)) })
+                },
+                error: function () { alert("Error..") }
+            });
+        }
+    </script>
+}

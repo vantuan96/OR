@@ -1,0 +1,192 @@
+﻿@using Admin.Models.OR;
+@using Contract.Enum;
+@using Contract.OR;
+@model ORAnesthCUDProgressModel
+@{
+    string errorMessage = ViewBag.ErrorMessage as string;
+    var canCUDAction = Functions.CheckAllowAction("OR", "ChangeORProgressState");
+}
+<div id="main_wrapper">
+    <div class="page_bar clearfix">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="">
+                    <h1 class="page_title">QUẢN LÝ TIẾN TRÌNH MỔ</h1>
+                    <span class="text-muted"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form class="frmCUDInPatientReport" id="frmPopUp" method="post">
+        <div class="page_content" style="padding-bottom:10px;">
+            <div class="bg_page_fix"><i class="fa fa-users"></i></div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                @if (string.IsNullOrEmpty(errorMessage) == false)
+                                {
+                                    @Html.Partial("_ErrorOccur", errorMessage)
+                                }
+                                else if (Model == null)
+                                {
+                                    @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+                                }
+                                else
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("VisitCode", Model.VisitCode)
+                                    @Html.Hidden("PId", Model.PId)
+                                    @Html.Hidden("Id", Model.Id)
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h3 class="heading_a" style="color:#32c69a">THÔNG TIN BỆNH NHÂN</h3>
+                                            <address>
+                                                <p class="addres_name">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <label>PID</label>
+                                                            @Model.PId
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <label>Họ và tên bệnh nhân </label>
+                                                            @Model.HoTen
+                                                        </div>
+                                                        <div class="col-sm-1 div_input_form_control_label">
+                                                            <label>Tuổi</label>
+                                                            @(Model.Ages ?? "unknown" )
+                                                        </div>
+                                                        <div class="col-md-2 div_input_form_control_label">
+                                                            <label>Giới tính</label>
+                                                            <span class="text-normal">@(EnumExtension.GetDescription((SexTypeEnum)Model.Sex))</span>
+                                                        </div>
+                                                        <div class="col-md-2 div_input_form_control_label">
+                                                            <label>Ngày sinh</label>
+                                                            <span class="text-normal">@Model.ShowNgaySinh</span>
+                                                        </div>
+                                                        <div class="col-md-2 div_input_form_control_label">
+                                                            <label>Công ty PL</label>
+                                                            <span class="text-normal">@Model.HospitalName</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <label>Tên dịch vụ mổ</label>
+                                                            @Model.HpServiceName
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <label>Phòng mỗ yêu cầu </label>
+                                                            @Model.ORRoomName
+                                                        </div>
+                                                        <div class="col-md-1 div_input_form_control_label">
+                                                            <label>Thời gian gây mê</label>
+                                                            @Model.TimeAnesth
+                                                        </div>
+                                                        <div class="col-sm-2 div_input_form_control_label">
+                                                            <label>Thời gian bắt đầu</label>
+                                                            @(Model.ShowdtStart)
+                                                        </div>
+                                                        <div class="col-md-2 div_input_form_control_label">
+                                                            <label>Ngày kết thúc</label>
+                                                            <span class="text-normal">@Model.ShowdtEnd</span>
+                                                        </div>
+
+                                                        <div class="col-md-2 div_input_form_control_label">
+                                                            <label>Ngày thực hiện ca mổ</label>
+                                                            <span class="text-normal">@Model.ShowdtOperation</span>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <label>Họ tên bs đặt mổ</label>
+                                                            @Model.NameCreatedBy
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <label>Email</label>
+                                                            @Model.EmailCreatedBy
+                                                        </div>
+                                                        <div class="col-md-1 div_input_form_control_label">
+                                                            <label>Chức danh</label>
+                                                            @Model.PositionCreatedBy
+                                                        </div>
+                                                        <div class="col-sm-2 div_input_form_control_label">
+                                                            <label>Điện thoại</label>
+                                                            @(Model.PhoneCreatedBy)
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <label>Trạng thái</label>
+                                                            @Html.DropDownListFor(e => e.State, Model.listStates, new { @class = "form-control select2 select2-offscreen", tabindex = "6", searchable = "true" })
+                                                        </div>
+                                                    </div>                                                   
+                                                </p>
+                                            </address>
+                                        </div>
+                                    </div>                                    
+                                <div class="row" style="margin-top:10px;">
+                                    <div class="col-sm-12">
+                                        <div class="form-group relative not_input_error not_input_error_popup" style="margin-top:0px;">
+                                            <span id="err_msg" class="field-validation-error" style="display: none;left:0px;"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btn-wrapper text-right">
+                                   @if (Model.State >= (int)OHPatientStateEnum.DuyetMo && canCUDAction)
+                                    {
+                                        <button class="btn btn-accept" tabindex="61" id="btnSaveData"><i class="fa fa-save"></i>&nbsp; Lưu lại</button>
+                                    }
+                                    <a href="@Url.Action("OHSearchPatients", "OR")" tabindex="63" class="btn btn-warning" style="padding-right:4px;"><i class="fa fa-undo"></i>&nbsp; Quay lại</a>
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+@section styles{
+    @Styles.Render("~/styles_searchfrm")
+}
+@Scripts.Render("~/javas_searchfrm")
+@section scripts{
+    <script>
+        var siteRedirect = '@Url.Action("OHSearchPatients", "OR")' + '?siteId=' + '@Model.HospitalCode';
+        $(function () {
+            pageManager.init();
+            $('#State').select2({allowClear: false})
+        });
+        var pageManager={
+            init:function(){
+                $("#btnSaveData").click(pageManager.SaveORAnesthState);
+            },
+            SaveORAnesthState: function (e) {
+                var postData = new Array();
+                postData.push({ name: 'Id', value: $('#Id').val() });
+                postData.push({name:'State',value:$('#State').val()});
+                ShowOverlay(true);
+                commonUtils.postAjaxWithToken("/OR/ChangeORProgressState/", postData, function (response) {
+                    HideOverlay();
+                    if(response!=null){
+                        if (response.ID == 100001)
+                        {
+                            ShowNotify('success', 'Lưu thông tin thành công', 1000);
+                            window.location.href = siteRedirect;
+                        }
+                        else {
+                            $("#err_msg").html(data.Message).show();
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+}
+
+
+
+

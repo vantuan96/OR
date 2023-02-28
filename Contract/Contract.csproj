@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F2461F40-6668-44CC-83E6-AC4FC9917620}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Contract</RootNamespace>
+    <AssemblyName>Contract</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net, Version=2.3.2.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <HintPath>..\packages\protobuf-net.2.3.2\lib\net40\protobuf-net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminAction\InsertUpdateAdminRoleGroupActionContract.cs" />
+    <Compile Include="AdminAction\AdminActionContract.cs" />
+    <Compile Include="AdminAction\AdminControllerContract.cs" />
+    <Compile Include="AdminAction\AdminRoleGroupActionContract.cs" />
+    <Compile Include="AdminAction\AdminGroupActionContract.cs" />
+    <Compile Include="AdminAction\AdminGroupActionMapContract.cs" />
+    <Compile Include="CheckList\CheckListContract.cs" />
+    <Compile Include="Core\HisModel.cs" />
+    <Compile Include="Core\HISServiceModel.cs" />
+    <Compile Include="Enum\RoomTypeEnum.cs" />
+    <Compile Include="Enum\AppTypeEnum.cs" />
+    <Compile Include="Enum\AuthenticationMethodEnum.cs" />
+    <Compile Include="Enum\CheckListStateEnum.cs" />
+    <Compile Include="Enum\CheckListTypeEnum.cs" />
+    <Compile Include="Enum\DREnum.cs" />
+    <Compile Include="Enum\OrginTypeEnum.cs" />
+    <Compile Include="Enum\PerformanceEnum.cs" />
+    <Compile Include="Enum\RankEnum.cs" />
+    <Compile Include="Enum\RPOTypeEnum.cs" />
+    <Compile Include="Enum\RTOTypeEnum.cs" />
+    <Compile Include="Enum\SecurityStateEnum.cs" />
+    <Compile Include="Enum\ServiceContinutyEnum.cs" />
+    <Compile Include="Enum\SexTypeEnum.cs" />
+    <Compile Include="Enum\StabilityEnum.cs" />
+    <Compile Include="Enum\SystemStateEnum.cs" />
+    <Compile Include="Device\DeviceContract.cs" />
+    <Compile Include="Device\DeviceInfoContract.cs" />
+    <Compile Include="Enum\SystemStatusEnum.cs" />
+    <Compile Include="Enum\SystemTypeEnum.cs" />
+    <Compile Include="Enum\TypeSearchEnum.cs" />
+    <Compile Include="Log\ActionTypeEnum.cs" />
+    <Compile Include="Log\LogObjectContract.cs" />
+    <Compile Include="Log\ObjectTypeEnum.cs" />
+    <Compile Include="Log\SearchLogParam.cs" />
+    <Compile Include="MasterData\AssignOwnerSystemContract.cs" />
+    <Compile Include="MasterData\CateSystemContract.cs" />
+    <Compile Include="MasterData\ItemContract.cs" />
+    <Compile Include="MasterData\MasterData.cs" />
+    <Compile Include="MasterData\SearchCateSystem.cs" />
+    <Compile Include="MasterData\SearchSubCateSystem.cs" />
+    <Compile Include="MasterData\SubCateSystemContract.cs" />
+    <Compile Include="MasterData\UpdateItemContract.cs" />
+    <Compile Include="OperationCheckList\OperationCheckListContract.cs" />
+    <Compile Include="OperationCheckList\OperationItemContract.cs" />
+    <Compile Include="OperationCheckList\SearchOperationCheckList.cs" />
+    <Compile Include="OperationCheckList\UpdateOperationCheckListContract.cs" />
+    <Compile Include="OR\ExecuteQueryIntIdResult.cs" />
+    <Compile Include="OR\HospitalSiteContract.cs" />
+    <Compile Include="OR\HpServiceContract.cs" />
+    <Compile Include="OR\OHQueuePatientSearchParam.cs" />
+    <Compile Include="OR\ORAnesthManagerEnum.cs" />
+    <Compile Include="OR\ORAnesthProgressContract.cs" />
+    <Compile Include="OR\ORAnesthProgressExt.cs" />
+    <Compile Include="OR\ORAnesthSearchParam.cs" />
+    <Compile Include="OR\ORLinkContract.cs" />
+    <Compile Include="OR\ORMappingEkip.cs" />
+    <Compile Include="OR\ORNotifyMail.cs" />
+    <Compile Include="OR\ORPositionEnum.cs" />
+    <Compile Include="OR\ORProgressStateEnum.cs" />
+    <Compile Include="OR\ORRoom.cs" />
+    <Compile Include="OR\ORRoomContract.cs" />
+    <Compile Include="OR\ORTrackingContract.cs" />
+    <Compile Include="OR\ORUserInfoContract.cs" />
+    <Compile Include="OR\ORVisitModel.cs" />
+    <Compile Include="OR\SearchORRoom.cs" />
+    <Compile Include="OR\SearchORProgress.cs" />
+    <Compile Include="OR\SourceClientEnum.cs" />
+    <Compile Include="OR\SyncData\BenhNhanORSync.cs" />
+    <Compile Include="OR\SyncData\ExaminationSync.cs" />
+    <Compile Include="OR\SyncData\PatientVisit.cs" />
+    <Compile Include="OR\TypeMappingServiceEnum.cs" />
+    <Compile Include="Question\GetQuestionRequestContract.cs" />
+    <Compile Include="Device\LoginRequestContract.cs" />
+    <Compile Include="Device\LoginResponseContract.cs" />
+    <Compile Include="Device\LogoutRequestContract.cs" />
+    <Compile Include="Question\QuestionContract.cs" />
+    <Compile Include="Question\QuestionGroupContract.cs" />
+    <Compile Include="Question\QuestionResultPostContract.cs" />
+    <Compile Include="Device\RequestContract.cs" />
+    <Compile Include="Device\ResponseContract.cs" />
+    <Compile Include="Microsite\MicrositeContentContract.cs" />
+    <Compile Include="Microsite\MicrositeContract.cs" />
+    <Compile Include="Microsite\MicrositeDetailContract.cs" />
+    <Compile Include="Microsite\MicrositeItemContract.cs" />
+    <Compile Include="Microsite\MicrositeTypeContract.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueuePatient\PatientContract.cs" />
+    <Compile Include="QueuePatient\PatientStateEnum.cs" />
+    <Compile Include="QueuePatient\QueuePatientSearchParam.cs" />
+    <Compile Include="QueuePatient\QueuePatientSearchResult.cs" />
+    <Compile Include="QueuePatient\SexEnum.cs" />
+    <Compile Include="Report\DashboarDataContract.cs" />
+    <Compile Include="Report\ReportCheckListTypeEnum.cs" />
+    <Compile Include="Report\SurveyResultDetail.cs" />
+    <Compile Include="Shared\AdminKeyDictionary.cs" />
+    <Compile Include="Shared\ConfigUrl.cs" />
+    <Compile Include="Shared\CUDReturnMessage.cs" />
+    <Compile Include="Core\SourceType.cs" />
+    <Compile Include="Core\SystemLogType.cs" />
+    <Compile Include="Shared\ErrorCode.cs" />
+    <Compile Include="Shared\ErrorMessage.cs" />
+    <Compile Include="Shared\ObjectStatus.cs" />
+    <Compile Include="Shared\SimpleItem.cs" />
+    <Compile Include="Shared\Status.cs" />
+    <Compile Include="Shared\WeekRangeContract.cs" />
+    <Compile Include="Shared\PagedList.cs" />
+    <Compile Include="Shared\ResponseCode.cs" />
+    <Compile Include="SystemLog\FileLogLocation.cs" />
+    <Compile Include="SystemLog\LogDbContract.cs" />
+    <Compile Include="SystemLog\LogFileContract.cs" />
+    <Compile Include="User\AdminActionContract.cs" />
+    <Compile Include="User\AdminRole.cs" />
+    <Compile Include="User\AdminRoleContract.cs" />
+    <Compile Include="SystemSetting\SystemSettingContract.cs" />
+    <Compile Include="User\AdminUserInfo.cs" />
+    <Compile Include="User\AdminUserPnLContract.cs" />
+    <Compile Include="User\AdminUserPnLSiteContract.cs" />
+    <Compile Include="User\ClientInfoContract.cs" />
+    <Compile Include="User\CreateUpdateUserContract.cs" />
+    <Compile Include="User\LocationContract.cs" />
+    <Compile Include="User\LoginContract.cs" />
+    <Compile Include="User\MemberExtendContract.cs" />
+    <Compile Include="User\ORUserInforPositionContract.cs" />
+    <Compile Include="User\UserItemContract.cs" />
+    <Compile Include="User\UserProfileContract.cs" />
+    <Compile Include="User\UserTrackingContract.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VG.Common\VG.Common.csproj">
+      <Project>{72D742F9-803C-4DC8-9C2B-A83B38DA0982}</Project>
+      <Name>VG.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

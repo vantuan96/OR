@@ -1,0 +1,81 @@
+﻿
+
+@{
+    string actionMenu = this.ViewContext.RouteData.Values["action"].ToString();
+    string controllerMenu = this.ViewContext.RouteData.Values["controller"].ToString();
+
+    var systemname = System.Configuration.ConfigurationManager.AppSettings["SystemName"];
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    
+    <title></title>
+    @RenderSection("headerMeta", required: false)
+    <meta name="description" content="overview &amp; stats" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <style>
+        .fontawesome-select {
+            font-family: 'FontAwesome', 'Helvetica';
+        }
+    </style>
+</head>
+
+<body class="no-skin">
+    <div id="navbar" class="navbar navbar-default ace-save-state navbar-fixed-top">
+        @*@Html.Action("Header", "Home", new { actionName = actionMenu, controllerName = controllerMenu })*@
+    </div>
+
+    <div class="main-container ace-save-state" id="main-container">
+        <script type="text/javascript">
+            try { ace.settings.loadState('main-container') } catch (e) { }
+        </script>
+
+        @*<div id="sidebar" class="sidebar responsive ace-save-state sidebar-fixed">
+                @Html.Action("Sidebar", "Home", new { actionName = actionMenu, controllerName = controllerMenu })
+            </div>*@
+
+        <div class="main-content">
+            <div class="main-content-inner">
+                @*<div class="breadcrumbs ace-save-state breadcrumbs-fixed" id="breadcrumbs">
+                        @Html.Action("Breadcrumb", "Home", new { controller = controllerMenu, action = actionMenu })
+                    </div>*@
+                <div class="page-content">
+                    @RenderBody()
+                </div>
+            </div>
+        </div><!-- /.main-content -->
+
+        <div class="footer">
+            @*@Html.Action("Footer", "Home")*@
+        </div>
+
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+            <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+        </a>
+    </div><!-- /.main-container -->
+    <!-- Basic scripts -->
+    @Scripts.Render("~/bundles/jquery")
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    @*<script type="text/javascript">
+            if ('ontouchstart' in document.documentElement) document.write("<script src='~/Content/AdminLayout/js/jquery.mobile.custom.js'>" + "<" + "/script>");
+        </script>*@
+
+    @Scripts.Render("~/Content/AdminLayout/Adminjs")
+
+    @Scripts.Render("~/Content/AdminLayout/AdminExtjs")
+
+    <!---->
+    @RenderSection("scripts", required: false)
+
+    <!-- inline scripts related to this page -->
+
+    <script type="text/javascript">
+      
+    </script>
+</body>
+</html>

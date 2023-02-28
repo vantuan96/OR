@@ -1,0 +1,305 @@
+﻿@using DataAccess.Models
+@using Admin.Models.QueuePatients;
+@using Contract.QueuePatient;
+
+@model Contract.QueuePatient.QueuePatientSearchResult<Patient>
+@{
+    ViewBag.Title = LayoutResource.UserMngt_ListUser_PageTitle;
+    var searchParam = (Contract.QueuePatient.QueuePatientSearchParam)ViewBag.SearchParam;
+    var states = new List<PatientState> { new PatientState { Id = 0, Name = "--Tất cả--" } };
+    states.AddRange((IEnumerable<PatientState>)ViewBag.States);
+
+    var rooms = new List<RoomHospital> { new RoomHospital { Id = 0, Name = "--Tất cả--" } };
+    rooms.AddRange((IEnumerable<RoomHospital>)ViewBag.Rooms);
+
+    var fromdate = searchParam.FromDate.ToString(StringHelper.DateShortFormat);
+    var todate = searchParam.ToDate.ToString(StringHelper.DateShortFormat);
+    var hidenFromdate = searchParam.FromDate.ToString(StringHelper.EnglishDateShortFormat);
+    var hidenTodate = searchParam.ToDate.ToString(StringHelper.EnglishDateShortFormat);
+}
+
+<div id="main_wrapper">
+    <div class="page_content">
+        <div class="bg_page_fix"><i class="fa fa-users"></i></div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Search (@LayoutResource.Shared_BtnText_Search)</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.AntiForgeryToken()
+                                    <form action="@Url.Action("SearchPatients", "QueuePatient")" id="searchform">
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <label>Operation room(Phòng mổ)</label>
+                                                @Html.DropDownList("RoomId", new SelectList(rooms, "Id", "Name", searchParam.StateId), new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <label>Readline(Trạng thái)</label>
+                                                @Html.DropDownList("StateId", new SelectList(states, "Id", "Name", searchParam.StateId), new { @class = "form-control" })
+                                            </div>
+
+                                            <div class="col-sm-2">
+                                                <label>FromDate(@LayoutResource.Shared_FromDateLabel)</label>
+                                                <input id="from_date" class="form-control" value="@fromdate" data-date-format="@Extension.DateShortFormatJS" data-date-autoclose="true" />
+                                                <input id="hidden_from_date" type="hidden" class="fromDateHidden form-control" value="@hidenFromdate" name="FromDate" />
+                                                <input id="hidden_to_date" type="hidden" class="fromDateHidden form-control" value="@hidenTodate" name="ToDate" />
+                                            </div>
+                                            <div class="col-sm-2">
+
+                                                <label>
+                                                    ToDate(@LayoutResource.Shared_ToDateLabel)
+                                                </label>
+                                                <input id="to_date" class="form-control" value="@todate" data-date-format="@Extension.DateShortFormatJS" data-date-autoclose="true" />
+
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="input-group">
+                                                    <label>PID/PatientName(@LayoutResource.UserMngt_ListUser_NameOrEmail)</label>
+                                                    <input tabindex="8" type="text" id="kw" class="form-control"
+                                                           name="Keyword" autofocus
+                                                           autocomplete="off"
+                                                           placeholder="PID/ Patient Name" value="@HttpUtility.UrlDecode(Request["Keyword"])" />
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-accept btn-search tabindex" tabindex="17">
+                                                            <i class="fa fa-search"></i> Search (@LayoutResource.Shared_BtnText_Search)
+                                                        </button>
+                                                        @if (Model != null && Model.Data.Count > 0)
+                                                        {
+                                                            <button type="submit" class="btn btn-search btn-success linkURL"
+                                                                    formtarget="_blank" name="export" value="True"
+                                                                    onclick="HideOverlay(4000)">
+                                                                <i class="fa fa-file-excel-o"></i>
+                                                            </button>
+                                                        }
+                                                    </span>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-heading">List Patients (Danh sách bệnh nhân)</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @if (Model != null && Model.TotalRecords > 0)
+                                    {
+                                        <div class="table-responsive">
+                                            <table class="table table-striped info-table margin_b0 table_booking table_week">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="sub_col text-center">Sorting Number <br/>(Thứ tự hiển thị)</th>
+                                                        <th class="sub_col">PID <br/>(Mã bệnh nhân)</th>
+                                                        <th class="sub_col">Patient Name <br/>(Tên bệnh nhân)</th>
+                                                        <th class="sub_col">Age <br/>(Tuổi)</th>
+                                                        <th class="sub_col">Sex <br/>(Giới tính)</th>
+                                                        <th class="sub_col">Operation Room <br/>(Phòng mổ)</th>
+                                                        <th class="sub_col">Start time <br/>(Bắt đầu)</th>
+                                                        <th class="sub_col">End time <br/>(Kết thúc)</th>
+                                                        <th class="sub_col" style="text-align:center;">Readline <br/>(Trạng thái)</th>
+                                                        <th class="sub_col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    @foreach (var item in Model.Data)
+                                                    {
+                                                        var backgroundState = @Html.StateBackgroundColorPatient(@item.State);
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                <a id="@item.Id.ToString()" data-type="text" data-pk="1" data-key="@item.Id"
+                                                                   data-placeholder="Bắt buộc"
+                                                                   data-title="Nhập giá trị độ ưu tiên bệnh nhân" class="editable editable-click settingvalue"
+                                                                   data-original-title="" title=""
+                                                                   style="background-color: rgba(0, 0, 0, 0);">@item.Sorting</a>
+                                                            </td>
+                                                            <td>
+                                                                @item.PId
+                                                            </td>
+                                                            <td>
+                                                                @item.PatientName
+                                                            </td>
+                                                            <td style="text-align:center;">
+                                                                @item.Age
+                                                            </td>
+                                                            <td>
+                                                               @EnumExtension.GetDescription((SexEnum)@item.Sex)
+                                                            </td>
+                                                            <td>
+                                                                @{
+                                                                    string room = string.Empty;
+                                                                    var first = rooms.FirstOrDefault(f => f.Id == item.RoomId);
+                                                                    if (first != null)
+                                                                    {
+                                                                        room = first.Name;
+                                                                    };
+                                                                }
+                                                                @room
+                                                            </td>
+                                                            <td>
+                                                                @item.StartDate.ToString("dd/MM/yyyy HH:mm")
+                                                            </td>
+                                                            <td>
+                                                                @item.EndDate.ToString("dd/MM/yyyy HH:mm")
+                                                            </td>
+                                                            <td class="text-center" style="background:@backgroundState!important">
+                                                                <div style="font-size: 9px;text-align:center;"  >@EnumExtension.GetDescription((PatientStateEnum)item.State)</div>                                                              
+                                                            </td>
+                                                          
+                                                            <td class="text-center" >
+                                                                <a href="@Url.Action("InsertUpdatePatient","QueuePatient", new { patientId = item.Id})"
+                                                                   title="Chỉnh sửa" tabindex="19" class="btn btn-primary">Edit (Chỉnh sửa)</a>
+                                                            </td>
+                                                        </tr>
+                                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        @Helpers.Paging(Model.TotalRecords, searchParam.p, true, searchParam.PageSize)
+                                }
+                                else
+                                {
+                                    @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+                                }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="popup_viewer" aria-hidden="true" data-backdrop="static" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" data-dismiss="modal">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title title-popup" style="cursor: pointer;"></h4>
+            </div>
+            <div class="modal-body">
+                <iframe src="" id="popupIframe" width="100%" frameborder="0" height="400" scrolling="yes"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+@section styles {
+    <style type="text/css">
+        .bootbox-body {
+            padding-top: 12px;
+        }
+
+            .bootbox-body div {
+                margin-bottom: 5px;
+            }
+    </style>
+}
+
+@section scripts {
+    @Scripts.Render("~/javas_searchfrm")
+    @Scripts.Render("~/javas_x_editable")
+
+    <script>
+        $(function () {
+            if (($('#from_date').length) && ($('#to_date').length)) {
+                $('#from_date').datepicker({
+                    todayHighlight: true,
+                    endDate: moment($('#to_date').val(), '@Extension.DateShortFormatJS.ToUpper()', true).toDate()
+                }).on('changeDate', function (e) {
+                    $('#to_date').datepicker('setStartDate', e.date);
+                    $('#hidden_from_date').val(moment($('#from_date').val(), '@Extension.DateShortFormatJS.ToUpper()', true).format('@Extension.DateSubmitFormatJS.ToUpper()'));
+                });
+                $('#to_date').datepicker({
+                    todayHighlight: true,
+                    startDate: moment($('#from_date').val(), '@Extension.DateShortFormatJS.ToUpper()', true).toDate(),
+                    endDate: '+1d'
+                    /*endDate: (moment().toDate())*/
+                }).on('changeDate', function (e) {
+                    $('#from_date').datepicker('setEndDate', e.date)
+                    $('#hidden_to_date').val(moment($('#to_date').val(), '@Extension.DateShortFormatJS.ToUpper()', true).format('@Extension.DateSubmitFormatJS.ToUpper()'));
+                });
+
+                $('#from_date,#to_date').keypress(function (event) {
+                    event.preventDefault();
+                    return false;
+                });
+
+                $('#from_date,#to_date').bind("cut copy paste", function (e) {
+                    e.preventDefault();
+                    return false;
+                });
+            }
+
+            //Reset table width if < container width
+            if ($("#tbData").css("width") != undefined) {
+                var curWidth = $("#tbData").css("width").replace("px", "");
+                if ($("#tbData").parent().width() > parseInt(curWidth, 10)) {
+                    $("#tbData").css("width", $("#tbData").parent().width()).css("maxWidth", $("#tbData").parent().width());;
+
+                }
+            }
+
+            $('.settingvalue').editable({
+                validate: function (value) {
+                    if ($.trim(value) == '')
+                        return '@Html.Raw(LayoutResource.CMS_SettingList_Require)';
+                    else if(!$.isNumeric(value))
+                        return '@Html.Raw(LayoutResource.QueuePatient_SettingSortingIndex)';
+                    else if (confirm(layout_lang.CMS_SystemMngt_ConfirmChanging))
+                    {
+                        var result = UpdateSettingValue($(this).data("key"), $.trim(value.replace(",", "")));
+                        if (result != "") return result;
+                        $(this).parent().parent().find("td").last().html("<i>@Html.Raw(LayoutResource.CMS_SettingList_JustAminuteByYou)</i>");
+                        $('#searchform').submit();
+                    } else {
+                        return "@Html.Raw(LayoutResource.CMS_SettingList_CancelByYouInAminute)";
+                    }
+                    return "";
+                }
+            });
+            function UpdateSettingValue(key, settingValue) {
+                var url = "@Url.Action("UpdateSortting")";
+                var ret = "";
+
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: {
+                        Id: key,
+                        value: settingValue,
+                        "__RequestVerificationToken": $('[name=__RequestVerificationToken]').val()
+                    },
+                    dataType: 'json',
+                    async: false,
+                    cache: false,
+                    success: function (result) {
+                        if (result.status.toLowerCase() == "ok") {
+                            ret = "";
+                        }
+                        else if (result.status === 401) {
+                            window.location.href = result.redirect;
+                        }
+                        else {
+                            ret = result.message;
+                        }
+                    },
+                    error: function () { ret = msg_lang.CMS_GetRuntimeErrorMsg; }
+                });
+                return ret;
+            }
+
+        });
+    </script>
+
+}

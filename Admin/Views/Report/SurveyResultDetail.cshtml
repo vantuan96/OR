@@ -1,0 +1,237 @@
+﻿@model PagedList<Contract.Report.SurveyResultDetail>
+@using Admin.Models.Report
+@{
+    ViewBag.Title = LayoutResource.Report_SurveyResultDetail_PageTitle;
+
+
+
+    var listLocation = new List<SelectListItem>();
+    listLocation = (List<SelectListItem>)ViewBag.ListLocation;
+
+    var listQuestionGroup = new List<SelectListItem>();
+    listQuestionGroup = (List<SelectListItem>)ViewBag.ListQuestionGroup;
+
+    var fromdate = ViewBag.FromDate.ToString(StringHelper.DateShortFormat);
+    var todate = ViewBag.ToDate.ToString(StringHelper.DateShortFormat);
+    var hidenFromdate = ViewBag.FromDate.ToString(StringHelper.EnglishDateShortFormat);
+    var hidenTodate = ViewBag.ToDate.ToString(StringHelper.EnglishDateShortFormat);
+
+    int page = (int)ViewBag.PageSize;
+    int pageSize = (int)ViewBag.PageNumber;
+}
+@section styles{
+    @Styles.Render("~/styles_searchfrm")
+    <style>
+        table.table.table-striped > thead > tr > th {
+            height: 25px;
+            background-color: #dbdbdb;
+        }
+    </style>
+}
+<div id="main_wrapper">
+    <div class="page_bar clearfix">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="">
+                    <h1 class="page_title">@LayoutResource.Report_SurveyResultDetail_PageTitle</h1>
+                    <span class="text-muted"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page_content">
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.AntiForgeryToken()
+                            <form action="@Url.Action("SurveyResultDetail", "Report")" method="get" 
+                                  @*onsubmit="return ValidateForm();*@">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label>@LayoutResource.Location_NameVN</label>
+                                        @Html.DropDownList("location", listLocation, new
+                                       {
+                                           @class = "form-control select2 select2-offscreen"
+                                       })
+                                    </div>
+
+                                   
+                                    <div class="col-sm-3">
+                                        <label>@LayoutResource.Device_QuestionGroupName</label>
+                                        @Html.DropDownList("questionGroup", listQuestionGroup, new
+                                           {
+                                               @class = "form-control select2 select2-offscreen"
+                                           })
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <label>@LayoutResource.Shared_FromDateLabel</label>
+                                        <input id="from_date" class="form-control" value="@fromdate" data-date-format="@Extension.DateShortFormatJS" data-date-autoclose="true" />
+                                        <input id="hidden_from_date" type="hidden" class="fromDateHidden form-control" value="@hidenFromdate" name="fromDate" />
+                                        <input id="hidden_to_date" type="hidden" class="fromDateHidden form-control" value="@hidenTodate" name="toDate" />
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="input-group">
+                                            <label>
+                                                @LayoutResource.Shared_ToDateLabel
+                                            </label>
+                                            <input id="to_date" class="form-control" value="@todate" data-date-format="@Extension.DateShortFormatJS" data-date-autoclose="true" />
+                                            <span class="input-group-btn">
+                                                <label>&nbsp; </label>
+                                                <button id="view" type="submit" class="btn btn-master btn-search"><i class="fa fa-search"></i></button>
+                                                @if (Model != null && Model.List.Count > 0)
+                                                {
+                                                    <button type="submit" class="btn btn-search btn-success linkURL"
+                                                            formtarget="_blank" name="export" value="True"
+                                                            onclick="HideOverlay(4000)">
+                                                        <i class="fa fa-file-excel-o"></i>
+                                                    </button>
+                                                }
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-heading">@LayoutResource.Report_SurveyDetail_ResultTitle</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @if (Model!=null && Model.List != null && Model.List.Count > 0)
+                            {
+                                <div class="table-responsive">
+                                    <table id="tbData" class="table table-striped info-table margin_b0 table_booking table_week">
+                                        <thead>
+                                            <tr>
+                                                <th class="sub_col">@LayoutResource.Shared_Label_SortNumber</th>
+                                                <th class="sub_col">@LayoutResource.Device_Label_ImeiNo</th>
+                                                <th class="sub_col">@LayoutResource.Shared_Label_Location</th>
+                                                <th class="sub_col">@LayoutResource.Report_SurveyDetail_SubmitCode</th>
+                                                <th class="sub_col">@LayoutResource.Device_QuestionGroupName</th>
+                                                <th class="sub_col">@LayoutResource.Question_QuestionName</th>
+                                                <th class="sub_col">@LayoutResource.Question_AnswerName</th>
+                                                <th class="sub_col">@LayoutResource.Question_ReasonName</th>
+                                                <th class="sub_col">@LayoutResource.Question_AnswerNote</th>
+                                                <th class="sub_col">@LayoutResource.Report_SurveyDetail_SubmitTime</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @{ int rownumber = (page - 1) * pageSize; }
+                                        @foreach (var item in Model.List)
+                                        {
+                                            <tr>
+                                                <td class="text-right">
+                                                    <span>@(++rownumber)</span>
+                                                </td>
+                                                <td class="">
+                                                    @item.DeviceImei
+                                                </td>
+                                                <td class="">
+                                                   @item.LocationName
+                                                </td>
+                                                    
+                                                <td>
+                                                    @item.ResultGroup
+                                                </td>                                                    
+                                                <td>
+                                                   @item.QuestionGroupTextVN
+                                                    <p class="text-muted" style="font-size: 12px;">
+                                                        @item.QuestionGroupTextEN
+                                                    </p>
+                                                </td>
+
+                                                <td>
+                                                    @item.QuestionTextVN
+                                                    <p class="text-muted" style="font-size: 12px;">
+                                                        @item.QuestionTextEN
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    @item.AnswerTextVN
+                                                    <p class="text-muted" style="font-size: 12px;">
+                                                        @item.AnswerTextEN
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    @item.QuestionReasonTextVN
+                                                    <p class="text-muted" style="font-size: 12px;">
+                                                        @item.QuestionReasonTextEN
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    @item.Note
+                                                </td>
+                                                <td>
+                                                    @(item.SurveyTime.HasValue?item.SurveyTime.Value.ToVnShortDateTimeString():"")
+                                                </td>
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                @Helpers.Paging(Model.Count, page, true, pageSize)
+                            }
+                            else
+                            {
+                            @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts {
+    @Scripts.Render("~/javas_searchfrm")
+
+    <script>
+        $(function () {
+            $("#location").focus();
+
+            if (($('#from_date').length) && ($('#to_date').length)) {
+                $('#from_date').datepicker({
+                    todayHighlight: true,
+                    endDate: moment($('#to_date').val(), '@Extension.DateShortFormatJS.ToUpper()', true).toDate()
+                }).on('changeDate', function (e) {
+                    $('#to_date').datepicker('setStartDate', e.date);
+                    $('#hidden_from_date').val( moment($('#from_date').val(), '@Extension.DateShortFormatJS.ToUpper()', true).format('@Extension.DateSubmitFormatJS.ToUpper()'));
+                });
+                $('#to_date').datepicker({
+                    todayHighlight: true,
+                    startDate: moment($('#from_date').val(), '@Extension.DateShortFormatJS.ToUpper()', true).toDate(),
+                    endDate: moment().toDate()
+                }).on('changeDate', function (e) {
+                    $('#from_date').datepicker('setEndDate', e.date)
+                    $('#hidden_to_date').val( moment($('#to_date').val(), '@Extension.DateShortFormatJS.ToUpper()', true).format('@Extension.DateSubmitFormatJS.ToUpper()'));
+                });
+
+                $('#from_date,#to_date').keypress(function(event){
+                    event.preventDefault();
+                    return false;
+                });
+
+                $('#from_date,#to_date').bind("cut copy paste",function(e) {
+                    e.preventDefault();
+                    return false;
+                });
+            }
+
+            //Reset table width if < container width
+            var curWidth = $("#tbData").css("width").replace("px","");
+            if($("#tbData").parent().width()> parseInt(curWidth,10)){
+                $("#tbData").css("width",$("#tbData").parent().width()).css("maxWidth",$("#tbData").parent().width());;
+
+            }
+        });
+    </script>
+}

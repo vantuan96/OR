@@ -1,0 +1,56 @@
+﻿@using Contract.AdminAction
+@model List<AdminGroupActionContract>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="modal_booking modal_booking_iframe">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h2 class="modal-title title-popup">
+            @LayoutResource.SystemMngt_ImportGroupActions_PageTitle
+        </h2>
+        <p class="place"></p>
+    </div>
+    <div class="modal-body">
+        <div class="body_booking">
+            <div class="row">
+                <div class="col-md-12">
+                    <label>@LayoutResource.Shared_Label_Json</label>
+                    @Html.TextArea("data", Html.ToJson(Model).ToString(), new { @class = "form-control", rows = "18" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <button class="btn btn-success" id="btnCopyJson" tabindex="8" type="button"><i class="fa fa-copy"></i></button>
+                    <button class="btn btn-danger" id="btnCloseModal" tabindex="8" type="button"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            $('#btnCopyJson').click(function (e) {
+                e.preventDefault();
+                var json = $('#data').val();
+
+                window.parent.postMessage({
+                    'action': 'CopyActionJsonString',
+                    'jsondata': json
+                }, "*");
+            });
+
+            $('#btnCloseModal').click(function (e) {
+                e.preventDefault();
+
+                window.parent.postMessage({
+                    'action': 'CloseModal'
+                }, "*");
+            });
+        })
+</script>
+}

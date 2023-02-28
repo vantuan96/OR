@@ -1,0 +1,71 @@
+﻿@using Contract.AdminAction
+@model List<AdminControllerContract>
+@{
+    ViewBag.Title = LayoutResource.SystemMngt_ImportActions_PageTitle;
+}
+
+<div id="main_wrapper">
+    <div class="page_bar clearfix">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="">
+                    <h1 class="page_title">@LayoutResource.SystemMngt_ImportActions_PageTitle</h1>
+                </div>
+            </div>
+            <div class="col-md-6 text-right">
+                <div class="div_add_fast">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page_content">
+        <div class="bg_page_fix"><i class="fa fa-users"></i></div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        @using (Ajax.BeginForm("ImportActions", "SystemMngt", new AjaxOptions { HttpMethod = "Post", OnSuccess = "CreateUpdateFormSubmitSuccess" }, new { onsubmit = "$('#err_msg').html('').hide();" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>@LayoutResource.Shared_Label_Json</label>
+                                    @Html.TextArea("data", Html.ToJson(Model).ToString(), new { @class = "form-control", rows = "20" })
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <button class="btn btn-warning" type="button" data-toggle="modal" data-target="#iframePopup" data-iframe-height="534px"
+                                        data-modal-src="@("http://localhost:8123" + Url.Action("ImportActions", "SystemMngt", new { iframe = true }))">
+                                        <i class="fa fa-recycle"></i>
+                                    </button>
+
+                                    <button class="btn btn-accept" tabindex="8" type="submit"><i class="fa fa-save"></i>&nbsp;@LayoutResource.Shared_BtnText_Save</button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        window.addEventListener('message', function (event) {
+            if (event.data.action == "CopyActionJsonString") {
+                $('#data').val(event.data.jsondata);
+                $('#iframePopup').modal('hide');
+            }
+            else if (event.data.action == "CloseModal") {
+                $('#iframePopup').modal('hide');
+            }
+        }, false);
+
+    </script>
+}

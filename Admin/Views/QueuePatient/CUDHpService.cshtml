@@ -1,0 +1,190 @@
+﻿@using Admin.Models.OR
+@model HpServiceModel
+@{
+    string errorMessage = ViewBag.ErrorMessage as string;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="modal_booking modal_booking_iframe">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h2 class="modal-title title-popup">
+            @if (Model.Id == 0)
+            {
+                <text>Thêm mới thông tin dịch vụ kỷ thuật cho site</text>
+            }
+            else
+            {
+                <text>Cập nhật cấu hình thông tin dịch vụ kỷ thuật</text>
+            }
+        </h2>
+        <p class="place"></p>
+    </div>
+    <div class="modal-body">
+        <div class="body_booking">
+            @if (string.IsNullOrEmpty(errorMessage) == false)
+            {
+                @Html.Partial("_ErrorOccur", errorMessage)
+            }
+            else
+            {
+                using (Ajax.BeginForm("CUDHpService", "OR", new AjaxOptions { HttpMethod = "Post", OnSuccess = "CreateUpdateFormSubmitSuccess" }, new { onsubmit = "removeDisabled();$('#err_msg').html('').hide();" }))
+                {
+                    @Html.Hidden("Id", Model.Id)
+                    @Html.Hidden("siteId", Model.siteId)
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-xs-12 div_input_form_control_label">
+                            @Html.LabelFor(x => x.Oh_Code, new { @class = "req" })
+                            @if (Model.Id != 0)
+                            {
+                                @Html.TextBoxFor(x => x.Oh_Code, new { @class = "form-control", @readonly = true, tabindex = "1" })
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(x => x.Oh_Code, new { @class = "form-control", tabindex = "1" })
+                            }
+                            @Html.ValidationMessageFor(x => x.Oh_Code)
+                        </div>
+                    </div>
+                    if (Model.Id > 0)
+                    {
+                        <div class="row">
+                            <div class="col-xs-12 div_input_form_control_label">
+                                @Html.LabelFor(x => x.Name, new { @class = "req" })
+                                @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @readonly=true, tabindex = "2" })
+                                @Html.ValidationMessageFor(x => x.Name)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 div_input_form_control_label">
+                                @Html.LabelFor(x => x.AnesthesiaTime, new { })
+                                @Html.TextBoxFor(x => x.AnesthesiaTime, new { @class = "form-control", tabindex = "3" })
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 div_input_form_control_label">
+                                @Html.LabelFor(x => x.CleaningTime, new { })
+                                @Html.TextBoxFor(x => x.CleaningTime, new { @class = "form-control", tabindex = "4" })
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 div_input_form_control_label">
+                                @Html.LabelFor(x => x.PreparationTime, new { })
+                                @Html.TextBoxFor(x => x.PreparationTime, new { @class = "form-control",  tabindex = "5" })
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 div_input_form_control_label">
+                                @Html.LabelFor(x => x.OtherTime, new {})
+                                @Html.TextBoxFor(x => x.OtherTime, new { @class = "form-control",  tabindex = "6" })
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 div_input_form_control_label">
+                                @Html.LabelFor(x => x.PreparationTime, new { })
+                                @Html.TextBoxFor(r => r.PreparationTime, new { @class = "form-control", tabindex = "7" })
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col-xs-12 div_input_form_control_label">
+                                @Html.LabelFor(x => x.Name, new { @class = "req" })
+                                @Html.TextBoxFor(x => x.Name, new { @class = "form-control",  tabindex = "2" })
+                                @Html.ValidationMessageFor(x => x.Name)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 div_input_form_control_label">
+                                @Html.LabelFor(x => x.AnesthesiaTime, new { })
+                                @Html.TextBoxFor(x => x.AnesthesiaTime, new { @class = "form-control", tabindex = "3" })
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 div_input_form_control_label">
+                                @Html.LabelFor(x => x.CleaningTime, new { })
+                                @Html.TextBoxFor(x => x.CleaningTime, new { @class = "form-control", tabindex = "4" })
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 div_input_form_control_label">
+                                @Html.LabelFor(x => x.PreparationTime, new { })
+                                @Html.TextBoxFor(x => x.PreparationTime, new { @class = "form-control",tabindex = "5" })
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 div_input_form_control_label">
+                                @Html.LabelFor(x => x.OtherTime, new { })
+                                @Html.TextBoxFor(x => x.OtherTime, new { @class = "form-control", tabindex = "6" })
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 div_input_form_control_label">
+                                @Html.LabelFor(x => x.PreparationTime, new { })
+                                @Html.TextBoxFor(r => r.PreparationTime, new { @class = "form-control", tabindex = "7" })
+                            </div>
+                        </div>
+                    }
+                    <div class="row">
+                        <div class="col-xs-12 div_input_form_control_label">
+                           <label>Site áp dụng</label>
+                            @Html.DropDownListFor(r => r.lstSiteId, Model.listSites,
+                           new { @class = "form-control select2-nosearch select2-offscreen", multiple = "multiple", tabindex = "8" })
+                            @Html.ValidationMessageFor(x => x.lstSiteId)
+                        </div>
+                    </div>
+                    <div class="btn-wrapper text-right">
+                        <button class="btn btn-accept" tabindex="8" type="submit"><i class="fa fa-save"></i>&nbsp;@LayoutResource.Shared_BtnText_Save</button>
+                    </div>
+                    }
+                }
+        </div>
+    </div>
+</div>
+
+@section styles{
+
+    <style>
+        .select2-results .select2-disabled {
+            display: none;
+        }
+
+        body {
+            min-height: 400px !important;
+        }
+
+        #location_validation .field-validation-error {
+            top: 4px !important;
+        }
+    </style>
+}
+@Scripts.Render("~/fctree")
+@section scripts{
+
+    <script type="text/javascript">
+
+        var jsonSites = @Html.Raw(JsonConvert.SerializeObject(Model.lstSiteId));        
+        $(function() {
+            $('#lstSiteId').select2({ allowClear: false });
+            $("#OH_Code").focus();
+            $('#lstSiteId').val(jsonSites).change()
+            /*Fix loi giao dien hien thi select2*/
+            $("span[data-select2-id]").css("width", "100%");
+            /*.Fix loi giao dien hien thi select2*/
+        });
+        function removeDisabled() {
+            $("#Oh_Code").removeAttr("disabled");
+            $("#err_msg").html("").hide();
+        }      
+    </script>
+
+}

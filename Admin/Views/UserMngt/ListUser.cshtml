@@ -1,0 +1,303 @@
+﻿@using Admin.Models.User
+@model ListUserModel
+@{
+    ViewBag.Title = LayoutResource.UserMngt_ListUser_PageTitle;
+    int currentUserId = (int) ViewBag.CurrentUserId;
+}
+
+<div id="main_wrapper">
+    <div class="page_bar clearfix">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="">
+                    <h1 class="page_title">@LayoutResource.UserMngt_ListUser_PageTitle</h1>
+                </div>
+            </div>
+            <div class="col-md-6 text-right">
+                <div class="div_add_fast">
+                    @if (Functions.CheckAllowAction("UserMngt", "CreateUpdateUser"))
+                    {
+                        @*<a class="btn btn-accept"
+                           data-toggle="modal"
+                           data-target="#iframePopup"
+                           data-modal-src="@Url.Action("CreateUpdateUser", "UserMngt")"
+                           data-iframe-height="650"
+                           tabindex="8">
+                            <i class="fa fa-plus"></i>&nbsp;<span class="text">@LayoutResource.UserMngt_BtnText_CreateAccount</span>
+                        </a>*@
+                        @Html.CreateToPopupBtn(href: @Url.Action("CreateUpdateUser", "UserMngt"), text:@LayoutResource.UserMngt_BtnText_CreateAccount )
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+   <div class="page_content">
+        <div class="bg_page_fix"><i class="fa fa-users"></i></div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">@LayoutResource.Shared_BtnText_Search</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.AntiForgeryToken()
+                                    <form action="@Url.Action("ListUser")" method="get" id="searchform">
+                                        <div class="row">                                            
+                                            <div class="col-sm-3">
+                                                <label>@LayoutResource.UserMngt_ListUser_Label_AccountRole</label>
+                                                @Html.DropDownList("role", Model.SelectRoles, LayoutResource.Shared_SelectOpt_All, new
+                                                {
+                                                    @class = "form-control select2 select2-offscreen",
+                                                    onchange = "this.form.submit(); ShowOverlay(true);"
+                                                })
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <label>@LayoutResource.Shared_Label_Location</label>
+                                                @Html.DropDownList("locationId", Model.SelectLocation, new
+                                                {
+                                                    @class = "form-control select2 select2-offscreen",
+                                                    onchange = "this.form.submit(); ShowOverlay(true);"
+                                                })
+                                            </div>
+
+                                            <div class="col-sm-5">
+                                                <div class="input-group">
+                                                    <label>@LayoutResource.UserMngt_ListUser_NameOrEmail</label>
+                                                    <input tabindex="8" type="text" id="kw" class="form-control" 
+                                                           name="kw"  autofocus                                                      
+                                                           autocomplete="off"
+                                                           placeholder="@LayoutResource.UserMngt_PlaceHolder_Keyword" value="@HttpUtility.UrlDecode(Request["kw"])" />
+                                                    <span class="input-group-btn">
+                                                        <label>&nbsp;</label>
+                                                        <button title="@LayoutResource.CMS_ButtonText_ClearFilter" tabindex="100"
+                                                                class="Tip_mouse_on_ne btn btn-danger btn-search" style="" id="clearFilter">
+                                                            <i class="fa fa-remove"></i>
+                                                        </button>
+                                                        <button class="btn btn-accept btn-search tabindex" tabindex="17">
+                                                            <i class="fa fa-search"></i> @LayoutResource.Shared_BtnText_Search</button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-heading">@LayoutResource.UserMngt_ListUser_List</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @if (Model.ListUser != null && Model.ListUser.Count > 0)
+                                    {
+                                    <div class="table-responsive">
+                                        <table class="table table-striped info-table margin_b0 table_booking table_week">
+                                            <thead>
+                                                <tr>
+                                                    <th class="sub_col">@LayoutResource.Shared_Label_SortNumber</th>
+                                                    <th class="sub_col">@LayoutResource.UserMngt_ListUser_Label_UserFullName</th>
+                                                    @*<th class="sub_col">@LayoutResource.UserMngt_ListUser_Label_Username</th>*@
+                                                    <th class="sub_col">@LayoutResource.Shared_Label_Location</th>
+                                                    <th class="sub_col">@LayoutResource.UserMngt_ListUser_Label_CreatedDate</th>
+                                                    <th class="sub_col" style="width: 90px">@LayoutResource.UserMngt_ListUser_Label_Status</th>
+                                                    <th class="sub_col" style="width: 150px"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{ int rownumber = (Model.PageNumber - 1) * Model.PageCount; }
+                                                @foreach (var user in Model.ListUser)
+                                                        {
+                                                    <tr>
+                                                        <td class="text-right">
+                                                            <span>@(++rownumber)</span>
+                                                        </td>
+                                                        <td class="">
+                                                            @if (!user.IsSuperAdmin && Functions.CheckAllowAction("UserMngt", "CreateUpdateUser"))
+                                                            {
+                                                                <a data-toggle="modal"
+                                                                   data-target="#iframePopup"
+                                                                   data-modal-src="@Url.Action("CreateUpdateUser", "UserMngt", new { userId = user.UserId })"
+                                                                   data-iframe-height="581">@user.FullName (@user.Username)</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a href="javascript:void(0);">@user.FullName (@user.Username)</a>
+                                                            }
+                                                            
+                                                            @if (string.IsNullOrEmpty(user.DeptName) == false)
+                                                            {
+                                                                <p class="text-muted" style="font-size: 12px;">
+                                                                    <strong>@LayoutResource.UserMngt_ListUser_Label_DeptId:</strong>
+                                                                    @user.DeptName
+                                                                </p>
+                                                            }
+
+                                                            <p class="text-muted" style="font-size: 12px;">
+                                                                <strong>@LayoutResource.UserMngt_ListUser_Label_AccountRole:</strong>
+                                                                @string.Join(", ", user.Roles.Select(r => r.RoleName))
+                                                            </p>
+                                                        </td>
+                                                        <td>
+                                                            @if (user.Locations != null)
+                                                            {
+                                                                <a href="javascript:void(0)">
+                                                                    @user.Locations.Count @LayoutResource.Shared_Label_Location @*(@user.Sites.Count @LayoutResource.Shared_Label_Site)*@
+                                                                </a>
+                                                            }
+                                                        </td>
+
+                                                        <td>
+                                                            @user.CreatedDate.ToVnShortDateTimeString()
+                                                        </td>
+
+                                                        <td class="text-center">
+                                                            @if (!user.IsSuperAdmin && user.UserId != currentUserId && Functions.CheckAllowAction("UserMngt", "LockUnLockUser"))
+                                                            {
+                                                                if (user.IsActive)
+                                                                {
+                                                                    <a class="icon_action act_unlock Tip_mouse_on" data-event="lock-unlock-user" style="width: auto;" title="@LayoutResource.UserMngt_ListUser_Label_Unlock"
+                                                                       data-name="@user.FullName" data-email="@user.Email" data-id="@user.UserId">
+                                                                        <i class="fa fa-unlock"></i>
+                                                                    </a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a class="icon_action act_lock Tip_mouse_on" data-event="lock-unlock-user" style="width: auto;" title="@LayoutResource.UserMngt_ListUser_Label_Lock"
+                                                                       data-name="@user.FullName" data-email="@user.Email" data-id="@user.UserId">
+                                                                        <i class="fa fa-lock"></i>
+                                                                    </a>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                if (user.IsActive)
+                                                                {
+                                                                    <a class="icon_action act_unlock Tip_mouse_on" style="width: auto;" href="javascript:void(0);" title="@LayoutResource.UserMngt_ListUser_Label_Unlock">
+                                                                        <i class="fa fa-unlock"></i>
+                                                                    </a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a class="icon_action act_lock Tip_mouse_on" style="width: auto;" href="javascript:void(0);" title="@LayoutResource.UserMngt_ListUser_Label_Lock">
+                                                                        <i class="fa fa-lock"></i>
+                                                                    </a>
+                                                                }
+                                                            }
+                                                        </td>
+                                                        <td class="text-center">
+                                                            @if (!user.IsSuperAdmin && Functions.CheckAllowAction("UserMngt", "CreateUpdateUser"))
+                                                            {
+                                                                @*<a class="btn btn-master Tip_mouse_on" data-toggle="modal"
+                                                                   data-target="#iframePopup"
+                                                                   data-modal-src="@Url.Action("CreateUpdateUser", "UserMngt", new { userId = user.UserId })"
+                                                                   data-iframe-height="650"><i class="fa fa-pencil"></i></a>*@
+                                                                @Html.EditToPopupBtn(href: @Url.Action("CreateUpdateUser", "UserMngt", new { userId = user.UserId }))
+                                                            }
+                                                            @*@if (!user.IsSuperAdmin && Functions.CheckAllowAction("UserMngt", "ResetPassword"))
+                                                            {
+                                                                <a class="btn btn-warning Tip_mouse_on" data-event="reset-pass-user" title="@LayoutResource.UserMngt_ListUser_Label_ResetPassword"
+                                                                   data-name="@user.FullName" data-email="@user.Email" data-id="@user.UserId">
+                                                                    <i class="fa fa-bolt"></i>
+                                                                </a>
+                                                            }*@
+                                                            @if (!user.IsSuperAdmin && user.UserId != currentUserId && Functions.CheckAllowAction("UserMngt", "DeleteUser"))
+                                                            {
+                                                                <a class="btn btn-danger Tip_mouse_on" data-event="delete-user" 
+                                                                   title="@LayoutResource.UserMngt_ListUser_Label_DeleteAccount"
+                                                                   data-name="@user.FullName" data-email="@user.Email" data-id="@user.UserId">
+                                                                    <i class="fa fa-trash-o"></i>
+                                                                </a>
+                                                            }
+                                                            @if (!user.IsSuperAdmin && user.UserId != currentUserId && Functions.CheckAllowAction("UserMngt", "SetAccountOR"))
+                                                            {
+                                                                @Html.EditToPopupBtn(href: @Url.Action("SetAccountOR", "UserMngt", new { userId = user.UserId }), iconActionClass: "fa-cog fa-fw", appendClass: "btn-warning", title: "Tạo thông tin user OR")
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                    }
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    @Helpers.Paging(Model.TotalCount, Model.PageNumber, true, Model.PageCount)
+                                    }
+                                    else
+                                    {
+                                    @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("_PopupLockUser")
+@Html.Partial("_PopupUnlockUser")
+@Html.Partial("_PopupDeleteUser")
+@Html.Partial("_PopupResetPassword", (string)ViewBag.DefaultPassword)
+
+@section styles {
+    <style type="text/css">
+        .bootbox-body {
+            padding-top: 12px;
+        }
+
+        .bootbox-body div {
+            margin-bottom: 5px;
+        }
+    </style>    
+}
+
+@section scripts{
+    <script>
+        var _lockUrl = '@Url.Action("LockUnLockUser")';
+        var _deleteUrl = '@Url.Action("DeleteUser")';
+        var _resetPasswordUrl = '@Url.Action("ResetPassword")';
+
+        $(function () {
+             $("#role").select2({
+                allowClear: false
+            })
+
+            $("#locationId").select2({
+                allowClear: false
+            })
+
+            $("#role").focus();
+
+            $("#kw").on("keypress", function (e) {
+                if (e.which == 13) {
+                    $("#searchform").submit();
+                }
+            });
+
+            $("#searchform").submit(function () {
+                $("#kw").css("color", "white").css("transition-duration", "0").css("-moz-transition-duration", "0").css("-o-transition-duration", "0");
+                $("#kw").val(encodeURIComponent($("#kw").val()));
+            });
+
+            $("#kw").on("keypress", function (e) {
+                if (e.which == 13) {
+                    //$("#kw").css("color", "white").css("transition-duration", "0").css("-moz-transition-duration", "0").css("-o-transition-duration", "0");
+                    //$('#searchform').submit();
+                    return false;    //<---- Add this line
+                }
+            });
+
+            $("#clearFilter").on("click", function (e) {
+                $("#kw").val("");
+                var defaultOptVal = '@AdminGlobal.DefaultValue.DefaultSelectListItem.Value';
+                $("#role").val(defaultOptVal);
+                $("#locationId").val(defaultOptVal);
+                //$("#from_date").val("");
+                //$("#to_date").val("");
+                //$("#hasFilterDate").prop("checked", "");
+            });
+        })
+    </script>
+    @Scripts.Render("~/usermanager")
+}

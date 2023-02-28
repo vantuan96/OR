@@ -1,0 +1,165 @@
+﻿@using Admin.Models.User
+@model Admin.Models.User.CreateUpdateLocationModel
+@{
+    string errorMessage = ViewBag.ErrorMessage as string;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="modal_booking modal_booking_iframe">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h2 class="modal-title title-popup">
+            @if (Model.LocationId == 0)
+            {
+                <text>@LayoutResource.LocationMngt_PopupCreate_Title</text>
+            }
+            else
+            {
+                <text>@LayoutResource.LocationMngt_PopupUpdate_Title</text>
+            }
+        </h2>
+        <p class="place"></p>
+    </div>
+    <div class="modal-body">
+        <div class="body_booking">
+            @if (string.IsNullOrEmpty(errorMessage) == false)
+            {
+                @Html.Partial("_ErrorOccur", errorMessage)
+            }
+            else
+            {
+                using (Ajax.BeginForm("CreateUpdateLocation", "UserMngt", new AjaxOptions { HttpMethod = "Post", OnSuccess = "SaveResult" }, new { onsubmit = "removeDisabled();$('#err_msg').html('').hide();" }))
+                {
+                    @Html.Hidden("LocationId", Model.LocationId)
+                    @Html.Hidden("ParentId", Model.ParentId)
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-xs-12 div_input_form_control_label">
+                            @Html.LabelFor(x => x.NameEN, "Code", new { @class = "req" })
+                            @Html.TextBoxFor(x => x.NameEN, new { @class = "form-control", tabindex = "1" })
+                            @Html.ValidationMessageFor(x => x.NameEN)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 div_input_form_control_label">
+                            @Html.LabelFor(x => x.NameVN, "Name", new { @class = "req" })
+                            @Html.TextBoxFor(x => x.NameVN, new { @class = "form-control", tabindex = "2" })
+                            @Html.ValidationMessageFor(x => x.NameVN)
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 div_input_form_control_label">
+                            @Html.LabelFor(x => x.ParentName,"Parent Code", new { @class = "req" })
+                            @Html.TextBoxFor(x => x.ParentName, new { @class = "form-control", disabled="disabled", tabindex = "3" })
+                            @Html.ValidationMessageFor(x => x.ParentName)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.LabelFor(x => x.DepartmentTypeId, "Type")
+                            @Html.DropDownListFor(x => x.DepartmentTypeId, new SelectList(Model.ListDepartmentType, "DepartmentTypeId", "DepartmentTypeName"), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.LabelFor(x => x.LevelNo, "Level")
+                            @Html.TextBoxFor(x => x.LevelNo, new { @class = "form-control", tabindex = "5" })
+                        </div>
+                    </div>
+
+                    @*if (Model.LevelNo == 1)
+                    {
+                        <div class="row">
+                            <div class="col-xs-12 div_input_form_control_label">
+                                @Html.LabelFor(x => x.SloganVN, new { @class = "req" })
+                                @Html.TextBoxFor(x => x.SloganVN, new { @class = "form-control", tabindex = "4" })
+                                @Html.ValidationMessageFor(x => x.SloganVN)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 div_input_form_control_label">
+                                @Html.LabelFor(x => x.SloganEN, new { @class = "req" })
+                                @Html.TextBoxFor(x => x.SloganEN, new { @class = "form-control", tabindex = "5" })
+                                @Html.ValidationMessageFor(x => x.SloganEN)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 div_input_form_control_label">
+                                @Html.LabelFor(x => x.LogoName, new { @class = "req" })
+                                @Html.TextBoxFor(x => x.LogoName, new { @class = "form-control", tabindex = "6" })
+                                @Html.ValidationMessageFor(x => x.LogoName)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 div_input_form_control_label">
+                                @Html.LabelFor(x => x.BackgroundName, new { @class = "req" })
+                                @Html.TextBoxFor(x => x.BackgroundName, new { @class = "form-control", tabindex = "7" })
+                                @Html.ValidationMessageFor(x => x.BackgroundName)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 div_input_form_control_label">
+                                @Html.LabelFor(x => x.ColorCode, new { @class = "req" })
+                                @Html.TextBoxFor(x => x.ColorCode, new { @class = "form-control", tabindex = "8" })
+                                @Html.ValidationMessageFor(x => x.ColorCode)
+                            </div>
+                        </div>
+                    }*@
+
+                    <div class="row">
+                        <div class="form-group relative not_input_error not_input_error_popup" style="top: 0;">
+                            <span id="err_msg" class="field-validation-error" style="display:none"></span>
+                        </div>
+                    </div>
+                    <div class="btn-wrapper text-right">
+                        <button class="btn btn-accept" tabindex="10" type="submit"><i class="fa fa-save"></i>&nbsp;@LayoutResource.Shared_BtnText_Save</button>
+                    </div>
+                        }
+                    }
+        </div>
+    </div>
+</div>
+
+@section styles{
+    <style>
+        .select2-results .select2-disabled {
+            display: none;
+        }
+
+        body {
+            min-height: 400px !important;
+        }
+
+        .select2-results {
+            max-height: 150px !important;
+        }
+
+        #location_validation .field-validation-error {
+            top: 4px !important;
+        }
+    </style>
+}
+
+@section scripts{
+    <script type="text/javascript">
+        function SaveResult(data){
+            if(!data.Id){
+                $("#err_msg").html(msg_lang.Shared_SystemErrorMessage).show();
+                HideOverlay(0);
+            }
+            else if(data.Id==@((int)ResponseCode.LocationMngt_SuccessCreate) || data.Id==@((int)ResponseCode.LocationMngt_SuccessUpdate)){
+                parent.window.location.reload();
+            }
+            else
+            {
+                $("#err_msg").html(data.Message).show();
+                HideOverlay(0);
+            }
+        }
+
+        $(function(){
+            $("#NameEN").focus();       
+        });
+    </script>
+}

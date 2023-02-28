@@ -1,0 +1,402 @@
+﻿@using Contract.OR;
+@using Contract.QueuePatient;
+
+@model SearchORProgress
+@{
+    var searchParam = (OHQueuePatientSearchParam)ViewBag.SearchParam;
+    var states = (List<SelectListItem>)ViewBag.States;
+    var rooms = (List<SelectListItem>)ViewBag.Rooms;
+    var sites = (List<SelectListItem>)ViewBag.Sites;
+    var fromdate = searchParam.FromDate.ToString(StringHelper.DateShortFormat);
+    var todate = searchParam.ToDate.ToString(StringHelper.DateShortFormat);
+    var hidenFromdate = searchParam.FromDate.ToString(StringHelper.EnglishDateShortFormat);
+    var hidenTodate = searchParam.ToDate.ToString(StringHelper.EnglishDateShortFormat);
+}
+<style>
+    .well.well-sm {
+        display: none;
+    }
+
+    table th {
+        text-align: center;
+    }
+
+    .div_tag_bg {
+        position: relative;
+    }
+
+        .div_tag_bg .bg_div {
+            position: fixed;
+            right: 10px;
+            bottom: 10px;
+            opacity: 0.1;
+            font-size: 160px !important;
+        }
+
+    .well.well-sm {
+        display: none;
+    }
+
+    table.table.table-striped > thead > tr > th {
+        height: 25px;
+        background-color: #dbdbdb;
+    }
+
+
+    .guarantees .bootstrap-themes-icon-check-circle {
+        margin-right: 3px !important;
+        font-size: 12px !important;
+        color: #2AD8A2 !important;
+        margin-top: 0px;
+        margin-bottom: 0px !important;
+        padding-bottom: 0px !important;
+        padding-top: 0px !important;
+    }
+
+    ul, menu, dir {
+        display: block;
+        list-style-type: none;
+        -webkit-margin-before: 1em;
+        -webkit-margin-after: 1em;
+        -webkit-margin-start: 0px;
+        -webkit-margin-end: 0px;
+        -webkit-padding-start: 5px;
+        margin-top: 0px;
+        margin-bottom: 0px !important;
+        padding-bottom: 0px !important;
+        padding-top: 0px !important;
+    }
+
+    li {
+        display: list-item;
+        text-align: -webkit-match-parent;
+    }
+
+    .bootstrap-themes-icon-check-circle:before {
+        content: '\e804';
+    }
+
+    [class^="bootstrap-themes-icon-"]:before, [class*=" bootstrap-themes-icon-"]:before {
+        font-family: "bootstrap-themes" !important font-style: normal;
+        font-weight: normal;
+        speak: none;
+        display: inline-block;
+        text-decoration: inherit;
+        width: 1em;
+        margin-right: .2em;
+        text-align: center;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1em;
+        margin-left: .2em;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+</style>
+<div id="main_wrapper">
+    <div class="page_content">
+        <div class="bg_page_fix"><i class="fa fa-users"></i></div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Search (@LayoutResource.Shared_BtnText_Search)</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.AntiForgeryToken()
+                                    <form action="@Url.Action("OHSearchPatients", "OR")" id="searchform">
+                                        @Html.Hidden("sourceClientId", searchParam.sourceClientId)
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <label>Cơ sở vinmec</label>
+                                                @Html.DropDownList("siteId", new SelectList(sites, "Value", "Text", searchParam.siteId), new { tabindex = "1", @disabled = "disabled", @class = "form-control select2 select2-offscreen", onchange = "this.form.submit(); ShowOverlay(true);" })
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label>Operation room(Phòng mổ)</label>
+                                                @Html.DropDownList("RoomId", new SelectList(rooms, "Value", "Text", searchParam.RoomId), new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label>Readline(Trạng thái)</label>
+                                                @Html.DropDownList("StateId", new SelectList(states, "Value", "Text", searchParam.StateId), new { @class = "form-control" })
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <label>FromDate(@LayoutResource.Shared_FromDateLabel)</label>
+                                                <input id="from_date" class="form-control" value="@fromdate" data-date-format="@Extension.DateShortFormatJS" data-date-autoclose="true" />
+                                                <input id="hidden_from_date" type="hidden" class="fromDateHidden form-control" value="@hidenFromdate" name="FromDate" />
+                                                <input id="hidden_to_date" type="hidden" class="fromDateHidden form-control" value="@hidenTodate" name="ToDate" />
+                                            </div>
+                                            <div class="col-sm-4">
+
+                                                <label>
+                                                    ToDate(@LayoutResource.Shared_ToDateLabel)
+                                                </label>
+                                                <input id="to_date" class="form-control" value="@todate" data-date-format="@Extension.DateShortFormatJS" data-date-autoclose="true" />
+
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="input-group">
+                                                    <label>Từ khóa (Keyword)</label>
+                                                    <input tabindex="8" type="text" id="kw" class="form-control"
+                                                           name="Keyword" autofocus
+                                                           autocomplete="off"
+                                                           placeholder="PID/ Patient Name" value="@HttpUtility.UrlDecode(Request["Keyword"])" />
+                                                    <span class="input-group-btn">
+                                                        <label>&nbsp;</label>
+                                                        <button class="btn btn-accept btn-search tabindex" tabindex="17">
+                                                            <i class="fa fa-search"></i>Search (@LayoutResource.Shared_BtnText_Search)
+                                                        </button>
+                                                        @if (Model != null && Model.Data.Count > 0)
+                                                        {
+                                                            <button type="submit" class="btn btn-search btn-success linkURL"
+                                                                    formtarget="_blank" name="export" value="True"
+                                                                    onclick="HideOverlay(4000)">
+                                                                <i class="fa fa-file-excel-o"></i>
+                                                            </button>
+                                                        }
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-heading">List Patients (Danh sách bệnh nhân)</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @if (Model != null && Model.TotalRows > 0)
+                                    {
+                                        <div class="table-responsive">
+                                            <table class="table table-striped info-table margin_b0 table_booking table_week">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="sub_col text-center">Sorting Number <br />(Thứ tự hiển thị)</th>
+                                                        @*<th class="sub_col">PID <br />(Mã bệnh nhân)</th>*@
+                                                        @*<th class="sub_col">Patient Name <br />(Tên bệnh nhân)</th>*@
+                                                        <th class="sub_col">Patient Info <br />(Thông tin bệnh nhân)</th>
+                                                        @*<th class="sub_col">Age <br />(Tuổi)</th>*@
+                                                        @*<th class="sub_col">Sex <br />(Giới tính)</th>*@
+                                                        <th class="sub_col">Operation Room Info <br />(Thông tin Phòng mổ)</th>
+                                                        @*<th class="sub_col">Start time <br />(Bắt đầu)</th>
+                                                        <th class="sub_col">End time <br />(Kết thúc)</th>*@
+                                                        <th class="sub_col" style="text-align:center;">Readline <br />(Trạng thái)</th>
+                                                        <th class="sub_col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tlbContent">
+
+                                                    @foreach (var item in Model.Data)
+                                                    {
+                                                        var backgroundState = @Html.OHStateBackgroundColorPatient(@item.State);
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                <a id="@item.Id.ToString()" data-type="text" data-pk="1" data-key="@item.Id"
+                                                                   data-placeholder="Bắt buộc"
+                                                                   data-title="Nhập giá trị độ ưu tiên bệnh nhân" class="editable editable-click settingvalue"
+                                                                   data-original-title="" title=""
+                                                                   style="background-color: rgba(0, 0, 0, 0);">@item.Sorting</a>
+                                                            </td>
+                                                            @*<td>
+                                                                    @item.PId
+                                                                </td>
+                                                                <td>
+                                                                    @item.HoTen
+                                                                </td>
+                                                                <td style="text-align:center;">
+                                                                    @item.Ages
+                                                                </td>
+                                                                <td>
+                                                                    @EnumExtension.GetDescription((SexEnum)@item.Sex)
+                                                                </td>*@
+                                                            <td>
+                                                                <ul class="guarantees">
+                                                                    <li style="padding-top:2px!important;">
+                                                                        <i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">PID</span>: <span class="badge">@item.PId</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">Patient Name (Tên bệnh nhân)</span>: <span class="badge badge-primary" style="font-weight:bold;">@item.HoTen</span>
+                                                                    </li>
+                                                                    <li><i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">Age (Tuổi)</span>: <span>@item.Ages</span></li>
+                                                                    <li><i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">Sex (Giới tính)</span>: <span>@EnumExtension.GetDescription((SexEnum)@item.Sex)</span></li>
+                                                                </ul>
+                                                            </td>
+                                                            <td>
+                                                                <ul class="guarantees">
+                                                                    <li style="padding-top:2px!important;">
+                                                                        <i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">Phòng mổ</span>: <span>@item.ORRoomName</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">Start time (Bắt đầu)</span>: <span>@((item.dtStart ?? DateTime.Now).ToString(StringHelper.DateTimeNoSecondFormat))</span>
+                                                                    </li>
+                                                                    <li><i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">End time (Kết thúc)</span>: <span>@((item.dtEnd ?? DateTime.Now).ToString(StringHelper.DateTimeNoSecondFormat))</span></li>
+                                                                    <li><i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">Người đăng ký</span>: (@item.ADCreatedBy) <span>@item.NameCreatedBy</span></li>
+                                                                </ul>
+                                                            </td>
+                                                            @*<td>
+                                                                @((item.dtStart ?? DateTime.Now).ToString(StringHelper.DateTimeNoSecondFormat))
+                                                            </td>
+                                                            <td>
+                                                                @((item.dtEnd ?? DateTime.Now).ToString(StringHelper.DateTimeNoSecondFormat))
+                                                            </td>*@
+                                                            <td class="text-center" style="background:@backgroundState!important">
+                                                                <div style="font-size: 9px;text-align:center;">@EnumExtension.GetDescription((OHPatientStateEnum)(item.State))</div>
+                                                            </td>
+
+                                                            <td class="text-center">
+                                                                <a href="@Url.Action("CUDPatientOH", "OR", new { Id = item.Id })"
+                                                                   title="Chỉnh sửa" tabindex="19" class="btn btn-primary">Edit (Chỉnh sửa)</a>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        @Helpers.Paging(Model.TotalRows, searchParam.p, true, searchParam.PageSize)
+                                    }
+                                    else
+                                    {
+                                        @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="popup_viewer" aria-hidden="true" data-backdrop="static" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" data-dismiss="modal">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title title-popup" style="cursor: pointer;"></h4>
+            </div>
+            <div class="modal-body">
+                <iframe src="" id="popupIframe" width="100%" frameborder="0" height="400" scrolling="yes"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+@section styles {
+    <style type="text/css">
+        .bootbox-body {
+            padding-top: 12px;
+        }
+
+            .bootbox-body div {
+                margin-bottom: 5px;
+            }
+    </style>
+}
+
+@section scripts {
+    @Scripts.Render("~/javas_searchfrm")
+    @Scripts.Render("~/javas_x_editable")
+
+    <script>
+        $(function () {
+             $("#siteId").select2({
+                allowClear: false
+            })
+            if (($('#from_date').length) && ($('#to_date').length)) {
+                $('#from_date').datepicker({
+                    todayHighlight: true,
+                    endDate: moment($('#to_date').val(), '@Extension.DateShortFormatJS.ToUpper()', true).toDate()
+                }).on('changeDate', function (e) {
+                    $('#to_date').datepicker('setStartDate', e.date);
+                    $('#hidden_from_date').val(moment($('#from_date').val(), '@Extension.DateShortFormatJS.ToUpper()', true).format('@Extension.DateSubmitFormatJS.ToUpper()'));
+                });
+                $('#to_date').datepicker({
+                    todayHighlight: true,
+                    startDate: moment($('#from_date').val(), '@Extension.DateShortFormatJS.ToUpper()', true).toDate(),
+                    //endDate: '+1d'
+                    /*endDate: (moment().toDate())*/
+                }).on('changeDate', function (e) {
+                    $('#from_date').datepicker('setEndDate', e.date)
+                    $('#hidden_to_date').val(moment($('#to_date').val(), '@Extension.DateShortFormatJS.ToUpper()', true).format('@Extension.DateSubmitFormatJS.ToUpper()'));
+                });
+
+                $('#from_date,#to_date').keypress(function (event) {
+                    event.preventDefault();
+                    return false;
+                });
+
+                $('#from_date,#to_date').bind("cut copy paste", function (e) {
+                    e.preventDefault();
+                    return false;
+                });
+            }
+
+            //Reset table width if < container width
+            if ($("#tbData").css("width") != undefined) {
+                var curWidth = $("#tbData").css("width").replace("px", "");
+                if ($("#tbData").parent().width() > parseInt(curWidth, 10)) {
+                    $("#tbData").css("width", $("#tbData").parent().width()).css("maxWidth", $("#tbData").parent().width());;
+
+                }
+            }
+
+            $('.settingvalue').editable({
+                validate: function (value) {
+                    if ($.trim(value) == '')
+                        return '@Html.Raw(LayoutResource.CMS_SettingList_Require)';
+                    else if(!$.isNumeric(value))
+                        return '@Html.Raw(LayoutResource.QueuePatient_SettingSortingIndex)';
+                    else if (confirm(layout_lang.CMS_SystemMngt_ConfirmChanging))
+                    {
+                        var result = UpdateSettingValue($(this).data("key"), $.trim(value.replace(",", "")));
+                        if (result != "") return result;
+                        $(this).parent().parent().find("td").last().html("<i>@Html.Raw(LayoutResource.CMS_SettingList_JustAminuteByYou)</i>");
+                        $('#searchform').submit();
+                    } else {
+                        return "@Html.Raw(LayoutResource.CMS_SettingList_CancelByYouInAminute)";
+                    }
+                    return "";
+                }
+            });
+            function UpdateSettingValue(key, settingValue) {
+                var url = "@Url.Action("UpdateSortting")";
+                var ret = "";
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: {
+                        Id: key,
+                        value: settingValue,
+                        "__RequestVerificationToken": $('[name=__RequestVerificationToken]').val()
+                    },
+                    dataType: 'json',
+                    async: false,
+                    cache: false,
+                    success: function (result) {
+                        if (result.status.toLowerCase() == "ok") {
+                            ret = "";
+                        }
+                        else if (result.status === 401) {
+                            window.location.href = result.redirect;
+                        }
+                        else {
+                            ret = result.message;
+                        }
+                    },
+                    error: function () { ret = msg_lang.CMS_GetRuntimeErrorMsg; }
+                });
+                return ret;
+            }
+
+        });
+    </script>
+
+}

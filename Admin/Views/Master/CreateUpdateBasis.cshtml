@@ -1,0 +1,451 @@
+﻿@*@model Admin.Models.Master.CreateUpdateBasisModel*@
+
+@using Admin.Models.Master
+@model CreateUpdateBasisModel
+@{
+    string errorMessage = ViewBag.ErrorMessage as string;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@*<script src="~/Scripts/jquery-1.8.3.min.js"></script>*@
+
+<div class="modal_booking modal_booking_iframe">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h2 class="modal-title title-popup">
+            @if (Model == null || (Model != null && Model.BasisId == 0))
+            {
+                @(LayoutResource.Basis_PopupCreate_Title)
+            }
+            else
+            {
+                @(LayoutResource.Basis_PopupUpdate_Title)
+            }
+        </h2>
+        <p class="place"></p>
+
+    </div>
+    <div class="modal-body">
+        <div class="body_booking">
+
+            @if (string.IsNullOrEmpty(errorMessage) == false)
+            {
+                @Html.Partial("_ErrorOccur", errorMessage)
+            }
+            else if (Model == null)
+            {
+                @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+            }
+            else
+            {
+                using (Ajax.BeginForm("CreateUpdateBasis", "Master", new AjaxOptions { HttpMethod = "Post", OnSuccess = "SaveResult" }, new { onsubmit = "removeDisabled();$('#err_msg').html('').hide();" }))
+                {
+                    <div class="row">
+                        @Html.Hidden("Id", Model.Id)
+                        @Html.Hidden("BasisId", Model.BasisId)
+                        @Html.AntiForgeryToken()
+                        <!-- col left -->
+                        <div class="col-xs-6">
+                            <div class="form-group ">
+                                <label class="col-md-4 control-label">Nhóm cơ sở </label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.BasisGroupId, new SelectList(Model.ListBasisGroup, "BasisGroupId", "BasisGroupName"), new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.BasisGroupId)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-md-4 control-label">Mã cơ sở (<span style="color: red;">*</span>)</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(model => model.BasisCode, new { @class = "form-control", @placeholder = "Mã cơ sở", uifocus = "focus" })
+                                    @Html.ValidationMessageFor(x => x.BasisCode)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-md-4 control-label">Tên cơ sở (<span style="color: red;">*</span>)</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.BasisName, new { @class = "form-control", @placeholder = "Tên cơ sở", uifocus = "focus" })
+                                    @Html.ValidationMessageFor(x => x.BasisName)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-md-4 control-label">PnL (<span style="color: red;">*</span>)</label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.PnLListId, new SelectList(Model.ListPnLList, "PnLListId", "PnLListName"), "---Select PnL---", new { @class = "form-control", id = "pnlDropDown", onchange = "getPnLCode()" })
+                                    @Html.ValidationMessageFor(x => x.PnLListId)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-md-4 control-label">PnL BU (<span style="color: red;">*</span>)</label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.PnLBUListId, new SelectList(Model.ListPnLBuList, "PnLBuListId", "Description"), "---Select PnL BU---", new { @class = "form-control", id = "pnlBuDropDown" })
+                                    @Html.ValidationMessageFor(x => x.PnLBUListId)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-md-4 control-label">Description</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.Description, new { @class = "form-control", @placeholder = "Description", uifocus = "focus" })
+                                    @Html.ValidationMessageFor(x => x.Description)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-md-4 control-label">City (<span style="color: red;">*</span>)</label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.CityId, new SelectList(Model.ListCity, "AdministrativeUnitsId", "AdministrativeUnitsVN"), "---Select City---", new { @class = "form-control", id = "cityDropDown", onchange = "getDistrict()" })
+                                    @Html.ValidationMessageFor(x => x.CityId)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-md-4 control-label">District (<span style="color: red;">*</span>)</label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.DistrictId, new SelectList(Model.ListDistrict, "AdministrativeUnitsId", "AdministrativeUnitsVN"), "---Select District---", new { @class = "form-control", id = "districtDropDown", onchange = "getWardByDistrict()" })
+                                    @Html.ValidationMessageFor(x => x.PnLListId)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-md-4 control-label">Ward (<span style="color: red;">*</span>)</label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.WardId, new SelectList(Model.ListWard, "AdministrativeUnitsId", "AdministrativeUnitsVN"), "---Select Ward---", new { @class = "form-control", id = "wardDropDown" })
+                                    @Html.ValidationMessageFor(x => x.WardId)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-md-4 control-label">RefCode</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.RefCode, new { @class = "form-control", @placeholder = "RefCode", uifocus = "focus" })
+                                    @Html.ValidationMessageFor(x => x.RefCode)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-md-4 control-label">Status </label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.StatusId, new SelectList(Model.ListBasisStatus, "BasisStatusId", "BasisStatusName"), new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.StatusId)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-md-4 control-label">FullName</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.FullName, new {@class = "form-control", @placeholder = "FullName", uifocus = "focus"})
+                                    @Html.ValidationMessageFor(x => x.FullName)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">OpeningDate</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(model => model.OpeningDate, new {@id = "birth_date", @class = "form-control", @DateFormatHandling = "@Extension.DateShortFormatJS", @autocomplete = true, @placeholder = "OpeningDate"})
+                                </div>
+                            </div>
+                        </div>
+                        <!-- col left -->
+                        <!-- col right-->
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Manager</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(model => model.Manager, new { @class = "form-control", @placeholder = "Manager", uifocus = "focus" })
+                                    @Html.ValidationMessageFor(x => x.Manager)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Manager Phone</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(model => model.ManagerPhone, new { @class = "form-control", @placeholder = "Manager Phone", uifocus = "focus" })
+                                    @Html.ValidationMessageFor(x => x.ManagerPhone)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Site Phone</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(model => model.SitePhone, new { @class = "form-control", @placeholder = "Site Phone", uifocus = "focus" })
+                                    @Html.ValidationMessageFor(x => x.SitePhone)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Site Email</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(model => model.SiteEmail, new { @class = "form-control", @placeholder = "Site Email", uifocus = "focus" })
+                                    @Html.ValidationMessageFor(x => x.SiteEmail)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Area Manager</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(model => model.AreaManager, new { @class = "form-control", @placeholder = "Area Manager", uifocus = "focus" })
+                                    @Html.ValidationMessageFor(x => x.AreaManager)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Area Manager Phone</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(model => model.AreaManagerPhone, new { @class = "form-control", @placeholder = "Area Manager Phone", uifocus = "focus" })
+                                    @Html.ValidationMessageFor(x => x.AreaManagerPhone)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Area Manager Email</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(model => model.AreaManagerEmail, new { @class = "form-control", @placeholder = "Area Manager Email", uifocus = "focus" })
+                                    @Html.ValidationMessageFor(x => x.AreaManagerEmail)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-md-4 control-label">Staff </label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.StaffId, new SelectList(Model.ListStaff, "StaffListId", "FullName"), "---Select Staff---", new { @class = "form-control", id = "staffDropDown" })
+                                    @Html.ValidationMessageFor(x => x.StaffId)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-md-4 control-label">Unit Code </label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.DepartmentId, new SelectList(Model.ListDepartment, "LocationId", "NameVN"), "---Select Unit Code---", new { @class = "form-control", id = "unitDropDown", onchange = "getCentreCode()" })
+                                    @Html.ValidationMessageFor(x => x.DepartmentId)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-md-4 control-label">Centre Code (<span style="color: red;">*</span>)</label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.DepartmentId, new SelectList(Model.ListDepartmentView, "LocationId", "NameVN"), "---Select Centre Code---", new { @class = "form-control", id = "centreDropDown", onchange = "getDepartmentCode()" })
+                                    @Html.ValidationMessageFor(x => x.DepartmentId)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-md-4 control-label">Department Code (<span style="color: red;">*</span>)</label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.DepartmentId, new SelectList(Model.ListDepartmentView, "LocationId", "NameVN"), "---Select Department Code---", new { @class = "form-control", id = "departmentDropDown", onchange = "getGroupCode()" })
+                                    @Html.ValidationMessageFor(x => x.DepartmentId)
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-md-4 control-label">Group Code (<span style="color: red;">*</span>)</label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.DepartmentId, new SelectList(Model.ListDepartmentView, "LocationId", "NameVN"), "---Select Group Code---", new { @class = "form-control", id = "groupDropDown" })
+                                    @Html.ValidationMessageFor(x => x.DepartmentId)
+                                </div>
+                            </div>
+                        </div>
+                        <!-- col right-->
+                        <div class="col-xs-12">
+                            <div class="form-group ">
+                                <label class="col-md-4 control-label">Address</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.Address, new {@class = "form-control", @placeholder = "Address", uifocus = "focus"})
+                                    @Html.ValidationMessageFor(x => x.Address)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group ">
+                                <label class="col-md-4 control-label">StatusDescription</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.StatusDescription, new { @class = "form-control", @placeholder = "StatusDescription", uifocus = "focus" })
+                                    @Html.ValidationMessageFor(x => x.StatusDescription)
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group relative not_input_error not_input_error_popup" style="top: 0;">
+                            <span id="err_msg" class="field-validation-error" style="display:none"></span>
+                        </div>
+                    </div>
+                    <div class="btn-wrapper text-right">
+                        <button class="btn btn-accept" tabindex="8" type="submit"><i class="fa fa-save"></i>&nbsp;@LayoutResource.Shared_BtnText_Save</button>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@section styles{
+    <style>
+        .select2-results .select2-disabled {
+            display: none;
+        }
+    </style>
+}
+@section scripts{
+    @if (ViewBag.IsSuccess != null && (bool)ViewBag.IsSuccess)
+    {
+        TempData[AdminGlobal.ActionMessage] = ViewBag.ActionMessage;
+
+        <script type="text/javascript">
+            parent.window.location.reload();
+        </script>
+    }
+
+    <script>
+        function removeDisabled() {
+            $("#BasisId,#BasisCode,#BasisName,#General,#Email,#PhoneNo").removeAttr("disabled");
+            $("#err_msg").html("").hide();
+        }
+
+        $('#birth_date').datepicker('setStartDate', new Date(1990, 1, 1));
+        $('#birth_date').datepicker('setEndDate', new Date(3000, 12, 31));
+
+        $('#join_company_date').datepicker('setStartDate', new Date(1990, 1, 1));
+        $('#join_company_date').datepicker('setEndDate', new Date(3000, 12, 31));
+
+        function SaveResult(data){
+            if(!data.Id){
+                $("#err_msg").html(msg_lang.Shared_SystemErrorMessage).show();
+                HideOverlay(0);
+            }
+            else if(data.Id==@((int)ResponseCode.StaffList_SuccessUpdate) || data.Id == @((int)ResponseCode.StaffList_SuccessCreate)){
+                parent.window.location.reload();
+            }
+            else if (data.status === 401) {
+                window.location.href = data.redirect;
+            }
+            else
+            {
+                $("#err_msg").html(data.Message).show();
+                HideOverlay(0);
+            }
+        }
+        //PnL
+        function getPnLCode() {
+            var stateId = $("#pnlDropDown").val();
+            $.ajax({
+                url: '/Master/GetPnLBuByPnL',
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: JSON.stringify({ stateId: +stateId }),
+                success: function (result) {
+                    if (result.status === 401) {
+                        window.location.href = result.redirect;
+                    }
+                    $("#pnlBuDropDown").html("");
+                    $("#pnlBuDropDown").append
+                        ($('<option></option>').val(null).html("---Select PnL BU---"));
+                    $.each($.parseJSON(result), function (i, PnLBuListContract)
+                        { $("#pnlBuDropDown").append($('<option></option>').val(PnLBuListContract.PnLBuListId).html(PnLBuListContract.Description)) })
+                },
+                error: function () { alert("Error..") }
+            });
+        }
+
+        //Load Centre Code theo Unit Code
+        function getCentreCode() {
+            var stateId = $("#unitDropDown").val();
+            $.ajax({
+                url: '/Master/GetCityList',
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: JSON.stringify({ stateId: +stateId }),
+                success: function (result) {
+                    if (result.status === 401) {
+                        window.location.href = result.redirect;
+                    }
+                    $("#centreDropDown").html("");
+                    $("#centreDropDown").append
+                        ($('<option></option>').val(null).html("---Select Centre Code---"));
+                    $.each($.parseJSON(result), function (i, LocationContract)
+                    { $("#centreDropDown").append($('<option></option>').val(LocationContract.LocationId).html(LocationContract.NameVN)) })
+                },
+                error: function () { alert("Error..") }
+            });
+        }
+        //Load Department Code theo Centre Code
+        function getDepartmentCode() {
+            var stateId = $("#centreDropDown").val();
+            $.ajax({
+                url: '/Master/GetCityList',
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: JSON.stringify({ stateId: +stateId }),
+                success: function (result) {
+                    if (result.status === 401) {
+                        window.location.href = result.redirect;
+                    }
+                    $("#departmentDropDown").html("");
+                    $("#departmentDropDown").append
+                        ($('<option></option>').val(null).html("---Select Department Code---"));
+                    $.each($.parseJSON(result), function (i, LocationContract)
+                    { $("#departmentDropDown").append($('<option></option>').val(LocationContract.LocationId).html(LocationContract.NameVN)) })
+                },
+                error: function () { alert("Error..") }
+            });
+        }
+        //Load Group Code theo Department Code
+        function getGroupCode() {
+            var stateId = $("#departmentDropDown").val();
+            $.ajax({
+                url: '/Master/GetCityList',
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: JSON.stringify({ stateId: +stateId }),
+                success: function (result) {
+                    if (result.status === 401) {
+                        window.location.href = result.redirect;
+                    }
+                    $("#groupDropDown").html("");
+                    $("#groupDropDown").append
+                        ($('<option></option>').val(null).html("---Select Group Code---"));
+                    $.each($.parseJSON(result), function (i, LocationContract)
+                    { $("#groupDropDown").append($('<option></option>').val(LocationContract.LocationId).html(LocationContract.NameVN)) })
+                },
+                error: function () { alert("Error..") }
+            });
+        }
+        //Load District theo City
+        function getDistrict() {
+            var stateId = $("#cityDropDown").val();
+            $.ajax({
+                url: '/Master/GetDvhcBy',
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: JSON.stringify({ stateId: stateId }),
+                success: function (result) {
+                    if (result.status === 401) {
+                        window.location.href = result.redirect;
+                    }
+                    $("#districtDropDown").html("");
+                    console.log('');
+                    $("#districtDropDown").append
+                        ($('<option></option>').val(null).html("---Select District---"));
+                    $.each($.parseJSON(result), function (i, DvhcContract)
+                    { $("#districtDropDown").append($('<option></option>').val(DvhcContract.AdministrativeUnitsId).html(DvhcContract.AdministrativeUnitsVN)) })
+                },
+                error: function () { alert("Error..") }
+            });
+        }
+        //Load Ward theo District
+        function getWardByDistrict() {
+            var stateId = $("#districtDropDown").val();
+            $.ajax({
+                url: '/Master/GetDvhcBy',
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: JSON.stringify({ stateId: stateId }),
+                success: function (result) {
+                    if (result.status === 401) {
+                        window.location.href = result.redirect;
+                    }
+                    $("#wardDropDown").html("");
+                    console.log('');
+                    $("#wardDropDown").append
+                        ($('<option></option>').val(null).html("---Select Ward---"));
+                    $.each($.parseJSON(result), function (i, DvhcContract)
+                    { $("#wardDropDown").append($('<option></option>').val(DvhcContract.AdministrativeUnitsId).html(DvhcContract.AdministrativeUnitsVN)) })
+                },
+                error: function () { alert("Error..") }
+            });
+        }
+
+        $(function () {
+            $("#StaffListCode").focus();
+        });
+    </script>
+}

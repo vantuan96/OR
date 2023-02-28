@@ -1,0 +1,31 @@
+﻿
+
+<div class="modal fade modal_booking" id="notice_delete_surgery" aria-hidden="true" data-backdrop="static" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h2 class="modal-title title-popup">@LayoutResource.OR_DeleteSurgery</h2>
+                <br />
+            </div>
+            <div class="modal-body">
+                <div class="body_booking">
+                    <div class="dis_tbl">
+                        <p class="dis_tbl_r" style="margin-top: 10px;">
+                            <strong class="dis_tbl_c text-left">Mã bệnh nhân:</strong>&nbsp;
+                            <span class="dis_tbl_c"><span class="user_code"></span></span>
+                        </p>
+                        <p class="dis_tbl_r" style="margin-top: 10px;">
+                            <strong class="dis_tbl_c text-left">Tên dịch vụ:</strong>&nbsp;
+                            <span class="dis_tbl_c service_name"></span>
+                        </p>
+                    </div>
+                    <p class="desc null">@Html.Raw(LayoutResource.OR_PopupDeleteSurgery_Description)</p>
+                    <div class="btn-wrapper text-right">
+                        <button class="btn btn-danger btn-submit" type="submit" tabindex="7"><i class="fa fa fa-trash-o"></i>&nbsp;@LayoutResource.Shared_BtnText_Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

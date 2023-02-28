@@ -1,0 +1,490 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9CD92667-8EDB-4B23-93B6-AA30E8795C82}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataAccess</RootNamespace>
+    <AssemblyName>DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ObjectBuilder, Version=1.0.51206.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Practices.ObjectBuilder.dll.3.1.0\lib\2.0\Microsoft.Practices.ObjectBuilder.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Common, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.Common.4.3.0\lib\net451\System.Data.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Data.SqlClient, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SqlClient.4.4.0\lib\net451\System.Data.SqlClient.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseDataAccess.cs" />
+    <Compile Include="DAO\AdminGroupActionDataAccess.cs" />
+    <Compile Include="DAO\AdminActionDataAccess.cs" />
+    <Compile Include="DAO\CheckListDataAccess.cs" />
+    <Compile Include="DAO\AdminRoleDataAccess.cs" />
+    <Compile Include="DAO\AdminUsersDataAccess.cs" />
+    <Compile Include="DAO\LocationDataAccess.cs" />
+    <Compile Include="DAO\LogDataAccess.cs" />
+    <Compile Include="DAO\LogObjectDataAccess.cs" />
+    <Compile Include="DAO\MasterDataAccess.cs" />
+    <Compile Include="DAO\MicrositeDataAccess.cs" />
+    <Compile Include="DAO\OperationCheckListAccess.cs" />
+    <Compile Include="DAO\ORDataAccess_Backup.cs" />
+    <Compile Include="DAO\ORDataAccess.cs" />
+    <Compile Include="DAO\ORProAccess.cs" />
+    <Compile Include="DAO\QueuePatientDataAccess.cs" />
+    <Compile Include="DAO\ReportDataAccess.cs" />
+    <Compile Include="DAO\SystemDataAccess.cs" />
+    <Compile Include="DAO\SystemSettingDataAccess.cs" />
+    <Compile Include="Models\AdminAction.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdminController.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdminDepartment.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdminGroupAction.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdminGroupAction_Map.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdministrativePrefix.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdministrativeUnit.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdminRole.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdminRole_GroupAction.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdminUser.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdminUserTracking.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdminUser_Action_Default.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdminUser_Action_Deny.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdminUser_Location.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdminUser_LoginHistory.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdminUser_Microsite.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdminUser_PlusAction.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdminUser_PnL.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdminUser_PnL_DepartmentSite.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdminUser_PnL_Site.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdminUser_Role.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdminUser_System.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\APIClient_Get_Endo_ListPatient_Result.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\APIClient_Get_ThongTinPhongBan_V01_Result.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AppList.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Basis.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BasisGroup.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BasisStaff_Map.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BasisStatu.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BigSiteList.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BlockTime.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CateSystem.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CheckList.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CheckListDetail.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CheckListItem.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CheckListItemMap.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CheckListMap.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CheckListOperation.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CheckListOperationLog.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CheckListOperationMapping.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CheckListStatu.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CheckListSystem.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CheckListType.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Core_CheckExistORRegistor_Result.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Core_CheckExistPositionByScheduler_Result.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Department.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DepartmentGeneral.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DepartmentList.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DepartmentStatu.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DepartmentTitle.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DepartmentType.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Device.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Employee.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FindMyData_String_Result.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Get_EKip_OR_SP_Result.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HospitalSite.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HpService.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Level.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Location.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LogObject.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Microsite.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ORAnesthProgress.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ORMappingEkip.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ORMappingService.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OROperationLink.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ORPositionType.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ORRoom.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ORTracking.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ORUserInfo.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ORUserInfor_Position.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OR_Get_AnesthProgress_PublicInfo_Result.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OR_Get_AnesthProgress_Result.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OR_Get_AnesthProgress_test_Result.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OR_Get_HpService_GetInfo_Result.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Patient.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PatientState.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PersonnelEvaluation.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PnLBuAttribute.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PnLBuAttributeGroup.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PnLBUList.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PnLList.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PnLListStatu.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Region.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReportPatient.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RoomHospital.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ServiceGroup.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SiteList.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SiteOpeningList.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StaffList.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SubCateSystem.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SystemCheckList.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SystemDataChangeLog.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SystemDataChangeLogDetail.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SystemRuntimeLog.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SystemSetting.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblLichHen_Temp.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VG_WebPortal.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VG_WebPortal.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VG_WebPortal.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VG_WebPortal.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VG_WebPortal.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_PlanORRoom.cs">
+      <DependentUpon>VG_WebPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Shared\BaseExec.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Contract\Contract.csproj">
+      <Project>{f2461f40-6668-44cc-83e6-ac4fc9917620}</Project>
+      <Name>Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VG.Common\VG.Common.csproj">
+      <Project>{72D742F9-803C-4DC8-9C2B-A83B38DA0982}</Project>
+      <Name>VG.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VG.EncryptLib\VG.EncryptLib.csproj">
+      <Project>{19CB0C08-C603-4BE6-AA7A-58F6355894E3}</Project>
+      <Name>VG.EncryptLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VG.General.ExceptionHandling\VG.General.ExceptionHandling.csproj">
+      <Project>{F67F8B2A-444D-4289-AEE7-6E9A3FF78B12}</Project>
+      <Name>VG.General.ExceptionHandling</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Models\VG_WebPortal.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>VG_WebPortal.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Models\VG_WebPortal.edmx.diagram">
+      <DependentUpon>VG_WebPortal.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Functions\SplitListToInt.sql" />
+    <Content Include="Models\VG_WebPortal.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>VG_WebPortal.edmx</DependentUpon>
+      <LastGenOutput>VG_WebPortal.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\VG_WebPortal.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>VG_WebPortal.edmx</DependentUpon>
+      <LastGenOutput>VG_WebPortal.cs</LastGenOutput>
+    </Content>
+    <Content Include="Sql\Microsite_CloneContent.sql" />
+    <Content Include="Sql\UpgradeSystem_V1.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="StoredProcedures\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

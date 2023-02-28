@@ -1,0 +1,197 @@
+﻿@model ViewLogClientVM
+@using Contract.SystemLog;
+
+@{
+    ViewBag.Title = "Quản lý log file";
+
+}
+
+
+@section styles{
+    <style type="text/css">
+        .cat-icon {
+            padding: 4px 3px;
+            cursor: pointer;
+        }
+
+        .item_event {
+            width: 30px;
+            display: block;
+            font-size: 14px;
+            color: white;
+            text-align: center;
+        }
+
+        .div_tag_bg {
+            position: relative;
+        }
+
+            .div_tag_bg .bg_div {
+                position: fixed;
+                right: 10px;
+                bottom: 10px;
+                opacity: 0.1;
+                font-size: 160px !important;
+            }
+    </style>
+}
+
+<div class="div_tag_bg">
+    <i class="fa fa-bug bg_div"></i>
+    <div id="main_wrapper">
+        <div class="page_bar clearfix">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h1 class="page_title">@ViewBag.Title</h1>
+                    <p class="text-muted">Quản lý lỗi hệ thống</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="page_content">
+            <div class="container-fluid chat_app">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default box_shadow">
+                            <div class="">
+                                @*<ul class="nav nav-tabs" id="tabs_a">
+                                    @if (Model.LogLocation == FileLogLocation.Presentation)
+                                    {
+                                        <li class="active"><a href="javascript:void(0);">Log tầng Presentation</a></li>
+                                        <li><a class="linkURL" href="@Url.Action("ViewLogClient", new { logLocation = FileLogLocation.ApiListenser })">Log tầng Api Listener</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a class="linkURL" href="@Url.Action("ViewLogClient", new { logLocation = FileLogLocation.Presentation })">Log tầng Presentation</a></li>
+                                        <li class="active"><a href="javascript:void(0);">Log tầng Api Listener</a></li>
+                                    }
+                                </ul>*@
+                                <div class="tab-content">
+                                    <div class="tab-pane fade active in">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <!-- column right -->
+                                                <div class="panel-body">
+                                                    <form id="frmActionLog" method="get" action="@Url.Action("ViewLogClient")">
+                                                        <input type="hidden" name="isDelete" value="0" />
+                                                        <input type="hidden" name="logLocation" value="@Model.LogLocation" />
+                                                        <input type="hidden" name="folderName" value="" />
+                                                        <input type="hidden" name="fileName" value="" />
+                                                    </form>
+                                                    <div class="row" style="margin-top: 20px;">
+                                                        @if (Model.LogFiles.IsNotNullAndNotEmpty() && Model.LogFiles.Count > 0)
+                                                        {
+                                                            <table id="table_question" class="table table-bordered">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="sub_col">Tên file</th>
+                                                                        <th class="sub_col" style="min-width:90px;"></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var item in Model.LogFiles)
+                                                                    {
+                                                                        string[] param = item.Replace('\\', '/').Split('/');
+                                                                        string filename = param.Last().Split('.')[0];
+                                                                        string foldername = param[param.Length - 2];
+
+                                                                        <tr style="@(filename == Model.FileName ? "background-color:cornsilk;" : "")">
+                                                                            <td>@filename</td>
+                                                                            <td class="text-center">
+                                                                                <a class="btn btn-accept Tip_mouse_on linkURL" title="Xem chi tiết"
+                                                                                   @(filename == Model.FileName ? "disabled" : "")
+                                                                                   href="@Url.Action("ViewLogClient", new { logLocation = Model.LogLocation, p = Model.PageNumber, folderName = foldername, fileName = filename })">
+                                                                                    <i class="fa fa-file-text-o fa-fw"></i>
+                                                                                </a>
+                                                                                <a class="btn btn-danger Tip_mouse_on btnDeleteLogFile" title="Xóa"
+                                                                                   data-filename="@filename" data-foldername="@foldername">
+                                                                                    <i class="fa fa-trash-o fa-fw"></i>
+                                                                                </a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.Partial("_ErrorOccur", "Không tìm thấy dữ liệu")
+                                                        }
+                                                    </div>
+                                                    @if (Model.TotalCount > 0)
+                                                    {
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="panel panel-default box_shadow">
+                                                                    <div class="dataTables_wrapper">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                @Helpers.Paging(Model.TotalCount, Model.PageNumber, true, Model.PageCount)
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <!-- column left -->
+                                                <div class="panel-body">
+                                                    <div class="row" style="margin-top: 0px;">
+                                                        <div class="col-md-4">
+                                                            <label>File</label>
+                                                            <input class="form-control" disabled value="@Model.FileName">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            @if (Model.ContentNodes != null)
+                                                            {
+                                                                @*@Html.Raw(Model.ContentNodes)*@
+                                                                <span>@Model.ContentNodes</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        var _alertData = @(Html.ToJson((CUDReturnMessage)TempData["AdminErrorLog_Alert"]));
+        
+        $(function () {
+            $('.btnDeleteLogFile').click(function (e) {
+                var filename = $(this).data('filename');
+                var foldername = $(this).data('foldername');
+
+                bootbox.confirm('Bạn có muốn xóa file: ' + foldername + '\\' + filename + '.log', function (result) {
+                    if (result) {
+
+                        $('#frmActionLog [name=fileName]').val(filename);
+                        $('#frmActionLog [name=folderName]').val(foldername);
+                        $('#frmActionLog [name=isDelete]').val(1);
+                        $('#frmActionLog').submit();
+                    }
+                });
+            });
+        });
+    </script>
+
+}

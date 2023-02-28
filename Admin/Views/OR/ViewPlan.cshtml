@@ -1,0 +1,205 @@
+﻿@{
+    Layout = null;
+}
+<link href="~/Assets/calendar/fullcalendar.min.css" rel="stylesheet">
+<link href="~/Assets/calendar/fullcalendar.print.min.css" rel="stylesheet" media="print">
+<link href="~/Assets/calendar/scheduler.min.css" rel="stylesheet">
+
+@section styles{
+
+    <style>
+        body {
+            font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+            font-size: 14px;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        #calendar {
+            max-width: 95%;
+            margin-top: 10px;
+            margin-right: 1%;
+            margin-bottom: 50px;
+            margin-left: 5%;
+            height: 100px;
+        }
+
+        .fc-resource-area td {
+            cursor: pointer;
+        }
+    </style>
+}
+<style>
+    #messageWarning {
+        margin-bottom:10px;
+    }
+    .success {
+        color: #64b92a;
+    }
+
+    .warning {
+        color: red;
+    }
+    .fc-time-area .fc-event-container {
+        top: 10px !important;
+    }
+</style>
+<body style="height:200px">
+    @Html.AntiForgeryToken()
+    <div id="messageWarning" style="width:100%;text-align:center;display:none;"></div>
+    <div id="calendar" class="float-center"></div>
+</body>
+
+<script src="~/Assets/js/jquery.min.js"></script>
+<script src="~/Assets/js/jquery-ui.js"></script>
+@*<script src="~/Assets/calendar/jquery.min.js"></script>*@
+<script src="~/Assets/calendar/moment.min.js"></script>
+<script src="~/Assets/calendar/fullcalendar.min.js"></script>
+<script src="~/Assets/calendar/scheduler.min.js"></script>
+<script>
+    var checklogin_url = '@Url.Action("CheckLogin", "Authen")';
+        @if (ViewBag.listRoom != null)
+        {
+            <text>var listRoom =@Html.Raw(@ViewBag.listRoom)</text>
+        }
+        else
+        {
+            <text>var listRoom =[];</text>
+        }
+        @if (ViewBag.listData != null)
+        {
+            <text>var listData =@Html.Raw(@ViewBag.listData)</text>
+        }else
+        {
+            <text>   var listData =[];</text>
+        }
+        $(function () {
+            getall(listRoom, listData);
+            setInterval(function () { getall(listRoom, listData); }, 30000);
+        });
+    function getall(listRoom, listData) {
+        checkIsLoginInsideIframe();
+        listRoom = listRoom.filter((item) => item.id !== 8); //tạm thời thêm để loại bỏ phòng mổ của HDN
+        var d = new Date();
+        var n = d.toDateString();
+        //console.log(listData);
+        if (listData.ID == "-1") {
+            $("#calendar").css("color", "red");
+            $("#calendar").css("text-align", "center");
+            $("#calendar").html(listData.Message);
+            return false;
+        }
+        $('#calendar').fullCalendar({
+            height:300,
+            schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+            eventMouseover: function (calEvent, jsEvent) {
+                var tooltip = '<div class="tooltipevent" style="width:auto;height:auto;background:#fff;position:absolute;z-index:10001;">'+calEvent.id +' ' + calEvent.title + '</br>' +calEvent.infopatient +  '</div>';
+                $("body").append(tooltip);
+                $(this).mouseover(function (e) {
+                    $(this).css('z-index', 10000);
+                    $('.tooltipevent').fadeIn('500');
+                    $('.tooltipevent').fadeTo('10', 1.9);
+                }).mousemove(function (e) {
+                    $('.tooltipevent').css('top', e.pageY + 10);
+                    $('.tooltipevent').css('left', e.pageX + 20);
+                });
+            },
+            eventClick: function(info) {
+                if (info.url) {
+                    window.parent.location.href=info.url;
+                }
+
+            },
+            eventMouseout: function (calEvent, jsEvent) {
+                $(this).css('z-index', 8);
+                $('.tooltipevent').remove();
+            },
+            eventRender: function (event, element) {
+                if (element.hasClass('fc-clear')) {
+                    element.append("<span data-event='delete-surgery' class='removebtn' style='color:#fff;position: absolute;top: -9px;right: -9px;width:15px;height: 15px;text-align:center;border-radius:50%;font-size: 10px;cursor: pointer;background-color: #e31837;z-index:10005;'>X</span>");
+       		        element.find(".removebtn").on('click', function() {
+                        var confirmDelete = confirm('Bạn có chắc chắn muốn xóa bản ghi này?');
+                        if (confirmDelete == true) {
+                            var url = "/OR/DeleteSurgery";
+                            var token = $('[name=__RequestVerificationToken]').val();
+                            console.log(token);
+                            $.ajax({
+                                url: url,
+                                type: 'POST',
+                                data: {
+                                    __RequestVerificationToken: token,
+                                    Id: event.id,
+                                    Type: 1
+                                },
+                                contentType: 'application/x-www-form-urlencoded'
+                            }).done(function (data) {
+                                if (data.status === 401) {
+                                    window.location.href = data.redirect;
+                                }
+                                console.log(data);
+                                if (data.ID > 0) {
+                                    $("#messageWarning").show();
+                                    $("#messageWarning").removeAttr('class');
+                                    $("#messageWarning").addClass("success");
+                                    $("#messageWarning").html(data.Message);
+                                    $('#calendar').fullCalendar('removeEvents', event._id);
+                                }
+                                else {
+                                    $("#messageWarning").show();
+                                    $("#messageWarning").addClass("warning");
+                                    $("#messageWarning").html(data.Message);
+                                }
+                                setTimeout(function () {
+                                    $("#messageWarning").hide();
+                                }, 3500);
+                            }).error(function () {
+                                console.log("Failed")
+                            });
+
+                        }
+        		    });
+                }
+            },
+            timezone: 'asia/ho_chi_minh',
+            navLinks: true,
+            header: {
+                left: 'today prev,next',
+                center: 'title',
+                right: 'timelineDay,timelineThreeDays,agendaWeek,month'
+            },
+            defaultView: 'timelineDay',
+            views: {
+                timelineThreeDays: {
+                    type: 'timeline',
+                    duration: { days: 3 },
+                    groupByResource: true
+                }
+            },
+            minTime: '00:00:00',
+            maxTime: '23:59:59',
+            slotDuration: '00:30:00',
+            slotLabelFormat: 'HH(:mm)',
+            resources:listRoom,
+            events: listData
+        });
+
+    }
+    function checkIsLoginInsideIframe() {
+        var returnValue = false;
+            window.parent.commonUtils.postAjaxWithTokenWaitResponse(checklogin_url, null, function (ret) {
+            //console.log(ret);
+            if (ret.IsSuccess == 1) {
+                //Login
+                returnValue = true;
+            }
+            else {
+                //Logout. Redirect logout
+                window.parent.location.replace(ret.Message + "?refurl=" + window.parent.location.href);
+                //window.location.replace(ret.Message + "?refurl=" + window.location.href);
+            }
+        });
+        return returnValue;
+    };
+</script>

@@ -1,0 +1,1002 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Authen_LogoutProcess" xml:space="preserve">
+    <value>Đăng xuất</value>
+  </data>
+  <data name="ChangePassword_PasswordNotChanged" xml:space="preserve">
+    <value>Mật khẩu mới phải khác mật khẩu cũ</value>
+  </data>
+  <data name="ChangePassword_Successed" xml:space="preserve">
+    <value>Thay đổi mật khẩu thành công</value>
+  </data>
+  <data name="ChangePassword_WrongOldPassword" xml:space="preserve">
+    <value>Mật khẩu cũ không đúng</value>
+  </data>
+  <data name="CMS_GetRuntimeErrorMsg" xml:space="preserve">
+    <value>Xảy ra lỗi. Vui lòng thử lại.</value>
+  </data>
+  <data name="CMS_SystemError_Message" xml:space="preserve">
+    <value>Xảy ra lỗi. Vui lòng thử lại</value>
+  </data>
+  <data name="CMS_UpdateFailed" xml:space="preserve">
+    <value>Cập nhật thất bại.</value>
+  </data>
+  <data name="CMS_UpdateSuccessed" xml:space="preserve">
+    <value>Cập nhật thành công</value>
+  </data>
+  <data name="Shared_BackToHome" xml:space="preserve">
+    <value>Quay về trang chủ</value>
+  </data>
+  <data name="Shared_BrowserDoNotSupported" xml:space="preserve">
+    <value>Trình duyệt không được hỗ trợ</value>
+  </data>
+  <data name="Shared_DownloadPrefix" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="Shared_ReLogin" xml:space="preserve">
+    <value>Đăng nhập lại</value>
+  </data>
+  <data name="Shared_RequestEnableScript" xml:space="preserve">
+    <value>Javascript đang bị khóa, vui lòng cho phép sử dụng javascript</value>
+  </data>
+  <data name="Shared_SystemErrorMessage" xml:space="preserve">
+    <value>Xảy ra lỗi. Vui lòng thử lại. </value>
+  </data>
+  <data name="Shared_SystemErrorMessage_1001" xml:space="preserve">
+    <value>Không có quyền truy cập trang này. </value>
+  </data>
+  <data name="Shared_SystemErrorMessage_401" xml:space="preserve">
+    <value>Tài khoản {0} chưa được xác thực hoặc chưa được phân quyền vào hệ thống. </value>
+  </data>
+  <data name="Shared_SystemErrorMessage_403" xml:space="preserve">
+    <value>Tài khoản {0} không được cấp phép truy cập tính năng này. </value>
+  </data>
+  <data name="Shared_SystemErrorMessage_404" xml:space="preserve">
+    <value>Trang này không tồn tại. Vui lòng thử lại. </value>
+  </data>
+  <data name="Shared_SystemErrorMessage_500" xml:space="preserve">
+    <value>Yêu cầu của bạn tạm thời không thể xử lý được. Vui lòng thử lại sau. </value>
+  </data>
+  <data name="Shared_SystemErrorMessage_6001" xml:space="preserve">
+    <value>Không tải được dữ liệu từ...</value>
+  </data>
+  <data name="Shared_SystemErrorMessage_6002" xml:space="preserve">
+    <value>Không tải được dữ liệu từ...</value>
+  </data>
+  <data name="Shared_SystemErrorMessage_7001" xml:space="preserve">
+    <value>không tìm thấy trang default</value>
+  </data>
+  <data name="Shared_SystemErrorMessage_Default" xml:space="preserve">
+    <value>Không có quyền truy cập vào hệ thống. </value>
+  </data>
+  <data name="Shared_UpgradeIEVersion" xml:space="preserve">
+    <value>Nâng cấp internet explorer</value>
+  </data>
+  <data name="Login_Failed" xml:space="preserve">
+    <value>Thông tin đăng nhập không đúng</value>
+  </data>
+  <data name="Login_UserNotActived" xml:space="preserve">
+    <value>Tài khoản đang bị khóa</value>
+  </data>
+  <data name="UserMngt_HaveNoPermission" xml:space="preserve">
+    <value>Không có quyền tạo người dùng này</value>
+  </data>
+  <data name="UserMngt_EmailExisted" xml:space="preserve">
+    <value>Email đã tồn tại trong hệ thống</value>
+  </data>
+  <data name="UserMngt_SuccessCreated" xml:space="preserve">
+    <value>Tạo tài khoản người dùng thành công</value>
+  </data>
+  <data name="UserMngt_SuccessUpdated" xml:space="preserve">
+    <value>Cập nhật thông tin tài khoản thành công</value>
+  </data>
+  <data name="UserMngt_SuccessDelete" xml:space="preserve">
+    <value>Xóa tài khoản thành công</value>
+  </data>
+  <data name="UserMngt_SuccessLock" xml:space="preserve">
+    <value>Khóa tài khoản thành công</value>
+  </data>
+  <data name="UserMngt_SuccessResetPassword" xml:space="preserve">
+    <value>Đặt lại mật khẩu thành công</value>
+  </data>
+  <data name="UserMngt_SuccessUnLock" xml:space="preserve">
+    <value>Mở khóa tài khoản thành công</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_AMultipleOfTenADR" xml:space="preserve">
+    <value>{0} phải chia hết cho 10</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_Compare" xml:space="preserve">
+    <value>{0} này không khớp. Thử lại?</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_DateADR" xml:space="preserve">
+    <value>{0} không đúng định dạng dd/mm/yyyy</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_DateInFutureADR" xml:space="preserve">
+    <value>{0} phải lớn hơn thời điểm hiện tại</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_DenySomeCharacterADR" xml:space="preserve">
+    <value>{0} không được chứa các ký tự sau: {1}</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_EmailAddressADR" xml:space="preserve">
+    <value>{0} không đúng định dạng</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_EqualLengthADR" xml:space="preserve">
+    <value>{0} phải có độ dài {1} kí tự</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_FaxADR" xml:space="preserve">
+    <value>{0} không đúng định dạng</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_InternalServerError_500" xml:space="preserve">
+    <value>Có lỗi xảy ra ở server. Yêu cầu không thể thực hiện.</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_InvalidFormatString" xml:space="preserve">
+    <value>{0} không đúng định dạng</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_InvalidFormatStringGeneral" xml:space="preserve">
+    <value>Không đúng định dạng.</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_MaxLength" xml:space="preserve">
+    <value>{0} có độ dài tối đa {1} kí tự</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_MaxLengthADR" xml:space="preserve">
+    <value>{0} có độ dài tối đa {1} kí tự</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_MaxNumberADR" xml:space="preserve">
+    <value>{0} phải nhỏ hơn hoặc bằng {1}</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_MinLength" xml:space="preserve">
+    <value>{0} phải có độ dài tối thiểu {1} ký tự</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_MinLengthADR" xml:space="preserve">
+    <value>{0} phải có độ dài tối thiểu {1} kí tự</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_MinNumberADR" xml:space="preserve">
+    <value>{0} phải lớn hơn hoặc bằng {1}</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_MobileADR" xml:space="preserve">
+    <value>{0} không đúng định dạng</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_MustNumber" xml:space="preserve">
+    <value>{0} phải là số.</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_NoMarkADR" xml:space="preserve">
+    <value>{0} không đúng định dạng</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_NotHtmlChar" xml:space="preserve">
+    <value>{0} không chứa mã html.</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_NotSpecialChar" xml:space="preserve">
+    <value>{0} không chứa ký tự đặc biệt.</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_PasswordADR" xml:space="preserve">
+    <value>{0} phải có độ dài từ 12 đến 50 kí tự, bao gồm kí tự số và chữ</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_PasswordFullADR" xml:space="preserve">
+    <value>{0} phải có độ dài từ 12 đến 50 kí tự, bao gồm kí tự số, chữ và kí tự đặc biệt</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_PhoneNumberADR" xml:space="preserve">
+    <value>{0} không đúng định dạng</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_RangeNumberADR" xml:space="preserve">
+    <value>{0} phải có giá trị từ {1} đến {2}</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_Required" xml:space="preserve">
+    <value>{0} là thông tin bắt buộc</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_RequiredIfADR" xml:space="preserve">
+    <value>{0} là thông tin bắt buộc</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_StringLength" xml:space="preserve">
+    <value>{0} phải từ {2} đến {1} kí tự</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_StringLengthADR" xml:space="preserve">
+    <value>{0} phải từ {2} đến {1} kí tự</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_TaxCodeADR" xml:space="preserve">
+    <value>{0} không đúng định dạng</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_TelephoneADR" xml:space="preserve">
+    <value>{0} không đúng định dạng</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_ValueComparisonADR" xml:space="preserve">
+    <value>{0} phải {1} {2}</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_EmailAddress" xml:space="preserve">
+    <value>{0} không đúng định dạng</value>
+  </data>
+  <data name="Language_DuplicateKey" xml:space="preserve">
+    <value>Trùng tên hoặc tên ngắn ngọn.</value>
+  </data>
+  <data name="Shared_SaveSuccess" xml:space="preserve">
+    <value>Lưu thành công.</value>
+  </data>
+  <data name="ChangeMicrosite_Success" xml:space="preserve">
+    <value>Thay đổi microsite thành công</value>
+  </data>
+  <data name="Shared_SystemErrorMessage_7002" xml:space="preserve">
+    <value>Tài khoản của bạn chưa được phân quyền quản lý microsite. </value>
+  </data>
+  <data name="Tag_DuplicateKey" xml:space="preserve">
+    <value>Trùng tên tag</value>
+  </data>
+  <data name="MenuMngt_MenuDetail_DeleteMenuConfirmText" xml:space="preserve">
+    <value>Bạn có muốn xóa menu này?</value>
+  </data>
+  <data name="MenuMngt_MenuDetail_UpdateStatusConfirmText" xml:space="preserve">
+    <value>Bạn có muốn chuyển menu sang trạng thái này?</value>
+  </data>
+  <data name="MenuMngt_SuccessCreate" xml:space="preserve">
+    <value>Tạo menu thành công</value>
+  </data>
+  <data name="MenuMngt_SuccessDelete" xml:space="preserve">
+    <value>Xóa menu thành công</value>
+  </data>
+  <data name="MenuMngt_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật menu thành công</value>
+  </data>
+  <data name="MenuMngt_SuccessUpdateSort" xml:space="preserve">
+    <value>Cập nhật vị trí menu thành công</value>
+  </data>
+  <data name="MenuMngt_SuccessUpdateStatus" xml:space="preserve">
+    <value>Cập nhật trạng thái menu thành công</value>
+  </data>
+  <data name="BannerGroup_DuplicateKey" xml:space="preserve">
+    <value>Trùng tên nhóm banner</value>
+  </data>
+  <data name="BannerPosition_DuplicateKey" xml:space="preserve">
+    <value>Trùng tên vị trí banner</value>
+  </data>
+  <data name="MicrositeMngt_SuccessCreate" xml:space="preserve">
+    <value>Tạo Microsite thành công</value>
+  </data>
+  <data name="MicrositeMngt_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật thành công</value>
+  </data>
+  <data name="MicrositeMngt_ViewMicrositeDetail_UpdateStatusConfirmText" xml:space="preserve">
+    <value>Bạn muốn chuyển trạng thái Microsite ?</value>
+  </data>
+  <data name="Shared_ModelState_InValid" xml:space="preserve">
+    <value>Dữ liệu không hợp lệ</value>
+  </data>
+  <data name="AddressMngt_SuccessCreate" xml:space="preserve">
+    <value>Tạo địa chỉ thành công</value>
+  </data>
+  <data name="AddressMngt_SuccessDelete" xml:space="preserve">
+    <value>Xóa địa chỉ thành công</value>
+  </data>
+  <data name="AddressMngt_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật địa chỉ thành công</value>
+  </data>
+  <data name="AddressMngt_SuccessUpdateStatus" xml:space="preserve">
+    <value>Cập nhật trạng thái địa chỉ thành công</value>
+  </data>
+  <data name="Banner_DuplicateKey" xml:space="preserve">
+    <value>Trùng tên banner</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_InvalidLink" xml:space="preserve">
+    <value>{0} Không đúng định dạng link</value>
+  </data>
+  <data name="AddressMngt_DeleteConfirmText" xml:space="preserve">
+    <value>Bạn có chắc muốn xóa địa chỉ này không?</value>
+  </data>
+  <data name="GalleryMngt_SuccessCreate" xml:space="preserve">
+    <value>Tạo gallery thành công</value>
+  </data>
+  <data name="GalleryMngt_SuccessCreateImage" xml:space="preserve">
+    <value>Thêm ảnh thành công</value>
+  </data>
+  <data name="GalleryMngt_SuccessDelete" xml:space="preserve">
+    <value>Xóa gallery thành công</value>
+  </data>
+  <data name="GalleryMngt_SuccessDeleteImage" xml:space="preserve">
+    <value>Xóa ảnh thành công</value>
+  </data>
+  <data name="GalleryMngt_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật gallery thành công</value>
+  </data>
+  <data name="GalleryMngt_SuccessUpdateImage" xml:space="preserve">
+    <value>Cập nhật ảnh thành công</value>
+  </data>
+  <data name="GalleryMngt_SuccessUpdateStatus" xml:space="preserve">
+    <value>Cập nhật trạng thái gallery thành công</value>
+  </data>
+  <data name="ProductAttribute_DuplicateKey" xml:space="preserve">
+    <value>Trùng tên thuộc tính</value>
+  </data>
+  <data name="GalleryMngt_GalleryDetail_DeleteGalleryConfirmText" xml:space="preserve">
+    <value>Bạn có muốn xóa gallery này không?</value>
+  </data>
+  <data name="GalleryMngt_GalleryDetail_DeleteGalleryImageConfirmText" xml:space="preserve">
+    <value>Bạn có muốn xóa ảnh này ra khỏi gallery không?</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryDetail_UpdateStatusConfirmText" xml:space="preserve">
+    <value>Bạn muốn chuyển trạng thái danh mục bài viết?</value>
+  </data>
+  <data name="Product_ProductCategoryDetail_UpdateStatusConfirmText" xml:space="preserve">
+    <value>Bạn muốn chuyển trạng thái danh mục sản phẩm ?</value>
+  </data>
+  <data name="ArticleCategory_DuplicateKey" xml:space="preserve">
+    <value>Trùng tên danh mục</value>
+  </data>
+  <data name="ProductCategory_DuplicateKey" xml:space="preserve">
+    <value>Trùng tên danh mục</value>
+  </data>
+  <data name="ArticleCategory_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật thành công</value>
+  </data>
+  <data name="ProductCategory_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật thành công</value>
+  </data>
+  <data name="ProductMngt_SuccessCreate" xml:space="preserve">
+    <value>Thêm sản phẩm thành công</value>
+  </data>
+  <data name="ProductMngt_ProductDetail_DeleteProductConfirmText" xml:space="preserve">
+    <value>Bạn có muốn xóa sản phẩm này không?</value>
+  </data>
+  <data name="ProductMngt_SuccessDelete" xml:space="preserve">
+    <value>Xóa sản phẩm thành công</value>
+  </data>
+  <data name="ProductMngt_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật sản phẩm thành công</value>
+  </data>
+  <data name="Article_SuccessCreate" xml:space="preserve">
+    <value>Đã thêm thành công</value>
+  </data>
+  <data name="Article_SuccessUpdate" xml:space="preserve">
+    <value>Đã cập nhật thành công</value>
+  </data>
+  <data name="AdminTag_DuplicateKey" xml:space="preserve">
+    <value>Trùng tên tag vị trí</value>
+  </data>
+  <data name="ArticleCategory_SuccessUpdateSort" xml:space="preserve">
+    <value>Đã cập nhật thành công</value>
+  </data>
+  <data name="ProductCategory_SuccessUpdateSort" xml:space="preserve">
+    <value>Đã cập nhật thành công</value>
+  </data>
+  <data name="Article_SuccessUpdatePosition" xml:space="preserve">
+    <value>Đã cập nhật vị trí thành công</value>
+  </data>
+  <data name="UploadFile_FileExtNotAllowed" xml:space="preserve">
+    <value>Tập tin không đúng định dang</value>
+  </data>
+  <data name="UploadFile_FileSizeExceeded" xml:space="preserve">
+    <value>Tập tin quá lớn, tối đa {0} MB</value>
+  </data>
+  <data name="Admin_Qcs_EvaluationCriteria_Error" xml:space="preserve">
+    <value>Lỗi cập nhật tiêu chí đánh giá thông tin</value>
+  </data>
+  <data name="Admin_Qcs_EvaluationCriteria_AddNew" xml:space="preserve">
+    <value>Tiêu chí đánh giá được thêm mới thành công</value>
+  </data>
+  <data name="Admin_Qcs_EvaluationCriteria_Updated" xml:space="preserve">
+    <value>Thông tin tiêu chí đánh giá được cập nhật thành công</value>
+  </data>
+  <data name="Admin_Qcs_Invalid_Data" xml:space="preserve">
+    <value>Dữ liệu không hợp lệ</value>
+  </data>
+  <data name="Admin_Qcs_SiteZone_DeleteSuccess" xml:space="preserve">
+    <value>Xóa khu vực thành công</value>
+  </data>
+  <data name="Admin_Qcs_EvaluationCalendar_DuplicateInfo" xml:space="preserve">
+    <value>Trùng tên kỳ kiểm tra</value>
+  </data>
+  <data name="Admin_Qcs_EvaluationCriteria_Delete" xml:space="preserve">
+    <value>Thông tin tiêu chí đánh giá đã được xóa.</value>
+  </data>
+  <data name="Qcs_EvalCriteria_DeleteConfirmText" xml:space="preserve">
+    <value>Bạn có chắc muốn xóa tiêu chí đánh giá này không?</value>
+  </data>
+  <data name="Admin_Qcs_EvaluationCriteriaGroup_AddNew" xml:space="preserve">
+    <value>Nhóm tiêu chí đánh giá đã được tạo mới thành công</value>
+  </data>
+  <data name="Admin_Qcs_EvaluationCriteriaGroup_Deleted" xml:space="preserve">
+    <value>Thông tin nhóm tiêu chí đánh giá đã được xóa</value>
+  </data>
+  <data name="Admin_Qcs_EvaluationCriteriaGroup_DeleteError" xml:space="preserve">
+    <value>Xóa thất bại. Vui lòng thử lại.</value>
+  </data>
+  <data name="Admin_Qcs_EvaluationCriteriaGroup_Exists" xml:space="preserve">
+    <value>Nhóm tiêu chí đánh giá đã có trong hệ thống.</value>
+  </data>
+  <data name="Admin_Qcs_EvaluationCriteriaGroup_NoExists" xml:space="preserve">
+    <value>Nhóm tiêu chí đánh giá cần cập nhật không tồn tại trong hệ thống.</value>
+  </data>
+  <data name="Admin_Qcs_EvaluationCriteriaGroup_Updated" xml:space="preserve">
+    <value>Thông tin nhóm tiêu chí đánh giá được cập nhật thành công</value>
+  </data>
+  <data name="Admin_Qcs_EvaluationCriteriaGroup_UpdateError" xml:space="preserve">
+    <value>Cập nhật thất bại. Vui lòng thử lại.</value>
+  </data>
+  <data name="Qcs_EvalCategory_DeleteConfirmText" xml:space="preserve">
+    <value>Bạn có muốn xóa nhóm hạng mục đánh giá không?</value>
+  </data>
+  <data name="Qcs_EvalCriteriaGroup_DeleteConfirmText" xml:space="preserve">
+    <value>Bạn có muốn xóa nhóm tiêu chí đánh giá này không?</value>
+  </data>
+  <data name="Admin_Qcs_EvaluationCategory_AddNew" xml:space="preserve">
+    <value>Nhóm hạng mục đánh giá đã được tạo mới thành công</value>
+  </data>
+  <data name="Admin_Qcs_EvaluationCategory_Deleted" xml:space="preserve">
+    <value>Thông tin nhóm hạng mục đánh giá đã được xóa</value>
+  </data>
+  <data name="Admin_Qcs_EvaluationCategory_DeleteError" xml:space="preserve">
+    <value>Xóa nhóm hạng mục đánh giá thất bại. Vui lòng thử lại.</value>
+  </data>
+  <data name="Admin_Qcs_EvaluationCategory_Exists" xml:space="preserve">
+    <value>Nhóm hạng mục đánh giá đã có trong hệ thống.</value>
+  </data>
+  <data name="Admin_Qcs_EvaluationCategory_NoExists" xml:space="preserve">
+    <value>Nhóm hạng mục đánh giá cần cập nhật không tồn tại trong hệ thống.</value>
+  </data>
+  <data name="Admin_Qcs_EvaluationCategory_Updated" xml:space="preserve">
+    <value>Thông tin nhóm hạng mục đánh giá được cập nhật thành công</value>
+  </data>
+  <data name="Admin_Qcs_EvaluationCategory_UpdateError" xml:space="preserve">
+    <value>Cập nhật nhóm hạng mục đánh giá thất bại. Vui lòng thử lại.</value>
+  </data>
+  <data name="Qcs_EvalCategory_Model_CateGroupId_Error" xml:space="preserve">
+    <value>Bạn chưa chọn loại hạng mục.</value>
+  </data>
+  <data name="Authen_Login_Denied" xml:space="preserve">
+    <value>Không có quyền truy cập vào hệ thống</value>
+  </data>
+  <data name="Authen_Login_WrongCaptcha" xml:space="preserve">
+    <value>Kết quả không đúng</value>
+  </data>
+  <data name="MasterDataMngt_AdminDepartment_DeleteDeptConfirmText" xml:space="preserve">
+    <value>Bạn có muốn xóa bộ phận này không?</value>
+  </data>
+  <data name="Admin_Qcs_EvaluationCalendar_InsertManySuccess" xml:space="preserve">
+    <value>Đã tạo thành công</value>
+  </data>
+  <data name="Shared_ValidAttrMsg_IntNumberADR" xml:space="preserve">
+    <value>{0} phải là số nguyên</value>
+  </data>
+  <data name="AdminRoleGroupAction_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật phân quyền thành công</value>
+  </data>
+  <data name="AdminRole_SuccessCreate" xml:space="preserve">
+    <value>Thêm quyền thành công</value>
+  </data>
+  <data name="AdminRole_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật quyền thành công</value>
+  </data>
+  <data name="UserMngt_ListRole_DeleteRoleConfirmText" xml:space="preserve">
+    <value>Bạn có muốn xóa quyền này?</value>
+  </data>
+  <data name="MenuMngt_ListMenu_GenerateMenuConfirmText" xml:space="preserve">
+    <value>Bạn có muốn đồng bộ menu từ template về không?</value>
+  </data>
+  <data name="MasterDataMngt_ListMicrositeZone_DeleteZoneConfirmText" xml:space="preserve">
+    <value>Bạn có muốn xóa khu vực này?</value>
+  </data>
+  <data name="MicrositeMngt_ListRoute_DeleteRouteConfirmText" xml:space="preserve">
+    <value>Bạn có muốn xóa lộ trình này không?</value>
+  </data>
+  <data name="RouteMngt_CanNotFindDirection" xml:space="preserve">
+    <value>Không thể tìm được đường đi</value>
+  </data>
+  <data name="RouteMngt_SuccessCreate" xml:space="preserve">
+    <value>Thêm mới lộ trình thành công</value>
+  </data>
+  <data name="RouteMngt_SuccessDelete" xml:space="preserve">
+    <value>Xóa lộ trình thành công</value>
+  </data>
+  <data name="RouteMngt_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật lộ trình thành công</value>
+  </data>
+  <data name="Login_HaveNotLogonPermit" xml:space="preserve">
+    <value>Bạn chưa được cấp quyền truy cập hệ thống</value>
+  </data>
+  <data name="UserMngt_UsernameExisted" xml:space="preserve">
+    <value>Tên đăng nhập đã tồn tại trong hệ thống</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_DeleteMicrositeConfirmText" xml:space="preserve">
+    <value>Bạn có muốn xóa microsite này không?</value>
+  </data>
+  <data name="MicrositeMngt_SuccessDelete" xml:space="preserve">
+    <value>Xóa microsite thành công</value>
+  </data>
+  <data name="UserMngt_UsernameNotExisted" xml:space="preserve">
+    <value>Tên đăng nhập không tồn tại trong hệ thống</value>
+  </data>
+  <data name="UserMngt_InvalidSite" xml:space="preserve">
+    <value>Cơ sở không hợp lệ</value>
+  </data>
+  <data name="DeviceMngt_ChangeStatusSuccess" xml:space="preserve">
+    <value>Cập nhật trạng thái thiết bị thành công</value>
+  </data>
+  <data name="UserMngt_InvalidLocation" xml:space="preserve">
+    <value>Tên phòng ban không hợp lệ</value>
+  </data>
+  <data name="DeviceMngt_DuplicateImei" xml:space="preserve">
+    <value>Trùng mã Imei</value>
+  </data>
+  <data name="DeviceMngt_SuccessCreate" xml:space="preserve">
+    <value>Thêm thiết bị thành công</value>
+  </data>
+  <data name="DeviceMngt_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật thiết bị thành công</value>
+  </data>
+  <data name="LocationMngt_DuplicateName" xml:space="preserve">
+    <value>Trùng tên phòng ban</value>
+  </data>
+  <data name="LocationMngt_SuccessDelete" xml:space="preserve">
+    <value>Xóa phòng ban thành công</value>
+  </data>
+  <data name="LocationMngt_IsUsing" xml:space="preserve">
+    <value>Phòng ban đang được sử dụng</value>
+  </data>
+  <data name="QuestionGroup_DuplicateName" xml:space="preserve">
+    <value>Trùng tên bộ câu hỏi</value>
+  </data>
+  <data name="QuestionGroup_IsUsing" xml:space="preserve">
+    <value>Bộ câu hỏi đang được sử dụng</value>
+  </data>
+  <data name="QuestionGroup_SuccessCreate" xml:space="preserve">
+    <value>Thêm mới thành công</value>
+  </data>
+  <data name="QuestionGroup_SuccessDelete" xml:space="preserve">
+    <value>Xóa thành công</value>
+  </data>
+  <data name="QuestionGroup_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật thành công</value>
+  </data>
+  <data name="Question_DuplicateName" xml:space="preserve">
+    <value>Trùng tên câu hỏi</value>
+  </data>
+  <data name="Question_ExceedAmountOfQuestion" xml:space="preserve">
+    <value>Vượt quá số lượng câu hỏi cho phép</value>
+  </data>
+  <data name="Question_SuccessCreate" xml:space="preserve">
+    <value>Tạo câu hỏi thành công</value>
+  </data>
+  <data name="Question_SuccessDelete" xml:space="preserve">
+    <value>Xóa câu hỏi thành công</value>
+  </data>
+  <data name="Question_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật câu hỏi thành công</value>
+  </data>
+  <data name="Question_RequireAnswer" xml:space="preserve">
+    <value>Vui lòng chọn ít nhất 1 câu trả lời</value>
+  </data>
+  <data name="AnswerMapping_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật thành công</value>
+  </data>
+  <data name="Reason_SuccessDelete" xml:space="preserve">
+    <value>Xóa thành công</value>
+  </data>
+  <data name="CheckListDetail_SuccessConfirm" xml:space="preserve">
+    <value>Bạn có muốn xóa Checklist Item này không?</value>
+  </data>
+  <data name="CheckListDetail_SuccessCreate" xml:space="preserve">
+    <value>Thêm Checklist Item thành công</value>
+  </data>
+  <data name="CheckListDetail_SuccessDelete" xml:space="preserve">
+    <value>Xóa Checklist Item thành công</value>
+  </data>
+  <data name="CheckListDetail_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật Checklist Item thành công</value>
+  </data>
+  <data name="CheckListMap_SuccessCreate" xml:space="preserve">
+    <value>Gán Checklist thành công</value>
+  </data>
+  <data name="CheckListMap_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật gán checklist thành công</value>
+  </data>
+  <data name="CheckList_SuccessConfirm" xml:space="preserve">
+    <value>Bạn có muốn xóa Checklist này không?</value>
+  </data>
+  <data name="CheckList_SuccessCreate" xml:space="preserve">
+    <value>Thêm checklist thành công</value>
+  </data>
+  <data name="CheckList_SuccessDelete" xml:space="preserve">
+    <value>Xóa checklist thành công</value>
+  </data>
+  <data name="CheckList_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật checklist thành công</value>
+  </data>
+  <data name="CheckList_DeleteCheckListConfirmText" xml:space="preserve">
+    <value>Bạn có muốn xóa Checklist này?</value>
+  </data>
+  <data name="PnLList_DeletePnLListConfirmText" xml:space="preserve">
+    <value>Bạn có muốn xóa PnLList này?</value>
+  </data>
+  <data name="Master_ListPnLBulist_DeletePnLBulistConfirmText" xml:space="preserve">
+    <value>Bạn có muốn xóa PnL BU List này không?</value>
+  </data>
+  <data name="PnLBuList_SuccessCreate" xml:space="preserve">
+    <value>Tạo PnL BU List thành công</value>
+  </data>
+  <data name="PnLBuList_SuccessDelete" xml:space="preserve">
+    <value>Xóa PnL BU List thành công.</value>
+  </data>
+  <data name="PnLBuList_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật thành công</value>
+  </data>
+  <data name="Master_ListPnLList_DeletePnLListConfirmText" xml:space="preserve">
+    <value>Bạn có muốn xóa PnL List này không?</value>
+  </data>
+  <data name="PnLList_SuccessCreate" xml:space="preserve">
+    <value>Tạo PnL List thành công.</value>
+  </data>
+  <data name="PnLList_SuccessDelete" xml:space="preserve">
+    <value>Xóa PnL List thành công.</value>
+  </data>
+  <data name="PnLList_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật thành công.</value>
+  </data>
+  <data name="DepartmentList_SuccessCreate" xml:space="preserve">
+    <value>Tạo danh mục phòng ban bộ phận thành công.</value>
+  </data>
+  <data name="DepartmentList_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật thành công</value>
+  </data>
+  <data name="DepartmentList_SuccessDelete" xml:space="preserve">
+    <value>Xóa danh mục phòng ban bộ phận thành công.</value>
+  </data>
+  <data name="Master_DepartmentList_DeleteDepartmentListConfirmText" xml:space="preserve">
+    <value>Bạn có muốn xóa danh mục phòng ban bộ phận này không?</value>
+  </data>
+  <data name="LocationMngt_DuplicateCode" xml:space="preserve">
+    <value>Trùng mã phòng ban</value>
+  </data>
+  <data name="StaffList_SuccessConfirm" xml:space="preserve">
+    <value>Bạn có muốn xóa danh mục nhân viên này không?</value>
+  </data>
+  <data name="StaffList_SuccessCreate" xml:space="preserve">
+    <value>Tạo danh mục nhân viên thành công</value>
+  </data>
+  <data name="StaffList_SuccessDelete" xml:space="preserve">
+    <value>Xóa danh mục nhân viên thành công</value>
+  </data>
+  <data name="StaffList_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật thành công</value>
+  </data>
+  <data name="Dvhc_DuplicateName" xml:space="preserve">
+    <value>Trùng tên đơn vị hành chính</value>
+  </data>
+  <data name="Master_PnLBuAttributeGroup_DeleteConfirmText" xml:space="preserve">
+    <value>Bạn có chắc chắn muốn xóa nhóm thuộc tính BU này không?</value>
+  </data>
+  <data name="PBAG_SuccessCreate" xml:space="preserve">
+    <value>Tạo nhóm thuộc tính BU thành công</value>
+  </data>
+  <data name="PBAG_SuccessDelete" xml:space="preserve">
+    <value>Xóa nhóm thuộc tính BU thành công</value>
+  </data>
+  <data name="PBAG_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật nhóm thuộc tính BU thành công</value>
+  </data>
+  <data name="PnLBuAttribute_SuccessConfirm" xml:space="preserve">
+    <value>Bạn có muốn xóa thuộc tính BU này không?</value>
+  </data>
+  <data name="PnLBuAttribute_SuccessCreate" xml:space="preserve">
+    <value>Tạo thuộc tính BU thành công</value>
+  </data>
+  <data name="PnLBuAttribute_SuccessDelete" xml:space="preserve">
+    <value>Xóa thuộc tính BU thành công</value>
+  </data>
+  <data name="PnLBuAttribute_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật thuộc tính BU thành công</value>
+  </data>
+  <data name="DepartmentTitle_SuccessConfirm" xml:space="preserve">
+    <value>Bạn có muốn xóa chức danh này không?</value>
+  </data>
+  <data name="DepartmentTitle_SuccessCreate" xml:space="preserve">
+    <value>Thêm chức danh thành công</value>
+  </data>
+  <data name="DepartmentTitle_SuccessDelete" xml:space="preserve">
+    <value>Xóa chức danh thành công</value>
+  </data>
+  <data name="DepartmentTitle_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật chức danh thành công</value>
+  </data>
+  <data name="Level_SuccessConfirm" xml:space="preserve">
+    <value>Bạn có muốn xóa level này không?</value>
+  </data>
+  <data name="Level_SuccessCreate" xml:space="preserve">
+    <value>Thêm level thành công</value>
+  </data>
+  <data name="Level_SuccessDelete" xml:space="preserve">
+    <value>Xóa level thành công</value>
+  </data>
+  <data name="Level_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật level thành công</value>
+  </data>
+  <data name="Region_SuccessConfirm" xml:space="preserve">
+    <value>Bạn có muốn xóa vùng miền này không?</value>
+  </data>
+  <data name="Region_SuccessCreate" xml:space="preserve">
+    <value>Thêm vùng miền thành công</value>
+  </data>
+  <data name="Region_SuccessDelete" xml:space="preserve">
+    <value>Xóa vùng miền thành công</value>
+  </data>
+  <data name="Region_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật vùng miền thành công</value>
+  </data>
+  <data name="BasisGroup_DuplicateCode" xml:space="preserve">
+    <value>Trùng tên mã nhóm cơ sở</value>
+  </data>
+  <data name="BasisGroup_DuplicateName" xml:space="preserve">
+    <value>Trùng tên nhóm cơ sở</value>
+  </data>
+  <data name="BasisGroup_SuccessConfirm" xml:space="preserve">
+    <value>Bạn có muốn xóa nhóm cơ sở này không?</value>
+  </data>
+  <data name="BasisGroup_SuccessCreate" xml:space="preserve">
+    <value>Thêm nhóm cơ sở thành công</value>
+  </data>
+  <data name="BasisGroup_SuccessDelete" xml:space="preserve">
+    <value>Xóa nhóm cơ sở thành công</value>
+  </data>
+  <data name="BasisGroup_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật nhóm cơ sở thành công</value>
+  </data>
+  <data name="DepartmentTitle_DuplicateCode" xml:space="preserve">
+    <value>Trùng mã chức danh</value>
+  </data>
+  <data name="DepartmentTitle_DuplicateName" xml:space="preserve">
+    <value>Trùng tên chức danh</value>
+  </data>
+  <data name="Level_DuplicateCode" xml:space="preserve">
+    <value>Duplicate Level Code</value>
+  </data>
+  <data name="Level_DuplicateName" xml:space="preserve">
+    <value>Duplicate Level Name</value>
+  </data>
+  <data name="PBAG_DuplicateCode" xml:space="preserve">
+    <value>Trùng mã nhóm thuộc tính BU</value>
+  </data>
+  <data name="PBAG_DuplicateName" xml:space="preserve">
+    <value>Trùng tên nhóm thuộc tính BU</value>
+  </data>
+  <data name="PnLBuAttribute_DuplicateCode" xml:space="preserve">
+    <value>Trùng mã thuộc tính BU</value>
+  </data>
+  <data name="PnLBuAttribute_DuplicateName" xml:space="preserve">
+    <value>Trùng tên thuộc tính BU</value>
+  </data>
+  <data name="PnLBuList_DuplicateCode" xml:space="preserve">
+    <value>Trùng mã code PnL BU</value>
+  </data>
+  <data name="PnLList_DuplicateCode" xml:space="preserve">
+    <value>Trùng mã code PnL</value>
+  </data>
+  <data name="PnLList_DuplicateName" xml:space="preserve">
+    <value>Trùng tên PnL</value>
+  </data>
+  <data name="Region_DuplicateCode" xml:space="preserve">
+    <value>Trùng mã vùng miền</value>
+  </data>
+  <data name="Region_DuplicateName" xml:space="preserve">
+    <value>Trùng tên vùng miền</value>
+  </data>
+  <data name="StaffList_DuplicateCode" xml:space="preserve">
+    <value>Trùng mã nhân viên</value>
+  </data>
+  <data name="Basis_DuplicateCode" xml:space="preserve">
+    <value>Trùng mã cơ sở</value>
+  </data>
+  <data name="Basis_DuplicateName" xml:space="preserve">
+    <value>Trùng tên cơ sở</value>
+  </data>
+  <data name="Basis_SuccessConfirm" xml:space="preserve">
+    <value>Bạn có muốn xóa cơ sở này không?</value>
+  </data>
+  <data name="Basis_SuccessCreate" xml:space="preserve">
+    <value>Thêm cơ sở thành công</value>
+  </data>
+  <data name="Basis_SuccessDelete" xml:space="preserve">
+    <value>Xóa cơ sở thành công</value>
+  </data>
+  <data name="Basis_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật cơ sở thành công</value>
+  </data>
+  <data name="SystemMngt_Error" xml:space="preserve">
+    <value>Lỗi trong quá trình xử lý</value>
+  </data>
+  <data name="SystemMngt_NoExists" xml:space="preserve">
+    <value>Không tồn tại hệ thống</value>
+  </data>
+  <data name="SystemMngt_SuccessDeleted" xml:space="preserve">
+    <value>Xóa hệ thống check list thành công</value>
+  </data>
+  <data name="ItemMngt_DuplicateItemExist" xml:space="preserve">
+    <value>Hạng mục đã tồn tại trong hệ thống</value>
+  </data>
+  <data name="ItemMngt_Error" xml:space="preserve">
+    <value>Lỗi xảy ra trong quá trình xử lý</value>
+  </data>
+  <data name="ItemMngt_NoExists" xml:space="preserve">
+    <value>Không tồn tại hạng mục</value>
+  </data>
+  <data name="ItemMngt_SuccessCreated" xml:space="preserve">
+    <value>Tạo mới hạng mục thành công</value>
+  </data>
+  <data name="ItemMngt_SuccessDeleted" xml:space="preserve">
+    <value>Xóa hạng mục thành công</value>
+  </data>
+  <data name="ItemMngt_SuccessUpdated" xml:space="preserve">
+    <value>Cập nhật hạng mục thành công</value>
+  </data>
+  <data name="SystemMngt_DuplicateItemExist" xml:space="preserve">
+    <value>Trùng thông tin khi đăng ký hệ thống</value>
+  </data>
+  <data name="SystemMngt_SuccessCreated" xml:space="preserve">
+    <value>Thêm mới hệ thống thành công</value>
+  </data>
+  <data name="SystemMngt_SuccessUpdated" xml:space="preserve">
+    <value>Cập nhật thông tin hệ thống thành công</value>
+  </data>
+  <data name="CheckList_DuplicateExist" xml:space="preserve">
+    <value>Thông tin check list đã tồn tại</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Có lỗi trong quá trình xử lý</value>
+  </data>
+  <data name="CheckList_NoAssignItem" xml:space="preserve">
+    <value>Không thể kích hoạt check list khi chưa gán hạng mục </value>
+  </data>
+  <data name="CheckList_ActiveCheckList" xml:space="preserve">
+    <value>Kích hoạt thành công</value>
+  </data>
+  <data name="CheckList_NotActiveWhenNoHavingOwner" xml:space="preserve">
+    <value>Không thể kích hoạt khi chưa set owner hệ thống này</value>
+  </data>
+  <data name="OperationCheckList_UpdateSuccess" xml:space="preserve">
+    <value>Hạng mục vận hành được cập nhật thành công</value>
+  </data>
+  <data name="OperationCheckList_ChangeStatus" xml:space="preserve">
+    <value>Chuyển trạng thái thành công</value>
+  </data>
+  <data name="OR_SuccessUpdate" xml:space="preserve">
+    <value>Lưu thông tin thành công</value>
+  </data>
+  <data name="OR_SuccessConfirm" xml:space="preserve">
+    <value>Bạn có tiếp tục thao tác này không?</value>
+  </data>
+  <data name="OR_SuccessCreate" xml:space="preserve">
+    <value>Đăng ký ca mổ thành công</value>
+  </data>
+  <data name="OR_SuccessDelete" xml:space="preserve">
+    <value>Xóa thông tin ca mổ thành công</value>
+  </data>
+  <data name="CMS_OR_NotPosition" xml:space="preserve">
+    <value>Vai trò ekip chưa chọn</value>
+  </data>
+  <data name="AdminRole_Accessdenied" xml:space="preserve">
+    <value>Không có quyền thực hiện với dữ liệu này</value>
+  </data>
+  <data name="UserMngt_NotExisted" xml:space="preserve">
+    <value>Người dùng không tồn tại trên hệ thống</value>
+  </data>
+  <data name="OR_Room_SuccessHide" xml:space="preserve">
+    <value>Ẩn Room thành công</value>
+  </data>
+  <data name="OR_Room_SuccessShow" xml:space="preserve">
+    <value>Kích hoạt hiển thị Room thành công</value>
+  </data>
+  <data name="OR_Room_SuccessDelete" xml:space="preserve">
+    <value>Xóa Room thành công</value>
+  </data>
+</root>

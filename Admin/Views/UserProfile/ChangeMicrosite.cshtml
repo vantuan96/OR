@@ -1,0 +1,51 @@
+﻿@model List<SelectListItem>
+@{
+    ViewBag.Title = LayoutResource.ChangeMicrosite_Title;
+}
+
+
+<div id="main_wrapper">
+    @*<div class="page_bar clearfix">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="page_title">@LayoutResource.ChangeMicrosite_Title</h1>
+            </div>
+            <div class="col-md-6 text-right">
+                <div class="div_add_fast">
+                </div>
+            </div>
+        </div>
+    </div>*@
+    <div class="page_content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel panel-body">
+                            <form action="@Url.Action("ChangeMicrosite")" method="post">
+                                <div class="row">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-4">
+                                        <input type="hidden" name="refurl" value="@Request.Params["refurl"]" />
+                                        <input type="hidden" name="userid" value="1" />
+                                        <label for="msid">@LayoutResource.ChangeMicrosite_Label_ChooseMicrosite</label>
+                                        @Html.DropDownList("msid", Model, new { @class = "form-control select2" })
+                                    </div>
+                                    <div class="col-md-4"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-4 text-right">
+                                        <button type="submit" class="btn btn-accept">
+                                            <i class="fa fa-save"></i>&nbsp;@LayoutResource.Shared_BtnText_Save</button>
+                                    </div>
+                                    <div class="col-md-4"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

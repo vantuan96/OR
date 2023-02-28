@@ -1,0 +1,466 @@
+﻿
+@using Admin.Models.Master
+@model InsertUpdatetSystemModel
+@{
+    string errorMessage = ViewBag.ErrorMessage as string;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="modal_booking modal_booking_iframe">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+            ×
+        </button>
+        <h2 class="modal-title title-popup">
+            @if (Model == null || (Model != null && Model.SystemId == 0))
+            {
+                @(LayoutResource.AdminTools_System_Button_New_PageTitle)
+            }
+            else
+            {
+                @LayoutResource.AdminTools_System_Button_Update_PageTitle
+            }
+
+        </h2>
+        <p class="place"></p>
+    </div>
+    <div class="modal-body">
+        <div class="body_booking">
+
+            @if (string.IsNullOrEmpty(errorMessage) == false)
+            {
+                @Html.Partial("_ErrorOccur", errorMessage)
+            }
+            else if (Model == null)
+            {
+                @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+            }
+            else
+            {
+                <form class="frmUpdateCheckListDetail" action="@Url.Action("InsertUpdateSystemCheckList","Master")" id="frmPopUp" method="post">
+                    @Html.Hidden("SystemId", Model.SystemId)
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.Code, new { @class = "req" })
+                            @if (Model.SystemId > 0)
+                            {
+                                @Html.TextBoxFor(x => x.Code, new { tabindex = "1", @class = "form-control", @readonly = "true" })
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(x => x.Code, new { tabindex = "1", @class = "form-control" })
+                            }
+                            @Html.ValidationMessageFor(x => x.Code)
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.SystemName, new { @class = "req" })
+                            @if (Model.SystemId > 0)
+                            {
+                                @Html.TextBoxFor(x => x.SystemName, new { tabindex = "2", @class = "form-control", @readonly = "true" })
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(x => x.SystemName, new { tabindex = "2", @class = "form-control" })
+                            }
+
+                            @Html.ValidationMessageFor(x => x.SystemName)
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.SystemNameEn, new { @class = "req" })
+                            @if (Model.SystemId > 0)
+                            {
+                                @Html.TextBoxFor(x => x.SystemNameEn, new { tabindex = "3", @class = "form-control", @readonly = "true" })
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(x => x.SystemNameEn, new { tabindex = "3", @class = "form-control" })
+                            }
+                            @Html.ValidationMessageFor(x => x.SystemNameEn)
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.ProviderName, new { })
+                            @Html.TextBoxFor(x => x.ProviderName, new { tabindex = "4", @class = "form-control " })
+                            @Html.ValidationMessageFor(x => x.ProviderName)
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.PlId, new { })
+                            @Html.DropDownListFor(x => x.PlId, Model.listPLs, new { tabindex = "5", @class = "form-control select2 select2-offscreen" })
+                            @Html.ValidationMessageFor(x => x.PlId)
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.CateId, new { })
+                            @Html.DropDownListFor(x => x.CateId, Model.listCates, new { tabindex = "6", @class = "form-control select2 select2-offscreen" })
+                            @Html.ValidationMessageFor(x => x.CateId)
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.SubCateId, new { })
+                            @Html.DropDownListFor(x => x.SubCateId, Model.listSubCates, new { tabindex = "7", @class = "form-control select2 select2-offscreen" })
+                            @Html.ValidationMessageFor(x => x.SubCateId)
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.StabilityId, new { })
+                            @Html.DropDownListFor(x => x.StabilityId, Model.listStabilitys, new { tabindex = "8", @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.StabilityId)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.OriginTypeId, new { })
+                            @Html.DropDownListFor(x => x.OriginTypeId, Model.listOrginTypes, new { tabindex = "9", @class = "form-control select2 select2-offscreen", })
+                            @Html.ValidationMessageFor(x => x.OriginTypeId)
+                        </div>
+
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.AppTypeId, new { })
+                            @Html.DropDownListFor(x => x.AppTypeId, Model.listAppTypes, new { tabindex = "10", @class = "form-control select2 select2-offscreen" })
+                            @Html.ValidationMessageFor(x => x.AppTypeId)
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.Status, new { })
+                            @Html.DropDownListFor(x => x.Status, Model.listStatus, new { tabindex = "11", @class = "form-control select2 select2-offscreen" })
+                            @Html.ValidationMessageFor(x => x.Status)
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.AuthenticationMethodId, new { })
+                            @Html.DropDownListFor(x => x.AuthenticationMethodId, Model.listAuthenticationMethods, new { tabindex = "12", @class = "form-control select2 select2-offscreen", })
+                            @Html.ValidationMessageFor(x => x.AuthenticationMethodId)
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.RankId, new { })
+                            @Html.DropDownListFor(x => x.RankId, Model.listRanks, new { tabindex = "13", @class = "form-control select2 select2-offscreen" })
+                            @Html.ValidationMessageFor(x => x.RankId)
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.RTOTypeId, new { })
+                            @Html.DropDownListFor(x => x.RTOTypeId, Model.listRTOTypes, new { tabindex = "14", @class = "form-control select2 select2-offscreen" })
+                            @Html.ValidationMessageFor(x => x.RTOTypeId)
+                        </div>
+
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.RPOTypeId, new { })
+                            @Html.DropDownListFor(x => x.RPOTypeId, Model.listRPOTypes, new { tabindex = "15", @class = "form-control select2 select2-offscreen" })
+                            @Html.ValidationMessageFor(x => x.RPOTypeId)
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.DRTypeId, new { })
+                            @Html.DropDownListFor(x => x.DRTypeId, Model.listDRs, new { tabindex = "16", @class = "form-control select2 select2-offscreen" })
+                            @Html.ValidationMessageFor(x => x.DRTypeId)
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.ScStateId, new { })
+                            @Html.DropDownListFor(x => x.ScStateId, Model.listServiceContinutys, new { tabindex = "17", @class = "form-control select2 select2-offscreen" })
+                            @Html.ValidationMessageFor(x => x.ScStateId)
+                        </div>
+
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.SecurityStateId, new { })
+                            @Html.DropDownListFor(x => x.SecurityStateId, Model.listSecuritys, new { tabindex = "18", @class = "form-control select2 select2 - offscreen" })
+                            @Html.ValidationMessageFor(x => x.SecurityStateId)
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.PerformanceId, new { })
+                            @Html.DropDownListFor(x => x.PerformanceId, Model.listPerformances, new { tabindex = "19", @class = "form-control select2 select2 - offscreen" })
+                            @Html.ValidationMessageFor(x => x.PerformanceId)
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.ReplaceBy, new { })
+                            @Html.DropDownListFor(x => x.ReplaceBy, Model.listSystemTypes, new { tabindex = "20", @class = "form-control  select2 - offscreen" })
+                            @Html.ValidationMessageFor(x => x.ReplaceBy)
+
+                        </div>
+
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.SME, new { })
+                            @Html.TextBoxFor(x => x.SME, new { tabindex = "21", @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.SME)
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.OwingBusinessUnit, new { })
+                            @Html.TextBoxFor(x => x.OwingBusinessUnit, new { tabindex = "22", @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.OwingBusinessUnit)
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.ITContact, new { })
+                            @Html.TextBoxFor(x => x.ITContact, new { tabindex = "23", @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.ITContact)
+
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.YearImplement, new { })
+                            @Html.TextBoxFor(x => x.YearImplement, new { tabindex = "24", @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.YearImplement)
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.RLO, new { })
+                            @Html.TextBoxFor(x => x.RLO, new { tabindex = "25", @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.RLO)
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.QuantityUserActive, new { })
+                            @Html.TextBoxFor(x => x.QuantityUserActive, new { tabindex = "26", @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.QuantityUserActive)
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.ConCurrentUser, new { })
+                            @Html.TextBoxFor(x => x.ConCurrentUser, new { tabindex = "27", @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.ConCurrentUser)
+
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.BusinessHour, new { })
+                            @Html.TextBoxFor(x => x.BusinessHour, new { tabindex = "28", @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.BusinessHour)
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.BusinessIssue, new { })
+                            @Html.TextBoxFor(x => x.BusinessIssue, new { tabindex = "29", @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.BusinessIssue)
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.TechIssue, new { })
+                            @Html.TextBoxFor(x => x.TechIssue, new { tabindex = "30", @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.TechIssue)
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.SystemMaintainTime, new { })
+                            @Html.TextBoxFor(x => x.SystemMaintainTime, new { tabindex = "31", @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.SystemMaintainTime)
+
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.HostingLocation, new { })
+                            @Html.TextBoxFor(x => x.HostingLocation, new { tabindex = "32", @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.HostingLocation)
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.UrlSystem, new { })
+                            @Html.TextBoxFor(x => x.UrlSystem, new { tabindex = "33", @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.UrlSystem)
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.Priority, new { })
+                            @Html.TextBoxFor(x => x.Priority, new { tabindex = "34", @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Priority)
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.Platform, new { })
+                            @Html.TextBoxFor(x => x.Platform, new { tabindex = "35", @class = "form-control " })
+                            @Html.ValidationMessageFor(x => x.Platform)
+                        </div>
+
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.DetailReplaceBy, new { })
+                            @Html.TextBoxFor(x => x.DetailReplaceBy, new { tabindex = "36", @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.DetailReplaceBy)
+                        </div>
+
+                    </div>
+                    <div class="row">
+                       
+                        <div class="col-sm-3">
+                            @Html.LabelFor(x => x.FunctionOverview, new { })
+                            @Html.TextBoxFor(x => x.FunctionOverview, new { tabindex = "38", @class = "form-control " })
+                            @Html.ValidationMessageFor(x => x.FunctionOverview)
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="col-sm-6 div_input_form_control_label">
+                                @Html.LabelFor(x => x.showLastDateDRTest, new { @class = "req" })
+                                @Html.TextAreaFor(x => x.showLastDateDRTest, new { tabindex = "39", @class = "form-control", placeholder = @LayoutResource.Master_SystemCheckList_LastDateDRTest, @rows = 1 })
+                                @Html.ValidationMessageFor(x => x.showLastDateDRTest)
+                                @Html.HiddenFor(x => x.LastDateDRTest)
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            @Html.LabelFor(x => x.Description, new { })
+                            @Html.TextAreaFor(x => x.Description, new { tabindex = "40", @class = "form-control", @rows = "4" })
+                            @Html.ValidationMessageFor(x => x.Description)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="checkbox">
+                                @Html.CheckBoxFor(x => x.IsCheckRisk, new { tabindex = "41", @class = "css-checkbox" })
+                                @Html.ValidationMessageFor(x => x.IsCheckRisk)
+                                @Html.LabelFor(x => x.IsCheckRisk, new { })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="checkbox ">
+
+                                @Html.CheckBoxFor(x => x.IsCheckSecurityByGolive, new { tabindex = "43", @class = "css-checkbox" })
+                                @Html.ValidationMessageFor(x => x.IsCheckSecurityByGolive)
+                                @Html.LabelFor(x => x.IsCheckSecurityByGolive, new { })
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="checkbox">
+
+                                @Html.CheckBoxFor(x => x.IsDevTest, new { tabindex = "44", @class = "css-checkbox" })
+                                @Html.ValidationMessageFor(x => x.IsDevTest)
+                                @Html.LabelFor(x => x.IsDevTest, new { })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="checkbox">
+
+                                @Html.CheckBoxFor(x => x.IsReplace, new { tabindex = "45", @class = "css-checkbox" })
+                                @Html.ValidationMessageFor(x => x.IsReplace)
+                                @Html.LabelFor(x => x.IsReplace, new { })
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="checkbox">
+
+                                @Html.CheckBoxFor(x => x.IsRequirementSecurityDesign, new { tabindex = "46", @class = "css-checkbox" })
+                                @Html.ValidationMessageFor(x => x.IsRequirementSecurityDesign)
+                                @Html.LabelFor(x => x.IsRequirementSecurityDesign, new { })
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row" style="margin-top:-30px!important">
+                        <div class="col-sm-2">
+                            <div class="checkbox">
+                                @Html.CheckBoxFor(x => x.IsSAP, new { tabindex = "47", @class = "css-checkbox" })
+                                @Html.ValidationMessageFor(x => x.IsSAP)
+                                @Html.LabelFor(x => x.IsSAP)
+
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="checkbox ">
+
+                                @Html.CheckBoxFor(x => x.IsRequirementSecurity, new { tabindex = "48", @class = "css-checkbox" })
+                                @Html.ValidationMessageFor(x => x.IsRequirementSecurity)
+                                @Html.LabelFor(x => x.IsRequirementSecurity, new { })
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group relative not_input_error not_input_error_popup" style="top:0;">
+                            <span id="err_msg" class="field-validation-error" style="display: none"></span>
+                        </div>
+                    </div>
+                    <div class="btn-wrapper text-right">
+                        <button class="btn btn-primary" tabindex="49" id="btnSaveData"><i class="fa fa-save"></i>&nbsp; @LayoutResource.Shared_BtnText_Save </button>
+                    </div>
+                </form>
+            }
+        </div>
+
+
+    </div>
+</div>
+
+@section styles{
+    @Styles.Render("~/styles_searchfrm")
+    <style>
+        .select2-results .select2-disabled {
+            display: none;
+        }
+
+        body {
+            min-height: 422px !important;
+        }
+
+        .cke_dialog_ui_labeled_label {
+            font-weight: bold !important;
+            margin-bottom: 5px !important;
+        }
+
+        .cke_dialog_ui_input_file.input {
+            font-size: 12px !important;
+        }
+
+        .cke_dialog_tab {
+            font-weight: bold !important;
+        }
+
+        .checkbox input[type=checkbox] {
+            margin-left: 0px;
+        }
+    </style>
+
+}
+@Scripts.Render("~/javas_searchfrm")
+@section scripts{
+    <script>
+        $(function() {
+            $("#btnSaveData").click(function(e) {
+                if (!$("#frmPopUp").valid()) return;
+                e.preventDefault();
+                $.ajax({
+                    url: '/Master/InsertUpdateSystemByAjax/',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: $("#frmPopUp").serialize(),
+                    success: function(data) {
+                        if ((data.Id ==@((int)ResponseCode.SystemMngt_SuccessUpdated)) || (data.Id ==@((int)ResponseCode.SystemMngt_SuccessCreated)) )
+                        {
+                            parent.window.location.reload();
+                        }
+                         else if (data.status === 401) {
+                            window.location.href = data.redirect;
+                        }
+                        else {
+                            $("#err_msg").html(data.Message).show();
+                            HideOverlay(0);
+                        }
+                    },
+                    error: function(data) {
+                        $("#err_msg").html(data.Message).show();
+                        HideOverlay(0);
+                    }
+                });
+            });
+
+            if ($('#showLastDateDRTest').length > 0)
+            {
+                $('#showLastDateDRTest').datetimepicker(
+                {
+                    minDate:0,
+                    onChangeDateTime:function(dp,$input)
+                    {
+                        var d = moment($input.val(), momentDateFormat);
+                        $('#LastDateDRTest').val(FormatDateTime(d.toDate(), systemDateFormat));
+                    }
+                });
+            }
+        });
+    </script>
+}

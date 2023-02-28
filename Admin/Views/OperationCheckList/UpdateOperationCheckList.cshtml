@@ -1,0 +1,178 @@
+﻿@using Admin.Models.Operation
+@model UpdateOperationCheckListModel
+@{
+    string errorMessage = ViewBag.ErrorMessage as string;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var canUpdateCheckListDetail = Functions.CheckAllowAction("OperationCheckList", "SaveOperationCheckListDetail") ;
+}
+<div class="modal_booking modal_booking_iframe">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+            ×
+        </button>
+        <h2 class="modal-title title-popup">
+            Cập nhật hạng mục vận hành 
+        </h2>
+        <p class="place"></p>
+    </div>
+    <div class="modal-body">
+        <div class="body_booking">
+            @if (string.IsNullOrEmpty(errorMessage) == false)
+            {
+                @Html.Partial("_ErrorOccur", errorMessage)
+            }
+            else if (Model == null)
+            {
+                @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+            }
+            else
+            {
+                <div class="row" style="margin-bottom:25px!important;">
+                    <div class="col-sm-12">
+                       <span class="text-primary bold">Tên checklist</span> : <span style="font-weight:bold;">@Model.CheckListName </span>
+                       <br/>
+                       <span class="text-primary bold">Tên hệ thống</span> : <span style="font-weight:bold;">@Model.SystemName </span>
+                        <br />
+                        <span class="text-primary bold">Loại checklist</span> : <span style="font-weight:bold;">@Model.CheckListTypeName </span>
+                        <br />
+                        <span class="text-primary bold">Ngày hết hạn</span> : <span style="font-weight:bold;">@((Model.DeadLine).ToString(StringHelper.DateTimeNoSecondFormat)) </span>
+                    </div>
+                </div>
+                  <form class="frmUpdateCheckListDetail" id="frmPopUp"  method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-striped info-table margin_b0 table_booking table_week">
+                                <thead>
+                                    <tr>
+                                        <th class="sub_col" style="max-width: 60px;width:15px">@LayoutResource.Shared_Label_SortNumber</th>
+                                        <th class="sub_col">Tên hạng mục</th>
+                                        <th class="sub_col">Diễn giải</th>
+                                        <th class="sub_col"> Ghi chú</th>
+                                        <th class="sub_col">
+                                            <a href="#" onclick="$('.opt1').prop('checked', true); return false;">@LayoutResource.CheckList_Status_Pass</a>
+                                        </th>
+                                        <th class="sub_col" >
+                                            <a href="#" onclick="$('.opt2').prop('checked', true); return false;">@LayoutResource.CheckList_Status_NotPass</a>
+                                        </th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                   
+                                       
+                                            
+                                            @{var i = 0;}
+                                            @foreach (var item in Model.listClItems )
+                                            {
+                                                string disabledText = canUpdateCheckListDetail ? "" : "disabled=disabled";
+                                           
+                                                <tr>
+                                                    @Html.Hidden("listClItems[" + i + "].ClItemId", item == null ? string.Empty : item.ClItemId.ToString())
+                                                    @Html.Hidden("listClItems[" + i + "].InstanceId", item == null ? string.Empty : Model.InstanceId.ToString())
+                                                    @Html.Hidden("listClItems[" + i + "].SystemId", item == null ? string.Empty : Model.SystemId.ToString())
+                                                    @Html.Hidden("listClItems[" + i + "].ItemName", item == null ? string.Empty : item.ItemName)
+                                                    <td class="text-right">@(i + 1)</td>
+                                                    <td>@item.ItemName</td>
+                                                    <td>@item.Description</td>
+                                                    <td>@Html.TextArea("listClItems[" + i + "].Comment", item == null ? string.Empty : item.Comment)</td>
+                                                    <td class="text-center">
+                                                        <input type="radio" @disabledText class="radioCheckList opt1" name="listClItems[@i].State" value="1" @(item.State == 1 ? "checked=checked" : "") />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input type="radio" @disabledText class="radioCheckList opt2" name="listClItems[@i].State" value="0" @(item.State==0 ? "checked=checked" : "") />
+                                                    </td>
+                                                  
+                                                </tr>
+
+                                                i++;
+                                            }
+                                            
+                                        
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    @if (canUpdateCheckListDetail)
+                    {
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-accept" id="btnSaveData" tabindex="8"><i class="fa fa-save"></i>&nbsp;@LayoutResource.Shared_BtnText_Save</button>
+                            </div>
+                        </div>
+                    }
+                    <div class="row" style="margin-bottom:25px!important;">
+                        <div class="form-group relative not_input_error not_input_error_popup" style="top:0;">
+                            <span id="err_msg" class="field-validation-error" style="display: none"></span>
+                        </div>
+                   </div>
+                  
+                </form>
+
+            }
+        </div>
+
+
+    </div>
+</div>
+
+@section styles{
+    @Styles.Render("~/styles_searchfrm")
+    <style>
+        .select2-results .select2-disabled {
+            display: none;
+        }
+
+        body {
+            min-height: 422px !important;
+        }
+
+        .cke_dialog_ui_labeled_label {
+            font-weight: bold !important;
+            margin-bottom: 5px !important;
+        }
+
+        .cke_dialog_ui_input_file.input {
+            font-size: 12px !important;
+        }
+
+        .cke_dialog_tab {
+            font-weight: bold !important;
+        }
+    </style>
+}
+@Scripts.Render("~/javas_searchfrm")
+@section scripts{
+    <script>
+        $(function() {
+           $("#btnSaveData").click(function(e) {
+                if (!$("#frmPopUp").valid()) return;
+                e.preventDefault();
+                $.ajax({
+                    url: '/OperationCheckList/SaveOperationCheckListDetail/',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: $("#frmPopUp").serialize(),
+                    success: function(data) {
+                        if ((data.Id ==@((int)ResponseCode.OperationCheckList_UpdateSuccess)))
+                        {
+                            parent.window.location.reload();
+                        }
+                         else if (data.status === 401) {
+                            window.location.href = data.redirect;
+                        }
+                        else {
+                            $("#err_msg").html(data.Message).show();
+                            HideOverlay(0);
+                        }
+                    },
+                    error: function(data) {
+                        $("#err_msg").html(data.Message).show();
+                        HideOverlay(0);
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,125 @@
+﻿@using Admin.Models.OR
+@model ORRoomModel
+@{
+    string errorMessage = ViewBag.ErrorMessage as string;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="modal_booking modal_booking_iframe">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h2 class="modal-title title-popup">
+            @if (Model.Id == 0)
+            {
+                <text>Thêm mới phòng mổ</text>
+            }
+            else
+            {
+                <text>Cập nhật cấu hình thông tin phòng mổ</text>
+            }
+        </h2>
+        <p class="place"></p>
+    </div>
+    <div class="modal-body">
+        <div class="body_booking">
+            @if (string.IsNullOrEmpty(errorMessage) == false)
+            {
+                @Html.Partial("_ErrorOccur", errorMessage)
+            }
+            else
+            {
+                using (Ajax.BeginForm("CUDORRoom", "OR", new AjaxOptions { HttpMethod = "Post", OnSuccess = "CreateUpdateFormSubmitSuccess" }, new { onsubmit = "removeDisabled();$('#err_msg').html('').hide();" }))
+                {
+                    @Html.Hidden("Id", Model.Id)
+                    @Html.Hidden("CreatedBy", Model.CreatedBy)
+                    @Html.Hidden("CreatedDate", Model.CreatedDate)
+                    @Html.Hidden("UpdatedBy", Model.UpdatedBy)
+                    @Html.Hidden("UpdatedDate", Model.UpdatedDate)
+                    @Html.Hidden("IsDeleted", Model.IsDeleted)
+                    @Html.Hidden("HospitalCode", Model.HospitalCode)
+                    @Html.Hidden("Id_Mapping", Model.Id_Mapping)
+                    @Html.Hidden("Name_Mapping", Model.Name_Mapping)
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-xs-12 div_input_form_control_label">
+                            @Html.LabelFor(x => x.TypeRoom, new { @class = "req" })
+                            @Html.DropDownListFor(r => r.TypeRoom, Model.listTypeRooms,
+                           new { @class = "form-control select2 select2-offscreen", tabindex = "1" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 div_input_form_control_label">
+                            @Html.LabelFor(x => x.Name, new { @class = "req" })
+                            @Html.TextBoxFor(x => x.Name, new { @class = "form-control", tabindex = "2" })
+                            @Html.ValidationMessageFor(x => x.Name)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 div_input_form_control_label">
+                            @Html.LabelFor(x => x.Description)
+                            @Html.TextAreaFor(x => x.Description, new { @class = "form-control", tabindex = "3" })
+                            @Html.ValidationMessageFor(x => x.Description)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.LabelFor(x => x.Sorting, new { @class = "req" })
+                            @Html.TextBoxFor(x => x.Sorting, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Sorting)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            @{
+                                var bDisplay = false;
+                                bDisplay = Model.IsDisplay == "1";
+                            }
+                            <label for="ShowMenuStatus">Hiển thị?</label>
+                            <input type="checkbox" id="IsDisplay" name="IsDisplay" checked="@bDisplay" />
+                            @Html.ValidationMessageFor(x => x.IsDisplay, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    @Html.Hidden("IsDeleted", Model.IsDeleted)
+                    <div class="btn-wrapper text-right">
+                        <button class="btn btn-accept" tabindex="8" type="submit"><i class="fa fa-save"></i>&nbsp;@LayoutResource.Shared_BtnText_Save</button>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@section styles{
+
+    <style>
+        .select2-results .select2-disabled {
+            display: none;
+        }
+
+        body {
+            min-height: 400px !important;
+        }
+
+        #location_validation .field-validation-error {
+            top: 4px !important;
+        }
+    </style>
+}
+@Scripts.Render("~/fctree")
+@section scripts{
+
+    <script type="text/javascript">
+
+        $(function() {
+            $('#TypeRoom').select2({ allowClear: false });
+            $("#Name").focus();
+            /*Fix loi giao dien hien thi select2*/
+            $("span[data-select2-id]").css("width", "100%");
+            /*.Fix loi giao dien hien thi select2*/
+        });
+        function removeDisabled() {
+            $("#Oh_Code").removeAttr("disabled");
+            $("#err_msg").html("").hide();
+        }      
+    </script>
+
+}

@@ -1,0 +1,290 @@
+﻿@model int?
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width" />
+    <title>Thông báo lỗi</title>
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link rel="shortcut icon" href="~/assets/img/ficon.ico" />
+    <style>
+        body {
+            font-family: Arial;
+            background:#f6f6f6
+        }
+
+        .navbar .container-fluid {
+            margin-right: auto;
+            margin-left: auto;
+            padding-left: 0px;
+            height: 50px;
+            padding-right: 0;
+        }
+
+        .container-fluid > .navbar-header {
+            margin-right: 0 !important;
+        }
+
+        .main_wrapper {
+            margin: auto;
+            width: 70%;
+            text-align: center;
+            color: #222;           
+            margin-top: 200px;
+        }
+
+            .main_wrapper h1 {
+                font-size: 72px;
+                font-weight: 100;
+                margin-bottom: 0;
+                margin-top: 0;
+                letter-spacing: -3px;
+            }
+
+                .main_wrapper h1 sub {
+                    font-size: 24px;
+                    position: absolute;
+                    left: 50%;
+                    margin-left: 240px;
+                    top: 70px;
+                    letter-spacing: 0;
+                }
+
+                    .main_wrapper h1 sub span {
+                        font-size: 15px;
+                        font-style: italic;
+                    }
+
+            .main_wrapper h4 {
+                font-weight: normal;
+            }
+
+        a.btn {
+            background-color: #ed1c24;
+            box-shadow: 0px 1px 4px #333;
+            text-decoration: none;
+            padding: 3px 30px;
+            display: inline-block;
+            margin-top: 5px;
+            color: #ffffff;
+            cursor: pointer;
+            font-size: 20px;
+            line-height: 40px;
+            height: 40px;
+            border-bottom: 2px solid #b70d0b;
+        }
+
+        .btn-master {
+            background: #2684e4; /* Old browsers */
+            background: -moz-linear-gradient(top, #2684e4 0%, #2684e4 0%, #1576d8 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#2684e4), color-stop(0%,#2684e4), color-stop(100%,#1576d8)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top, #2684e4 0%,#2684e4 0%,#1576d8 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top, #2684e4 0%,#2684e4 0%,#1576d8 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top, #2684e4 0%,#2684e4 0%,#1576d8 100%); /* IE10+ */
+            background: linear-gradient(to bottom, #2684e4 0%,#2684e4 0%,#1576d8 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2684e4', endColorstr='#1576d8',GradientType=0 ); /* IE6-9 */
+            border: 1px solid #0d6fd0 !important;
+            height: 32px;
+            color: #fff;
+        }
+
+            .btn-master:hover {
+                background: #2684e4; /* Old browsers */
+                background: -moz-linear-gradient(top, #2684e4 0%, #3996f8 0%, #127ee8 100%); /* FF3.6+ */
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#2684e4), color-stop(0%,#3996f8), color-stop(100%,#127ee8)); /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(top, #2684e4 0%,#3996f8 0%,#127ee8 100%); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(top, #2684e4 0%,#3996f8 0%,#127ee8 100%); /* Opera 11.10+ */
+                background: -ms-linear-gradient(top, #2684e4 0%,#3996f8 0%,#127ee8 100%); /* IE10+ */
+                background: linear-gradient(to bottom, #2684e4 0%,#3996f8 0%,#127ee8 100%); /* W3C */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2684e4', endColorstr='#127ee8',GradientType=0 ); /* IE6-9 */
+                border: 1px solid #0d6fd0 !important;
+                color: #fff;
+            }
+
+            .btn-master:focus {
+                background: #2684e4; /* Old browsers */
+                background: -moz-linear-gradient(top, #2684e4 0%, #1273d4 0%, #0c65be 100%); /* FF3.6+ */
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#2684e4), color-stop(0%,#1273d4), color-stop(100%,#0c65be)); /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(top, #2684e4 0%,#1273d4 0%,#0c65be 100%); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(top, #2684e4 0%,#1273d4 0%,#0c65be 100%); /* Opera 11.10+ */
+                background: -ms-linear-gradient(top, #2684e4 0%,#1273d4 0%,#0c65be 100%); /* IE10+ */
+                background: linear-gradient(to bottom, #2684e4 0%,#1273d4 0%,#0c65be 100%); /* W3C */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2684e4', endColorstr='#0c65be',GradientType=0 ); /* IE6-9 */
+                border: 1px solid #0d6fd0 !important;
+                color: #fff;
+            }
+
+        .navbar {
+            height: 50px !important;
+            max-height: 50px !important;
+            top: 0;
+            border-width: 0 0 1px;
+            position: fixed;
+            right: 0;
+            left: 0;
+            z-index: 1030;
+            background-color: #E31837 !important;
+            border-bottom: none !important;
+        }
+
+        .nav_right_menu {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .navbar .div_menu a > .ion-navicon {
+            width: 21px;
+        }
+
+        .navbar .navbar-brand {
+            display: table-cell;
+            vertical-align: middle;
+            float: none;
+            height: 50px;
+            padding: 0;
+        }
+
+            .navbar .navbar-brand img {
+                background: none;
+                height: auto !important;
+                width: auto !important;
+                max-height: 42px;
+                max-width: 220px;
+                margin: 4px auto;
+                display: block;
+            }
+
+        .navbar-brand {
+            width: 220px;
+            background: #C40B27;
+        }
+
+        .div_menu {
+            padding: 8px 10px 2px 0px;
+            display: inline-block;
+            padding-top: 13px;
+        }
+
+        .navbar .navbar-header {
+            float: left;
+        }
+
+        .div_menu .title-site {
+            width: 300px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .div_menu .title-site {
+            margin-top: 0;
+            color: #ffffff;
+            font-size: 20PX;
+            margin-left: 10PX;
+            float: left;
+        }
+    </style>
+    <script>
+        function checkIframe() {
+            if(window.self !== window.top)
+            {
+                window.top.location.href = window.location.href;
+            }
+        }
+    </script>
+</head>
+
+<body onload="checkIframe()">
+    <!-- top bar -->
+    <header class="navbar navbar-fixed-top" role="banner">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="/" class="navbar-brand" draggable="false">
+                    <img src="~/Assets/img/logo.png" width="142" height="42" alt="">
+                </a>
+            </div>
+            <div class="div_menu">
+                <p class="title-site" title="@LayoutResource.Shared_VersionText: @ViewContext.Controller.GetType().Assembly.GetName().Version">
+                    <i style="font-size:10px"> (@LayoutResource.Shared_VersionText: @ViewContext.Controller.GetType().Assembly.GetName().Version) </i>
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <!-- main content -->
+    <div class="main_wrapper">
+        @*<h1>@MessageResource.Shared_SystemErrorMessage</h1>*@
+        @{
+            var fullName = "";
+            try
+            {
+                if (Admin.Helper.VinAuthentication.CurrentUser(Context) != null && Admin.Helper.VinAuthentication.CurrentUser(Context).FullName != null)
+                {
+                    fullName = Admin.Helper.VinAuthentication.CurrentUser(Context).FullName;
+                }
+            }
+            catch (Exception)
+            { }
+        }
+        @switch (Model)
+        {
+            case 6001:
+                <h2>@MessageResource.Shared_SystemErrorMessage_6001</h2>
+                break;
+            case 7001:
+                <h2>@MessageResource.Shared_SystemErrorMessage_7001</h2>
+                break;
+            case 7002:
+                <h2>@MessageResource.Shared_SystemErrorMessage_7002</h2>
+                break;
+            case 1001:
+                <h2>@MessageResource.Shared_SystemErrorMessage_1001</h2>
+                break;
+            case 6002:
+                <h2>@MessageResource.Shared_SystemErrorMessage_6002</h2>
+                break;
+            case 6003:
+                <h2>@MessageResource.Shared_ValidAttrMsg_InternalServerError_500</h2>
+                break;
+            case -1:
+                <h2>@MessageResource.AdminRole_Accessdenied</h2>
+                break;
+            case 500:
+                {
+                    <h2>@MessageResource.Shared_SystemErrorMessage_500 <a style="font-size:10px;" href="@Url.Action("Logout", "Authen")">@LayoutResource.ErrorPage_Logout</a></h2>
+                    break;
+                }
+            case 401:
+                {
+                    string message = string.Format(MessageResource.Shared_SystemErrorMessage_401, fullName);
+                    <h2>@message<a style="font-size:10px;" href="@Url.Action("Logout", "Authen")">@LayoutResource.ErrorPage_Logout</a></h2>
+                    break;
+                }
+            case 403:
+                {
+                    string message = string.Format(MessageResource.Shared_SystemErrorMessage_403, fullName);
+                    <h2>@message <a style="font-size:10px;" href="@Url.Action("Logout", "Authen")">@LayoutResource.ErrorPage_Logout</a></h2>
+                    break;
+                }
+            case 404:
+                {
+                    <h2>@MessageResource.Shared_SystemErrorMessage_404</h2>
+                    break;
+                }
+            default:
+                <h2>@MessageResource.Shared_SystemErrorMessage_Default<a style="font-size:10px;" href="@Url.Action("Logout", "Authen")">@LayoutResource.ErrorPage_Logout</a></h2>
+                break;
+        }
+
+
+        <a href="/" class="btn btn-master" target="_top">@MessageResource.Shared_BackToHome</a>
+
+    </div>
+    
+</body>
+</html>

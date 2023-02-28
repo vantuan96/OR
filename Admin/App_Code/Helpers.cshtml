@@ -1,0 +1,31 @@
+﻿@using Admin.Models;
+
+@helper Paging(int TotalRow, int PageIndex, bool IsShowCount = true, int PageSize = 10)
+{
+var pagingObj = new PagingModel(TotalRow, PageIndex, PageSize);
+
+if (pagingObj.LastPage > 1)
+{
+        <div class="row" style="margin-top: 5px" id="divPaging">
+            @if (IsShowCount)
+            {
+                <div class="col-md-5 clearfix col-sm-5">
+                    <div class="dataTables_info">@*Show items from @pagingObj.StartRowIndex to @pagingObj.EndRowIndex in @TotalRow patients (*@Hiển thị từ @pagingObj.StartRowIndex đến @pagingObj.EndRowIndex trong @TotalRow bản ghi@*)*@</div>
+                </div>
+            }
+
+            <div class="col-md-7 clearfix col-sm-7">
+                <div class="dataTables_paginate paging_simple_numbers">
+                    <ul class="pagination pagination-sm">
+                        @foreach (var r in pagingObj.ListButton)
+                        {
+                            <li class="@r.CssClass">
+                                <a href="@r.Href">@r.InnerText</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+}
+}

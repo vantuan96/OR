@@ -1,0 +1,409 @@
+﻿@using Admin.Models.QueuePatients;
+@using Contract.QueuePatient;
+@model PatientModel
+
+@{
+    ViewBag.Title = "Danh sách thông tin bệnh nhân";
+    var fromdate = Model.FromDate.ToString(StringHelper.DateShortFormat);
+    var todate = Model.ToDate.ToString(StringHelper.DateShortFormat);
+    var hidenFromdate = Model.FromDate.ToString(StringHelper.EnglishDateShortFormat);
+    var hidenTodate = Model.ToDate.ToString(StringHelper.EnglishDateShortFormat);
+    Layout = "~/Views/Shared/_LayoutQueuePatient.cshtml";
+}
+@section styles{
+    @Styles.Render("~/styles_searchfrm")
+    <style>
+        table.table.table-striped > thead > tr > th {
+            height: 25px;
+            background-color: #dbdbdb;
+        }
+
+         .guarantees .bootstrap-themes-icon-check-circle {
+            margin-right: 3px!important;
+            font-size: 12px!important;
+            color: #2AD8A2!important;
+            margin-top:0px;
+            margin-bottom:0px!important;
+            padding-bottom:0px!important;
+            padding-top:0px!important;
+        }
+        ul, menu, dir {
+            display: block;
+            list-style-type: none;
+            -webkit-margin-before: 1em;
+            -webkit-margin-after: 1em;
+            -webkit-margin-start: 0px;
+            -webkit-margin-end: 0px;
+            -webkit-padding-start: 5px;
+            margin-top:0px;
+            margin-bottom:0px!important;
+            padding-bottom:0px!important;
+            padding-top:0px!important;
+       }
+       li {
+            display: list-item;
+            text-align: -webkit-match-parent;
+        }
+
+       .bootstrap-themes-icon-check-circle:before {
+            content: '\e804';
+        }
+        [class^="bootstrap-themes-icon-"]:before, [class*=" bootstrap-themes-icon-"]:before {
+            font-family: "bootstrap-themes"!important
+            font-style: normal;
+            font-weight: normal;
+            speak: none;
+            display: inline-block;
+            text-decoration: inherit;
+            width: 1em;
+            margin-right: .2em;
+            text-align: center;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1em;
+            margin-left: .2em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    *, *::before, *::after {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    body{padding-top:0px!important;font-size:12px!important;}
+    body .badge{font-size:12px!important;}
+    .page_content{padding:0px!important;}
+
+    .info-table {
+        font-size: 1.6rem;
+    }
+
+    </style>
+}
+<div id="main_wrapper" style="margin-left:0px;">
+    <div class="page_bar clearfix">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="">
+                    <h1 class="page_title">OPERATION ROOM INFO (Thông tin phòng mổ)</h1>
+                    <span class="text-muted"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page_content">
+        <div class="container-fluid">
+            <div class="panel panel-default" style="display:none;">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.AntiForgeryToken()
+                            <form action="@Url.Action("ViewPatientsPublic", "QueuePatient")" method="get" id="searchform"                                
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>@LayoutResource.Shared_FromDateLabel</label>
+                                        <input id="from_date" class="form-control" value="@fromdate" data-date-format="@Extension.DateShortFormatJS" data-date-autoclose="true" readonly="true" />
+                                        <input id="hidden_from_date" type="hidden" class="fromDateHidden form-control" value="@hidenFromdate" name="fromDate" />
+                                        <input id="hidden_to_date" type="hidden" class="fromDateHidden form-control" value="@hidenTodate" name="toDate" />
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="input-group">
+                                            <label>
+                                                @LayoutResource.Shared_ToDateLabel
+                                            </label>
+                                            <input id="to_date" class="form-control" value="@todate" data-date-format="@Extension.DateShortFormatJS" data-date-autoclose="true" readonly="true" />
+                                            <span class="input-group-btn">
+                                                <label>&nbsp; </label>
+                                                <button id="view" type="submit" class="btn btn-master btn-search"><i class="fa fa-search"></i></button>
+                                              
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="panel-heading">Kết quả</div>*@
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @if (Model != null && Model.listData != null && Model.listData.Count > 0)
+                            {
+                                <div class="table-responsive">
+                                    <table class="table table-striped info-table margin_b0 table_booking table_week">
+                                        <thead>
+                                            <tr>
+                                                <th class="sub_col" style="min-width: 100px; width: 120px">Room Number<br/>(Phòng mổ) </th>
+                                                <th class="sub_col" style="max-width: 30px; width: 30px">Stt</th>
+                                                <th class="sub_col" style="min-width: 90px; width: 90px">Start Time<br />(Thời gian bắt đầu) </th>
+                                                <th class="sub_col" style="max-width:90px; width:90px">End Time<br/>(Thời gian kết thúc)</th>
+                                                <th class="sub_col" style="max-width: 150px; width: 200px">Patient info<br />(Thông tin bệnh nhân)</th>
+                                                @*<th class="sub_col" style="max-width: 60px; width: 60px">Ward<br />(Khu vực)</th>*@
+
+                                                <th class="sub_col" style="max-width: 150px; width: 150px">Surgeon/Anesth<br />(Ekip phẩu thuật)</th>
+                                                @*<th class="sub_col" style="max-width: 100px; width: 100px">Type of anesth<br />(Loại gây mê)</th>*@
+                                                <th class="sub_col" style="max-width: 200px; width: 200px">Procedure<br />(Tên phẩu thuật)</th>
+                                                <th class="sub_col" style="max-width: 70px; width: 160px">Status<br />(Trạng thái)</th>
+                                                @*<th class="sub_col" style="max-width: 230px; width: 230px">Remarks<br />(Ghi nhận)</th>*@                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tlbContent">
+                                            @{var rownumber = (Model.PageNumber - 1) * Model.PageCount;
+                                                var listRoom = Model.listData.Select(c => c.RoomId);
+                                                var currentRoomId = 0;
+                                                var countPatientByRoom = 0;
+
+                                            }
+                                            @foreach (var item in Model.listData)
+                                            {
+                                                
+                                                var boldBorder = "border-top-width:1px!important;";
+                                                var backgroundState = @Html.StateBackgroundColorPatient(@item.State);
+
+                                                <tr>
+                                                  
+                                                    @if(@item.RoomId!=@currentRoomId){
+                                                        currentRoomId= item.RoomId??1;
+                                                        countPatientByRoom = Model.listData.Where(c => c.RoomId == currentRoomId).Count();
+                                                        rownumber = 0;
+                                                        <td class="text-center" rowspan="@countPatientByRoom">
+                                                            <span class="text-center" style="font-weight:bold;">@item.RoomHospital.Name</span>
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        countPatientByRoom= 0;
+                                                    }
+                                                      <td class="text-center">
+                                                          <span class="text-center">@(++rownumber)</span>
+                                                      </td>
+                                                    
+                                                    
+                                                    <td class="text-center">
+                                                        <span class="text-center">@((item.StartDate).ToString(StringHelper.DateTimeNoSecondFormat))</span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span class="text-center">@((item.EndDate).ToString(StringHelper.DateTimeNoSecondFormat))</span>
+                                                    </td>
+                                                   
+                                                    <td style="white-space: inherit;@boldBorder;width:250px;">
+                                                        <ul class="guarantees">
+
+                                                        <li><i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">PID (Mã Bệnh Nhân) </span>: <span class="label label-success"> @(item.PId.Trim()) </span></li>
+                                                        
+                                                        <li style="padding-top:2px!important;">
+                                                            <i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">Age (Tuổi) </span>: <span class="badge badge-primary">@item.Age</span>
+                                                        </li>
+                                                              
+                                                        <li><i class="bootstrap-themes-icon-check-circle"></i>    <span style="font-weight:bold;">Sex (Giới tính) </span>: <span>@EnumExtension.GetDescription((SexEnum)@item.Sex)</span></li>
+
+                                                        </ul>                                                    
+                                                    </td>     
+                                                    @*<td>
+                                                        @item.AreaName
+                                                    </td>*@
+                                                    <td >
+                                                        <ul class="guarantees">
+                                                            @if (!string.IsNullOrEmpty(item.EkipName))
+                                                            {
+                                                                 <li><i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">Surgeon</span>: <span > @item.EkipName </span></li>
+                                                            }
+                                                            @if(!string.IsNullOrEmpty(item.EKipAnesth)){
+                                                                <li style="padding-top:2px!important;">
+                                                                    <i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">Anesth</span>: <span>@item.EKipAnesth</span>
+                                                                </li>
+                                                            }
+                                                          
+                                                        </ul>                                                    
+                                                    </td>
+                                                    @*<td>
+                                                        @item.TypeName
+                                                    </td>*@  
+                                                    <td style='width:200px!important;'>
+                                                        @item.ServiceName
+                                                    </td>                                                         
+                                                    <td style="text-align:center;white-space: inherit;background:@backgroundState!important;width:160px;">
+
+                                                        <div style="font-size:12px;" data-status="@item.State">@EnumExtension.GetDescription((PatientStateEnum)item.State)</div>
+                                                        @if(@item.IsEmergence)
+                                                        {
+                                                            <span class="badge badge-danger"> Cấp cứu(Emergency) </span>
+                                                        }
+                                                        
+                                                    </td>
+                                                    @*<td>
+                                                        @item.Description
+                                                    </td>*@                                                    
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                              <input type="hidden" id="PageNumber" name="PageNumber" value="@Model.PageNumber">
+                              <input type="hidden" id="LastPage" name="LastPage" value="@EnumExtension.GetLastPage(Model.TotalCount, Model.PageCount)">
+                              @Helpers.Paging(Model.TotalCount, Model.PageNumber, true, Model.PageCount)
+                            }
+                            else
+                            {
+                                @Html.Partial("_ErrorOccur", "Không có thông tin bệnh nhân")
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    @Scripts.Render("~/javas_searchfrm")
+
+    <script>
+        $(function () {
+
+            if (($('#from_date').length) && ($('#to_date').length)) {
+                $('#from_date').datepicker({
+                    todayHighlight: true,
+                    endDate: moment($('#to_date').val(), '@Extension.DateShortFormatJS.ToUpper()', true).toDate()
+                }).on('changeDate', function (e) {
+                    $('#to_date').datepicker('setStartDate', e.date);
+                    $('#hidden_from_date').val(moment($('#from_date').val(), '@Extension.DateShortFormatJS.ToUpper()', true).format('@Extension.DateSubmitFormatJS.ToUpper()'));
+                });
+                $('#to_date').datepicker({
+                    todayHighlight: true,
+                    startDate: moment($('#from_date').val(), '@Extension.DateShortFormatJS.ToUpper()', true).toDate(),
+                    endDate: moment().toDate()
+                }).on('changeDate', function (e) {
+                    $('#from_date').datepicker('setEndDate', e.date)
+                    $('#hidden_to_date').val(moment($('#to_date').val(), '@Extension.DateShortFormatJS.ToUpper()', true).format('@Extension.DateSubmitFormatJS.ToUpper()'));
+                });
+
+                $('#from_date,#to_date').keypress(function (event) {
+                    event.preventDefault();
+                    return false;
+                });
+
+                $('#from_date,#to_date').bind("cut copy paste", function (e) {
+                    e.preventDefault();
+                    return false;
+                });
+
+            }
+            //Reset table width if < container width
+            if ($("#tbData").css("width") != undefined) {
+                var curWidth = $("#tbData").css("width").replace("px", "");
+                if ($("#tbData").parent().width() > parseInt(curWidth, 10)) {
+                    $("#tbData").css("width", $("#tbData").parent().width()).css("maxWidth", $("#tbData").parent().width());;
+                }
+            }
+            setInterval(function () { UpdateDashboard(); }, 10000);
+        });
+        function UpdateDashboard() {
+            checkIsLogin("QueuePatient.ViewPublic");
+            ShowOverlay(true);
+            var postData = new Array();
+            var pageIndex = $("#PageNumber").val();
+            var totalPage=
+            postData.push({ name: 'pageIndex', value: ($("#PageNumber").val() != null) ? $("#PageNumber").val() : 0 });
+            postData.push({ name: 'totalPage', value: ($("#LastPage").val() != null) ? $("#LastPage").val():0 });
+            commonUtils.postAjaxWithToken('/QueuePatient/ViewPatientsPublicByJson/', postData, function (model)
+            {
+                HideOverlay();
+                if (model == "" || model == undefined) {
+                    //$("#tlbContent").update();
+                    window.location.reload(true);
+                    return;
+                }
+                //show ds patients
+                var listPatients = model.listData;
+                var tblContent = $("#tlbContent");
+                if (typeof tblContent.html() === "undefined") {
+                    window.location.reload(true);
+                }
+                
+                if (listPatients != null && listPatients.length > 0)
+                {
+                    tblContent.empty();
+                    var boldBorder = "border-top-width:1px!important;";
+                    var rownumber = (model.PageNumber - 1) * model.PageCount;
+                    var listRomm = model.listRoom;
+                    var currentRoomId = 0;
+                    var countPatientByRoom = 0;
+                    var  htmlPatient="";
+                    var boldBorder = "border-top-width:1px!important;";
+                    $(listPatients).each(function (k, it) {
+                        var backgroundState = it.Color;
+                        htmlPatient+="<tr>";
+
+                        if(it.RoomId!=currentRoomId){
+                            currentRoomId = it.RoomId;
+                            countPatientByRoom = 0;
+                            for (var i = 0; i < listPatients.length; i++) {
+                                if (listPatients[i].RoomId == currentRoomId) countPatientByRoom++;
+                            }
+                            rownumber = 0;
+                            htmlPatient +="<td class='text-center' rowspan='"+countPatientByRoom+"'>";
+                            htmlPatient +="    <span class='text-center' style='font-weight:bold;'>"+it.RoomHospitalName+"</span>";
+                            htmlPatient += "</td>";
+                        }
+                        else
+                        {
+                            countPatientByRoom= 0;
+                        }
+                        htmlPatient +="<td class='text-center'>";
+                        htmlPatient +="<span class='text-center'>"+(++rownumber)+"</span>";
+                        htmlPatient +="</td>";
+                        htmlPatient +="<td class='text-center'>";
+                        htmlPatient +=" <span class='text-center'>"+(it.StartDate)+"</span>";
+                        htmlPatient +="</td>";
+                        htmlPatient +="<td class='text-center'>";
+                        htmlPatient +="<span class='text-center'>"+(it.EndDate)+"</span>";
+                        htmlPatient +="</td>";
+
+                        htmlPatient +="<td style='white-space: inherit;"+boldBorder+";width:190px;'>";
+                        htmlPatient +=" <ul class='guarantees'>";
+                        htmlPatient +="<li><i class='bootstrap-themes-icon-check-circle'></i><span style='font-weight:bold;'>PID (Mã Bệnh Nhân) </span>: <span class='label label-success'>"+ it.PId+" </span></li>";
+
+                        htmlPatient +="<li style='padding-top:2px!important;'>";
+                        htmlPatient +="<i class='bootstrap-themes-icon-check-circle'></i><span style='font-weight:bold;'>Age (Tuổi) </span>: <span class='badge badge-primary'>"+it.Age+"</span>";
+                        htmlPatient +="</li>";
+                        htmlPatient +="<li><i class='bootstrap-themes-icon-check-circle'></i>    <span style='font-weight:bold;'>Sex (Giới tính) </span>: <span>"+(it.Sex==1?"Nam":it.Sex==2?"Nữ":"Chưa xác định")+"</span></li>";
+                        htmlPatient +="</ul>";
+                        htmlPatient +="</td>";
+                        //htmlPatient +="<td>"+ it.AreaName+"</td>";
+                        htmlPatient +="<td ><ul class='guarantees'>";
+                        if (it.EkipName!='')
+                        {
+                            htmlPatient +="<li><i class='bootstrap-themes-icon-check-circle'></i><span style='font-weight:bold;'>Surgeon</span>: <span >"+ it.EkipName +"</span></li>";
+                        }
+                        if(it.EKipAnesth!=''){
+                            htmlPatient +="<li style='padding-top:2px!important;'><i class='bootstrap-themes-icon-check-circle'></i><span style='font-weight:bold;'>Anesth</span>: <span>"+it.EKipAnesth+"</span></li>";
+
+                        }
+                        htmlPatient +="</ul></td>";
+                        htmlPatient +="<td style='width:200px;'>"+it.ServiceName+"</td>";
+                        htmlPatient +="<td style='text-align:center;white-space: inherit;background:"+backgroundState+"!important;width:160px;'>";
+                        htmlPatient += "<div style='font-size:12px;' data-status='" + it.State+"'>" + it.Statename + "</div>";
+                        if(it.IsEmergence)
+                        {
+                            htmlPatient +="<span class='badge badge-danger'> Cấp cứu(Emergency) </span>";
+                        }
+                        //htmlPatient +="</td><td>"+it.Description+"</td></tr>";
+                    });
+                    tblContent.html(htmlPatient);
+                    $("#PageNumber").val(model.PageNumber);
+                    $("#LastPage").val(model.LastPage);
+                    var divPaging = $("#divPaging");
+                    if (divPaging != null && divPaging != undefined) {
+                        var pageHtml = model.HtmlPaging;
+                        divPaging.html(pageHtml);                        
+                    }
+                    else divPaging.html('');                    
+                }
+            });
+        }
+    </script>
+}

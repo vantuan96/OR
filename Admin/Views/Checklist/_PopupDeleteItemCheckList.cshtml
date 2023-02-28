@@ -1,0 +1,31 @@
+﻿
+
+<div class="modal fade modal_booking" id="notice_delete_item" aria-hidden="true" data-backdrop="static" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h2 class="modal-title title-popup">@LayoutResource.AdminTools_Item_PopUp_Delete_TitlePage</h2>
+                <br />
+            </div>
+            <div class="modal-body">
+                <div class="body_booking">
+                    <div class="dis_tbl">
+                        <p class="dis_tbl_r" style="margin-top: 10px;">
+                            <strong class="dis_tbl_c text-left">@LayoutResource.AdminTools_Item_PopUp_Delete_ItemName</strong>&nbsp;
+                            <span class="dis_tbl_c"><span class="user_fullname"></span></span>
+                        </p>
+                        <p class="dis_tbl_r" style="margin-top: 10px;">
+                            <strong class="dis_tbl_c text-left">@LayoutResource.AdminTools_Item_PopUp_Delete_Description</strong>&nbsp;
+                            <a href="#" class="dis_tbl_c user_email"></a>
+                        </p>
+                    </div>
+                    <p class="desc null">@Html.Raw(LayoutResource.AdminTools_Item_PopUp_Delete_Confirm)</p>
+                    <div class="btn-wrapper text-right">
+                        <button class="btn btn-default btn-submit" type="submit" tabindex="7"><i class="fa fa fa-trash-o"></i>&nbsp;@LayoutResource.Shared_BtnText_Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,144 @@
+﻿@using DataAccess.Models;
+@model Blocktime_view
+@{
+    string errorMessage = ViewBag.ErrorMessage as string;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="modal_booking modal_booking_iframe">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h2 class="modal-title title-popup">
+            @if (Model == null || (Model != null && Model.id == 0))
+            {
+                @(LayoutResource.Shared_AddNew)
+            }
+            else
+            {
+                @(LayoutResource.Shared_Edit)
+            }
+        </h2>
+        <p class="place"></p>
+    </div>
+    <div class="modal-body">
+        <div class="body_booking">
+
+            @if (string.IsNullOrEmpty(errorMessage) == false)
+            {
+                @Html.Partial("_ErrorOccur", errorMessage)
+            }
+            else if (Model == null)
+            {
+                @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+            }
+            else
+            {
+                using (Ajax.BeginForm("CreateUpdateBlocktime", "QueuePatient", new AjaxOptions { HttpMethod = "Post", OnSuccess = "SaveResult" }, new { onsubmit = "removeDisabled();$('#err_msg').html('').hide();" }))
+                {
+                    @Html.Hidden("id", Model.id) 
+                    @Html.Hidden("Ehos_Iddv",Model.Ehos_Iddv)
+                    @Html.AntiForgeryToken()
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.LabelFor(x => x.MaDV, "MaDV", new { @class = "req" })
+                            @Html.TextBoxFor(x => x.MaDV, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.MaDV)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.LabelFor(x => x.TenDv, "TenDv", new { @class = "req" })
+                            @Html.TextBoxFor(x => x.TenDv, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.TenDv)
+                        </div>
+                    </div>
+                    @*<div class="row">
+                        <div class="col-xs-12">
+                            @Html.LabelFor(x => x.Ehos_Iddv, "Ehos_Iddv")
+                            @Html.TextBoxFor(x => x.Ehos_Iddv, new { @class = "form-control" })
+                        </div>
+                    </div>*@
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.LabelFor(x => x.AnesthesiaTime, "AnesthesiaTime")
+                            @Html.TextBoxFor(x => x.AnesthesiaTime, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.LabelFor(x => x.CleaningTime, "CleaningTime")
+                            @Html.TextBoxFor(x => x.CleaningTime, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.LabelFor(x => x.PreparationTime, "PreparationTime")
+                            @Html.TextBoxFor(x => x.PreparationTime, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.LabelFor(x => x.OtherTime, "OtherTime")
+                            @Html.TextBoxFor(x => x.OtherTime, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group relative not_input_error not_input_error_popup" style="top: 0;">
+                            <span id="err_msg" class="field-validation-error" style="display:none"></span>
+                        </div>
+                    </div>
+                    <div class="btn-wrapper text-right">
+                        <button class="btn btn-accept" tabindex="8" type="submit"><i class="fa fa-save"></i>&nbsp;@LayoutResource.Shared_BtnText_Save</button>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@section styles{
+    <style>
+        .select2-results .select2-disabled {
+            display: none;
+        }
+    </style>
+}
+@section scripts{
+    @if (ViewBag.IsSuccess != null && (bool)ViewBag.IsSuccess)
+    {
+        TempData[AdminGlobal.ActionMessage] = ViewBag.ActionMessage;
+
+        <script type="text/javascript">
+            parent.window.location.reload();
+        </script>
+    }
+
+    <script>
+        function removeDisabled() {
+            $("#DTT_Id,#TypeCode,#TypeName,#Description").removeAttr("disabled");
+            $("#err_msg").html("").hide();
+        }
+
+        function SaveResult(data)
+        {
+            if (!data.Id)
+            {
+                $("#err_msg").html(msg_lang.Shared_SystemErrorMessage).show();
+                HideOverlay(0);
+            }
+            else if (data.Id == 200201 || data.Id == 200202)
+            {
+                parent.window.location.reload();
+            }
+            else
+            {
+                $("#err_msg").html(data.Message).show();
+                HideOverlay(0);
+            }
+        }
+        $(function () {
+            $("#MaDV").focus();
+        });
+    </script>
+}

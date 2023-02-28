@@ -1,0 +1,330 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var SessionUserInfo = MvcHelper.GetUserSession(Context.ApplicationInstance.Context);
+
+    string countNotification = string.Empty;
+    string logo = ViewBag.Logo ?? "";
+    var currentLoc = SessionUserInfo.CurrentLocaltion;
+}
+@if (!MvcHelper.IsIEBrowser(Context.ApplicationInstance.Context) || 1 == 1)
+{
+    <header class="navbar navbar-fixed-top" role="banner">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="/" class="navbar-brand" draggable="false">
+                    @if (logo.EndsWith(".png"))
+                    {
+                        <img src="~/Assets/img/@logo" width="142" height="42" alt="">
+                    }
+                    else
+                    {
+                        @(logo)
+                    }
+                </a>
+            </div>
+            <div class="div_menu">
+                @if (ViewBag.HideMenu == null)
+                {
+                    <a href="javascript:void(0)" class="slidebar-toggle slidebar-toggle_menu Tip_mouse_on">
+                        <span class="navbar_el_icon ion-navicon"></span>
+                    </a>
+                }
+                <p class="title-site">@ViewBag.ToolName</p>
+            </div>
+            <ul class="nav navbar-nav navbar-right nav_right_menu">
+                @*@if (SessionUserInfo.CurrentMicrosite!=null && !string.IsNullOrEmpty(SessionUserInfo.CurrentMicrosite.Title))
+        {
+            <li class="li_border">
+                <a class="Tip_mouse_on" title="@LayoutResource.Shared_CurrentMicrositeTip: @SessionUserInfo.CurrentMicrosite.Title.ToUpper()"
+                    href="@Url.Action("ChangeMicrosite", "UserProfile", new { smn = 1, refurl=Request.Url.ToString() })">
+                    <span class="fa fa-window-restore " style="float:left;margin-right:7px;margin-top: 4px;font-size:16px"></span>
+                 <span class="navbar_el_title">@SessionUserInfo.CurrentMicrosite.Title.ToUpper()</span>
+                </a>
+            </li>
+        }*@
+                <li class="li_border switch-site">
+                    <a class="dropdown-toggle" data-toggle="dropdown" style="padding:10px 7px;">
+                        <img data-name="@SessionUserInfo.UserAccount" class="user-image" alt="User Image" />
+                        <span class="navbar_el_title" style="max-width:unset;">
+                            @SessionUserInfo.DisplayName.Split('(')[0]
+                        @if (currentLoc != null)
+                        {
+                            <font> - </font><span class="text-site">@currentLoc.NameVN</span>
+                        }
+                    </span>
+                    @if (SessionUserInfo.Locations != null && SessionUserInfo.Locations.Count > 1)
+                    {
+                        <span class="caret" style="float: right;margin-top: 10px;margin-left:7px"></span>
+                    }
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right site-list">
+                    @foreach (var item in SessionUserInfo.Locations)
+                    {
+                        if (item.LocationId != SessionUserInfo.CurrentLocationId)
+                        {
+                            <li><a id="hos_@item.LocationId" data-id="@item.LocationId" href="javascript:switchSite('hos_@item.LocationId')" class="btn-social btn-dropbox"><i class="fa fa-hospital-o"></i>@item.NameVN</a></li>
+                        }
+                    }
+                </ul>
+            </li>
+            <li class="user_menu">
+                @Html.AntiForgeryToken()
+                <a class="dropdown-toggle" data-toggle="dropdown" style="padding:10px 7px">
+                    <span class="glyphicon glyphicon-user" style="font-size: 18px;"></span>
+                    @*<span class="navbar_el_title">@LayoutResource.Layout_Label_Hi @SessionUserInfo.DisplayName !</span>*@
+                    <span class="caret" style="float: right;margin-top: 10px;margin-left:7px"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    @if (SessionUserInfo.ListMicrosites.IsNotNullAndNotEmpty() && SessionUserInfo.ListMicrosites.Count > 1)
+                    {
+                        <li><a href="@Url.Action("ChangeMicrosite", "UserProfile", new { smn = 1, refurl=Request.Url.ToString() })">@LayoutResource.Layout_Label_ChangeMicrosite</a></li>
+                    }
+                    <li><a href="@Url.Action("Index", "UserProfile")">@LayoutResource.Layout_Label_UserProfile</a></li>
+                    <li><a href="@Url.Action("Logout", "Authen")">@LayoutResource.Layout_Label_Logout</a></li>
+                </ul>
+            </li>
+            <li class='dropdown messages-menu showApp' id='dropdown_select_apps'>
+
+            </li>
+            </ul>
+        </div>
+    </header>
+    @RenderBody()
+    if (ViewBag.HideMenu == null)
+    {
+        @Html.Partial("_LeftMenu")
+    }
+    <script type="text/javascript">
+          @Html.JsMinify(@<text>
+
+            _isIframe = false;
+
+            $(function () { $(window).scroll(function () { if ($(this).scrollTop() != 0) { $('#bttop').stop(true, false).slideDown(); } else { $('#bttop').stop(true, false).slideUp(); } }); $('#bttop').click(function () { $('body,html').animate({ scrollTop: 0 }, 800); }); });
+
+            $(window).load(function () {
+                HideOverlay();
+            });
+            </text>)
+    </script>
+    <div id='bttop' style="display: none" class="btn btn-master hvr-bob"><i class="fa fa-angle-double-up" style=""></i></div>
+}
+else
+{
+
+    <style type="text/css">
+        /*No script*/
+        .noscript {
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: fixed;
+            z-index: 1032;
+            top: 0;
+            font-family: Arial;
+        }
+
+            .noscript .main_wrapper {
+                margin: 200px auto 0 auto;
+                width: 100%;
+                text-align: center;
+                color: #ffffff;
+                position: absolute;
+                top: 50%;
+                font-family: Arial;
+                margin-top: -114px;
+                left: 0;
+            }
+
+                .noscript .main_wrapper h1 {
+                    font-size: 101px;
+                    font-weight: 100;
+                    margin-bottom: 0;
+                    margin-top: 0;
+                    letter-spacing: -3px;
+                    font-family: Arial;
+                    line-height: 1.1;
+                }
+
+                    .noscript .main_wrapper h1 sub {
+                        font-size: 24px;
+                        position: absolute;
+                        left: 50%;
+                        margin-left: 270px;
+                        top: 83px;
+                        letter-spacing: 0;
+                    }
+
+                        .noscript .main_wrapper h1 sub span {
+                            font-size: 15px;
+                            font-style: italic;
+                        }
+
+                .noscript .main_wrapper h4 {
+                    font-weight: normal;
+                }
+
+        .ul_logo {
+            margin: 52px auto;
+            display: block;
+        }
+
+            .ul_logo li {
+                display: inline;
+                list-style-type: none;
+                margin: 0 27px;
+            }
+
+        .logo_browser {
+            width: 128px;
+            height: 128px;
+            display: inline-block;
+            cursor: pointer;
+        }
+    </style>
+    <div>
+        <div class="bg_black_noscript"></div>
+        <div class="noscript">
+            <div class="main_wrapper">
+                <h1>Oops!..<sub><span> @LayoutResource.Shared_BrowserNotSupported</span></sub></h1>
+                <h4>
+                    @Html.Raw(LayoutResource.Shared_BrowserNotSupportedDetail)
+                </h4>
+                <ul class="ul_logo">
+                    <li>
+                        <a class="logo_browser logo_ie" target="_blank" href="http://www.microsoft.com/vi-vn/download/details.aspx?id=40902" title="Nâng cấp phiên bản mới nhất của Internet Explorer">
+                            <img src="~/assets/img/logo_ie.png" />
+                        </a>
+                    </li>
+                    <li>
+                        <a class="logo_browser logo_chrome" target="_blank" href="https://www.google.com/intl/vi/chrome/browser/desktop/index.html" title="Tải về Chrome">
+                            <img src="~/assets/img/logo_chrome.png" />
+                        </a>
+                    </li>
+                    <li>
+                        <a class="logo_browser logo_firefox" target="_blank" href="https://www.mozilla.org/vi/firefox/new/" title="Tải về Firefox">
+                            <img src="~/assets/img/logo_firefox.png" />
+                        </a>
+                    </li>
+                    <li>
+                        <a class="logo_browser logo_opera" target="_blank" href="http://www.opera.com/vi/computer/windows" title="Tải về Opera">
+                            <img src="~/assets/img/logo_opera.png" />
+                        </a>
+                    </li>
+                    <li>
+                        <a class="logo_browser logo_safari" target="_blank" href="https://support.apple.com/kb/DL1531?locale=en_US" title="Tải về Safari">
+                            <img src="~/assets/img/logo_safari.png" />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="hidden">
+        @RenderBody()
+    </div>
+}
+@Html.Partial("_PopupSwitchSite")
+@section styles{
+    @RenderSection("styles", required: false)
+    @RenderSection("style", required: false)
+}
+
+@section scripts{
+    @RenderSection("scripts", required: false)
+    @RenderSection("script", required: false)
+
+}
+<script type="text/javascript">
+    var default_url = '@Url.Action(SessionUserInfo.DefaultAction.ActionName, SessionUserInfo.DefaultAction.ControllerName)';
+    var switch_site_url = '@Url.Action("ChangeSite", "UserProfile")';
+    var checklogin_url = '@Url.Action("CheckLogin", "Authen")';
+    function AjaxPost(url) {
+        return $.ajax({
+            type: "GET",
+            datatype: "json",
+            url: url,
+        });
+    }
+    function AJAX_Post(url, id) {
+        return $.ajax({
+            type: "POST",
+            datatype: "json",
+            data: { id: id },
+            url: url
+        });
+    }
+    function fingerprint() {
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        var txt = 'i9asdm..$#po((^KbXrww!~cz';
+        ctx.textBaseline = "top";
+        ctx.font = "16px 'Arial'";
+        ctx.textBaseline = "alphabetic";
+        ctx.rotate(.05);
+        ctx.fillStyle = "#f60";
+        ctx.fillRect(125, 1, 62, 20);
+        ctx.fillStyle = "#069";
+        ctx.fillText(txt, 2, 15);
+        ctx.fillStyle = "rgba(102, 200, 0, 0.7)";
+        ctx.fillText(txt, 4, 17);
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = "blue";
+        ctx.fillRect(-20, 10, 234, 5);
+        var strng = canvas.toDataURL();
+
+        var hash = 0;
+        if (strng.length == 0) return 'nothing!';
+        for (i = 0; i < strng.length; i++) {
+            char = strng.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash;
+        }
+        return hash;
+    }
+    $(document).ready(function () {
+
+        var navigator_info = window.navigator;
+        var screen_info = window.screen;
+        var uid = navigator_info.mimeTypes.length;
+        uid += navigator_info.userAgent.replace(/\D+/g, '');
+        var hashCodeId = fingerprint() + uid
+        AJAX_Post("/Authen/PushUid", hashCodeId).done(function (response) {
+
+        });
+
+        AjaxPost("/Authen/GetListAppForm").done(function (response) {
+            $(".showApp").html(response);
+            $(".img-circle").initial({ charCount: 1, seed: 100, width: 50, height: 50, fontSize: 30 });
+        });
+        $('.user-image').initial({
+            charCount: 1, // Number of characherts to be shown in the picture.
+            //textColor: '#ffffff', // Color of the text
+            seed: 100, // randomize background color
+            height: 100,
+            width: 100,
+            fontSize: 60,
+            fontWeight: 400,
+            fontFamily: 'HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica, Arial,Lucida Grande, sans-serif',
+            radius: 0
+        });
+        $('.img-circle').initial({ charCount: 1, seed: 100, width: 90, height: 90, fontSize: 50 });
+        /*Event popup modal show*/
+        $("#iframePopup").on('shown.bs.modal', function (e) {
+            //var box = $('#iframePopup');
+            //hide.modal('hide');
+            if (checkIsLogin()) {
+                //box.show();
+                return true;
+            }
+            return false;
+        });
+        //Show Switch Site Popup
+        if (@SessionUserInfo.CurrentLocationId<= 0) {
+            showSwitchSitePopup();
+        }
+    });
+    function showSwitchSitePopup() {
+        var boxSwitchSite = $("#popup_switch_site");
+        boxSwitchSite.modal('show');
+    }
+</script>

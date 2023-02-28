@@ -1,0 +1,181 @@
+﻿@using Admin.Resource
+@using VG.Framework.Mvc
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <title>@LayoutResource.Shared_ToolTitle_LogoutPage</title>    
+    <style>
+        body {
+            font-family: Arial;
+        }
+
+        .navbar {
+            height: 50px !important;
+            max-height: 50px !important;
+            background-color: #E31837 !important;
+            min-height: 42px;
+            top: 0;
+            border-width: 0 0 1px;
+            position: fixed;
+            right: 0;
+            left: 0;
+            z-index: 1030;
+            background: #f9f9f9 !important;
+            background: -moz-linear-gradient(top, #f9f9f9 0%, #eeeeee 100%) !important;
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f9f9f9), color-stop(100%,#eeeeee)) !important;
+            background: -webkit-linear-gradient(top, #f9f9f9 0%,#eeeeee 100%) !important;
+            background: -o-linear-gradient(top, #f9f9f9 0%,#eeeeee 100%) !important;
+            background: -ms-linear-gradient(top, #f9f9f9 0%,#eeeeee 100%) !important;
+            background: linear-gradient(to bottom, #f9f9f9 0%,#eeeeee 100%) !important;
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', endColorstr='#eeeeee',GradientType=0 ) !important;
+            border-bottom: 1px solid #d3d3d3 !important;
+        }
+
+            .navbar .container-fluid {
+                margin-right: auto;
+                margin-left: auto;
+                padding-left: 0px;
+                height: 50px;
+                padding-right: 0;
+            }
+
+        .container-fluid > .navbar-header {
+            margin-right: 0 !important;
+        }
+
+        .navbar .navbar-brand {
+            font-size: 18px;
+            line-height: 20px;
+            float: left;
+            width: 220px;
+            background: #e32b2c;
+            display: block;
+            padding: 0;
+            height: 50px;
+        }
+
+            .navbar .navbar-brand span {
+                height: 42px;
+                display: block;
+                margin: 4px auto;
+                width: 142px !important;
+                background: url("/assets/img/logo.png") no-repeat 50% 50%;
+            }
+
+        .main_wrapper {
+            margin: 200px auto 0 auto;
+            width: 100%;
+            text-align: center;
+            color: #222;
+            position: absolute;
+            top: 50%;
+            margin-top: -114px;
+            left: 0;
+        }
+
+            .main_wrapper h1 {
+                font-size: 101px;
+                font-weight: 100;
+                margin-bottom: 0;
+                margin-top: 0;
+                letter-spacing: -3px;
+            }
+
+                .main_wrapper h1 sub {
+                    font-size: 24px;
+                    position: absolute;
+                    left: 50%;
+                    margin-left: 240px;
+                    top: 70px;
+                    letter-spacing: 0;
+                }
+
+                    .main_wrapper h1 sub span {
+                        font-size: 15px;
+                        font-style: italic;
+                    }
+
+            .main_wrapper h4 {
+                font-weight: normal;
+            }
+
+        a.btn {
+            background-color: #ed1c24;
+            box-shadow: 0px 1px 4px #333;
+            text-decoration: none;
+            padding: 3px 30px;
+            display: inline-block;
+            margin-top: 5px;
+            color: #ffffff;
+            cursor: pointer;
+            font-size: 20px;
+            line-height: 40px;
+            height: 40px;
+            border-bottom: 2px solid #b70d0b;
+        }
+
+        .btn-master {
+            background: #2684e4; /* Old browsers */
+            background: -moz-linear-gradient(top, #2684e4 0%, #2684e4 0%, #1576d8 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#2684e4), color-stop(0%,#2684e4), color-stop(100%,#1576d8)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top, #2684e4 0%,#2684e4 0%,#1576d8 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top, #2684e4 0%,#2684e4 0%,#1576d8 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top, #2684e4 0%,#2684e4 0%,#1576d8 100%); /* IE10+ */
+            background: linear-gradient(to bottom, #2684e4 0%,#2684e4 0%,#1576d8 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2684e4', endColorstr='#1576d8',GradientType=0 ); /* IE6-9 */
+            border: 1px solid #0d6fd0 !important;
+            height: 32px;
+            color: #fff;
+        }
+
+            .btn-master:hover {
+                background: #2684e4; /* Old browsers */
+                background: -moz-linear-gradient(top, #2684e4 0%, #3996f8 0%, #127ee8 100%); /* FF3.6+ */
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#2684e4), color-stop(0%,#3996f8), color-stop(100%,#127ee8)); /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(top, #2684e4 0%,#3996f8 0%,#127ee8 100%); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(top, #2684e4 0%,#3996f8 0%,#127ee8 100%); /* Opera 11.10+ */
+                background: -ms-linear-gradient(top, #2684e4 0%,#3996f8 0%,#127ee8 100%); /* IE10+ */
+                background: linear-gradient(to bottom, #2684e4 0%,#3996f8 0%,#127ee8 100%); /* W3C */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2684e4', endColorstr='#127ee8',GradientType=0 ); /* IE6-9 */
+                border: 1px solid #0d6fd0 !important;
+                color: #fff;
+            }
+
+            .btn-master:focus {
+                background: #2684e4; /* Old browsers */
+                background: -moz-linear-gradient(top, #2684e4 0%, #1273d4 0%, #0c65be 100%); /* FF3.6+ */
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#2684e4), color-stop(0%,#1273d4), color-stop(100%,#0c65be)); /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(top, #2684e4 0%,#1273d4 0%,#0c65be 100%); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(top, #2684e4 0%,#1273d4 0%,#0c65be 100%); /* Opera 11.10+ */
+                background: -ms-linear-gradient(top, #2684e4 0%,#1273d4 0%,#0c65be 100%); /* IE10+ */
+                background: linear-gradient(to bottom, #2684e4 0%,#1273d4 0%,#0c65be 100%); /* W3C */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2684e4', endColorstr='#0c65be',GradientType=0 ); /* IE6-9 */
+                border: 1px solid #0d6fd0 !important;
+                color: #fff;
+            }
+    </style>
+    <meta http-equiv="refresh" content="1;URL=@VG.Framework.Mvc.UrlExtension.UrlShema()">
+</head>
+<body>
+    <!-- top bar -->
+    <header class="navbar navbar-fixed-top" role="banner" style="">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="/" class="navbar-brand" target="_top">
+                    <span></span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- main content -->
+    <div class="main_wrapper">
+        <img src="/assets/img/ajax-loader.gif" />
+        <div class="err_desc" style="font-size:16px;color:#999;margin:20px 0 10px 0;font-style: italic">
+            @MessageResource.Authen_LogoutProcess
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,818 @@
+﻿@using Admin.Models.OR;
+@using Contract.Enum;
+@using Contract.OR;
+@model ORAnesthProgressModel
+@{
+    string errorMessage = ViewBag.ErrorMessage as string;
+    var canCUDAction = Functions.CheckAllowAction("OR", "SaveORRegistorByJson");
+    var SessionUserInfo = MvcHelper.GetUserSession(Context.ApplicationInstance.Context);
+
+}
+<div id="main_wrapper">
+    <div class="page_bar clearfix">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="">
+                    <h1 class="page_title">ĐĂNG KÝ CA MỔ</h1>
+                    <span class="text-muted"></span>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <form class="frmCUDInPatientReport form-horizontal" id="frmPopUp" method="post">
+        <div class="page_content" style="padding-bottom:10px;">
+            <div class="bg_page_fix"><i class="fa fa-users"></i></div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                @if (string.IsNullOrEmpty(errorMessage) == false)
+                                {
+                                    @Html.Partial("_ErrorOccur", errorMessage)
+                                }
+                                else if (Model == null)
+                                {
+                                    @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+                                }
+                                else
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("VisitCode", Model.VisitCode)
+                                    @Html.Hidden("PId", Model.PId)
+                                    @Html.Hidden("HoTen", Model.HoTen)
+                                    @Html.Hidden("Ages", Model.Ages)
+                                    @Html.Hidden("State", Model.State)
+
+                                    @Html.Hidden("HospitalCode", Model.HospitalCode)
+                                    @Html.Hidden("HospitalName", Model.HospitalName)
+                                    @Html.Hidden("Address", Model.Address)
+                                    @Html.Hidden("Email", Model.Email)
+                                    @Html.Hidden("PatientPhone", Model.PatientPhone)
+                                    @Html.Hidden("NgaySinh", Model.NgaySinh)
+                                    @Html.Hidden("Sex", Model.Sex)
+                                    @Html.Hidden("Id", Model.Id)
+                                    @Html.HiddenFor(x => x.NgaySinh)
+                                    @Html.Hidden("TimeAnesth", Model.TimeAnesth)
+                                    @Html.Hidden("CreatedBy", Model.CreatedBy)
+                                    @Html.Hidden("NameCreatedBy", Model.NameCreatedBy)
+                                    @Html.Hidden("EmailSurgeryDoctorManager", Model.EmailSurgeryDoctorManager)
+                                    @Html.Hidden("HpServiceName", Model.HpServiceName)
+                                    @Html.Hidden("ORRoomName", Model.ORRoomName)
+                                    @Html.HiddenFor(s => s.OrderID)
+                                    @Html.HiddenFor(s => s.ChargeDetailId)
+                                    @Html.HiddenFor(s => s.DepartmentCode)
+                                    //vutv7
+                                    @Html.HiddenFor(s => s.ChargeDate)
+                                    @Html.HiddenFor(s => s.ChargeBy)
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <h3 class="heading_a" style="color:#32c69a">THÔNG TIN BỆNH NHÂN</h3>
+                                                </div>
+                                                <div class="col-lg-6" style="text-align:right;">
+                                                    <!-- Bootstrap Radio Button Group -->
+                                                    <div class="btn-group" role="group">
+                                                        <input type="radio" name="surgeryType" class="btn-check" value="1" checked="@(Model.SurgeryType == 1)" id="radMoPhien">
+                                                        <label class="btn btn-outline-primary btn-with-border" for="radMoPhien">Mổ phiên</label>
+
+                                                        @*<input type="radio" name="surgeryType" class="btn-check" value="2" checked="@(Model.SurgeryType == 2)" id="radMoCapCuu">
+                                                            <label class="btn btn-outline-primary btn-with-border" for="radMoCapCuu">Mổ cấp cứu</label>*@
+
+                                                        <input type="radio" name="surgeryType" class="btn-check" value="3" checked="@(Model.SurgeryType == 3)" id="radThuThuat">
+                                                        <label class="btn btn-outline-primary btn-with-border" for="radThuThuat">Thủ thuật</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <address>
+                                                <p class="addres_name">
+                                                    <div class="row">
+                                                        <div class="col-md-1">
+                                                            <label>PID</label>
+                                                            @Model.PId
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <label>Họ và tên bệnh nhân </label>
+                                                            @Model.HoTen
+                                                        </div>
+                                                        <div class="col-sm-1 div_input_form_control_label">
+                                                            <label>Tuổi</label>
+                                                            @(Model.Ages ?? "unknown")
+                                                        </div>
+                                                        <div class="col-md-1 div_input_form_control_label">
+                                                            <label>Giới tính</label>
+                                                            <span class="text-normal">@(EnumExtension.GetDescription((SexTypeEnum)Model.Sex))</span>
+                                                        </div>
+                                                        <div class="col-md-1 div_input_form_control_label">
+                                                            <label>Ngày sinh</label>
+                                                            <span class="text-normal">@Model.ShowNgaySinh</span>
+                                                        </div>
+                                                        <div class="col-md-2 div_input_form_control_label">
+                                                            <label>Công ty PL</label>
+                                                            <span class="text-normal">@Model.HospitalName</span>
+                                                        </div>
+                                                    </div>
+
+                                                </p>
+                                            </address>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h3 class="heading_a" style="color:#32c69a">THÔNG TIN YÊU CẦU DỊCH VỤ MỔ</h3>
+                                            <address>
+                                                <p class="addres_name">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label class="req">Tên dịch vụ mổ</label>
+                                                            @{
+                                                                var dataItemService = Model.listHpServices.Select(c => new SelectListItemCustom()
+                                                                {
+                                                                    Selected = (Model.HpServiceId == c.Id),
+                                                                    Value = c.Id.ToString(),
+                                                                    Text = c.Name,
+                                                                    itemsHtmlAttributes = new Dictionary<string, string> { { "AnesthesiaTime", c.AnesthesiaTime.ToString() }, { "Name", c.Name.ToString() } }
+
+                                                                }).ToList();
+
+                                                                @*@Html.Raw(Html.DropDownListForCustomExt("HpServiceId", dataItemService, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangeHpService(this);" }))*@
+                                                                <select id="HpServices" class="form-control select2 select2-offscreen col-12" tabindex="6" , onchange="ChangeHpService(this);" @*disabled*@>
+                                                                    @*@if (Model.Charges != null)
+                                                                        {
+                                                                            foreach (var item in Model.Charges)
+                                                                            {
+                                                                                <option value="@item.OrderID//@item.ItemCode//@item.ChargeDetailId//@item.DepartmentCode//@item.LocationName">@item.ItemName</option>
+                                                                            }
+                                                                        }*@
+                                                                </select>
+                                                                @Html.HiddenFor(x => x.HpServiceId);
+                                                                @Html.ValidationMessageFor(x => x.HpServiceId)
+                                                            }
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <label>Thời gian gây mê </label>
+                                                            <span class="text-normal" id="spnTimeAnesth">@Model.TimeAnesth</span>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label class="req">Phòng mổ yêu cầu</label>
+                                                            @*tạm thời remove phòng mổ số 4 - HDN*@
+                                                            @*@Html.DropDownListFor(r => r.ORRoomId, new SelectList(Model.listORRooms, "Id", "Name"), new { @class = "form-control select2-nosearch select2-offscreen", tabindex = "2", onchange = "ChangeORRooms(this);" })*@
+                                                            @Html.DropDownListFor(r => r.ORRoomId, new SelectList(Model.listORRooms.Where(x => x.Id != 8), "Id", "Name"), new { @class = "form-control select2-nosearch select2-offscreen", tabindex = "2", onchange = "ChangeORRooms(this);" })
+                                                            @*<select id="ORRoomId" class = "form-control select2-nosearch select2-offscreen" tabindex = "2" onchange = "ChangeORRooms(this);"></select>*@
+                                                            @Html.ValidationMessageFor(x => x.ORRoomId)
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <label> Ngày thực hiện ca mổ</label>
+                                                            @Html.TextBoxFor(x => x.ShowdtOperation, new { @class = "form-control", placeholder = "Ngày thực hiện", @rows = 1, tabindex = "3" })
+                                                            @Html.ValidationMessageFor(x => x.ShowdtOperation)
+                                                            @Html.HiddenFor(x => x.dtOperation)
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <label> Thời gian bắt đầu</label>
+                                                            <div class="input-group show-dt-start">
+                                                                @Html.TextBoxFor(x => x.ShowdtStart, new { @class = "form-control", type = "text", @readonly = "readonly", @style = "background-color: #fff" })
+                                                                <span class="input-group-addon">
+                                                                    <span class="glyphicon glyphicon-time"></span>
+                                                                </span>
+                                                            </div>
+                                                            @Html.ValidationMessageFor(x => x.ShowdtStart)
+                                                            @Html.HiddenFor(x => x.dtStart)
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <label>Thời gian kết thúc</label>
+                                                            <div class="input-group show-dt-end">
+                                                                @Html.TextBoxFor(x => x.ShowdtEnd, new { @class = "form-control", type = "text", @readonly = "readonly", @style = "background-color: #fff" })
+                                                                <span class="input-group-addon">
+                                                                    <span class="glyphicon glyphicon-time"></span>
+                                                                </span>
+                                                            </div>
+                                                            @Html.ValidationMessageFor(x => x.ShowdtEnd)
+                                                            @Html.HiddenFor(x => x.dtEnd)
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-4">
+                                                            <label> Địa điểm nhập viện</label>
+                                                            @Html.TextBoxFor(x => x.AdmissionWard, new { @class = "form-control", placeholder = "Địa điểm nhập viện", @rows = 1, tabindex = "3" })
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <label> Ngày dự kiến nhập viện</label>
+                                                            @Html.TextBoxFor(x => x.ShowdtAdmission, new { @class = "form-control", placeholder = "Ngày nhập viện", @rows = 1, tabindex = "4" })
+                                                            @Html.ValidationMessageFor(x => x.ShowdtAdmission)
+                                                            @Html.HiddenFor(x => x.dtAdmission)
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <label> Thời gian dự kiến nhập viện</label>
+                                                            <div class="input-group show-dt-start">
+                                                                @Html.TextBoxFor(x => x.ShowTimeAdmission, new { @class = "form-control", placeholder = "thời gian nhập viện", type = "text", @style = "background-color: #fff" })
+                                                                <span class="input-group-addon">
+                                                                    <span class="glyphicon glyphicon-time"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4" style="float:right;text-align:right;">
+                                                            <div class="col-xs-12 col-md-12 show-mes-error">
+                                                                <span>Vui lòng chọn thời gian kết thúc lớn hơn thời gian bắt đầu</span>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-12" id="mess_warning" style="color:red;display:none;">
+                                                                <span>Vui lòng chọn thời gian dự kiến nhập viện sớm thời gian bắt đầu</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="display:none;">
+                                                        <div class="col-sm-12">
+                                                            <label> Tên dự án/ yêu cầu</label>
+                                                            @Html.TextBoxFor(x => x.NameProject, new { @class = "form-control", @rows = 1, tabindex = "6" })
+                                                            @Html.ValidationMessageFor(x => x.NameProject)
+                                                        </div>
+                                                    </div>
+
+                                                </p>
+                                            </address>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <!--BÁC SĨ THỰC HIỆN-->
+                                    <div class="row" style="margin-top:unset;">
+                                        <div class="col-sm-12">
+                                            <h3 class="heading_a" style="color:#32c69a">BÁC SĨ THỰC HIỆN</h3>
+                                            <address>
+                                                <p class="addres_name">
+                                                    <div class="row">
+                                                        <div class="col-sm-4">
+                                                            <label>Họ và tên</label>
+                                                            @{
+                                                                //var PTVMainEntity = Model.listORDoctorManagements.FirstOrDefault();
+                                                                //var PTVMainUid = PTVMainEntity!=null?PTVMainEntity.Id:0;
+                                                            }
+                                                            <select id="PTVMain" class="form-control select2 select2-offscreen col-12" tabindex="6" , onchange="ChangePTVMain(this);" @*disabled*@></select>
+                                                            @Html.HiddenFor(x => x.UIdPTVMain)
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <label>Email</label>
+                                                            <span id="EmailPTVMain">@Model.EmailSurgeryDoctorManager</span>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <label>Điện thoại</label>
+                                                            <span id="PhonePTVMain">@Model.PhoneSurgeryDoctorManager</span>
+                                                        </div>
+                                                    </div>
+                                                </p>
+                                            </address>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <!--QUẢN LÝ CA MỔ-->
+                                    <div class="row" style="margin-top:unset;">
+                                        <div class="col-sm-12">
+                                            <h3 class="heading_a" style="color:#32c69a">QUẢN LÝ CA MỔ</h3>
+                                            <address>
+                                                <p class="addres_name">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <label>Tên đơn vị </label> @Model.ORUnitName
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <label>Email   </label>@Model.ORUnitEmail
+                                                        </div>
+                                                    </div>
+                                                </p>
+                                            </address>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <!--THÔNG TIN KHÁC-->
+                                    <div class="row" style="margin-top:unset;">
+                                        <div class="col-sm-12">
+                                            <h3 class="heading_a" style="color:#32c69a">THÔNG TIN KHÁC</h3>
+                                            <address>
+                                                <p class="addres_name">
+                                                    <div class="row">
+                                                        <div class="col-sm-12 div_input_form_control_label">
+                                                            <label>Chẩn đoán</label>
+                                                            @Html.TextAreaFor(x => x.Diagnosis, new { tabindex = "8", @class = "form-control", @rows = 2 })
+                                                            @Html.ValidationMessageFor(x => x.Diagnosis)
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-12 div_input_form_control_label">
+                                                            <label>Ghi chú</label>
+                                                            @Html.TextAreaFor(x => x.RegDescription, new { tabindex = "9", @class = "form-control", @rows = 3 })
+                                                            @Html.ValidationMessageFor(x => x.RegDescription)
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <span style="display:inline;font-style:italic;font-weight:bold;" class="text-normal">
+                                                                Khi bác sĩ bấm Lưu lại, hệ thống lưu thông tin đặt mổ và thông tin đặt mổ  sẽ hiển thị lên màn hình đặt mổ:<br />
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </p>
+                                            </address>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:10px;">
+                                        <div class="col-sm-12">
+                                            <div class="form-group relative not_input_error not_input_error_popup" style="margin-top:0px;">
+                                                <span id="err_msg" class="field-validation-error" style="display: none;left:0px;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="btn-wrapper text-right">
+
+                                        @if (((Model.State == 0) || Model.State == (int)ORProgressStateEnum.Registor || Model.State == (int)ORProgressStateEnum.NoApproveSurgeryManager || Model.State == (int)ORProgressStateEnum.AssignEkip) && (Model.CreatedBy == 0 || Model.CreatedBy == Model.CurrentUserId || SessionUserInfo.IsSuperAdmin || SessionUserInfo.IsManageAdminSurgery))
+                                        {
+                                            <button class="btn btn-accept" tabindex="61" id="btnSaveData"><i class="fa fa-save"></i>&nbsp; Lưu lại</button>
+                                        }
+
+                                        <a href="@Url.Action("SearchPatientOR", "OR")" tabindex="63" class="btn btn-warning" style="padding-right:4px;"><i class="fa fa-undo"></i>&nbsp; Quay lại</a>
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+@Styles.Render("~/styles_searchfrm")
+@section styles{
+    <style>
+        .form-horizontal .control-label {
+            padding-top: 7px;
+            margin-left: 10px !important;
+            text-align: left;
+        }
+
+        .form-horizontal .control-label-second {
+            margin-left: 0px !important;
+        }
+
+        .col-xs-2 {
+            width: 10.66666667% !important;
+        }
+
+        .show-mes-error {
+            padding: 5px 0;
+            color: red;
+            font-size: 1.3rem;
+        }
+    </style>
+    <link href="~/Assets/clockpicker/bootstrap-clockpicker.min.css" rel="stylesheet" />
+
+}
+@Scripts.Render("~/javas_searchfrm")
+
+@section scripts{
+    <script src="~/Assets/clockpicker/bootstrap-clockpicker.min.js"></script>
+    <script>
+        $('.show-mes-error').css('display', 'none');
+        $('.show-dt-start').clockpicker({
+            placement: 'bottom',
+            align: 'left',
+            autoclose: true,
+            'default': 'now',
+            afterDone: function () {
+                //var dtOperation = $("#dtOperation").val();
+                var hourStart = $('#ShowdtStart').val().replace(":", "");
+                var hourEnd = $('#ShowdtEnd').val().replace(":", "");
+                //var dtAdmission = $("#dtAdmission").val();
+                //var hourAdmission = $('#ShowTimeAdmission').val().replace(":", "");
+                if (hourEnd < hourStart) {
+                    $('.show-mes-error').css('display', 'block');
+                }
+                else {
+                    $('.show-mes-error').css('display', 'none');
+                }
+                //if (dtAdmission != '' && hourAdmission != '') {
+                //    var fulldtStart = dtOperation.dateToINT().concat(hourStart);
+                //    var fulldtAdmission = dtAdmission.dateToINT().concat(hourAdmission);
+                //    console.log(fulldtStart);
+                //    console.log(fulldtAdmission);
+                //    if (fulldtAdmission > fulldtStart) {
+                //        $('#mess_warning').css('display', 'block');
+                //    }
+                //    else {
+                //        $('#mess_warning').css('display', 'none');
+                //    }
+                //}
+            }
+        });
+
+        $('.show-dt-end').clockpicker({
+            placement: 'bottom',
+            align: 'left',
+            autoclose: true,
+            'default': 'now',
+            fromnow: 6000000,
+            afterDone: function () {
+                var hourStart = $('#ShowdtStart').val().split(':')[0];
+                var hourEnd = $('#ShowdtEnd').val().split(':')[0];
+                if (hourEnd < hourStart) {
+                    $('.show-mes-error').css('display', 'block');
+                }
+                else {
+                    $('.show-mes-error').css('display', 'none');
+                }
+            }
+        });
+        $('#ShowTimeAdmission').on('change', function() {
+            if (!$(this).val().checkValidHour())
+                $(this).val('');
+        });
+        $(function () {
+            var siteRedirect = '/tra-cuu-thong-tin-dang-ky?siteId=' + '@Model.HospitalCode' + '&kw=' + '@HttpUtility.UrlDecode(Model.PId)';
+
+            if ($("#btnSaveData") != null) {
+                $("#btnSaveData").click(function (e) {
+                    if (!$("#frmPopUp").valid()) return;
+                    $("#err_msg").html("").hide();
+                    var dataRoom = $('#ORRoomId').find('option:selected');
+                    if (dataRoom != undefined) {
+                        $('#ORRoomName').val(dataRoom.text());
+                        var roomname = dataRoom.text();
+                        if (roomname == 'Chưa xác định') {
+                            $("#err_msg").html("Bạn chưa chọn thông tin phòng mổ").show();
+                            return false;
+                        }
+                    }
+                    var dataService = $('#HpServices').select2('data');
+                    if (dataService.length > 0) {
+                        $('#spnTimeAnesth').text(dataService[0].anesthesiaTime);
+                        $('#TimeAnesth').val(dataService[0].anesthesiaTime);
+                        $('#HpServiceName').val(dataService[0].text);
+                        $('#HpServiceId').val(dataService[0].id);
+                        $('#OrderID').val(dataService[0].orderId);
+                        $('#ChargeDetailId').val(dataService[0].chargeDetailId);
+                        $('#DepartmentCode').val(dataService[0].departmentCode);
+                         //vutv7
+                        $('#ChargeDate').val(dataService[0].chargeDate);
+                        $('#ChargeBy').val(dataService[0].chargeBy);
+                        if ($('#AdmissionWard').val() == "") {
+                            $('#AdmissionWard').val(dataService[0].locationName);
+                        }
+                    }
+                    if ($('#HpServiceId').val() == 0) {
+                        $("#err_msg").html("Bạn chưa chọn dịch vụ").show();
+                        return false;
+                    }
+
+                    if ($('#ShowdtOperation').val() == '') {
+                        $("#err_msg").html("Bạn chưa chọn ngày thực hiện ca mổ").show();
+                        $('#ShowdtOperation').focus();
+                        return false;
+                    }
+                    if ($('#ShowdtAdmission').val() != '' && $('#ShowTimeAdmission').val()=='') {
+                        $("#err_msg").html("Bạn chưa chọn thời gian dự kiến nhập viện").show();
+                        $('#ShowTimeAdmission').focus();
+                        return false;
+                    }
+                    if ($('#ShowTimeAdmission').val() != '' && $('#ShowdtAdmission').val()=='') {
+                        $("#err_msg").html("Bạn chưa chọn ngày dự kiến nhập viện").show();
+                        $('#ShowdtAdmission').focus();
+                        return false;
+                    }
+                    e.preventDefault();
+                    var IdModel = $('#Id').val();
+                    $.ajax({
+                        url: '/OR/SaveORRegistorByJson/',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: $("#frmPopUp").serialize(),
+                        success: function (data) {
+                            if (data && data['redirect']) {
+                                window.location.href = data['redirect'];
+                                return;
+                            }
+                            HideOverlay(0);
+                            if (data.ID > 0) {
+                                ShowNotify('success', 'Lưu thông tin thành công', 1000);
+                                $("#err_msg").html("").hide();
+                                window.location.href = siteRedirect;// '/dang-ky-phong-mo?id=' + data.ID;
+
+                            }
+                            else if (data.status === 401) {
+                                window.location.href = data.redirect;
+                            }
+                            else {
+                                $('.show-mes-error').css('display', 'none');
+                                $("#err_msg").html(data.Message).show();
+                                HideOverlay(0);
+                            }
+                        },
+                        error: function (jqXHR, data, exception) {
+                            var msg = '';
+                            if (jqXHR.status === 0) {
+                                msg = 'Không có kết nối internet';
+                            } else if (jqXHR.status == 401) {
+                                msg = 'Unauthorization. [401]';
+                            } else if (jqXHR.status == 404) {
+                                msg = 'Requested page not found. [404]';
+                            } else if (jqXHR.status == 500) {
+                                msg = 'Internal Server Error [500].';
+                            } else if (data === 'parsererror') {
+                                msg = 'Requested JSON parse failed.';
+                            } else if (data === 'timeout') {
+                                msg = 'Time out error.';
+                            } else if (data === 'abort') {
+                                msg = 'Ajax request aborted.';
+                            } else {
+                                msg = 'Uncaught Error.n' + jqXHR.responseText;
+                            }
+                            ShowNotify('error', msg, 1000);
+                        }
+                    });
+                });
+            }
+
+            //if ($('#ShowNgaySinh').length > 0) {
+            //    $('#ShowNgaySinh').datetimepicker(
+            //    {
+            //        minDate: 0,
+
+            //        onChangeDateTime: function (dp, $input) {
+            //            var d = moment($input.val(), momentDateFormat);
+            //            $('#NgaySinh').val(FormatDateTime(d.toDate(), systemDateFormat));
+            //        }
+            //    });
+            //}
+            //$('#ShowdtOperation').datepicker({
+            //    todayHighlight: true,
+            //    format: 'dd/mm/yyyy'
+            //});
+            if ($('#ShowdtOperation').length > 0) {
+                $('#ShowdtOperation').datepicker(
+
+                    {
+                        startDate: "today",
+                        format: 'dd/mm/yyyy',
+                        //on('changeDate', function(ev){
+                        //    if (ev.date.valueOf() < startDate.valueOf()){
+
+                        //    }
+                        //})
+
+                    })
+                    .on('changeDate', function (ev) {
+                        //  var d = moment(ev.date.valueOf(), momentDateFormat);
+                        var val = FormatDateTime(ev.date, systemDateFormat);
+                        $('#dtOperation').val(val);
+                    });
+            }
+            if ($('#ShowdtAdmission').length > 0) {
+                $('#ShowdtAdmission').datepicker(
+
+                    {
+                        startDate: "today",
+                        format: 'dd/mm/yyyy',
+                        //on('changeDate', function(ev){
+                        //    if (ev.date.valueOf() < startDate.valueOf()){
+
+                        //    }
+                        //})
+
+                    })
+                    .on('changeDate', function (ev) {
+                        //  var d = moment(ev.date.valueOf(), momentDateFormat);
+                        var val = FormatDateTime(ev.date, systemDateFormat);
+                        $('#dtAdmission').val(val);
+                    });
+            }
+            var serviceName = '@Html.Raw(Model.HpServiceName)';
+            var resService = null;
+            if (serviceName != '') {
+                var data = new Array({
+                    id: @Html.Raw(Json.Encode(Model.HpServiceId)),
+                    text: serviceName,
+                    anesthesiaTime: @Html.Raw(Json.Encode(Model.TimeAnesth)),
+                    orderId: @Html.Raw(Json.Encode(Model.OrderID)),
+                    chargeDetailId: @Html.Raw(Json.Encode(Model.ChargeDetailId)),
+                    departmentCode: @Html.Raw(Json.Encode(Model.DepartmentCode)),
+                    locationName: @Html.Raw(Json.Encode(Model.AdmissionWard)),
+                    chargeDate: @Html.Raw(Json.Encode(Model.ChargeDate)),
+                    chargeBy: @Html.Raw(Json.Encode(Model.ChargeBy))
+                });
+                //var newOption = new Option(data.text, data.id, false, true);
+                //$('#HpServices').append(newOption).trigger('change');
+                $("#TimeAnesth").val(@Model.TimeAnesth)
+                resService = data;
+            } else {
+                var listService=@Html.Raw(Json.Encode(Model.listHpServices));
+                resService = listService.map(function (item) {
+                    return {
+                        id: item.Id,
+                        text: item.Name,
+                        anesthesiaTime: item.AnesthesiaTime,
+                        orderId: item.OrderID,
+                        chargeDetailId: item.ChargeDetailId,
+                        departmentCode: item.DepartmentCode,
+                        locationName: item.LocationName,
+                        chargeDate: item.ChargeDate,
+                        chargeBy: item.ChargeBy
+                    };
+                });
+                //console.log(resService);
+            }
+            //$('#HpServices').empty().trigger('change');
+            $('#HpServices').select2({
+                data: resService,
+                placeholder: 'Nhập tối thiểu 3 ký tự để tìm dịch vụ',
+                minimumInputLength: 3,
+                ajax: {
+                    url: '@Url.Action("SearchHpServiceExt", "OR")',
+                    dataType: 'json',
+                    type: "GET",
+                    delay: 250,
+                    data: function (params) {
+                        var query = {
+                            kw: params.term,
+                            page: params.page || 1
+                        }
+                        return query;
+                    },
+                    processResults: function (data) {
+                        var res = data.map(function (item) {
+                            return {
+                                id: item.Id,
+                                text: item.Name,
+                                code:item.Oh_Code,
+                                anesthesiaTime: item.AnesthesiaTime,
+                                orderId: item.OrderID,
+                                chargeDetailId: item.ChargeDetailId,
+                                departmentCode: item.DepartmentCode,
+                                locationName: item.LocationName
+                            };
+                        });
+                        if (res.length > 0) {
+                            var charges =@Html.Raw(Json.Encode(Model.Charges));
+                            if (charges != null && charges.length > 0) {
+                                for (var i = 0; i < charges.length; i++){
+                                    for (var k = 0; k < res.length; k++) {
+                                        if (res[k].code == charges[i].ItemCode) {
+                                            res[k].orderId = charges[i].ChargeDetailId;
+                                            res[k].chargeDetailId = charges[i].ChargeDetailId;
+                                            res[k].departmentCode = charges[i].DepartmentCode;
+                                            res[k].locationName = charges[i].LocationName;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        return {
+                            results: res
+                        };
+                    }
+                },
+            });
+            $("#ORRoomId").select2({
+                allowClear: false
+            })
+            $("input:radio[name='surgeryType']").change(function(){
+                var _val = $(this).val();
+                $('#ORRoomId').val(null).trigger('change');
+                var response=$.ajax({
+                        url: '@Url.Action("GetRoomsViaSurgeryType", "OR")',
+                        dataType: 'json',
+                        async:false,
+                        type: "GET",
+                        data: {
+                            surgerytype: _val,
+                            __RequestVerificationToken: $('[name=__RequestVerificationToken]').val()
+                        },
+                        async: false,
+                        success: function (data) {
+                            var res = data.map(function (item) {
+                                return {
+                                    id: item.Id,
+                                    text: item.Name
+                                };
+                            });
+                            $('#ORRoomId').empty().trigger('change');
+                            $('#ORRoomId').select2({data:res});
+                        }
+                });
+            });
+            //Build for PTV Main info
+            BuildPTVMainInfo();
+            //Selection user for postion ekip
+            $("#PTVMain").select2(
+                {
+                allowClear: true,
+                placeholder: 'Nhập tối thiểu 2 ký tự để tìm dịch vụ',
+                minimumInputLength: 2,
+                ajax: {
+                    url: '@Url.Action("GetListUserForEKip", "OR")',
+                    dataType: 'json',
+                    type: "GET",
+                    delay: 250,
+                    data: function (params) {
+                        var query = {
+                            positionId:1,
+                            kw: params.term
+                        }
+                        return query;
+                    },
+                    processResults: function (data) {
+                        var res = data.map(function (item) {
+                            return {
+                                id: item.Id,
+                                text: item.Name +' ('+item.Email+')',
+                                email: item.Email,
+                                phone: item.Phone
+                            };
+                        });
+                        return {
+                            results: res
+                        };
+                    }
+                },
+                });
+            $('#PTVMain').on('select2:clear', function (e) {
+                $('#EmailPTVMain').html('');
+                $('#PhonePTVMain').html('');
+                $('#UIdPTVMain').val(0);
+            });
+        });
+        function ChangeHpService() {
+            var dataService = $('#HpServices').select2('data');
+            if (dataService.length > 0) {
+                $('#spnTimeAnesth').text(dataService[0].anesthesiaTime);
+                $('#TimeAnesth').val(dataService[0].anesthesiaTime);
+                $('#HpServiceName').val(dataService[0].text);
+                $('#HpServiceId').val(dataService[0].id);
+                $('#OrderID').val(dataService[0].orderId);
+                $('#ChargeDetailId').val(dataService[0].chargeDetailId);
+                $('#DepartmentCode').val(dataService[0].departmentCode);
+                $('#AdmissionWard').val(dataService[0].locationName);
+                //vutv7
+                $('#ChargeDate').val(dataService[0].chargeDate);
+                $('#ChargeBy').val(dataService[0].chargeBy);
+                //Get Chẩn đoán
+                if (dataService[0].chargeDetailId != null && dataService[0].chargeDetailId != "") {
+                    $.ajax({
+                        url: '/OR/GetDiagnosisViaChargeId/',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {
+                            chargeid: dataService[0].chargeDetailId,
+                            __RequestVerificationToken: $('[name=__RequestVerificationToken]').val()
+                        },
+                        async: false,
+                        success: function (response) {
+                            $('#Diagnosis').val(response);
+                        },
+                        error: function (response) {
+                            alert("Đã có lỗi xảy ra");
+                        }
+                    });
+                } else {
+                    $('#Diagnosis').val("");
+                }
+            }
+        }
+        function ChangeORRooms() {
+            var dataRoom = $('#ORRoomId').find('option:selected');
+            if (dataRoom != undefined) {
+                $('#ORRoomName').val(dataRoom.text());
+            }
+        }
+        function ChangePTVMain() {
+            var dataUser = $('#PTVMain').select2('data');
+            //console.log(dataUser);
+            if(dataUser.length>0){
+                var email = dataUser[0].email;
+                var phone = dataUser[0].phone;
+                $('#EmailPTVMain').html(email);
+                $('#PhonePTVMain').html(phone);
+                $('#UIdPTVMain').val(dataUser[0].id);
+            }
+        }
+        function BuildPTVMainInfo() {
+            var ptvName = '@Html.Raw(Model.NameSurgeryDoctorManager)';
+            if ( ptvName != '') {
+                var data = {
+                    id: @Model.UIdPTVMain,
+                    text: ptvName
+                };
+
+                var newOption = new Option(data.text, data.id, false, false);
+                $('#PTVMain').append(newOption).trigger('change');
+            }
+        }
+    </script>
+}
+
+
+
+

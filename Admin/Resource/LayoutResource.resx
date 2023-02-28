@@ -1,0 +1,3449 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CMS_Layout_Setting_LatedUpdate" xml:space="preserve">
+    <value>Cập nhật gần nhất</value>
+  </data>
+  <data name="CMS_Layout_Setting_No" xml:space="preserve">
+    <value>STT</value>
+  </data>
+  <data name="CMS_Layout_Setting_Parameters" xml:space="preserve">
+    <value>Các tham số</value>
+  </data>
+  <data name="CMS_Layout_Setting_ParameterType" xml:space="preserve">
+    <value>Loại tham số</value>
+  </data>
+  <data name="CMS_Layout_Setting_SubTitle" xml:space="preserve">
+    <value>Cài đặt các tham số để vận hành hệ thống</value>
+  </data>
+  <data name="CMS_Layout_Setting_Title" xml:space="preserve">
+    <value>Cài đặt hệ thống</value>
+  </data>
+  <data name="CMS_Layout_Setting_Value" xml:space="preserve">
+    <value>Giá trị</value>
+  </data>
+  <data name="CMS_SettingList_CancelByYouInAminute" xml:space="preserve">
+    <value>Bạn vừa hủy thao tác Cập nhật</value>
+  </data>
+  <data name="CMS_SettingList_JustAminuteByYou" xml:space="preserve">
+    <value>Mới đây bởi bạn</value>
+  </data>
+  <data name="CMS_SettingList_PageTitle" xml:space="preserve">
+    <value>Cài đặt cấu hình hệ thống CMS</value>
+  </data>
+  <data name="CMS_SettingList_Require" xml:space="preserve">
+    <value>Thông tin bắt buộc</value>
+  </data>
+  <data name="CMS_SettingList_VirtualQuantityRequired" xml:space="preserve">
+    <value>Số lượng ảo phải nhỏ hơn số lượng bán tối đa và ít hơn 5 kí tự</value>
+  </data>
+  <data name="CMS_Setting_AdminSystemConfigTitle" xml:space="preserve">
+    <value>Các tham số quản trị hệ thống</value>
+  </data>
+  <data name="ErrorPage_Logout" xml:space="preserve">
+    <value>Đăng xuất</value>
+  </data>
+  <data name="Shared_ToolTitle_LoginPage" xml:space="preserve">
+    <value>Đăng nhập</value>
+  </data>
+  <data name="Shared_ToolTitle_LogoutPage" xml:space="preserve">
+    <value>Đăng xuất</value>
+  </data>
+  <data name="Shared_ToolTitle_UserProfilePage" xml:space="preserve">
+    <value>Thông tin cá nhân</value>
+  </data>
+  <data name="Shared_UnderConstruction" xml:space="preserve">
+    <value>Hệ thống đang nâng cấp, vui lòng quay lại sau ít phút</value>
+  </data>
+  <data name="Shared_UnderConstructionTitle" xml:space="preserve">
+    <value>Đang nâng cấp</value>
+  </data>
+  <data name="Shared_VersionText" xml:space="preserve">
+    <value>Phiên bản</value>
+  </data>
+  <data name="UserInfo_ChangePassword" xml:space="preserve">
+    <value>Đổi mật khẩu</value>
+  </data>
+  <data name="CMS_SystemMngt_ConfirmChanging" xml:space="preserve">
+    <value>Thay đổi này sẽ ảnh hưởng tới hệ thống, bạn có chắc chắn không?</value>
+  </data>
+  <data name="CMS_SystemMngt_InputNumber" xml:space="preserve">
+    <value>Vui lòng nhập kiểu số và dữ liệu hợp lệ.</value>
+  </data>
+  <data name="CMS_AjaxResponseStatus_Fail" xml:space="preserve">
+    <value>Fail</value>
+  </data>
+  <data name="CMS_AjaxResponseStatus_Success" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="CMS_LanguageList_Default" xml:space="preserve">
+    <value>Mặc định</value>
+  </data>
+  <data name="CMS_LanguageList_Icon" xml:space="preserve">
+    <value>Icon</value>
+  </data>
+  <data name="CMS_LanguageList_Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="CMS_LanguageList_Name" xml:space="preserve">
+    <value>Tên ngôn ngữ</value>
+  </data>
+  <data name="CMS_LanguageList_PageTitle" xml:space="preserve">
+    <value>Quản lý ngôn ngữ</value>
+  </data>
+  <data name="CMS_LanguageList_ShortName" xml:space="preserve">
+    <value>Tên ngắn</value>
+  </data>
+  <data name="CMS_LanguageList_Status" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="CMS_LanguageList_SubLang" xml:space="preserve">
+    <value>Ngôn ngữ phụ</value>
+  </data>
+  <data name="Shared_NoRowFound" xml:space="preserve">
+    <value>Không có dữ liệu</value>
+  </data>
+  <data name="CMS_LanguageList_Add" xml:space="preserve">
+    <value>Thêm ngôn ngữ</value>
+  </data>
+  <data name="Shared_Edit" xml:space="preserve">
+    <value>Chỉnh sửa</value>
+  </data>
+  <data name="CMS_ButtonText_AddTag" xml:space="preserve">
+    <value>Bổ sung Tag</value>
+  </data>
+  <data name="CMS_ButtonText_Back" xml:space="preserve">
+    <value>Quay về</value>
+  </data>
+  <data name="CMS_ButtonText_Body" xml:space="preserve">
+    <value>Thân bài viết</value>
+  </data>
+  <data name="CMS_ButtonText_Cancel" xml:space="preserve">
+    <value>Hủy</value>
+  </data>
+  <data name="CMS_ButtonText_Close" xml:space="preserve">
+    <value>Đóng</value>
+  </data>
+  <data name="CMS_ButtonText_Complete" xml:space="preserve">
+    <value>Hoàn tất</value>
+  </data>
+  <data name="CMS_ButtonText_CompletePR" xml:space="preserve">
+    <value>Hoàn tất nội dung bài viết</value>
+  </data>
+  <data name="CMS_ButtonText_Confrim" xml:space="preserve">
+    <value>Xác nhận</value>
+  </data>
+  <data name="CMS_ButtonText_Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="CMS_ButtonText_Create" xml:space="preserve">
+    <value>Tạo nhanh</value>
+  </data>
+  <data name="CMS_ButtonText_Delete" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="CMS_ButtonText_DeleteBanner" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="CMS_ButtonText_Detail" xml:space="preserve">
+    <value>Chi tiết</value>
+  </data>
+  <data name="CMS_ButtonText_DownloadSitemap" xml:space="preserve">
+    <value>Download sitemap</value>
+  </data>
+  <data name="CMS_ButtonText_Edit" xml:space="preserve">
+    <value>Chỉnh sửa</value>
+  </data>
+  <data name="CMS_ButtonText_ExportExcel" xml:space="preserve">
+    <value>Xuất excel</value>
+  </data>
+  <data name="CMS_ButtonText_Footer" xml:space="preserve">
+    <value>Kết bài viết</value>
+  </data>
+  <data name="CMS_ButtonText_Header" xml:space="preserve">
+    <value>Mở bài viết</value>
+  </data>
+  <data name="CMS_ButtonText_ReloadPage" xml:space="preserve">
+    <value>Tải lại trang</value>
+  </data>
+  <data name="CMS_ButtonText_RequiredEdit" xml:space="preserve">
+    <value>Yêu cầu sản xuất lại hình ảnh</value>
+  </data>
+  <data name="CMS_ButtonText_RequiredEditContent" xml:space="preserve">
+    <value>Gửi yêu cầu</value>
+  </data>
+  <data name="CMS_ButtonText_RequiredEditContentText" xml:space="preserve">
+    <value>Yêu cầu chỉnh sửa bài viết</value>
+  </data>
+  <data name="CMS_ButtonText_Rewrite_AddContinuous" xml:space="preserve">
+    <value>Thêm</value>
+  </data>
+  <data name="CMS_ButtonText_Save" xml:space="preserve">
+    <value>Lưu lại</value>
+  </data>
+  <data name="CMS_ButtonText_SaveBody" xml:space="preserve">
+    <value>Lưu thân bài</value>
+  </data>
+  <data name="CMS_ButtonText_SaveFooter" xml:space="preserve">
+    <value>Lưu kết bài</value>
+  </data>
+  <data name="CMS_ButtonText_SaveHeader" xml:space="preserve">
+    <value>Lưu mở bài</value>
+  </data>
+  <data name="CMS_ButtonText_Search" xml:space="preserve">
+    <value>Tìm kiếm</value>
+  </data>
+  <data name="CMS_ButtonText_Send" xml:space="preserve">
+    <value>Gửi</value>
+  </data>
+  <data name="CMS_ButtonText_SeoCreatedFeeds" xml:space="preserve">
+    <value>Tạo feeds</value>
+  </data>
+  <data name="CMS_ButtonText_SeoCreatedSitemap" xml:space="preserve">
+    <value>Tạo sitemap</value>
+  </data>
+  <data name="CMS_ButtonText_ViewPhoto" xml:space="preserve">
+    <value>Xem ảnh</value>
+  </data>
+  <data name="CMS_Layout_Category_NotHtmlChar" xml:space="preserve">
+    <value>Không chứa mã html</value>
+  </data>
+  <data name="CMS_ListController_OptionDisplayFalse" xml:space="preserve">
+    <value>Không (False)</value>
+  </data>
+  <data name="CMS_ListController_OptionDisplayTrue" xml:space="preserve">
+    <value>Hiển thị (True)</value>
+  </data>
+  <data name="Shared_AddNew" xml:space="preserve">
+    <value>Thêm mới</value>
+  </data>
+  <data name="CMS_Shared_MustWordAndDigit" xml:space="preserve">
+    <value>Chỉ được phép chứa các kí tự từ a đến Z và 0 đến 9</value>
+  </data>
+  <data name="ObjectStatus_Deactive" xml:space="preserve">
+    <value>Không kích hoạt</value>
+  </data>
+  <data name="ObjectStatus_Deleted" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="ObjectStatus_New" xml:space="preserve">
+    <value>Mới tạo</value>
+  </data>
+  <data name="ObjectStatus_Onsite" xml:space="preserve">
+    <value>Onsite</value>
+  </data>
+  <data name="ObjectStatus_WaitingOnsite" xml:space="preserve">
+    <value>Chờ onsite</value>
+  </data>
+  <data name="OnsiteStatus_False" xml:space="preserve">
+    <value>Chưa chọn</value>
+  </data>
+  <data name="OnsiteStatus_True" xml:space="preserve">
+    <value>Chọn</value>
+  </data>
+  <data name="Shared_BtnText_Delete" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="Shared_BtnText_Lock" xml:space="preserve">
+    <value>Khóa</value>
+  </data>
+  <data name="Shared_BtnText_Save" xml:space="preserve">
+    <value>Lưu lại</value>
+  </data>
+  <data name="Shared_BtnText_Search" xml:space="preserve">
+    <value>Tìm kiếm</value>
+  </data>
+  <data name="Shared_BtnText_Unlock" xml:space="preserve">
+    <value>Mở khóa</value>
+  </data>
+  <data name="Shared_Label_SortNumber" xml:space="preserve">
+    <value>#</value>
+  </data>
+  <data name="UserMngt_BtnText_CreateAccount" xml:space="preserve">
+    <value>Tạo tài khoản</value>
+  </data>
+  <data name="UserMngt_ListUser_Label_AccountRole" xml:space="preserve">
+    <value>Loại tài khoản</value>
+  </data>
+  <data name="UserMngt_ListUser_Label_AllRole" xml:space="preserve">
+    <value>-- Tất cả loại tài khoản --</value>
+  </data>
+  <data name="UserMngt_ListUser_Label_CreatedDate" xml:space="preserve">
+    <value>Ngày tạo</value>
+  </data>
+  <data name="UserMngt_ListUser_Label_DeleteAccount" xml:space="preserve">
+    <value>Xóa tài khoản</value>
+  </data>
+  <data name="UserMngt_ListUser_Label_EmailAddress" xml:space="preserve">
+    <value>Địa chỉ email</value>
+  </data>
+  <data name="UserMngt_ListUser_Label_Lock" xml:space="preserve">
+    <value>Đang khóa</value>
+  </data>
+  <data name="UserMngt_ListUser_Label_Microsite" xml:space="preserve">
+    <value>Microsite</value>
+  </data>
+  <data name="UserMngt_ListUser_Label_ResetPassword" xml:space="preserve">
+    <value>Đặt lại mật khẩu</value>
+  </data>
+  <data name="UserMngt_ListUser_Label_Status" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="UserMngt_ListUser_Label_Unlock" xml:space="preserve">
+    <value>Đang mở</value>
+  </data>
+  <data name="UserMngt_ListUser_Label_UserFullName" xml:space="preserve">
+    <value>Họ và tên</value>
+  </data>
+  <data name="UserMngt_ListUser_PageTitle" xml:space="preserve">
+    <value>Quản lý người dùng</value>
+  </data>
+  <data name="UserMngt_PlaceHolder_Keyword" xml:space="preserve">
+    <value>Tìm theo tài khoản, họ tên hoặc email</value>
+  </data>
+  <data name="UserMngt_PopupCreate_Title" xml:space="preserve">
+    <value>Tạo tài khoản người dùng</value>
+  </data>
+  <data name="UserMngt_PopupDelete_Description" xml:space="preserve">
+    <value>Khi bạn xóa, thông tin người dùng sẽ bị xóa khỏi hệ thống&lt;br/&gt;Vẫn tiếp tục xóa người dùng này?</value>
+  </data>
+  <data name="UserMngt_PopupDelete_Title" xml:space="preserve">
+    <value>Bạn đang tiến hành xóa người dùng</value>
+  </data>
+  <data name="UserMngt_PopupLock_Description" xml:space="preserve">
+    <value>Sau khi bị khóa, người dùng sẽ không thể đăng nhập vào hệ thống&lt;br/&gt;Vẫn tiếp tục khóa người dùng này?</value>
+  </data>
+  <data name="UserMngt_PopupLock_Title" xml:space="preserve">
+    <value>Bạn đang tiến hành khóa người dùng</value>
+  </data>
+  <data name="UserMngt_PopupResetPass_Description" xml:space="preserve">
+    <value>* Mật khẩu mặc định khi đặt lại:</value>
+  </data>
+  <data name="UserMngt_PopupResetPass_Title" xml:space="preserve">
+    <value>Bạn đang tiến hành đặt lại mật khẩu</value>
+  </data>
+  <data name="UserMngt_PopupUnlock_Description" xml:space="preserve">
+    <value>Khi bạn mở khóa, người dùng sẽ có thể đăng nhập vào hệ thống&lt;br/&gt;Vẫn tiếp tục mở khóa người dùng này?</value>
+  </data>
+  <data name="UserMngt_PopupUnlock_Title" xml:space="preserve">
+    <value>Bạn đang tiến hành mở khóa người dùng</value>
+  </data>
+  <data name="UserMngt_PopupUpdate_Title" xml:space="preserve">
+    <value>Cập nhật thông tin tài khoản</value>
+  </data>
+  <data name="Login_BtnText_Submit" xml:space="preserve">
+    <value>Đăng nhập</value>
+  </data>
+  <data name="Login_LabelCapcha" xml:space="preserve">
+    <value>Kết quả phép tính bên dưới</value>
+  </data>
+  <data name="Login_LabelEmail" xml:space="preserve">
+    <value>Địa chỉ email</value>
+  </data>
+  <data name="Login_LabelPassword" xml:space="preserve">
+    <value>Mật khẩu</value>
+  </data>
+  <data name="ChangeMicrosite_Label_ChooseMicrosite" xml:space="preserve">
+    <value>Chọn microsite</value>
+  </data>
+  <data name="ChangeMicrosite_Title" xml:space="preserve">
+    <value>Thay đổi microsite</value>
+  </data>
+  <data name="Layout_Label_ChangeMicrosite" xml:space="preserve">
+    <value>Thay đổi microsite</value>
+  </data>
+  <data name="Layout_Label_Hi" xml:space="preserve">
+    <value>Xin chào</value>
+  </data>
+  <data name="Layout_Label_Logout" xml:space="preserve">
+    <value>Thoát</value>
+  </data>
+  <data name="Layout_Label_UserProfile" xml:space="preserve">
+    <value>Thông tin tài khoản</value>
+  </data>
+  <data name="ArticleMngt_BtnText_CreateTag" xml:space="preserve">
+    <value>Thêm mới Tag</value>
+  </data>
+  <data name="ArticleMngt_ListTag_PageTitle" xml:space="preserve">
+    <value>Quản lý Tag</value>
+  </data>
+  <data name="ConfirmStatus_False" xml:space="preserve">
+    <value>Chưa duyệt</value>
+  </data>
+  <data name="ConfirmStatus_True" xml:space="preserve">
+    <value>Đã duyệt</value>
+  </data>
+  <data name="CMS_LanguageList_SubTitle" xml:space="preserve">
+    <value>Danh sách ngôn ngữ</value>
+  </data>
+  <data name="UserProfile_Label_Email" xml:space="preserve">
+    <value>Địa chỉ email</value>
+  </data>
+  <data name="UserProfile_Label_Microsite" xml:space="preserve">
+    <value>Microsite</value>
+  </data>
+  <data name="UserProfile_Label_Password" xml:space="preserve">
+    <value>Mật khẩu</value>
+  </data>
+  <data name="UserProfile_Label_Role" xml:space="preserve">
+    <value>Nhóm quyền</value>
+  </data>
+  <data name="UserProfile_Label_UserName" xml:space="preserve">
+    <value>Tên người dùng</value>
+  </data>
+  <data name="ArticleMngt_ListTag_Label_ApprovalStatus" xml:space="preserve">
+    <value>Trạng thái duyệt</value>
+  </data>
+  <data name="ArticleMngt_ListTag_Label_Lang" xml:space="preserve">
+    <value>Ngôn ngữ</value>
+  </data>
+  <data name="ArticleMngt_ListTag_Label_Status" xml:space="preserve">
+    <value>Trang thái hoạt động</value>
+  </data>
+  <data name="ArticleMngt_ListTag_Label_TagName" xml:space="preserve">
+    <value>Tên Tag</value>
+  </data>
+  <data name="ArticleMngt_PopupCreateTag_Title" xml:space="preserve">
+    <value>Thêm Tag mới</value>
+  </data>
+  <data name="ArticleMngt_PopupUpdateTag_Title" xml:space="preserve">
+    <value>Chỉnh sửa Tag</value>
+  </data>
+  <data name="MenuMngt_BtnText_CreateMenuItem" xml:space="preserve">
+    <value>Thêm menu</value>
+  </data>
+  <data name="MenuMngt_CreateMenu_PageTitle" xml:space="preserve">
+    <value>Thêm menu</value>
+  </data>
+  <data name="MenuMngt_ListMenu_PageTitle" xml:space="preserve">
+    <value>Quản lý menu</value>
+  </data>
+  <data name="MenuMngt_UpdateMenu_PageTitle" xml:space="preserve">
+    <value>Cập nhật menu</value>
+  </data>
+  <data name="ApprovalStatus_Approved" xml:space="preserve">
+    <value>Duyệt</value>
+  </data>
+  <data name="ApprovalStatus_New" xml:space="preserve">
+    <value>Chờ duyệt</value>
+  </data>
+  <data name="ApprovalStatus_Reject" xml:space="preserve">
+    <value>Không duyệt</value>
+  </data>
+  <data name="MenuMngt_ListMenu_BtnText_SaveSortOrder" xml:space="preserve">
+    <value>Lưu lại</value>
+  </data>
+  <data name="MenuMngt_ListMenu_LabelOffsite" xml:space="preserve">
+    <value>Chưa hiển thị</value>
+  </data>
+  <data name="MenuMngt_ListMenu_LabelOnsite" xml:space="preserve">
+    <value>Đang hiển thị</value>
+  </data>
+  <data name="CMS_BannerPositionList_Add" xml:space="preserve">
+    <value>Thêm vị trí banner</value>
+  </data>
+  <data name="CMS_BannerPositionList_ApprovalStatus" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="CMS_BannerPositionList_CreatedByEmail" xml:space="preserve">
+    <value>Người tạo</value>
+  </data>
+  <data name="CMS_BannerPositionList_CreatedDate" xml:space="preserve">
+    <value>Ngày tạo</value>
+  </data>
+  <data name="CMS_BannerPositionList_Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="CMS_BannerPositionList_Name" xml:space="preserve">
+    <value>Tên vị trí banner</value>
+  </data>
+  <data name="CMS_BannerPositionList_PageTitle" xml:space="preserve">
+    <value>Quản lý vị trí banner</value>
+  </data>
+  <data name="CMS_BannerPositionList_SubTitle" xml:space="preserve">
+    <value>Danh sách vị trí banner</value>
+  </data>
+  <data name="MenuMngt_ListMenu_TipDragDrop" xml:space="preserve">
+    <value>Kéo và thả để thay đổi thứ tự</value>
+  </data>
+  <data name="Shared_Label_Language" xml:space="preserve">
+    <value>Ngôn ngữ</value>
+  </data>
+  <data name="MenuMngt_MenuDetail_Label_MetaDescription" xml:space="preserve">
+    <value>Meta description</value>
+  </data>
+  <data name="MenuMngt_MenuDetail_Label_MetaKeyword" xml:space="preserve">
+    <value>Meta keyword</value>
+  </data>
+  <data name="MenuMngt_MenuDetail_Label_MetaTitle" xml:space="preserve">
+    <value>Meta title</value>
+  </data>
+  <data name="MenuMngt_MenuDetail_Label_Name" xml:space="preserve">
+    <value>Text hiển thị</value>
+  </data>
+  <data name="MenuMngt_MenuDetail_Label_Url" xml:space="preserve">
+    <value>Liên kết</value>
+  </data>
+  <data name="MenuMngt_MenuDetail_PageTitle" xml:space="preserve">
+    <value>Chi tiết menu</value>
+  </data>
+  <data name="Shared_BtnText_Back" xml:space="preserve">
+    <value>Quay lại</value>
+  </data>
+  <data name="Shared_PopupConfirmTitle" xml:space="preserve">
+    <value>CHÚ Ý</value>
+  </data>
+  <data name="CMS_BannerGroupList_Add" xml:space="preserve">
+    <value>Thêm nhóm banner</value>
+  </data>
+  <data name="CMS_BannerGroupList_CreatedByEmail" xml:space="preserve">
+    <value>Người tạo</value>
+  </data>
+  <data name="CMS_BannerGroupList_CreatedDate" xml:space="preserve">
+    <value>Ngày tạo</value>
+  </data>
+  <data name="CMS_BannerGroupList_Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="CMS_BannerGroupList_PageTitle" xml:space="preserve">
+    <value>Quản lý nhóm banner</value>
+  </data>
+  <data name="CMS_BannerGroupList_SubTitle" xml:space="preserve">
+    <value>Danh sách nhóm banner</value>
+  </data>
+  <data name="CMS_BannerGroup_ApprovalStatus" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="CMS_BannerGroup_Name" xml:space="preserve">
+    <value>Tên nhóm banner</value>
+  </data>
+  <data name="MicrositeMngt_BtnText_CreateMicrosite" xml:space="preserve">
+    <value>Thêm Microsite</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_CreatedDate" xml:space="preserve">
+    <value>Ngày tạo</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_IsRootSite" xml:space="preserve">
+    <value>Site gốc</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_LastUpdatedDate" xml:space="preserve">
+    <value>Chỉnh sửa lần cuối</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_Status" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_Title" xml:space="preserve">
+    <value>Tên microsite</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_PageTitle" xml:space="preserve">
+    <value>Quản lý microsite</value>
+  </data>
+  <data name="MicrositeMngt_PopupCreateMicrosite_Title" xml:space="preserve">
+    <value>Thêm microsite</value>
+  </data>
+  <data name="MicrositeMngt_PopupUpdateMicrosite_Title" xml:space="preserve">
+    <value>Chỉnh sửa microsite</value>
+  </data>
+  <data name="MicrositeMngt_ViewMicrositeDetail_PageTitle" xml:space="preserve">
+    <value>Chi tiết microsite</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_Description" xml:space="preserve">
+    <value>Mô tả</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_ImageMobileUrl" xml:space="preserve">
+    <value>Hình ảnh mobile</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_ImageUrl" xml:space="preserve">
+    <value>Hình ảnh</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_LanguageShortName" xml:space="preserve">
+    <value>Ngôn ngữ</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_MetaDescription" xml:space="preserve">
+    <value>Meta description</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_MetaKeyword" xml:space="preserve">
+    <value>Meta keyword</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_MetaTitle" xml:space="preserve">
+    <value>Meta title</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_Rewrite" xml:space="preserve">
+    <value>Rewrite</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_ShortDescription" xml:space="preserve">
+    <value>Mô tả ngắn gọn</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_TargetLinkImage" xml:space="preserve">
+    <value>Target link image</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_TargetLinkImageMobile" xml:space="preserve">
+    <value>Target link image mobile</value>
+  </data>
+  <data name="BannerList_OnsiteDateRange" xml:space="preserve">
+    <value>Ngày onsite</value>
+  </data>
+  <data name="BannerList_PageTitle" xml:space="preserve">
+    <value>Quản lý banner</value>
+  </data>
+  <data name="BannerList_Search" xml:space="preserve">
+    <value>Tìm kiếm banner</value>
+  </data>
+  <data name="Banner_BannerName" xml:space="preserve">
+    <value>Tên banner</value>
+  </data>
+  <data name="Banner_BannerStatus" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="Banner_DestopImage" xml:space="preserve">
+    <value>Ảnh trên PC</value>
+  </data>
+  <data name="Banner_EndDate" xml:space="preserve">
+    <value>Ngày dừng chạy</value>
+  </data>
+  <data name="Banner_MobileImage" xml:space="preserve">
+    <value>Ảnh trên Mobile</value>
+  </data>
+  <data name="Banner_StartDate" xml:space="preserve">
+    <value>Ngày chạy</value>
+  </data>
+  <data name="MicrositeMngt_MicrositeDetail_PageTitle" xml:space="preserve">
+    <value>Chi tiết microsite</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_Image" xml:space="preserve">
+    <value>Hình ảnh</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_ImageMobile" xml:space="preserve">
+    <value>Hình ảnh mobile</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_MsId" xml:space="preserve">
+    <value>Mã Microsite</value>
+  </data>
+  <data name="MicrositeMngt_ViewMicrositeDetail_Label_ListDetail" xml:space="preserve">
+    <value>Nội dung</value>
+  </data>
+  <data name="AddressMngt_BtnText_CreateAddress" xml:space="preserve">
+    <value>Thêm địa chỉ</value>
+  </data>
+  <data name="AddressMngt_FormLabel_CityId" xml:space="preserve">
+    <value>Tỉnh thành</value>
+  </data>
+  <data name="AddressMngt_FormLabel_DistrictId" xml:space="preserve">
+    <value>Quận/huyện</value>
+  </data>
+  <data name="AddressMngt_FormLabel_FullAddress" xml:space="preserve">
+    <value>Địa chỉ đầy đủ</value>
+  </data>
+  <data name="AddressMngt_Label_AddressName" xml:space="preserve">
+    <value>Địa chỉ</value>
+  </data>
+  <data name="AddressMngt_ListAddress_PageTitle" xml:space="preserve">
+    <value>Quản lý địa chỉ</value>
+  </data>
+  <data name="AddressMngt_PopupCreate_Title" xml:space="preserve">
+    <value>Thêm địa chỉ</value>
+  </data>
+  <data name="BannerList_CreateBanner" xml:space="preserve">
+    <value>Thêm banner</value>
+  </data>
+  <data name="BannerList_SearchResult" xml:space="preserve">
+    <value>Danh sách banner</value>
+  </data>
+  <data name="CMS_ButtonText_ClearFilter" xml:space="preserve">
+    <value>Xóa điều kiện lọc</value>
+  </data>
+  <data name="Shared_SelectOpt_All" xml:space="preserve">
+    <value>Tất cả</value>
+  </data>
+  <data name="Banner_Description" xml:space="preserve">
+    <value>Mô tả</value>
+  </data>
+  <data name="Banner_ImageHeight" xml:space="preserve">
+    <value>Chiều cao</value>
+  </data>
+  <data name="Banner_ImageWitdh" xml:space="preserve">
+    <value>Chiều rộng</value>
+  </data>
+  <data name="Banner_TargetUrl" xml:space="preserve">
+    <value>Link banner</value>
+  </data>
+  <data name="CMS_Shared_MustDigit" xml:space="preserve">
+    <value>Phải là kiểu số nguyên</value>
+  </data>
+  <data name="Shared_SelectOpt_Require" xml:space="preserve">
+    <value>Vui lòng chọn</value>
+  </data>
+  <data name="Validate_UrlInvalidFormat" xml:space="preserve">
+    <value>Url không đúng định dạng</value>
+  </data>
+  <data name="Shared_BtnText_UpdateStatus" xml:space="preserve">
+    <value>Chuyển trạng thái</value>
+  </data>
+  <data name="Banner_Detail_ContentList" xml:space="preserve">
+    <value>Nội dung</value>
+  </data>
+  <data name="Banner_Detail_Title" xml:space="preserve">
+    <value>Thông tin banner</value>
+  </data>
+  <data name="Banner_Detail_UpdateTitle" xml:space="preserve">
+    <value>Chỉnh sửa banner</value>
+  </data>
+  <data name="AddressMngt_FormLabel_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="AddressMngt_FormLabel_Fax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="AddressMngt_FormLabel_PhoneNumber" xml:space="preserve">
+    <value>Số điện thoại</value>
+  </data>
+  <data name="AddressMngt_AddressDetail_PageTitle" xml:space="preserve">
+    <value>Thông tin địa chỉ</value>
+  </data>
+  <data name="AddressMngt_FormLabel_ApprovalStatus" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="AddressMngt_FormLabel_IsOnsite" xml:space="preserve">
+    <value>Onsite</value>
+  </data>
+  <data name="AddressMngt_AddressDetail_UpdateFullAddressPromptText" xml:space="preserve">
+    <value>Cập nhật địa chỉ đầy đủ</value>
+  </data>
+  <data name="Shared_Label_IsOnsite" xml:space="preserve">
+    <value>Onsite</value>
+  </data>
+  <data name="Shared_Label_Status" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="ProductAttr_AttrName" xml:space="preserve">
+    <value>Tên thuộc tính</value>
+  </data>
+  <data name="ProductAttr_CreateAttr" xml:space="preserve">
+    <value>Thêm thuộc tính</value>
+  </data>
+  <data name="ProductAttr_Detail_ContentList" xml:space="preserve">
+    <value>Nội dung</value>
+  </data>
+  <data name="ProductAttr_Detail_Title" xml:space="preserve">
+    <value>Thông tin thuộc tính</value>
+  </data>
+  <data name="ProductAttr_Icon" xml:space="preserve">
+    <value>Ảnh icon</value>
+  </data>
+  <data name="ProductAttr_OnsiteStatus" xml:space="preserve">
+    <value>Onsite</value>
+  </data>
+  <data name="ProductAttr_PageTitle" xml:space="preserve">
+    <value>Quản lý thuộc tính</value>
+  </data>
+  <data name="ProductAttr_RequiredStatus" xml:space="preserve">
+    <value>Bắt buộc</value>
+  </data>
+  <data name="ProductAttr_Search" xml:space="preserve">
+    <value>Tìm kiếm</value>
+  </data>
+  <data name="ProductAttr_SearchResult" xml:space="preserve">
+    <value>Danh sách thuộc tính</value>
+  </data>
+  <data name="ProductAttr_Sort" xml:space="preserve">
+    <value>Thứ tự hiển thị</value>
+  </data>
+  <data name="ProductAttr_Status" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="ProductAttr_ThumbnailStatus" xml:space="preserve">
+    <value>Hiển thị icon</value>
+  </data>
+  <data name="ProdutctAttr_Detail_UpdateTitle" xml:space="preserve">
+    <value>Chỉnh sửa thuộc tính</value>
+  </data>
+  <data name="Banner_UpdateContent" xml:space="preserve">
+    <value>Chỉnh sửa nội dung banner</value>
+  </data>
+  <data name="ProductAttr_UpdateContent" xml:space="preserve">
+    <value>Chỉnh sửa nội dung thuộc tính</value>
+  </data>
+  <data name="GalleryMngt_BtnText_CreateGallery" xml:space="preserve">
+    <value>Thêm gallery</value>
+  </data>
+  <data name="GalleryMngt_FormLabel_Description" xml:space="preserve">
+    <value>Mô tả</value>
+  </data>
+  <data name="GalleryMngt_FormLabel_MetaDescription" xml:space="preserve">
+    <value>Meta description</value>
+  </data>
+  <data name="GalleryMngt_FormLabel_MetaKeyword" xml:space="preserve">
+    <value>Meta keyword</value>
+  </data>
+  <data name="GalleryMngt_FormLabel_MetaTitle" xml:space="preserve">
+    <value>Meta title</value>
+  </data>
+  <data name="GalleryMngt_FormLabel_Name" xml:space="preserve">
+    <value>Tên gallery</value>
+  </data>
+  <data name="GalleryMngt_FormLabel_RewriteUrl" xml:space="preserve">
+    <value>Rewrite</value>
+  </data>
+  <data name="GalleryMngt_FormLabel_ShortDescription" xml:space="preserve">
+    <value>Mô tả ngắn gọn</value>
+  </data>
+  <data name="GalleryMngt_Label_Name" xml:space="preserve">
+    <value>Tên gallery</value>
+  </data>
+  <data name="GalleryMngt_Label_Picture" xml:space="preserve">
+    <value>Hình ảnh</value>
+  </data>
+  <data name="GalleryMngt_ListGallery_PageTitle" xml:space="preserve">
+    <value>Quản lý gallery</value>
+  </data>
+  <data name="GalleryMngt_PopupCreate_Title" xml:space="preserve">
+    <value>Thêm gallery</value>
+  </data>
+  <data name="GalleryMngt_PopupUpdate_Title" xml:space="preserve">
+    <value>Cập nhật gallery</value>
+  </data>
+  <data name="GalleryMngt_GalleryDetail_Box1Title" xml:space="preserve">
+    <value>Chỉnh sửa trạng thái gallery</value>
+  </data>
+  <data name="GalleryMngt_GalleryDetail_Box2Title" xml:space="preserve">
+    <value>Nội dung</value>
+  </data>
+  <data name="GalleryMngt_GalleryDetail_Box3Title" xml:space="preserve">
+    <value>Danh sách ảnh</value>
+  </data>
+  <data name="GalleryMngt_GalleryDetail_PageTitle" xml:space="preserve">
+    <value>Chi tiết gallery</value>
+  </data>
+  <data name="Shared_Label_ApprovalStatus" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryList_Label_CategoryUrl" xml:space="preserve">
+    <value>Caregory URL</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryList_Label_CreatedDate" xml:space="preserve">
+    <value>Ngày tạo</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryList_Label_Description" xml:space="preserve">
+    <value>Mô tả</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryList_Label_Id" xml:space="preserve">
+    <value>Mã danh mục</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryList_Label_LanguageShortName" xml:space="preserve">
+    <value>Ngôn ngữ</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryList_Label_LastUpdatedDate" xml:space="preserve">
+    <value>Chỉnh sửa lần cuối</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryList_Label_Name" xml:space="preserve">
+    <value>Tên</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryList_Label_ParentId" xml:space="preserve">
+    <value>Danh mục cha</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryList_Label_Rewrite" xml:space="preserve">
+    <value>Tên rewrite</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryList_Label_ShortDescription" xml:space="preserve">
+    <value>Mô tả ngắn</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryList_PageTitle" xml:space="preserve">
+    <value>Quản lý danh mục bài viết</value>
+  </data>
+  <data name="Product_ProductCategoryList_Label_CaregoryUrl" xml:space="preserve">
+    <value>Category URL</value>
+  </data>
+  <data name="Product_ProductCategoryList_Label_CreatedDate" xml:space="preserve">
+    <value>Ngày tạo</value>
+  </data>
+  <data name="Product_ProductCategoryList_Label_Description" xml:space="preserve">
+    <value>Mô tả</value>
+  </data>
+  <data name="Product_ProductCategoryList_Label_Id" xml:space="preserve">
+    <value>Mã danh mục</value>
+  </data>
+  <data name="Product_ProductCategoryList_Label_LanguageShortName" xml:space="preserve">
+    <value>Ngôn ngữ</value>
+  </data>
+  <data name="Product_ProductCategoryList_Label_LastUpdatedDate" xml:space="preserve">
+    <value>Chỉnh sửa lần cuối</value>
+  </data>
+  <data name="Product_ProductCategoryList_Label_Name" xml:space="preserve">
+    <value>Tên</value>
+  </data>
+  <data name="Product_ProductCategoryList_Label_ParentId" xml:space="preserve">
+    <value>Danh mục cha</value>
+  </data>
+  <data name="Product_ProductCategoryList_Label_Rewrite" xml:space="preserve">
+    <value>Tên rewrite</value>
+  </data>
+  <data name="Product_ProductCategoryList_Label_ShortDescription" xml:space="preserve">
+    <value>Mô tả ngắn</value>
+  </data>
+  <data name="Product_ProductCategoryList_PageTitle" xml:space="preserve">
+    <value>Quản lý danh mục sản phẩm</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryDetail_Label_ListDetail" xml:space="preserve">
+    <value>Danh sách</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryDetail_PageTitle" xml:space="preserve">
+    <value>Chi tiết danh mục</value>
+  </data>
+  <data name="ArticleMngt_BtnText_CreateArticleCategory" xml:space="preserve">
+    <value>Thêm danh mục bài viết</value>
+  </data>
+  <data name="ArticleMngt_PopupCreateArticleCategory_Title" xml:space="preserve">
+    <value>Thêm danh mục bài viết</value>
+  </data>
+  <data name="ArticleMngt_PopupUpdateArticleCategory_Title" xml:space="preserve">
+    <value>Chỉnh sửa danh mục bài viết</value>
+  </data>
+  <data name="Product_BtnText_CreateProductCategory" xml:space="preserve">
+    <value>Thêm danh mục sản phẩm</value>
+  </data>
+  <data name="Product_PopupCreateProductCategory_Title" xml:space="preserve">
+    <value>Thêm danh mục sản phẩm</value>
+  </data>
+  <data name="Product_PopupUpdateProductCategory_Title" xml:space="preserve">
+    <value>Chỉnh sửa danh mục sản phẩm</value>
+  </data>
+  <data name="Product_ProductCategoryDetail_Label_ListDetail" xml:space="preserve">
+    <value>Danh sách </value>
+  </data>
+  <data name="Product_ProductCategoryDetail_PageTitle" xml:space="preserve">
+    <value>Chi tiết danh mục</value>
+  </data>
+  <data name="Product_ProductCategoryDetail_Label_SelectCategory" xml:space="preserve">
+    <value>---  chọn danh mục ---</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryDetail_Label_SelectCategory" xml:space="preserve">
+    <value>---  Chưa chọn danh mục ---</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryDetail_Label_Detail" xml:space="preserve">
+    <value>Thông tin chính</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryList_Label_ListArticleCaregory" xml:space="preserve">
+    <value>Danh sách danh mục</value>
+  </data>
+  <data name="Product_ProductCategoryDetail_Label_Detail" xml:space="preserve">
+    <value>Thông tin chính</value>
+  </data>
+  <data name="Product_ProductCategoryList_Label_ListProductCaregory" xml:space="preserve">
+    <value>Danh sách danh mục</value>
+  </data>
+  <data name="AddressMngt_ListAddress_List" xml:space="preserve">
+    <value>Danh sách địa chỉ</value>
+  </data>
+  <data name="GalleryMngt_ListGallery_Title" xml:space="preserve">
+    <value>Danh sách gallery</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_List" xml:space="preserve">
+    <value>Danh sách microsite</value>
+  </data>
+  <data name="UserMngt_ListUser_List" xml:space="preserve">
+    <value>Danh sách người dùng</value>
+  </data>
+  <data name="ProductMngt_BtnText_CreateProduct" xml:space="preserve">
+    <value>Thêm sản phẩm</value>
+  </data>
+  <data name="ProductMngt_Label_AttrId" xml:space="preserve">
+    <value>Thuộc tính</value>
+  </data>
+  <data name="ProductMngt_Label_AttrValue" xml:space="preserve">
+    <value>Giá trị</value>
+  </data>
+  <data name="ProductMngt_Label_Body" xml:space="preserve">
+    <value>Nội dung</value>
+  </data>
+  <data name="ProductMngt_Label_CateName" xml:space="preserve">
+    <value>Danh mục</value>
+  </data>
+  <data name="ProductMngt_Label_Description" xml:space="preserve">
+    <value>Mô tả</value>
+  </data>
+  <data name="ProductMngt_Label_NameLine1" xml:space="preserve">
+    <value>Tên sản phẩm</value>
+  </data>
+  <data name="ProductMngt_Label_ProductCategoryId" xml:space="preserve">
+    <value>Danh mục</value>
+  </data>
+  <data name="ProductMngt_Label_ProductTypeId" xml:space="preserve">
+    <value>Loại sản phẩm</value>
+  </data>
+  <data name="ProductMngt_Label_ShortDescription" xml:space="preserve">
+    <value>Mô tả ngắn gọn</value>
+  </data>
+  <data name="ProductMngt_Label_TypeName" xml:space="preserve">
+    <value>Loại sản phẩm</value>
+  </data>
+  <data name="ProductMngt_ListProduct_PageTitle" xml:space="preserve">
+    <value>Quản lý sản phẩm</value>
+  </data>
+  <data name="ProductMngt_PopupCreate_Title" xml:space="preserve">
+    <value>Thêm sản phẩm</value>
+  </data>
+  <data name="ProductMngt_ProductDetail_DeleteProductConfirmText" xml:space="preserve">
+    <value>Bạn có muốn xóa sản phẩm này không?</value>
+  </data>
+  <data name="Shared_Label_MetaDescription" xml:space="preserve">
+    <value>Meta description</value>
+  </data>
+  <data name="Shared_Label_MetaKeyword" xml:space="preserve">
+    <value>Meta keyword</value>
+  </data>
+  <data name="Shared_Label_MetaTitle" xml:space="preserve">
+    <value>Meta title</value>
+  </data>
+  <data name="Shared_Label_RewriteUrl" xml:space="preserve">
+    <value>Rewrite</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryList_Label_ListArticlePage" xml:space="preserve">
+    <value>Danh sách bài viết</value>
+  </data>
+  <data name="ArticleMngt_ArticlePageDetail_PageTitle" xml:space="preserve">
+    <value>Chi tiết bài viết tĩnh</value>
+  </data>
+  <data name="ArticleMngt_ArticlePageList_Label_ArticleName" xml:space="preserve">
+    <value>Tên bài viết</value>
+  </data>
+  <data name="ArticleMngt_ArticlePageList_Label_Image" xml:space="preserve">
+    <value>Hình đại diện</value>
+  </data>
+  <data name="ArticleMngt_ArticlePageList_Label_ImageMobile" xml:space="preserve">
+    <value>Hình đại diện mobile</value>
+  </data>
+  <data name="ArticleMngt_ArticlePageList_Label_ListArticlePage" xml:space="preserve">
+    <value>Danh sách bài viết</value>
+  </data>
+  <data name="ArticleMngt_ArticlePageList_Label_StartDate" xml:space="preserve">
+    <value>Ngày đăng</value>
+  </data>
+  <data name="ArticleMngt_BtnText_CreateArticlePage" xml:space="preserve">
+    <value>Thêm bài viết tĩnh</value>
+  </data>
+  <data name="ArticlePageList_Search" xml:space="preserve">
+    <value>Tìm kiếm</value>
+  </data>
+  <data name="Article_ArticlePageList_Label_Name" xml:space="preserve">
+    <value>Tên bài viết</value>
+  </data>
+  <data name="Article_ArticlePageList_Label_OnsiteDate" xml:space="preserve">
+    <value>Ngày onsite</value>
+  </data>
+  <data name="Article_ArticlePageList_Label_Status" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="Article_ArticlePageList_PageTitle" xml:space="preserve">
+    <value>Quản lý bài viết trang tĩnh</value>
+  </data>
+  <data name="Shared_Label_Priority" xml:space="preserve">
+    <value>Ưu tiên</value>
+  </data>
+  <data name="ProductMngt_ProductDetail_PageTitle" xml:space="preserve">
+    <value>Chi tiết sản phẩm</value>
+  </data>
+  <data name="ProductMngt_GalleryDetail_Box1Title" xml:space="preserve">
+    <value>Thông tin sản phẩm</value>
+  </data>
+  <data name="ProductMngt_GalleryDetail_Box2Title" xml:space="preserve">
+    <value>Nội dung</value>
+  </data>
+  <data name="ProductMngt_Label_ImageId" xml:space="preserve">
+    <value>Hình ảnh</value>
+  </data>
+  <data name="ArticleMngt_ArticlePageList_Label_Caregory" xml:space="preserve">
+    <value>Danh mục</value>
+  </data>
+  <data name="ProductMngt_Label_NameLine2" xml:space="preserve">
+    <value>Tên khác</value>
+  </data>
+  <data name="ArticleMngt_CreateUpdateArticlePage_Label_ArticleCategoryId" xml:space="preserve">
+    <value>Danh mục</value>
+  </data>
+  <data name="ArticleMngt_CreateUpdateArticlePage_Label_ArticleUrl" xml:space="preserve">
+    <value>Link redirect</value>
+  </data>
+  <data name="ArticleMngt_CreateUpdateArticlePage_Label_Body" xml:space="preserve">
+    <value>Nội dung</value>
+  </data>
+  <data name="ArticleMngt_CreateUpdateArticlePage_Label_ImageMobileUrl" xml:space="preserve">
+    <value>Ảnh đại diện bài viết mobile</value>
+  </data>
+  <data name="ArticleMngt_CreateUpdateArticlePage_Label_ImageUrl" xml:space="preserve">
+    <value>Ảnh đại diện bài viết</value>
+  </data>
+  <data name="ArticleMngt_CreateUpdateArticlePage_Label_Rewrite" xml:space="preserve">
+    <value>Rewrite</value>
+  </data>
+  <data name="ArticleMngt_CreateUpdateArticlePage_Label_ShortDescription" xml:space="preserve">
+    <value>Mô tả ngắn</value>
+  </data>
+  <data name="ArticleMngt_CreateUpdateArticlePage_Label_MetaDescription" xml:space="preserve">
+    <value>MetaDescription</value>
+  </data>
+  <data name="ArticleMngt_CreateUpdateArticlePage_Label_MetaKeyword" xml:space="preserve">
+    <value>MetaKeyword</value>
+  </data>
+  <data name="ArticleMngt_CreateUpdateArticlePage_Label_MetaTitle" xml:space="preserve">
+    <value>MetaTitle</value>
+  </data>
+  <data name="ArticleMngt_CreateUpdateArticlePage_Label_Tag" xml:space="preserve">
+    <value>Thẻ</value>
+  </data>
+  <data name="ArticleMngt_CreateUpdateArticlePage_Label_TargetLinkImage" xml:space="preserve">
+    <value>Link redirect bài viết</value>
+  </data>
+  <data name="ArticleMngt_CreateUpdateArticlePage_Label_TargetLinkImageMobile" xml:space="preserve">
+    <value>Link redirect bài viết mobile</value>
+  </data>
+  <data name="ArticleMngt_ArticlePageList_Label_Title" xml:space="preserve">
+    <value>Tên bài viết</value>
+  </data>
+  <data name="ArticleMngt_PopupCreateArticlePage_Title" xml:space="preserve">
+    <value>Thêm bài viết tĩnh</value>
+  </data>
+  <data name="ArticleMngt_PopupUpdateArticlePage_Title" xml:space="preserve">
+    <value>Chỉnh sửa bài viết tĩnh</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryDetail_Label_LangShortName" xml:space="preserve">
+    <value>Ngôn ngữ</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryDetail_Label_Tag" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="ArticlePosition_Name" xml:space="preserve">
+    <value>Tên vị trí</value>
+  </data>
+  <data name="ArticlePosition_Search" xml:space="preserve">
+    <value>Tìm kiếm</value>
+  </data>
+  <data name="CMS_AdminTag_Add" xml:space="preserve">
+    <value>Thêm tag vị trí</value>
+  </data>
+  <data name="CMS_AdminTag_Description" xml:space="preserve">
+    <value>Mô tả</value>
+  </data>
+  <data name="CMS_AdminTag_Name" xml:space="preserve">
+    <value>Tên tag</value>
+  </data>
+  <data name="CMS_AdminTag_PageTitle" xml:space="preserve">
+    <value>Quản lý tag vị trí</value>
+  </data>
+  <data name="CMS_AdminTag_Predefined" xml:space="preserve">
+    <value>Được định nghĩa sẵn</value>
+  </data>
+  <data name="CMS_AdminTag_SubTitle" xml:space="preserve">
+    <value>Danh sách </value>
+  </data>
+  <data name="CMS_ArticlePosition_PageTitle" xml:space="preserve">
+    <value>Quản lý vị trí</value>
+  </data>
+  <data name="CMS_ArticlePosition_SubTitle" xml:space="preserve">
+    <value>Danh sách vị trí</value>
+  </data>
+  <data name="Shared_Homepage_Title" xml:space="preserve">
+    <value>Trang chủ</value>
+  </data>
+  <data name="Shared_LastUpdatedDatetime" xml:space="preserve">
+    <value>Cập nhật gần nhất</value>
+  </data>
+  <data name="ArticleMngt_ArticlePageDetail_Label_EndDate" xml:space="preserve">
+    <value>Ngày kế thúc</value>
+  </data>
+  <data name="ArticleMngt_ArticlePageDetail_Label_IsFocus" xml:space="preserve">
+    <value>Tin Focus</value>
+  </data>
+  <data name="ArticleMngt_ArticlePageDetail_Label_IsHot" xml:space="preserve">
+    <value>Tin Hot</value>
+  </data>
+  <data name="ArticleMngt_ArticlePageDetail_Label_StartDate" xml:space="preserve">
+    <value>Ngày bắt đầu</value>
+  </data>
+  <data name="ArticleMngt_ArticlePageList_Label_Id" xml:space="preserve">
+    <value>Mã bài viết</value>
+  </data>
+  <data name="ArticleMngt_ArticlePageList_Label_Title2" xml:space="preserve">
+    <value>Tên bài viết mở rộng</value>
+  </data>
+  <data name="ProductMngt_PopupUpdate_Title" xml:space="preserve">
+    <value>Cập nhật giới thiệu sản phẩm</value>
+  </data>
+  <data name="ArticleMngt_ArticleDetail_PageTitle" xml:space="preserve">
+    <value>Chi tiết bài viết</value>
+  </data>
+  <data name="ArticleMngt_BtnText_CreateArticle" xml:space="preserve">
+    <value>Thêm bài viết</value>
+  </data>
+  <data name="ArticleMngt_PopupCreateArticle_Title" xml:space="preserve">
+    <value>Thêm bài viết</value>
+  </data>
+  <data name="ArticleMngt_PopupUpdateArticle_Title" xml:space="preserve">
+    <value>Chỉnh sửa nội dung bài viết</value>
+  </data>
+  <data name="Article_ArticleList_PageTitle" xml:space="preserve">
+    <value>Danh sách bài viết</value>
+  </data>
+  <data name="ProductMngt_GalleryDetail_AttributeBoxTitle" xml:space="preserve">
+    <value>Thuộc tính sản phẩm</value>
+  </data>
+  <data name="ProductMngt_Label_AttributeName" xml:space="preserve">
+    <value>Thuộc tính</value>
+  </data>
+  <data name="ProductMngt_Label_IsDelete" xml:space="preserve">
+    <value>Sử dụng</value>
+  </data>
+  <data name="GalleryMngt_AddVideo_Title" xml:space="preserve">
+    <value>Thêm video</value>
+  </data>
+  <data name="GalleryMngt_Image_TargetUrl" xml:space="preserve">
+    <value>Link chuyển trang</value>
+  </data>
+  <data name="GalleryMngt_Image_Url" xml:space="preserve">
+    <value>Link ảnh</value>
+  </data>
+  <data name="GalleryMngt_Image_VideoUrl" xml:space="preserve">
+    <value>Link video</value>
+  </data>
+  <data name="MediaType_Image" xml:space="preserve">
+    <value>Hình ảnh</value>
+  </data>
+  <data name="MediaType_Video" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="Shared_Upload_Image" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="Shared_Upload_Video" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="MenuMngt_ListMenu_MainMenu" xml:space="preserve">
+    <value>Thông tin menu</value>
+  </data>
+  <data name="MenuMngt_ListMenu_MenuNotApproval" xml:space="preserve">
+    <value>Menu chưa duyệt</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryDetail_Label_AdminTag" xml:space="preserve">
+    <value>Vị trí hiển thị</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryList_Label_CategoryNotApproval" xml:space="preserve">
+    <value>Danh mục chưa duyệt</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryList_Label_TitleNotOnsite" xml:space="preserve">
+    <value>Danh mục chưa onsite</value>
+  </data>
+  <data name="ArticleMngt_ArticleCategoryList_Label_TitleOnsite" xml:space="preserve">
+    <value>Danh mục đang onsite</value>
+  </data>
+  <data name="GalleryMngt_Image_NoImageInList" xml:space="preserve">
+    <value>Không có item nào trong danh sách</value>
+  </data>
+  <data name="GalleryMngt_Image_UpdateSort" xml:space="preserve">
+    <value>Lưu thứ tự</value>
+  </data>
+  <data name="GalleryMngt_Image_UpdateSortConfirmText" xml:space="preserve">
+    <value>Bạn có chắc muốn lưu thứ tự mới này?</value>
+  </data>
+  <data name="ArticleMngt_ListTag_SubTitle" xml:space="preserve">
+    <value>Danh sách tag</value>
+  </data>
+  <data name="ProductMngt_ListProduct_SubTitle" xml:space="preserve">
+    <value>Danh sách sản phẩm</value>
+  </data>
+  <data name="UserMngt_ListUser_NameOrEmail" xml:space="preserve">
+    <value>Tên hoặc email</value>
+  </data>
+  <data name="About_BrowserSupport" xml:space="preserve">
+    <value>Ứng dụng hỗ trợ tốt nhất trên các trình duyệt IE10+, Firefox, Safari, Opera, Chrome.</value>
+  </data>
+  <data name="CMS_BannerGroup_Sort" xml:space="preserve">
+    <value>Thứ tự</value>
+  </data>
+  <data name="Shared_AboutTitle" xml:space="preserve">
+    <value>Thông tin ứng dụng</value>
+  </data>
+  <data name="Shared_Label_IsDefault" xml:space="preserve">
+    <value>Mặc định</value>
+  </data>
+  <data name="Shared_Upload_Photo" xml:space="preserve">
+    <value>Hình ảnh</value>
+  </data>
+  <data name="ArticleMngt_ArticlePositionDetail_ListArticle" xml:space="preserve">
+    <value>Danh sách bài viết</value>
+  </data>
+  <data name="ArticleMngt_ArticlePositionDetail_NoArticleInList" xml:space="preserve">
+    <value>Không có bài viết nào trong danh sách</value>
+  </data>
+  <data name="ArticleMngt_ArticlePositionDetail_PageTitle" xml:space="preserve">
+    <value>Sắp xếp vị trí bài viết</value>
+  </data>
+  <data name="ArticleMngt_ArticlePositionDetail_UpdateSort" xml:space="preserve">
+    <value>Cập nhật vị trí</value>
+  </data>
+  <data name="ArticleMngt_ArticlePositionDetail_UpdateSortConfirmText" xml:space="preserve">
+    <value>Xác nhận lưu vị trí bài viết</value>
+  </data>
+  <data name="AddressMngt_AddressDetail_SubTitle" xml:space="preserve">
+    <value>Chỉnh sửa địa chỉ</value>
+  </data>
+  <data name="AddressMngt_FormLabel_PhoneNumber2" xml:space="preserve">
+    <value>Số điện thoại 2</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_ReferenceCode" xml:space="preserve">
+    <value>Mã tham chiếu</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_MstId" xml:space="preserve">
+    <value>Loại microsite</value>
+  </data>
+  <data name="Shared_BrowserNotSupported" xml:space="preserve">
+    <value>Trình duyệt không được hỗ trợ !</value>
+  </data>
+  <data name="Shared_BrowserNotSupportedDetail" xml:space="preserve">
+    <value>Không hỗ trợ trình duyệt &lt;strong&gt;Internet Explorer (IE) từ các phiên bản 8 trở về trước&lt;/strong&gt;.
+                    &lt;br /&gt;
+                    Vui lòng sử dụng phiên bản mới hơn hoặc trình duyệt khác (Chrome, Firefox, Safiri,...)</value>
+  </data>
+  <data name="Shared_CurrentMicrositeTip" xml:space="preserve">
+    <value>Microsite hiện tại</value>
+  </data>
+  <data name="MicrositeMngt_ViewMicrositeDetail_Info" xml:space="preserve">
+    <value>Cập nhật thông tin microsite</value>
+  </data>
+  <data name="GalleryMngt_PopupUpdateImage_Title" xml:space="preserve">
+    <value>Cập nhật nội dung ảnh</value>
+  </data>
+  <data name="GalleryMngt_Label_Description" xml:space="preserve">
+    <value>Mô tả</value>
+  </data>
+  <data name="GalleryMngt_Label_ShortDescription" xml:space="preserve">
+    <value>Mô tả ngắn gọn</value>
+  </data>
+  <data name="GalleryMngt_Label_TargetUrl" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="GalleryMngt_Label_Title" xml:space="preserve">
+    <value>Tiêu đề</value>
+  </data>
+  <data name="Shared_Label_AltText" xml:space="preserve">
+    <value>Alt text</value>
+  </data>
+  <data name="AddressMngt_FormLabel_Name" xml:space="preserve">
+    <value>Tên địa chỉ</value>
+  </data>
+  <data name="GalleryMngt_Label_AdminType" xml:space="preserve">
+    <value>Loại</value>
+  </data>
+  <data name="ProductMngt_Label_GalleryId" xml:space="preserve">
+    <value>Gallery</value>
+  </data>
+  <data name="Qcs_EvalCriteria_Title" xml:space="preserve">
+    <value>Danh mục tiêu chí đánh giá</value>
+  </data>
+  <data name="Qcs_EvalCriteria_Label_Category" xml:space="preserve">
+    <value>Nhóm hạng mục</value>
+  </data>
+  <data name="Qcs_EvalCriteria_Label_Category_Group" xml:space="preserve">
+    <value>Chọn hạng mục</value>
+  </data>
+  <data name="Qcs_EvalCriteria_Label_Department" xml:space="preserve">
+    <value>Chọn bộ phận</value>
+  </data>
+  <data name="Qcs_EvalCriteria_Grid_Title_Category_Code" xml:space="preserve">
+    <value>Mã</value>
+  </data>
+  <data name="Qcs_EvalCriteria_Grid_Title_Criteria_Content" xml:space="preserve">
+    <value>Chi tiết</value>
+  </data>
+  <data name="Qcs_EvalCriteria_Grid_Title_Criteria_Name" xml:space="preserve">
+    <value>Nhóm tiêu chí đánh giá</value>
+  </data>
+  <data name="Qcs_EvalCriteria_Grid_Title_Criteria_Point" xml:space="preserve">
+    <value>Điểm</value>
+  </data>
+  <data name="Qcs_EvalCriteria_Grid_Title_Department" xml:space="preserve">
+    <value>Bộ phận</value>
+  </data>
+  <data name="Qcs_EvalCriteria_Shared_Panel_Heading_List_Title" xml:space="preserve">
+    <value>Danh sách tiêu chí đánh giá</value>
+  </data>
+  <data name="Qcs_EvalCriteria_Shared_Panel_Heading_Search" xml:space="preserve">
+    <value>Tìm kiếm</value>
+  </data>
+  <data name="Qcs_EvalCriteria_Shared_Button_Caption_Add" xml:space="preserve">
+    <value>Thêm mới tiêu chí đánh giá</value>
+  </data>
+  <data name="Qcs_EvalCriteria_Popup_Label_Category" xml:space="preserve">
+    <value>Nhóm hạng mục</value>
+  </data>
+  <data name="Qcs_EvalCriteria_Popup_Label_Category_Type" xml:space="preserve">
+    <value>Loại hạng mục</value>
+  </data>
+  <data name="Qcs_EvalCriteria_Popup_Label_Content" xml:space="preserve">
+    <value>Chi tiết</value>
+  </data>
+  <data name="Qcs_EvalCriteria_Popup_Label_Criteria_Group" xml:space="preserve">
+    <value>Nhóm tiêu chí đánh giá</value>
+  </data>
+  <data name="Qcs_EvalCriteria_Popup_Label_Deparment" xml:space="preserve">
+    <value>Bộ phận</value>
+  </data>
+  <data name="Qcs_EvalCriteria_Popup_Label_Point" xml:space="preserve">
+    <value>Điểm</value>
+  </data>
+  <data name="Qcs_EvalCriteria_Popup_Title" xml:space="preserve">
+    <value>Thêm mới tiêu chí đánh giá</value>
+  </data>
+  <data name="Qcs_EvalCriteria_Label_Criteria_Group" xml:space="preserve">
+    <value>Nhóm tiêu chí đánh giá</value>
+  </data>
+  <data name="ArticleMngt_ArticleDetail_OnsiteDateRange" xml:space="preserve">
+    <value>Ngày onsite</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Label_BannerUrl" xml:space="preserve">
+    <value>Hình banner</value>
+  </data>
+  <data name="MasterDataMngt_BtnText_CreateMicrositeZone" xml:space="preserve">
+    <value>Thêm khu vực</value>
+  </data>
+  <data name="MasterDataMngt_ListMicrositeZone_PageTitle" xml:space="preserve">
+    <value>Quản lý khu vực</value>
+  </data>
+  <data name="Evaluation_ListEvaluationCalendar_BtnText_CreateEvaluationCalendar" xml:space="preserve">
+    <value>Tạo kỳ kiểm tra</value>
+  </data>
+  <data name="Evaluation_ListEvaluationCalendar_EndDate" xml:space="preserve">
+    <value>Ngày kết thúc</value>
+  </data>
+  <data name="Evaluation_ListEvaluationCalendar_Name" xml:space="preserve">
+    <value>Tên kỳ kiểm tra</value>
+  </data>
+  <data name="Evaluation_ListEvaluationCalendar_PageTitle" xml:space="preserve">
+    <value>Quản lý kỳ kiểm tra</value>
+  </data>
+  <data name="Evaluation_ListEvaluationCalendar_Search" xml:space="preserve">
+    <value>Tìm kiếm</value>
+  </data>
+  <data name="Evaluation_ListEvaluationCalendar_StartDate" xml:space="preserve">
+    <value>Ngày bắt đầu</value>
+  </data>
+  <data name="Shared_Label_SourceClient" xml:space="preserve">
+    <value>Loại</value>
+  </data>
+  <data name="MasterDataMngt_PopupCreateZone_Title" xml:space="preserve">
+    <value>Thêm khu vực</value>
+  </data>
+  <data name="MasterDataMngt_PopupUpdateZone_Title" xml:space="preserve">
+    <value>Cập nhật khu vực</value>
+  </data>
+  <data name="MasterDataMngt_SiteZone_Label_EvaluationCateGroupId" xml:space="preserve">
+    <value>Chủ đề</value>
+  </data>
+  <data name="MasterDataMngt_SiteZone_Label_SiteZoneCode" xml:space="preserve">
+    <value>Mã khu vực</value>
+  </data>
+  <data name="MasterDataMngt_SiteZone_Label_SiteZoneName" xml:space="preserve">
+    <value>Tên khu vực</value>
+  </data>
+  <data name="Shared_Label_Microsite" xml:space="preserve">
+    <value>Microsite</value>
+  </data>
+  <data name="Evaluation_ListEvaluation_Label_ListEvaluationCalendar" xml:space="preserve">
+    <value>Danh sách</value>
+  </data>
+  <data name="Evaluation_PopupCreateEvaluationCalendar_Title" xml:space="preserve">
+    <value>Thêm mới kỳ kiểm tra</value>
+  </data>
+  <data name="Evaluation_PopupUpdateEvaluationCalendar_Title" xml:space="preserve">
+    <value>Chỉnh sửa kỳ kiểm tra</value>
+  </data>
+  <data name="MasterDataMngt_ListZone_SubTitle" xml:space="preserve">
+    <value>Danh sách khu vực</value>
+  </data>
+  <data name="MasterDataMngt_SiteZone_DeleteConfirmText" xml:space="preserve">
+    <value>Bạn có muốn xóa khu vực này không?</value>
+  </data>
+  <data name="EvaluationCalendarStatusEnum_Closed" xml:space="preserve">
+    <value>Đã xử lý xong</value>
+  </data>
+  <data name="EvaluationCalendarStatusEnum_IsProcessing" xml:space="preserve">
+    <value>Đang xử lý</value>
+  </data>
+  <data name="Evaluation_ListEvaluationCalendar_StartDateEndDate" xml:space="preserve">
+    <value>Thời gian</value>
+  </data>
+  <data name="ViolationRecordStatus_KSCLThamdinh" xml:space="preserve">
+    <value>KSCL thẩm định</value>
+  </data>
+  <data name="ViolationRecordStatus_New" xml:space="preserve">
+    <value>Mới</value>
+  </data>
+  <data name="ViolationRecordStatus_NSnhan" xml:space="preserve">
+    <value>NS nhận</value>
+  </data>
+  <data name="ViolationRecord_Label_DeadlineToResolve" xml:space="preserve">
+    <value>Hạn Y/C khắc phục</value>
+  </data>
+  <data name="ViolationRecord_Label_Proposes" xml:space="preserve">
+    <value>Đề xuất của KSCL</value>
+  </data>
+  <data name="ViolationRecord_Label_RecordDate" xml:space="preserve">
+    <value>Ngày lập biên bản</value>
+  </data>
+  <data name="ViolationRecord_Label_RecorderDept" xml:space="preserve">
+    <value>Bộ phận người lập biên bản</value>
+  </data>
+  <data name="ViolationRecord_Label_RecorderName" xml:space="preserve">
+    <value>Tên người lập biên bản</value>
+  </data>
+  <data name="ViolationRecord_Label_RecorderPosition" xml:space="preserve">
+    <value>Chức vụ người lập biên bản</value>
+  </data>
+  <data name="ViolationRecord_Label_ResolveType" xml:space="preserve">
+    <value>Hình thức xử lý</value>
+  </data>
+  <data name="ViolationRecord_Label_ResolveTypeNote" xml:space="preserve">
+    <value>Đề xuất thêm cho hình thức xử lý</value>
+  </data>
+  <data name="ViolationRecord_Label_SignDate" xml:space="preserve">
+    <value>Ngày ký biên bản vi phạm</value>
+  </data>
+  <data name="ViolationRecord_Label_StaffDept" xml:space="preserve">
+    <value>Bộ phận người vi phạm</value>
+  </data>
+  <data name="ViolationRecord_Label_StaffId" xml:space="preserve">
+    <value>Mã nhân viên vi phạm</value>
+  </data>
+  <data name="ViolationRecord_Label_StaffMasterCode" xml:space="preserve">
+    <value>MasterCode</value>
+  </data>
+  <data name="ViolationRecord_Label_StaffName" xml:space="preserve">
+    <value>Tên nhân viên vi phạm</value>
+  </data>
+  <data name="ViolationRecord_Label_StaffPosition" xml:space="preserve">
+    <value>Chức vụ nhân viên vi phạm</value>
+  </data>
+  <data name="ViolationRecord_Label_ViolationDate" xml:space="preserve">
+    <value>Ngày vi phạm</value>
+  </data>
+  <data name="ViolationRecord_Label_ViolationUriImage" xml:space="preserve">
+    <value>Hình ảnh</value>
+  </data>
+  <data name="ViolationRecord_Label_ViolContent" xml:space="preserve">
+    <value>Lỗi vi phạm</value>
+  </data>
+  <data name="ViolationRecord_Label_ViolGroup" xml:space="preserve">
+    <value>Nhóm lỗi</value>
+  </data>
+  <data name="ViolationRecord_Label_ViolIssuesDate" xml:space="preserve">
+    <value>Ngày phát hiện vi phạm</value>
+  </data>
+  <data name="ViolationRecord_Label_ViolRecordId" xml:space="preserve">
+    <value>Mã số biên bản vi phạm</value>
+  </data>
+  <data name="ViolationRecord_Label_ViolationRecordStatus" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="ViolationRecord_ListViolationRecord_BtnText_CreateEvaluatioRecord" xml:space="preserve">
+    <value>Tạo biên bản vi phạm</value>
+  </data>
+  <data name="ViolationRecord_ListViolationRecord_List" xml:space="preserve">
+    <value>Danh sách </value>
+  </data>
+  <data name="ViolationRecord_ListViolationRecord_PageTitle" xml:space="preserve">
+    <value>Quản lý biên bản vi phạm</value>
+  </data>
+  <data name="ViolationRecord_ListViolationRecord_Search" xml:space="preserve">
+    <value>Tìm kiếm</value>
+  </data>
+  <data name="CheckList_PageTitle" xml:space="preserve">
+    <value>Quản lý kiểm tra</value>
+  </data>
+  <data name="Checklist_EvaluatedCount" xml:space="preserve">
+    <value>Đã đánh giá</value>
+  </data>
+  <data name="Checklist_NeedToEvaluate" xml:space="preserve">
+    <value>Tổng số</value>
+  </data>
+  <data name="ViolationRecord_PopupInsertViolationRecord_Title" xml:space="preserve">
+    <value>Thêm biên bản vi phạm</value>
+  </data>
+  <data name="ViolationRecord_PopupUpdateViolationRecord_Title" xml:space="preserve">
+    <value>Chỉnh sửa biên bản vi phạm</value>
+  </data>
+  <data name="ViolationRecord_Label_DateRange" xml:space="preserve">
+    <value>Ngày lập biên bản</value>
+  </data>
+  <data name="ViolationRecord_Validated_RequiredData" xml:space="preserve">
+    <value>Vui lòng chọn</value>
+  </data>
+  <data name="Qcs_EvaluationZone_Label_Cate_Name" xml:space="preserve">
+    <value>Danh mục</value>
+  </data>
+  <data name="Qcs_EvaluationZone_Label_EvaluationCalendar_Name" xml:space="preserve">
+    <value>Kỳ kiểm tra</value>
+  </data>
+  <data name="Qcs_EvaluationZone_Label_GroupCate_Name" xml:space="preserve">
+    <value>Nhóm danh mục</value>
+  </data>
+  <data name="Qcs_EvaluationZone_Label_Microsite_Name" xml:space="preserve">
+    <value>Trung tâm thương mại</value>
+  </data>
+  <data name="Qcs_EvaluationZone_Label_keyWord_Name" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Qcs_EvaluationZone_Label_NoteReport" xml:space="preserve">
+    <value>Ghi chú Kscl</value>
+  </data>
+  <data name="Qcs_EvaluationZone_Label_ViolationError" xml:space="preserve">
+    <value>Mô tả lỗi</value>
+  </data>
+  <data name="Qcs_EvaluationZone_Label_Zones" xml:space="preserve">
+    <value>Khu vực</value>
+  </data>
+  <data name="Qcs_EvaluationZone_PopupCreate_Title" xml:space="preserve">
+    <value>Thêm mới 1 báo lỗi cho khu vực</value>
+  </data>
+  <data name="Qcs_EvaluationZone_PopupUpdate_Title" xml:space="preserve">
+    <value>Cập nhật 1 báo lỗi cho khu vực</value>
+  </data>
+  <data name="Evaluation_ListZoneViolation_BtnText_CreateZoneViolation" xml:space="preserve">
+    <value>Tạo mới báo cáo lỗi vi phạm</value>
+  </data>
+  <data name="Evaluation_ListZoneViolation_Label_Action" xml:space="preserve">
+    <value>Thao tác</value>
+  </data>
+  <data name="Evaluation_ListZoneViolation_Label_CategoryName" xml:space="preserve">
+    <value>Danh mục chi tiết</value>
+  </data>
+  <data name="Evaluation_ListZoneViolation_Label_Department" xml:space="preserve">
+    <value>Bộ phận</value>
+  </data>
+  <data name="Evaluation_ListZoneViolation_Label_Description" xml:space="preserve">
+    <value>Mô tả</value>
+  </data>
+  <data name="Evaluation_ListZoneViolation_Label_ImageName" xml:space="preserve">
+    <value>Ảnh</value>
+  </data>
+  <data name="Evaluation_ListZoneViolation_Label_NoteReport" xml:space="preserve">
+    <value>KSCL đề xuất</value>
+  </data>
+  <data name="Evaluation_ListZoneViolation_Label_Zone" xml:space="preserve">
+    <value>Khu vực</value>
+  </data>
+  <data name="Evaluation_ListZoneViolation_PageTitle" xml:space="preserve">
+    <value>Quản lý báo cáo lỗi của kỳ kiểm tra</value>
+  </data>
+  <data name="Share_Btn_ExportExcel_Title" xml:space="preserve">
+    <value>Xuất danh sách ra Excel</value>
+  </data>
+  <data name="ViolationRecord_Label_Dept" xml:space="preserve">
+    <value>Bộ phận</value>
+  </data>
+  <data name="ViolationRecord_Label_Id" xml:space="preserve">
+    <value>Mã NV</value>
+  </data>
+  <data name="ViolationRecord_Label_Name" xml:space="preserve">
+    <value>Tên</value>
+  </data>
+  <data name="ViolationRecord_Label_Position" xml:space="preserve">
+    <value>Chức vụ</value>
+  </data>
+  <data name="UserMngt_ListUser_Label_AllMicrosite" xml:space="preserve">
+    <value>Tất cả</value>
+  </data>
+  <data name="UserMngt_ListUser_Label_DeptId" xml:space="preserve">
+    <value>Phòng ban</value>
+  </data>
+  <data name="CheckList_Status_NoEvaluated" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="CheckList_Status_NotPass" xml:space="preserve">
+    <value>K.Đạt</value>
+  </data>
+  <data name="CheckList_Status_NotYetEvaluated" xml:space="preserve">
+    <value>N/C</value>
+  </data>
+  <data name="CheckList_Status_Pass" xml:space="preserve">
+    <value>Đạt</value>
+  </data>
+  <data name="CheckList_ViolationImage" xml:space="preserve">
+    <value>Ảnh</value>
+  </data>
+  <data name="Shared_Label_Json" xml:space="preserve">
+    <value>JSON</value>
+  </data>
+  <data name="SystemMngt_ImportActions_PageTitle" xml:space="preserve">
+    <value>Nhập dữ liệu Controllers &amp; Actions</value>
+  </data>
+  <data name="Qcs_EvaluationZone_Label_Department" xml:space="preserve">
+    <value>Phòng ban</value>
+  </data>
+  <data name="Qcs_EvaluationZone_Label_Image" xml:space="preserve">
+    <value>Tải ảnh</value>
+  </data>
+  <data name="Qcs_EvaluationZone_Label_ZoneErrorRequired" xml:space="preserve">
+    <value>Vui lòng chọn ít nhất 1 khu vực</value>
+  </data>
+  <data name="Qcs_EvalCriteriaGroup_Shared_Panel_Heading_List_Title" xml:space="preserve">
+    <value>Danh sách nhóm tiêu chí đánh giá</value>
+  </data>
+  <data name="Qcs_EvalCriteriaGroup_Title" xml:space="preserve">
+    <value>Danh mục nhóm tiêu chí đánh giá</value>
+  </data>
+  <data name="Qcs_EvalCriteriaGroup_View_Label_Code" xml:space="preserve">
+    <value>Mã nhóm tiêu chí</value>
+  </data>
+  <data name="Qcs_EvalCriteriaGroup_View_Label_Name" xml:space="preserve">
+    <value>Tên nhóm tiêu chí</value>
+  </data>
+  <data name="Qcs_EvalCriteriaGroup_Popup_Title_Add" xml:space="preserve">
+    <value>Thêm mới nhóm tiêu chí đánh giá</value>
+  </data>
+  <data name="Qcs_EvalCriteriaGroup_Popup_Title_Update" xml:space="preserve">
+    <value>Cập nhật thông tin nhóm tiêu chí đánh giá</value>
+  </data>
+  <data name="Qcs_EvalCriteriaGroup_View_Button_Caption_Add" xml:space="preserve">
+    <value>Thêm mới nhóm tiêu chí đánh giá</value>
+  </data>
+  <data name="Qcs_EvalCategory_View_Label_CateGroup_Name" xml:space="preserve">
+    <value>Tên loại hạng mục đánh giá</value>
+  </data>
+  <data name="Qcs_EvalCategory_View_Label_Code" xml:space="preserve">
+    <value>Mã nhóm hạng mục đánh giá</value>
+  </data>
+  <data name="Qcs_EvalCategory_View_Label_Name" xml:space="preserve">
+    <value>Tên nhóm hạng mục đánh giá</value>
+  </data>
+  <data name="Qcs_EvalCategory_Grid_Title_Cate_Group_Name" xml:space="preserve">
+    <value>Loại hạng mục</value>
+  </data>
+  <data name="Qcs_EvalCategory_Grid_Title_Code" xml:space="preserve">
+    <value>Mã nhóm hạng mục</value>
+  </data>
+  <data name="Qcs_EvalCategory_Grid_Title_Name" xml:space="preserve">
+    <value>Tên nhóm hạng mục</value>
+  </data>
+  <data name="Qcs_EvalCategory_Label_Category_Group" xml:space="preserve">
+    <value>Chọn loại hạng mục</value>
+  </data>
+  <data name="Qcs_EvalCategory_Shared_Panel_Heading_List_Title" xml:space="preserve">
+    <value>Danh sách nhóm hạng mục đánh giá</value>
+  </data>
+  <data name="Qcs_EvalCategory_Shared_Panel_Heading_Search" xml:space="preserve">
+    <value>Tìm kiếm</value>
+  </data>
+  <data name="Qcs_EvalCategory_Title" xml:space="preserve">
+    <value>Danh mục nhóm hạng mục đánh giá</value>
+  </data>
+  <data name="Qcs_EvalCaterory_DeleteConfirmText" xml:space="preserve">
+    <value>Bạn có m</value>
+  </data>
+  <data name="Qcs_EvalCatgory_View_Button_Caption_Add" xml:space="preserve">
+    <value>Thêm mới nhóm hạng mục đánh giá</value>
+  </data>
+  <data name="Qcs_EvalCategory_Popup_Title_Add" xml:space="preserve">
+    <value>Thêm mới nhóm hạng mục đánh giá</value>
+  </data>
+  <data name="Qcs_EvalCategory_Popup_Title_Update" xml:space="preserve">
+    <value>Cập nhật nhóm hạng mục đánh giá</value>
+  </data>
+  <data name="Report_ViolationRecord_Label_CompareUpDown" xml:space="preserve">
+    <value>So sánh tăng/giảm</value>
+  </data>
+  <data name="Report_ViolationRecord_Label_Department" xml:space="preserve">
+    <value>Phòng/Ban/Khối</value>
+  </data>
+  <data name="Report_ViolationRecord_Label_GroupErrorContent" xml:space="preserve">
+    <value>Nội dung nhóm lỗi</value>
+  </data>
+  <data name="Report_ViolationRecord_Label_Microsite" xml:space="preserve">
+    <value>BQL</value>
+  </data>
+  <data name="Report_ViolationRecord_Label_TotalViolRecordInMonth" xml:space="preserve">
+    <value>Số lượng BBVP Tháng hiện tại</value>
+  </data>
+  <data name="Report_ViolationRecord_Label_TotalViolRecordLastMonth" xml:space="preserve">
+    <value>Số lượng BBVP tháng trước</value>
+  </data>
+  <data name="Report_ViolationRecord_Label_ViolRecordByInternal" xml:space="preserve">
+    <value>Nội bộ lập BB</value>
+  </data>
+  <data name="Report_ViolationRecord_Label_ViolRecordByQC" xml:space="preserve">
+    <value>KSCL lập BB</value>
+  </data>
+  <data name="Report_ViolationRecord_Title_ReportByDepartment" xml:space="preserve">
+    <value>Thống kê BBVP theo Bộ phận</value>
+  </data>
+  <data name="Report_ViolationRecord_Title_ReportByGroupError" xml:space="preserve">
+    <value>Thống kê BBVP theo nhóm lỗi</value>
+  </data>
+  <data name="Report_ViolationRecord_Title_ReportByMicrosite" xml:space="preserve">
+    <value>Thống kê BBVP theo BQL</value>
+  </data>
+  <data name="SystemMngt_ImportGroupActionMaps_PageTitle" xml:space="preserve">
+    <value>Nhập dữ liệu GroupActionMaps</value>
+  </data>
+  <data name="SystemMngt_ImportGroupActions_PageTitle" xml:space="preserve">
+    <value>Nhập dữ liệu GroupActions</value>
+  </data>
+  <data name="Report_ViolationRecord_Label_RecordDate" xml:space="preserve">
+    <value>Ngày lập BB</value>
+  </data>
+  <data name="Report_ViolationRecord_PageTitle" xml:space="preserve">
+    <value>Báo cáo biên bản vi phạm</value>
+  </data>
+  <data name="Share_Text_Total" xml:space="preserve">
+    <value>Tổng</value>
+  </data>
+  <data name="MasterDataMngt_ListAdminDepartment_SubTitle" xml:space="preserve">
+    <value>Danh sách bộ phận</value>
+  </data>
+  <data name="MasterDataMngt_ListEvaluationDepartment_PageTitle" xml:space="preserve">
+    <value>Quản lý bộ phận</value>
+  </data>
+  <data name="MasterDataMngt_BtnText_CreateAdminDepartment" xml:space="preserve">
+    <value>Thêm bộ phận</value>
+  </data>
+  <data name="MasterDataMngt_Departments_Label_Date" xml:space="preserve">
+    <value>Ngày tạo</value>
+  </data>
+  <data name="MasterDataMngt_Departments_Label_ID" xml:space="preserve">
+    <value>Mã bộ phận</value>
+  </data>
+  <data name="MasterDataMngt_Departments_Label_Name" xml:space="preserve">
+    <value>Tên bộ phận</value>
+  </data>
+  <data name="MasterDataMngt_DepartmentsParent_Label_Name" xml:space="preserve">
+    <value>Tên bộ phận cha</value>
+  </data>
+  <data name="MasterDataMngt_PopupCreateAdminDepartment_Title" xml:space="preserve">
+    <value>Thêm bộ phận</value>
+  </data>
+  <data name="MasterDataMngt_PopupUpdateAdminDepartment_Title" xml:space="preserve">
+    <value>Cập nhật bộ phận</value>
+  </data>
+  <data name="MasterDataMngt_ListAdminDepartment_SelectOpt_No" xml:space="preserve">
+    <value>Không có cấp cha</value>
+  </data>
+  <data name="Qcs_EvaluationZone_Popup_DeleteViolation_Description" xml:space="preserve">
+    <value>Hệ thống chuẩn bị xóa báo cáo vi phạm. &amp;lt;br/&amp;gt;Bạn vẫn muốn tiếp tục xóa báo cáo vi phạm này</value>
+  </data>
+  <data name="Qcs_ZoneViolationReport_PopUp_Create_Title" xml:space="preserve">
+    <value>Thông tin giải trình đánh giá lỗi vi phạm</value>
+  </data>
+  <data name="Qcs_ZoneViolationReport_PopUp_Update_Title" xml:space="preserve">
+    <value>Cập nhật thông tin giải trình đánh giá lổi vi phạm</value>
+  </data>
+  <data name="Qcs_EvaluationZone_Label_DateTimeSearch" xml:space="preserve">
+    <value>Thời gian tạo</value>
+  </data>
+  <data name="Qcs_EvaluationZone_Label_ToolsTip_btnCreateReportZoneViolation" xml:space="preserve">
+    <value>Tạo ghi nhận khắc phục lỗi</value>
+  </data>
+  <data name="Qcs_EvaluationZone_Label_ToolsTip_btnDelete" xml:space="preserve">
+    <value>Xóa báo cáo vi phạm</value>
+  </data>
+  <data name="Qcs_EvaluationZone_Popup_DeleteViolation_Title" xml:space="preserve">
+    <value>Bạn đang tiến hành xóa thông báo vi phạm</value>
+  </data>
+  <data name="Qcs_EvaluationZone_Popup_DeleteViolation_ViolationName" xml:space="preserve">
+    <value>Báo cáo vi phạm</value>
+  </data>
+  <data name="Qcs_EvaluationZone_Popup_DeleteViolation_ZoneName" xml:space="preserve">
+    <value>Khu vực</value>
+  </data>
+  <data name="Qcs_ZoneViolationReport_Label_DepartmentReport" xml:space="preserve">
+    <value>Bộ phận</value>
+  </data>
+  <data name="Qcs_ZoneViolationReport_Label_NoteReport" xml:space="preserve">
+    <value>Nội dung giải trình</value>
+  </data>
+  <data name="Qcs_ZoneViolationReport_Label_ReportDateEnd" xml:space="preserve">
+    <value>Ngày hết hạn giải trình</value>
+  </data>
+  <data name="Qcs_ZoneViolationReport_Label_ReportImage" xml:space="preserve">
+    <value>Hình ảnh</value>
+  </data>
+  <data name="Qcs_ZoneViolationReport_Label_StatusReport" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="Qcs_EvaluationZone_Label_Criteria_Name" xml:space="preserve">
+    <value>Loại nội dung chi tiết</value>
+  </data>
+  <data name="Qcs_Report_Feedback_FromToDate" xml:space="preserve">
+    <value>Chọn ngày</value>
+  </data>
+  <data name="Qcs_Report_Feedback_Grid_ExpiredDateToComplete" xml:space="preserve">
+    <value>Quá hạn hoàn thành</value>
+  </data>
+  <data name="Qcs_Report_Feedback_Grid_ExpiredDateToUncomplete" xml:space="preserve">
+    <value>Quá hạn chưa hoàn thành</value>
+  </data>
+  <data name="Qcs_Report_Feedback_Grid_NotExpiredDateToResolve" xml:space="preserve">
+    <value>Chưa đến hạn</value>
+  </data>
+  <data name="Qcs_Report_Feedback_Grid_Title_SiteTitle" xml:space="preserve">
+    <value>TTTM</value>
+  </data>
+  <data name="Qcs_Report_Feedback_Grid_TotalCompleted" xml:space="preserve">
+    <value>Tổng hoàn thành</value>
+  </data>
+  <data name="Qcs_Report_Feedback_Grid_TotalViolations" xml:space="preserve">
+    <value>Số lượng lỗi</value>
+  </data>
+  <data name="Qcs_Report_Feedback_Grid_ViolationExplaned" xml:space="preserve">
+    <value>Đã giải trình</value>
+  </data>
+  <data name="Qcs_Report_Feedback_Grid_ViolationNotExplaned" xml:space="preserve">
+    <value>Chưa giải trình</value>
+  </data>
+  <data name="Qcs_Report_Feedback_Grid_ViolationStopedToProcess" xml:space="preserve">
+    <value>Tạm dừng</value>
+  </data>
+  <data name="Qcs_Report_Feedback_Title" xml:space="preserve">
+    <value>Báo cáo khắc phục</value>
+  </data>
+  <data name="Qcs_Report_Feedback_Shared_Panel_Heading_List_Title" xml:space="preserve">
+    <value>BÁO CÁO THEO DÕI KHẮC PHỤC NGÀY CHỐT:{0}</value>
+  </data>
+  <data name="Report_CheckListReport_Label_CheckedSiteZone" xml:space="preserve">
+    <value>Gian hàng đã kiểm tra/Tổng SL gian hàng</value>
+  </data>
+  <data name="Report_CheckListReport_Label_EvaluationCalendar" xml:space="preserve">
+    <value>Kỳ kiểm tra</value>
+  </data>
+  <data name="Report_CheckListReport_Label_InValidPoint" xml:space="preserve">
+    <value>Số lỗi(điểm lỗi)</value>
+  </data>
+  <data name="Report_CheckListReport_Label_InValidSiteZone" xml:space="preserve">
+    <value>Gian hàng có lỗi</value>
+  </data>
+  <data name="Report_CheckListReport_Label_Result" xml:space="preserve">
+    <value>Kết quả (Tổng điểm lỗi/Tổng điểm đã kiểm tra)</value>
+  </data>
+  <data name="Report_CheckListReport_Label_Site" xml:space="preserve">
+    <value>TTTM</value>
+  </data>
+  <data name="Report_CheckListReport_Label_TotalCheckList" xml:space="preserve">
+    <value>Đã chấm/Tổng DS(điểm KT)</value>
+  </data>
+  <data name="Report_CheckListReport_Label_ValidSiteZone" xml:space="preserve">
+    <value>Gian hàng không có lỗi</value>
+  </data>
+  <data name="Report_CheckListReport_PageTitle" xml:space="preserve">
+    <value>Báo cáo checklist</value>
+  </data>
+  <data name="MasterDataMngt_BtnText_CreateEvalCategoryGroup" xml:space="preserve">
+    <value>Thêm loại hạng mục</value>
+  </data>
+  <data name="MasterDataMngt_EvaluationCategoryGroup_Label_EvaluationCateGroupCode" xml:space="preserve">
+    <value>Mã loại hạng mục</value>
+  </data>
+  <data name="MasterDataMngt_EvaluationCategoryGroup_Label_EvaluationCateGroupName" xml:space="preserve">
+    <value>Tên loại hạng mục</value>
+  </data>
+  <data name="MasterDataMngt_ListEvaluationCategoryGroup_PageTitle" xml:space="preserve">
+    <value>Quản lý loại hạng mục</value>
+  </data>
+  <data name="MasterDataMngt_ListEvaluationCategoryGroup_SubTitle" xml:space="preserve">
+    <value>Danh sách loại hạng mục</value>
+  </data>
+  <data name="UserMngt_ListUser_Label_PhoneNumber" xml:space="preserve">
+    <value>Số điện thoại</value>
+  </data>
+  <data name="Qcs_Report_Cap_Category_Date" xml:space="preserve">
+    <value>Ngày chốt</value>
+  </data>
+  <data name="Qcs_Report_CAP_By_Dept_Cate_Shared_Panel_Heading_List_Title" xml:space="preserve">
+    <value>BÁO CÁO KHẮC PHỤC THEO HẠNG MỤC VÀ BỘ PHẬN CỦA BQL {0}, NGÀY CHỐT {1:dd/MM/yyyyy}</value>
+  </data>
+  <data name="Qcs_Report_CAP_By_Dept_Cate_Title" xml:space="preserve">
+    <value>Báo cáo C.A.P theo nhóm danh mục</value>
+  </data>
+  <data name="Qcs_Report_CAP_Cate_Dept_Grid_ExpiredDateToComplete" xml:space="preserve">
+    <value>Hoàn thành quá hạn(%)</value>
+  </data>
+  <data name="Qcs_Report_CAP_Cate_Dept_Grid_ExpiredDateToUncomplete" xml:space="preserve">
+    <value>Quá hạn</value>
+  </data>
+  <data name="Qcs_Report_CAP_Cate_Dept_Grid_TotalCompleted" xml:space="preserve">
+    <value>Hoàn thành(%)</value>
+  </data>
+  <data name="Qcs_Report_CAP_Cate_Dept_Grid_TotalViolations" xml:space="preserve">
+    <value>Tổng lỗi</value>
+  </data>
+  <data name="Qcs_Report_CAP_Cate_Grid_CateGroupName" xml:space="preserve">
+    <value>Hạng mục</value>
+  </data>
+  <data name="Qcs_Report_CAP_Dept_Grid_DeptName" xml:space="preserve">
+    <value>Bộ phận khắc phục</value>
+  </data>
+  <data name="UserMngt_ListUser_Label_Microsites" xml:space="preserve">
+    <value>Microsites</value>
+  </data>
+  <data name="MasterDataMngt_PopupCreateCateGroup_Title" xml:space="preserve">
+    <value>Thêm mới loại hạng mục</value>
+  </data>
+  <data name="MasterDataMngt_PopupUpdateCateGroup_Title" xml:space="preserve">
+    <value>Cập nhật loại hạng mục</value>
+  </data>
+  <data name="Report_CheckListReport_Label_DateRange" xml:space="preserve">
+    <value>Kỳ kiểm tra</value>
+  </data>
+  <data name="Report_CheckListReport_Label_FinalResult" xml:space="preserve">
+    <value>Kết quả</value>
+  </data>
+  <data name="Evaluation_ListZoneViolation_Label_DateFinish" xml:space="preserve">
+    <value>Ngày hoàn thành</value>
+  </data>
+  <data name="Evaluation_ListZoneViolation_Label_Explanation" xml:space="preserve">
+    <value>Giải trình</value>
+  </data>
+  <data name="Evaluation_ListZoneViolation_Label_ExplanationDepartment" xml:space="preserve">
+    <value>Phòng ban</value>
+  </data>
+  <data name="Evaluation_ListZoneViolation_Label_ExplanationImageName" xml:space="preserve">
+    <value>Hình ảnh</value>
+  </data>
+  <data name="Evaluation_ListZoneViolation_Label_Propose" xml:space="preserve">
+    <value>Đề xuất</value>
+  </data>
+  <data name="Evaluation_ListZoneViolation_Label_ReportDateEnd" xml:space="preserve">
+    <value>Hạn lần đầu</value>
+  </data>
+  <data name="Evaluation_ListZoneViolation_Label_ReportDateEndSecond" xml:space="preserve">
+    <value>Hạn xin phê duyệt</value>
+  </data>
+  <data name="Share_Btn_SendMail_DirectorToApprove" xml:space="preserve">
+    <value>Gởi mail cho Giám đốc xin phê duyệt gia hạn</value>
+  </data>
+  <data name="Share_Btn_SendMail_KSCL" xml:space="preserve">
+    <value>Gởi mail Kscl thông báo hoàn thành khắc phục</value>
+  </data>
+  <data name="Qcs_Report_CAP_CateGroup_Heading_Panel_Title" xml:space="preserve">
+    <value>Thống kê CAP theo hạng mục</value>
+  </data>
+  <data name="Qcs_Report_CAP_Dept_Heading_Panel_Title" xml:space="preserve">
+    <value>Thống kê CAP theo bộ phận khắc phục</value>
+  </data>
+  <data name="Shared_KeyName" xml:space="preserve">
+    <value>Tên key</value>
+  </data>
+  <data name="Qcs_Report_CAP_Sites_Title" xml:space="preserve">
+    <value>Báo cáo CAP theo TTTM</value>
+  </data>
+  <data name="Report_ChecklistByCateReport_Checked" xml:space="preserve">
+    <value>Đã check</value>
+  </data>
+  <data name="Report_ChecklistByCateReport_General" xml:space="preserve">
+    <value>Chung</value>
+  </data>
+  <data name="Report_ChecklistByCateReport_PageTitle" xml:space="preserve">
+    <value>Báo cáo checklist bộ phận / hạng mục</value>
+  </data>
+  <data name="Report_ChecklistByCateReport_Sum" xml:space="preserve">
+    <value>Tổng</value>
+  </data>
+  <data name="Report_ChecklistByCateReport_Total" xml:space="preserve">
+    <value>Tổng list</value>
+  </data>
+  <data name="Report_ChecklistByCateReport_Dept" xml:space="preserve">
+    <value>Bộ phận</value>
+  </data>
+  <data name="Share_Btn_SendMail_DirectorToApprove_Title" xml:space="preserve">
+    <value>[QCS]-Hệ thống KSCL thông báo danh sách lỗi cần phê duyệt gia hạn!</value>
+  </data>
+  <data name="Share_Btn_SendMail_KSCL_Title" xml:space="preserve">
+    <value>[QCS]-Hệ thống KSCL thông báo danh sách lỗi đã hoàn thành khắc phục!</value>
+  </data>
+  <data name="Report_ChecklistByScheduleReport_PageTitle" xml:space="preserve">
+    <value>Báo cáo check list theo kỳ</value>
+  </data>
+  <data name="Report_ChecklistBySiteReport_Compare" xml:space="preserve">
+    <value>So sánh kiểm tra tại các TTTM</value>
+  </data>
+  <data name="Report_ChecklistBySiteReport_PageTitle" xml:space="preserve">
+    <value>Báo cáo check list theo TTTM</value>
+  </data>
+  <data name="Evaluation_ListEvaluationCalendar_BtnText_CreateManyEvaluationCalendar" xml:space="preserve">
+    <value>Tạo tự động các kỳ  kiểm tra</value>
+  </data>
+  <data name="Qcs_Report_ZoneViolationReport_PageTitle" xml:space="preserve">
+    <value>Báo cáo CAP</value>
+  </data>
+  <data name="Qcs_Report_ZoneViolationReport_Title_Research" xml:space="preserve">
+    <value>Danh sách </value>
+  </data>
+  <data name="Qcs_Report_ZoneViolationReport_Title_Check" xml:space="preserve">
+    <value>Kiểm tra</value>
+  </data>
+  <data name="Qcs_Report_ZoneViolationReport_Title_Content" xml:space="preserve">
+    <value>Nội dung</value>
+  </data>
+  <data name="Qcs_Report_ZoneViolationReport_Title_Refix" xml:space="preserve">
+    <value>Khắc phục</value>
+  </data>
+  <data name="Qcs_Report_ZoneViolationReport_Title_Explain" xml:space="preserve">
+    <value>Giải trình</value>
+  </data>
+  <data name="Qcs_Report_ZoneViolationReport_Title_Propose" xml:space="preserve">
+    <value>Đề xuất</value>
+  </data>
+  <data name="Qcs_Report_ZoneViolationReport_Title_ReportDateEnd" xml:space="preserve">
+    <value>Hạn</value>
+  </data>
+  <data name="Qcs_Report_ZoneViolationReport_Title_Type" xml:space="preserve">
+    <value>Loại</value>
+  </data>
+  <data name="Qcs_Report_ZoneViolationReport_ExportExcel_Title" xml:space="preserve">
+    <value>BÁO CÁO GIẢI TRÌNH</value>
+  </data>
+  <data name="MediaType_Document" xml:space="preserve">
+    <value>Tài liệu</value>
+  </data>
+  <data name="Gallery_InsertUpdateMedia_Label_ImageDesc" xml:space="preserve">
+    <value>Hình ảnh</value>
+  </data>
+  <data name="Gallery_InsertUpdateMedia_Label_MediaDesc" xml:space="preserve">
+    <value>Mô tả</value>
+  </data>
+  <data name="Gallery_InsertUpdateMedia_Label_MediaType" xml:space="preserve">
+    <value>Loại</value>
+  </data>
+  <data name="Gallery_InsertUpdateMedia_Label_MediaUrl" xml:space="preserve">
+    <value>File tài liệu</value>
+  </data>
+  <data name="Gallery_InsertUpdateMedia_Label_Name" xml:space="preserve">
+    <value>Tên</value>
+  </data>
+  <data name="Gallery_InsertUpdateMedia_UpdatePopup_PageTitle" xml:space="preserve">
+    <value>Chỉnh sửa file</value>
+  </data>
+  <data name="Share_Btn_SendMail_CAP_Title" xml:space="preserve">
+    <value>[QCS]-Hệ thống KSCL thông báo danh sách lỗi cần khắc phục</value>
+  </data>
+  <data name="Share_Btn_SendMail_ReportCAP" xml:space="preserve">
+    <value>KSCL thông báo danh sách lỗi cần khắc phục</value>
+  </data>
+  <data name="Gallery_InsertUpdateMedia_Label_CreateDate" xml:space="preserve">
+    <value>Ngày tạo</value>
+  </data>
+  <data name="Gallery_InsertUpdateMedia_btn_CreateMediaFile" xml:space="preserve">
+    <value>Upload file</value>
+  </data>
+  <data name="Gallery_ListMediaFile_Label_ListMediaFile" xml:space="preserve">
+    <value>Danh sách tài liệu</value>
+  </data>
+  <data name="Gallery_ListMediaFile_PageTitle" xml:space="preserve">
+    <value>Quản lý tài liệu</value>
+  </data>
+  <data name="Gallery_InsertUpdateMedia_PopupCreateMediafile_Title" xml:space="preserve">
+    <value>Upload file mới</value>
+  </data>
+  <data name="Gallery_InsertUpdateMedia_PopupUpdateMediafile_Title" xml:space="preserve">
+    <value>Chỉnh sửa thông tin file</value>
+  </data>
+  <data name="Shared_DateRange" xml:space="preserve">
+    <value>Ngày</value>
+  </data>
+  <data name="SystemMngt_ListUserTracking_PageTitle" xml:space="preserve">
+    <value>User tracking</value>
+  </data>
+  <data name="Gallery_InsertUpdateMedia_Label_FileExtension" xml:space="preserve">
+    <value>Loại file</value>
+  </data>
+  <data name="Gallery_InsertUpdateMedia_Label_FileSize" xml:space="preserve">
+    <value>Dung lượng</value>
+  </data>
+  <data name="SystemMngt_ListUserTracking_Content" xml:space="preserve">
+    <value>Content</value>
+  </data>
+  <data name="SystemMngt_ListUserTracking_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="SystemMngt_ListUserTracking_FullName" xml:space="preserve">
+    <value>User Fullname</value>
+  </data>
+  <data name="SystemMngt_ListUserTracking_List" xml:space="preserve">
+    <value>Danh sách</value>
+  </data>
+  <data name="SystemMngt_ListUserTracking_UserId" xml:space="preserve">
+    <value>User Id</value>
+  </data>
+  <data name="Shared_SearchText" xml:space="preserve">
+    <value>Từ khóa</value>
+  </data>
+  <data name="UserMngt_BtnText_CreateRole" xml:space="preserve">
+    <value>Thêm quyền</value>
+  </data>
+  <data name="UserMngt_ListRole_Label_RoleName" xml:space="preserve">
+    <value>Tên quyền</value>
+  </data>
+  <data name="UserMngt_ListRole_Label_Sort" xml:space="preserve">
+    <value>Ưu tiên</value>
+  </data>
+  <data name="UserMngt_ListRole_PageTitle" xml:space="preserve">
+    <value>Danh sách quyền</value>
+  </data>
+  <data name="Qcs_EvalCriteriaGroup_Label_EvalGroupName" xml:space="preserve">
+    <value>Tên nhóm tiêu chí đánh giá</value>
+  </data>
+  <data name="Qcs_EvalCriteriaGroup_Panel_Search" xml:space="preserve">
+    <value>Tìm kiếm</value>
+  </data>
+  <data name="Qcs_EvalCriteria_Valid_Label_Point" xml:space="preserve">
+    <value>Điểm cho tiêu chí đánh giá phải nhập số nguyên.</value>
+  </data>
+  <data name="UserMngt_PopupCreateRole_Title" xml:space="preserve">
+    <value>Thêm quyền mới</value>
+  </data>
+  <data name="UserMngt_PopupUpdateRole_Title" xml:space="preserve">
+    <value>Cập nhật quyền</value>
+  </data>
+  <data name="Admin_Qcs_AdminDepartment_Code_Existsed" xml:space="preserve">
+    <value>Mã bộ phận đã tồn tại trong hệ thống.</value>
+  </data>
+  <data name="Admin_Qcs_AdminDepartment_Name_Existsed" xml:space="preserve">
+    <value>Tên bộ phận đã tồn tại trong hệ thống.</value>
+  </data>
+  <data name="MenuMngt_BtnText_CreateMenuTemplateItem" xml:space="preserve">
+    <value>Thêm menu</value>
+  </data>
+  <data name="MenuMngt_ListMenuTemplate_PageTitle" xml:space="preserve">
+    <value>Quản lý template menu</value>
+  </data>
+  <data name="MenuMngt_ListMenu_MainMenuTemplate" xml:space="preserve">
+    <value>Thông tin menu</value>
+  </data>
+  <data name="MenuMngt_ListMenu_SyncMenu" xml:space="preserve">
+    <value>Đồng bộ menu</value>
+  </data>
+  <data name="MenuMngt_ListMenu_SyncMenuTitle" xml:space="preserve">
+    <value>Đồng bộ menu từ template</value>
+  </data>
+  <data name="MenuMngt_ListMenu_IsUsingTemplate" xml:space="preserve">
+    <value>(*)</value>
+  </data>
+  <data name="MenuMngt_ListMenu_IsUsingTemplateTitle" xml:space="preserve">
+    <value>Được đồng bộ từ template</value>
+  </data>
+  <data name="MicrositeMngt_BtnText_CreateRoute" xml:space="preserve">
+    <value>Thêm lộ trình</value>
+  </data>
+  <data name="MicrositeMngt_Label_ContactName" xml:space="preserve">
+    <value>Tên liên hệ</value>
+  </data>
+  <data name="MicrositeMngt_Label_ContactPhone" xml:space="preserve">
+    <value>SĐT liên hệ</value>
+  </data>
+  <data name="MicrositeMngt_Label_Distance" xml:space="preserve">
+    <value>Khoảng cách</value>
+  </data>
+  <data name="MicrositeMngt_Label_RouteName" xml:space="preserve">
+    <value>Tên lộ trình</value>
+  </data>
+  <data name="MicrositeMngt_Label_TextFrom" xml:space="preserve">
+    <value>Đi từ</value>
+  </data>
+  <data name="MicrositeMngt_Label_TextTo" xml:space="preserve">
+    <value>Đến</value>
+  </data>
+  <data name="MicrositeMngt_Label_TravelTime" xml:space="preserve">
+    <value>Thời gian</value>
+  </data>
+  <data name="MicrositeMngt_ListRoute_PageTitle" xml:space="preserve">
+    <value>Danh sách lộ trình</value>
+  </data>
+  <data name="MicrositeMngt_ListRoute_PopupCreate_Title" xml:space="preserve">
+    <value>Thêm lộ trình</value>
+  </data>
+  <data name="MicrositeMngt_ListRoute_PopupUpdate_Title" xml:space="preserve">
+    <value>Cập nhật lộ trình</value>
+  </data>
+  <data name="MicrositeMngt_RouteDetail_PageTitle" xml:space="preserve">
+    <value>Chi tiết lộ trình</value>
+  </data>
+  <data name="Login_Username" xml:space="preserve">
+    <value>Tên đăng nhập</value>
+  </data>
+  <data name="Login_WithADAccount" xml:space="preserve">
+    <value>Đăng nhập bằng tài khoản máy tính</value>
+  </data>
+  <data name="Login_WithWebAccount" xml:space="preserve">
+    <value>Đăng nhập bằng tài khoản website (cũ)</value>
+  </data>
+  <data name="UserMngt_ListUser_Label_IsADAccount" xml:space="preserve">
+    <value>Sử dụng Account AD</value>
+  </data>
+  <data name="UserMngt_ListUser_Label_IsADAccount_Hint" xml:space="preserve">
+    <value>Account AD là account đăng nhập vào máy tính với những máy Join domain Vingroup. Ví dụ: email của bạn là: v.anhnq@vincom.com.vn thì Account đăng nhập máy tính thường là anhnq hoặc u.anhnq (Theo thông tin bộ phận IT cung cấp)</value>
+  </data>
+  <data name="UserMngt_ListUser_Label_IsWebsiteAccount" xml:space="preserve">
+    <value>Tạo tài khoản mới</value>
+  </data>
+  <data name="UserMngt_ListUser_Label_Username" xml:space="preserve">
+    <value>Tên đăng nhập</value>
+  </data>
+  <data name="MicrositeMngt_ListMicrosite_Delete" xml:space="preserve">
+    <value>Xóa microsite</value>
+  </data>
+  <data name="Report_MaintainScheduleReport_PageTitle" xml:space="preserve">
+    <value>Báo cáo kế hoạch bảo trì</value>
+  </data>
+  <data name="Report_MaintainScheduleReport_Content" xml:space="preserve">
+    <value>Nội dung</value>
+  </data>
+  <data name="Report_MaintainScheduleReport_Frequency" xml:space="preserve">
+    <value>Tần suất</value>
+  </data>
+  <data name="Report_MaintainScheduleReport_PlanInfo" xml:space="preserve">
+    <value>THÔNG TIN KẾ HOẠCH</value>
+  </data>
+  <data name="Report_MaintainScheduleReport_Quantity" xml:space="preserve">
+    <value>SL</value>
+  </data>
+  <data name="Report_MaintainScheduleReport_SelectBranch" xml:space="preserve">
+    <value>Chọn Cơ sở</value>
+  </data>
+  <data name="Report_MaintainScheduleReport_SelectDept" xml:space="preserve">
+    <value>Chọn Phòng ban</value>
+  </data>
+  <data name="Report_MaintainScheduleReport_SelectPnL" xml:space="preserve">
+    <value>Chọn P&amp;L</value>
+  </data>
+  <data name="Report_MaintainScheduleReport_SelectYear" xml:space="preserve">
+    <value>Chọn năm</value>
+  </data>
+  <data name="Shared_FromDateLabel" xml:space="preserve">
+    <value>Từ ngày</value>
+  </data>
+  <data name="Shared_MonthLabel" xml:space="preserve">
+    <value>Tháng</value>
+  </data>
+  <data name="Shared_ToDateLabel" xml:space="preserve">
+    <value>Đến ngày</value>
+  </data>
+  <data name="Shared_YearLabel" xml:space="preserve">
+    <value>Năm</value>
+  </data>
+  <data name="Report_MaintainScheduleReport_RequiredSite" xml:space="preserve">
+    <value>Vui lòng chọn cơ sở</value>
+  </data>
+  <data name="Shared_Label_PnL" xml:space="preserve">
+    <value>P&amp;L</value>
+  </data>
+  <data name="Shared_Label_Site" xml:space="preserve">
+    <value>Cơ sở</value>
+  </data>
+  <data name="Shared_TimeLabel" xml:space="preserve">
+    <value>Thời gian</value>
+  </data>
+  <data name="Report_MaintainScheduleReport_ScheduleList" xml:space="preserve">
+    <value>Danh sách kế hoạch</value>
+  </data>
+  <data name="Device_BtnText_CreateNew" xml:space="preserve">
+    <value>Thêm thiết bị</value>
+  </data>
+  <data name="Device_Label_DeleteDevice" xml:space="preserve">
+    <value>Xóa thiết bị</value>
+  </data>
+  <data name="Device_Label_ImeiNo" xml:space="preserve">
+    <value>Số Imei</value>
+  </data>
+  <data name="Device_Label_Name" xml:space="preserve">
+    <value>Tên thiết bị</value>
+  </data>
+  <data name="Device_ListPage_PageTitle" xml:space="preserve">
+    <value>Quản lý thiết bị</value>
+  </data>
+  <data name="Device_LockUnlockWarning" xml:space="preserve">
+    <value>Bạn có chắc muốn thực hiện thao tác này?</value>
+  </data>
+  <data name="Device_NameImeiNo" xml:space="preserve">
+    <value>Imei/Tên thiết bị</value>
+  </data>
+  <data name="Shared_BtnText_Exec" xml:space="preserve">
+    <value>Thực hiện</value>
+  </data>
+  <data name="Shared_Label_Location" xml:space="preserve">
+    <value>Phòng ban</value>
+  </data>
+  <data name="Device_ListPage_ListTitle" xml:space="preserve">
+    <value>Danh sách thiết bị</value>
+  </data>
+  <data name="Device_LockTitle" xml:space="preserve">
+    <value>Khóa thiết bị</value>
+  </data>
+  <data name="Device_QuestionGroupName" xml:space="preserve">
+    <value>Tên bộ câu hỏi</value>
+  </data>
+  <data name="Device_UnlockTitle" xml:space="preserve">
+    <value>Mở khóa thiết bị</value>
+  </data>
+  <data name="DeviceMngt_PopupCreate_Title" xml:space="preserve">
+    <value>Thêm thiết bị</value>
+  </data>
+  <data name="DeviceMngt_PopupUpdate_Title" xml:space="preserve">
+    <value>Cập nhật thông tin thiết bị</value>
+  </data>
+  <data name="Shared_Label_Activated" xml:space="preserve">
+    <value>Kích hoạt</value>
+  </data>
+  <data name="Device_LayoutTypeName" xml:space="preserve">
+    <value>Loại giao diện</value>
+  </data>
+  <data name="LocationMngt_ConfirmDel" xml:space="preserve">
+    <value>Bạn có chắc muốn xóa phòng ban này không?</value>
+  </data>
+  <data name="LocationMngt_PopupCreate_Title" xml:space="preserve">
+    <value>Thêm phòng ban</value>
+  </data>
+  <data name="LocationMngt_PopupUpdate_Title" xml:space="preserve">
+    <value>Cập nhật phòng ban</value>
+  </data>
+  <data name="LocationMngt_SuccessDelete" xml:space="preserve">
+    <value>Xóa phòng ban thành công</value>
+  </data>
+  <data name="Location_BgName" xml:space="preserve">
+    <value>Tên file background</value>
+  </data>
+  <data name="Location_BtnText_CreateNew" xml:space="preserve">
+    <value>Thêm mới</value>
+  </data>
+  <data name="Location_ColorCode" xml:space="preserve">
+    <value>Mã màu nền</value>
+  </data>
+  <data name="Location_ListPage_ListTitle" xml:space="preserve">
+    <value>Danh sách phòng ban</value>
+  </data>
+  <data name="Location_ListPage_PageTitle" xml:space="preserve">
+    <value>Quản lý phòng ban</value>
+  </data>
+  <data name="Location_Logo" xml:space="preserve">
+    <value>Tên file logo</value>
+  </data>
+  <data name="Location_NameEN" xml:space="preserve">
+    <value>Tên phòng ban (tiếng Anh)</value>
+  </data>
+  <data name="Location_NameVN" xml:space="preserve">
+    <value>Tên phòng ban</value>
+  </data>
+  <data name="Location_Parent_Name" xml:space="preserve">
+    <value>Tên phòng ban cha</value>
+  </data>
+  <data name="Location_Slogan" xml:space="preserve">
+    <value>Slogan</value>
+  </data>
+  <data name="Location_SloganEN" xml:space="preserve">
+    <value>Slogan (tiếng Anh)</value>
+  </data>
+  <data name="Shared_ContextMenu_Label_Add" xml:space="preserve">
+    <value>Thêm mới</value>
+  </data>
+  <data name="Shared_ContextMenu_Label_Edit" xml:space="preserve">
+    <value>Chỉnh sửa</value>
+  </data>
+  <data name="Device_Online" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="Question_AnswerName" xml:space="preserve">
+    <value>Đánh giá</value>
+  </data>
+  <data name="Question_AnswerNote" xml:space="preserve">
+    <value>Ghi chú</value>
+  </data>
+  <data name="Question_QuestionName" xml:space="preserve">
+    <value>Tên câu hỏi</value>
+  </data>
+  <data name="Question_ReasonName" xml:space="preserve">
+    <value>Tên góp ý</value>
+  </data>
+  <data name="Report_SurveyDetail_SubmitCode" xml:space="preserve">
+    <value>Mã lần gửi</value>
+  </data>
+  <data name="Report_SurveyDetail_SubmitTime" xml:space="preserve">
+    <value>Thời gian gửi đánh giá</value>
+  </data>
+  <data name="Report_SurveyResultDetail_PageTitle" xml:space="preserve">
+    <value>Báo cáo kết quả đánh giá chất lượng dịch vụ</value>
+  </data>
+  <data name="Device_Label_LastHealthcheck" xml:space="preserve">
+    <value>Kết nối gần nhất</value>
+  </data>
+  <data name="Report_SurveyDetail_ResultTitle" xml:space="preserve">
+    <value>Kết quả</value>
+  </data>
+  <data name="Device_QuestionGroupNameEN" xml:space="preserve">
+    <value>Tên bộ câu hỏi (tiếng Anh)</value>
+  </data>
+  <data name="QuestionGroup_AddNew" xml:space="preserve">
+    <value>Thêm bộ câu hỏi</value>
+  </data>
+  <data name="QuestionGroup_ConfirmDel" xml:space="preserve">
+    <value>Bạn có chắc muốn xóa bộ câu hỏi?</value>
+  </data>
+  <data name="QuestionGroup_Label_CreateTitle" xml:space="preserve">
+    <value>Thêm bộ câu hỏi</value>
+  </data>
+  <data name="QuestionGroup_Label_UpdateTitle" xml:space="preserve">
+    <value>Thông tin bộ câu hỏi</value>
+  </data>
+  <data name="QuestionGroup_ListTitle" xml:space="preserve">
+    <value>Danh sách bộ câu hỏi</value>
+  </data>
+  <data name="QuestionGroup_PageTitle" xml:space="preserve">
+    <value>Quản lý bộ câu hỏi</value>
+  </data>
+  <data name="QuestionGroup_Detail" xml:space="preserve">
+    <value>Thông tin bộ câu hỏi</value>
+  </data>
+  <data name="QuestionGroup_Detail_ListQuestion" xml:space="preserve">
+    <value>Chi tiết các câu hỏi</value>
+  </data>
+  <data name="QuestionGroup_Detail_PageTitle" xml:space="preserve">
+    <value>Chi tiết bộ câu hỏi</value>
+  </data>
+  <data name="Question_ConfirmDelete" xml:space="preserve">
+    <value>Bạn có chắc muốn xóa câu hỏi này?</value>
+  </data>
+  <data name="Shared_ContextMenu_Label_AddAnswer" xml:space="preserve">
+    <value>Thêm mới đánh giá</value>
+  </data>
+  <data name="Shared_ContextMenu_Label_AddQuestion" xml:space="preserve">
+    <value>Thêm câu hỏi</value>
+  </data>
+  <data name="Shared_ContextMenu_Label_AddReason" xml:space="preserve">
+    <value>Thêm mới lựa chọn góp ý</value>
+  </data>
+  <data name="Shared_ContextMenu_Label_DelAnswer" xml:space="preserve">
+    <value>Xóa đánh giá</value>
+  </data>
+  <data name="Shared_ContextMenu_Label_DelQuestion" xml:space="preserve">
+    <value>Xóa câu hỏi</value>
+  </data>
+  <data name="Shared_ContextMenu_Label_DelReason" xml:space="preserve">
+    <value>Xóa lựa chọn góp ý</value>
+  </data>
+  <data name="Shared_ContextMenu_Label_EditGroupQuestion" xml:space="preserve">
+    <value>Chỉnh sửa bộ câu hỏi</value>
+  </data>
+  <data name="Shared_ContextMenu_Label_EditQuestion" xml:space="preserve">
+    <value>Chỉnh sửa câu hỏi</value>
+  </data>
+  <data name="Shared_ContextMenu_Label_EditReason" xml:space="preserve">
+    <value>Chỉnh sửa lựa chọn góp ý</value>
+  </data>
+  <data name="Question_Name" xml:space="preserve">
+    <value>Câu hỏi</value>
+  </data>
+  <data name="Question_NameEN" xml:space="preserve">
+    <value>Câu hỏi (tiếng Anh)</value>
+  </data>
+  <data name="Shared_ContextMenu_Label_UpdateAnswer" xml:space="preserve">
+    <value>Cập nhật đánh giá</value>
+  </data>
+  <data name="AnswerMapping_FeedbackText" xml:space="preserve">
+    <value>Yêu cầu lựa chọn</value>
+  </data>
+  <data name="AnswerMapping_FeedbackTextEN" xml:space="preserve">
+    <value>Yêu cầu lựa chọn (tiếng Anh)</value>
+  </data>
+  <data name="Question_AnswerNameEN" xml:space="preserve">
+    <value>Đánh giá (tiếng Anh)</value>
+  </data>
+  <data name="Question_ReasonNameEN" xml:space="preserve">
+    <value>Tên góp ý (tiếng Anh)</value>
+  </data>
+  <data name="Question_ReasonType" xml:space="preserve">
+    <value>Loại góp ý</value>
+  </data>
+  <data name="Reason_CofirmDelete" xml:space="preserve">
+    <value>Bạn có chắc muốn xóa góp ý này?</value>
+  </data>
+  <data name="Shared_RequiredInputNumber" xml:space="preserve">
+    <value>Vui lòng nhập kiểu số</value>
+  </data>
+  <data name="Shared_SortLabel" xml:space="preserve">
+    <value>Thứ tự</value>
+  </data>
+  <data name="CheckList_BtnText_CreateCheckList" xml:space="preserve">
+    <value>Thêm checklist</value>
+  </data>
+  <data name="CheckList_BtnText_UpdateCheckList" xml:space="preserve">
+    <value>Cập nhật checklist</value>
+  </data>
+  <data name="CheckList_ListCheckList_PageTitle" xml:space="preserve">
+    <value>Danh sách checklist</value>
+  </data>
+  <data name="CheckList_PopupCreate_Title" xml:space="preserve">
+    <value>Thêm mới checklist</value>
+  </data>
+  <data name="CheckList_PopupUpdate_Title" xml:space="preserve">
+    <value>Cập nhật checklist</value>
+  </data>
+  <data name="Checklist_PlaceHolder_Keyword" xml:space="preserve">
+    <value>Tìm theo tên</value>
+  </data>
+  <data name="PnLList_PopupCreate_Title" xml:space="preserve">
+    <value>Thêm mới PnL List</value>
+  </data>
+  <data name="PnLList_PopupUpdate_Title" xml:space="preserve">
+    <value>Cập nhật PnL List</value>
+  </data>
+  <data name="Master_PnLBuList_Label_Description" xml:space="preserve">
+    <value>Mô tả</value>
+  </data>
+  <data name="Master_PnLBuList_Label_Title" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Master_PopupCreatePnLBUlist_Title" xml:space="preserve">
+    <value>Thêm PnL BU List</value>
+  </data>
+  <data name="Master_PopupUpdatePnLBUlist_Title" xml:space="preserve">
+    <value>Chỉnh sửa PnL BU List</value>
+  </data>
+  <data name="Master_ViewPnLBuListDetail_PageTitle" xml:space="preserve">
+    <value>Chi tiết PnL BU List</value>
+  </data>
+  <data name="Master_PnLBuList_Label_Title_Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Master_PnLBuList_Label_Title_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Master_PopupCreatePnLlist_Title" xml:space="preserve">
+    <value>Thêm PnL List</value>
+  </data>
+  <data name="Master_PnLBuList_Label_Title_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Master_PnLBuList_Label_Title_PnLCode" xml:space="preserve">
+    <value>PnL Code</value>
+  </data>
+  <data name="Master_PnLList_Label_Title_Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Master_PnLList_Label_Title_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Master_PnLList_Label_Title_FullAddress" xml:space="preserve">
+    <value>Full Address</value>
+  </data>
+  <data name="Master_PnLList_Label_Title_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="DepartmentList_PopupCreate_Title" xml:space="preserve">
+    <value>Thêm mới danh mục phòng ban bộ phận</value>
+  </data>
+  <data name="DepartmentList_PopupUpdate_Title" xml:space="preserve">
+    <value>Cập nhật danh mục phòng ban bộ phận</value>
+  </data>
+  <data name="Master_DepartmentList_Label_Title_Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Master_DepartmentList_Label_Title_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Master_DepartmentList_Label_Title_Level" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="Master_DepartmentList_Label_Title_ParentCode" xml:space="preserve">
+    <value>Parent Code</value>
+  </data>
+  <data name="Master_DepartmentList_Label_Title_Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Master_PopupCreateDepartmentList_Title" xml:space="preserve">
+    <value>Thêm danh mục phòng ban bộ phận</value>
+  </data>
+  <data name="Shared_Label_Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Shared_Label_ParentCode" xml:space="preserve">
+    <value>Parent Code</value>
+  </data>
+  <data name="Shared_Label_Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Shared_Label_Level" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="Master_PopupCreateStaffList_Title" xml:space="preserve">
+    <value>Thêm danh mục nhân viên</value>
+  </data>
+  <data name="Master_StaffList_Label_Title_BirthDate" xml:space="preserve">
+    <value>Birth Date</value>
+  </data>
+  <data name="Master_StaffList_Label_Title_CentreCode" xml:space="preserve">
+    <value>Centre Code</value>
+  </data>
+  <data name="Master_StaffList_Label_Title_CityCode" xml:space="preserve">
+    <value>City Code</value>
+  </data>
+  <data name="Master_StaffList_Label_Title_Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Master_StaffList_Label_Title_DepartmentCode" xml:space="preserve">
+    <value>Department Code</value>
+  </data>
+  <data name="Master_StaffList_Label_Title_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Master_StaffList_Label_Title_FullName" xml:space="preserve">
+    <value>Full name</value>
+  </data>
+  <data name="Master_StaffList_Label_Title_General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Master_StaffList_Label_Title_GroupName" xml:space="preserve">
+    <value>Group</value>
+  </data>
+  <data name="Master_StaffList_Label_Title_JoinCompaneDate" xml:space="preserve">
+    <value>Join Company Date</value>
+  </data>
+  <data name="Master_StaffList_Label_Title_LevelCode" xml:space="preserve">
+    <value>Level Code</value>
+  </data>
+  <data name="Master_StaffList_Label_Title_ManageCode" xml:space="preserve">
+    <value>Manager Code</value>
+  </data>
+  <data name="Master_StaffList_Label_Title_OfficeLocation" xml:space="preserve">
+    <value>Office Loacation</value>
+  </data>
+  <data name="Master_StaffList_Label_Title_PhoneNo" xml:space="preserve">
+    <value>Phone No.</value>
+  </data>
+  <data name="Master_StaffList_Label_Title_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Master_StaffList_Label_Title_TitleCode" xml:space="preserve">
+    <value>Title Code</value>
+  </data>
+  <data name="Master_StaffList_Label_Title_UnitCode" xml:space="preserve">
+    <value>Unit Code</value>
+  </data>
+  <data name="StaffList_PopupCreate_Title" xml:space="preserve">
+    <value>Thêm mới danh mục nhân viên</value>
+  </data>
+  <data name="StaffList_PopupUpdate_Title" xml:space="preserve">
+    <value>Cập nhật danh mục nhân viên</value>
+  </data>
+  <data name="Dvhc_ConfirmDel" xml:space="preserve">
+    <value>Bạn có chắc chắn muốn xóa đơn vị hành chính này không?</value>
+  </data>
+  <data name="Dvhc_ListPage_ListTitle" xml:space="preserve">
+    <value>Danh sách đơn vị hành chính</value>
+  </data>
+  <data name="Dvhc_ListPage_PageTitle" xml:space="preserve">
+    <value>Quản lý đơn vị hành chính</value>
+  </data>
+  <data name="Dvhc_Parent_Name" xml:space="preserve">
+    <value>Parent</value>
+  </data>
+  <data name="Master_Dvhc_Label_Title_LevelPath" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="Master_Dvhc_Label_Title_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Master_Dvhc_Label_Title_Parent" xml:space="preserve">
+    <value>Parent</value>
+  </data>
+  <data name="Master_Dvhc_Label_Title_Prefix" xml:space="preserve">
+    <value>Prefix</value>
+  </data>
+  <data name="Shared_Label_Dvhc" xml:space="preserve">
+    <value>Đơn vị hành chính</value>
+  </data>
+  <data name="Dvhc_PopupCreate_Title" xml:space="preserve">
+    <value>Thêm mới đơn vị hành chính</value>
+  </data>
+  <data name="Dvhc_PopupUpdate_Title" xml:space="preserve">
+    <value>Cập nhật đơn vị hành chính</value>
+  </data>
+  <data name="Master_PnLAttribute_Label_Title_Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Master_PnLAttribute_Label_Title_Name" xml:space="preserve">
+    <value>Tên thuộc tính</value>
+  </data>
+  <data name="Master_PnLAttribute_Label_Title_PnLAttributeGroupId" xml:space="preserve">
+    <value>PnL BU Attribute Group</value>
+  </data>
+  <data name="Master_PnLAttribute_Label_Title_PnLBUListId" xml:space="preserve">
+    <value>PnL BU Name</value>
+  </data>
+  <data name="Master_PnLAttribute_Label_Title_PnLListId" xml:space="preserve">
+    <value>PnL Name</value>
+  </data>
+  <data name="Master_PopupCreatePnLAttribute_Title" xml:space="preserve">
+    <value>Thêm thuộc tính BU</value>
+  </data>
+  <data name="Master_PopupCreatePnLBuAG_Title" xml:space="preserve">
+    <value>Thêm nhóm thuộc tính BU</value>
+  </data>
+  <data name="PBAG_PopupCreate_Title" xml:space="preserve">
+    <value>Thêm mới nhóm thuộc tính BU</value>
+  </data>
+  <data name="PBAG_PopupUpdate_Title" xml:space="preserve">
+    <value>Cập nhật nhóm thuộc tính BU</value>
+  </data>
+  <data name="PnLAttribute_PopupCreate_Title" xml:space="preserve">
+    <value>Thêm mới thuộc tính BU</value>
+  </data>
+  <data name="PnLAttribute_PopupUpdate_Title" xml:space="preserve">
+    <value>Cập nhật thuộc tính BU</value>
+  </data>
+  <data name="CheckListDetail_Title" xml:space="preserve">
+    <value>Thêm Checklist Item</value>
+  </data>
+  <data name="CheckListItem_Label_Title_CheckListName" xml:space="preserve">
+    <value>Checklist Name</value>
+  </data>
+  <data name="CheckListItem_Label_Title_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="CheckListItem_Label_Title_Name" xml:space="preserve">
+    <value>Checklist Item Name</value>
+  </data>
+  <data name="CheckListItem_PopupCreate_Title" xml:space="preserve">
+    <value>Thêm mới Checklist Item</value>
+  </data>
+  <data name="CheckListItem_PopupUpdate_Title" xml:space="preserve">
+    <value>Cập nhật Checklist Item</value>
+  </data>
+  <data name="DepartmentTitle_PopupCreate_Title" xml:space="preserve">
+    <value>Thêm mới chức danh</value>
+  </data>
+  <data name="DepartmentTitle_PopupUpdate_Title" xml:space="preserve">
+    <value>Cập nhật chức danh</value>
+  </data>
+  <data name="Master_CheckListDetail_Label_Title" xml:space="preserve">
+    <value>Checklist Item</value>
+  </data>
+  <data name="Master_CheckList_Label_Title_Code" xml:space="preserve">
+    <value>Tên checklist</value>
+  </data>
+  <data name="Master_DepartmentTitle_Title" xml:space="preserve">
+    <value>Thêm chức danh</value>
+  </data>
+  <data name="Master_Level_Title" xml:space="preserve">
+    <value>Thêm Level</value>
+  </data>
+  <data name="Master_Region_Title" xml:space="preserve">
+    <value>Thêm vùng miền</value>
+  </data>
+  <data name="Region_PopupCreate_Title" xml:space="preserve">
+    <value>Thêm mới vùng miền</value>
+  </data>
+  <data name="Region_PopupUpdate_Title" xml:space="preserve">
+    <value>Cập nhật vùng miền</value>
+  </data>
+  <data name="CheckList_Label_Title_CreateByName" xml:space="preserve">
+    <value>CreateBy Name</value>
+  </data>
+  <data name="CheckList_Label_Title_CreateDate" xml:space="preserve">
+    <value>Ngày tạo</value>
+  </data>
+  <data name="CheckList_Label_Title_Description" xml:space="preserve">
+    <value>Chú thích</value>
+  </data>
+  <data name="CheckList_Label_Title_Name" xml:space="preserve">
+    <value>Tên check list</value>
+  </data>
+  <data name="CheckList_Label_Title_Priority" xml:space="preserve">
+    <value>Priority</value>
+  </data>
+  <data name="CheckList_Label_Title_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="CheckList_PopupCreateChecklist_Title" xml:space="preserve">
+    <value>Thêm Checklist</value>
+  </data>
+  <data name="BasisGroup_Label_Title_Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="BasisGroup_Label_Title_Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="BasisGroup_Label_Title_Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="BasisGroup_Label_Title_Longitude" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="BasisGroup_Label_Title_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="BasisGroup_Level_Title" xml:space="preserve">
+    <value>Thêm nhóm cơ sở</value>
+  </data>
+  <data name="BasisGroup_PopupCreate_Title" xml:space="preserve">
+    <value>Thêm mới nhóm cơ sở</value>
+  </data>
+  <data name="BasisGroup_PopupUpdate_Title" xml:space="preserve">
+    <value>Cập nhật nhóm cơ sở</value>
+  </data>
+  <data name="Master_BasisGroup_Label_Title_Code" xml:space="preserve">
+    <value>Mã nhóm cơ sở</value>
+  </data>
+  <data name="Master_BasisGroup_Label_Title_Name" xml:space="preserve">
+    <value>Tên nhóm cơ sở</value>
+  </data>
+  <data name="Dvhc_Parent_Prefix" xml:space="preserve">
+    <value>Prefix</value>
+  </data>
+  <data name="Basis_Label_Title_Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="Basis_Label_Title_AreaManager" xml:space="preserve">
+    <value>Area Manager</value>
+  </data>
+  <data name="Basis_Label_Title_AreaManagerEmail" xml:space="preserve">
+    <value>Area Manager Email</value>
+  </data>
+  <data name="Basis_Label_Title_AreaManagerPhone" xml:space="preserve">
+    <value>Area Manager Phone</value>
+  </data>
+  <data name="Basis_Label_Title_Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Basis_Label_Title_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Basis_Label_Title_FullName" xml:space="preserve">
+    <value>Full Name</value>
+  </data>
+  <data name="Basis_Label_Title_Manager" xml:space="preserve">
+    <value>Manager</value>
+  </data>
+  <data name="Basis_Label_Title_ManagerPhone" xml:space="preserve">
+    <value>Manager Phone</value>
+  </data>
+  <data name="Basis_Label_Title_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Basis_Label_Title_RefCode" xml:space="preserve">
+    <value>RefCode</value>
+  </data>
+  <data name="Basis_Label_Title_SiteEmail" xml:space="preserve">
+    <value>Site Email</value>
+  </data>
+  <data name="Basis_Label_Title_SitePhone" xml:space="preserve">
+    <value>Site Phone</value>
+  </data>
+  <data name="Basis_Label_Title_StatusDescription" xml:space="preserve">
+    <value>Status Description</value>
+  </data>
+  <data name="Basis_PopupCreate_Title" xml:space="preserve">
+    <value>Thêm cơ sở</value>
+  </data>
+  <data name="Basis_Label_Title_BasisGroupName" xml:space="preserve">
+    <value>Nhóm cơ sở</value>
+  </data>
+  <data name="Basis_Label_Title_PnLBuListName" xml:space="preserve">
+    <value>PnL BU Name</value>
+  </data>
+  <data name="Basis_Label_Title_PnLListName" xml:space="preserve">
+    <value>PnL Name</value>
+  </data>
+  <data name="Basis_Label_Title_StatusName" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Basis_PopupUpdate_Title" xml:space="preserve">
+    <value>Cập nhật cơ sở</value>
+  </data>
+  <data name="Master_PopUpCreateSystemCheclList_Title" xml:space="preserve">
+    <value>Thêm mới hệ thống check list</value>
+  </data>
+  <data name="Master_Share_KeyWord" xml:space="preserve">
+    <value>Từ khóa</value>
+  </data>
+  <data name="Master_Share_Result" xml:space="preserve">
+    <value>Kết quả</value>
+  </data>
+  <data name="Master_Share_StateEnum_Title" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="Master_SystemChechList_PageTitle" xml:space="preserve">
+    <value>Danh mục hệ thống</value>
+  </data>
+  <data name="Master_SystemCheckList_CreatedDate" xml:space="preserve">
+    <value>Ngày tạo</value>
+  </data>
+  <data name="Master_SystemCheckList_Description" xml:space="preserve">
+    <value>Chú thích</value>
+  </data>
+  <data name="Master_SystemCheckList_State" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="Master_SystemCheckList_SystemName" xml:space="preserve">
+    <value>Tên hệ thống</value>
+  </data>
+  <data name="Shared_BtnText_Add" xml:space="preserve">
+    <value>Thêm mới</value>
+  </data>
+  <data name="AdminTools_System_PopUp_Delete_Confirm" xml:space="preserve">
+    <value>Hệ thống chuẩn bị xóa hệ thống này ! Bạn vẫn muốn tiếp tục?</value>
+  </data>
+  <data name="AdminTools_System_PopUp_Delete_Description" xml:space="preserve">
+    <value>Chú thích</value>
+  </data>
+  <data name="AdminTools_System_PopUp_Delete_SystemName" xml:space="preserve">
+    <value>Tên hệ thống check list</value>
+  </data>
+  <data name="AdminTools_System_PopUp_Delete_TitlePage" xml:space="preserve">
+    <value>Bạn đang tiến hành xóa hệ thống check list</value>
+  </data>
+  <data name="Master_SystemCheckList_DeActiveSystemCheckList" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="Master_SystemCheckList_UpdateLabel" xml:space="preserve">
+    <value>Cập nhật thông tin hệ thống check list</value>
+  </data>
+  <data name="AdminTools_System_Button_New_PageTitle" xml:space="preserve">
+    <value>Thêm mới hệ thống</value>
+  </data>
+  <data name="AdminTools_System_Button_Update_PageTitle" xml:space="preserve">
+    <value>Cập nhật thông tin hệ thống</value>
+  </data>
+  <data name="AdminTools_System_ExportExcel_TitleFile" xml:space="preserve">
+    <value>Danh sách hệ thống</value>
+  </data>
+  <data name="AdminTools_Item_ExportExcel_TitleFile" xml:space="preserve">
+    <value>Danh sách hạng mục check list</value>
+  </data>
+  <data name="Master_ItemCheckList_CreatedDate" xml:space="preserve">
+    <value>Ngày tạo</value>
+  </data>
+  <data name="Master_ItemCheckList_Description" xml:space="preserve">
+    <value>Chú thích</value>
+  </data>
+  <data name="Master_ItemCheckList_ItemName" xml:space="preserve">
+    <value>Tên hạng mục</value>
+  </data>
+  <data name="Master_ItemCheckList_State" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="AdminTools_Item_PopUp_Delete_Confirm" xml:space="preserve">
+    <value>Hệ thống tiến hành xóa hạng mục kiểm tra này ! Bạn vẫn muốn tiếp tục ?</value>
+  </data>
+  <data name="AdminTools_Item_PopUp_Delete_Description" xml:space="preserve">
+    <value>Chú thích</value>
+  </data>
+  <data name="AdminTools_Item_PopUp_Delete_ItemName" xml:space="preserve">
+    <value>Tên hạng mục</value>
+  </data>
+  <data name="AdminTools_Item_PopUp_Delete_TitlePage" xml:space="preserve">
+    <value>Bạn đang tiến hành xóa hạng mục</value>
+  </data>
+  <data name="AdminTools_Item_PopUp__NewPageTitle" xml:space="preserve">
+    <value>Thêm mới hạng mục check list</value>
+  </data>
+  <data name="Master_ItemChechList_PageTitle" xml:space="preserve">
+    <value>Danh sách hạng mục check list</value>
+  </data>
+  <data name="Master_ItemCheckList_UpdateLabel" xml:space="preserve">
+    <value>Cập nhật hạng mục check list</value>
+  </data>
+  <data name="CheckList_Label_Title_PageTitle" xml:space="preserve">
+    <value>Danh sách check list</value>
+  </data>
+  <data name="Master_Share_CheckListTypeEnum_Title" xml:space="preserve">
+    <value>Loại</value>
+  </data>
+  <data name="Master_Share_SystemEnum_Title" xml:space="preserve">
+    <value>Hệ thống</value>
+  </data>
+  <data name="CheckList_DuplicateExist" xml:space="preserve">
+    <value>Trùng tên check list</value>
+  </data>
+  <data name="CheckList_Lable_CheckListType" xml:space="preserve">
+    <value>Loại vận hành</value>
+  </data>
+  <data name="CheckList_Lable_Item" xml:space="preserve">
+    <value>Hạng mục</value>
+  </data>
+  <data name="CheckList_Lable_State" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="CheckList_Lable_System" xml:space="preserve">
+    <value>Hệ thống</value>
+  </data>
+  <data name="CheckList_SuccessConfirm" xml:space="preserve">
+    <value>Xác nhận check list thành công</value>
+  </data>
+  <data name="CheckList_SuccessCreate" xml:space="preserve">
+    <value>Thêm mới check list thành công</value>
+  </data>
+  <data name="CheckList_SuccessDelete" xml:space="preserve">
+    <value>Xóa check list thành công</value>
+  </data>
+  <data name="CheckList_SuccessUpdate" xml:space="preserve">
+    <value>Cập nhật check list thành công</value>
+  </data>
+  <data name="Master_CheckList_UpdateLabel" xml:space="preserve">
+    <value>Cập nhật thông tin check list</value>
+  </data>
+  <data name="CheckList_Label_SetupDateFrom" xml:space="preserve">
+    <value>Thời gian bắt đầu</value>
+  </data>
+  <data name="CheckList_Label_SetupDateTo" xml:space="preserve">
+    <value>Thời gian kết thúc</value>
+  </data>
+  <data name="AdminTools_CheckList_ExportExcel_TitleFile" xml:space="preserve">
+    <value>Danh sách check list </value>
+  </data>
+  <data name="Share_State__Lable_StateName" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="Share_State_Lable_StateName" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="CheckList_Label_Title_ItemName" xml:space="preserve">
+    <value>Hạng mục kiểm tra</value>
+  </data>
+  <data name="AdminTools_Item_PopUp_ActiveCheckList_CheckListDescription" xml:space="preserve">
+    <value>Chú thích</value>
+  </data>
+  <data name="AdminTools_Item_PopUp_ActiveCheckList_CheckListName" xml:space="preserve">
+    <value>Tên check list</value>
+  </data>
+  <data name="AdminTools_Item_PopUp_ActiveCheckList_Confirm" xml:space="preserve">
+    <value>Bạn đang tiến hành kích hoạt check list, bạn vẫn muốn tiếp tục ?</value>
+  </data>
+  <data name="AdminTools_Item_PopUp_ActiveCheckList_TitlePage" xml:space="preserve">
+    <value>Xác nhận kích hoạt check list</value>
+  </data>
+  <data name="Shared_BtnText_Active" xml:space="preserve">
+    <value>Kích hoạt</value>
+  </data>
+  <data name="Shared_BtnText_State_FastActive" xml:space="preserve">
+    <value>Kích hoạt nhanh</value>
+  </data>
+  <data name="CheckList_Label_Title_SetupDate" xml:space="preserve">
+    <value>Ngày bắt đầu hiệu lực</value>
+  </data>
+  <data name="Master_SystemCheckList_UserName" xml:space="preserve">
+    <value>Người dùng hệ thống</value>
+  </data>
+  <data name="Share_Label_TextDescription" xml:space="preserve">
+    <value>Ghi chú</value>
+  </data>
+  <data name="Master_SystemCheckList_AppTypeId" xml:space="preserve">
+    <value>Loại ứng dụng</value>
+  </data>
+  <data name="Master_SystemCheckList_Cate" xml:space="preserve">
+    <value>Loại hệ thống</value>
+  </data>
+  <data name="Master_SystemCheckList_Code" xml:space="preserve">
+    <value>Mã hệ thống</value>
+  </data>
+  <data name="Master_SystemCheckList_IsSAP" xml:space="preserve">
+    <value>Hệ thống SAP</value>
+  </data>
+  <data name="Master_SystemCheckList_OriginTypeId" xml:space="preserve">
+    <value>Loại nguồn</value>
+  </data>
+  <data name="Master_SystemCheckList_Overview" xml:space="preserve">
+    <value>Mô tả tính năng</value>
+  </data>
+  <data name="Master_SystemCheckList_PL" xml:space="preserve">
+    <value>Mã P&amp;L</value>
+  </data>
+  <data name="Master_SystemCheckList_Platform" xml:space="preserve">
+    <value>Nền tảng</value>
+  </data>
+  <data name="Master_SystemCheckList_ProviderName" xml:space="preserve">
+    <value>Nhà cung cấp</value>
+  </data>
+  <data name="Master_SystemCheckList_Status" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="Master_SystemCheckList_SubCate" xml:space="preserve">
+    <value>Loại hệ thống theo tính năng</value>
+  </data>
+  <data name="Master_SystemCheckList_SystemNameEn" xml:space="preserve">
+    <value>Tên tiếng Anh</value>
+  </data>
+  <data name="Master_SystemCheckList_UrlSystem" xml:space="preserve">
+    <value>Link hệ thống</value>
+  </data>
+  <data name="Master_SystemCheckList_AuthenticationMethodId" xml:space="preserve">
+    <value>Phương thức xác thực</value>
+  </data>
+  <data name="Master_SystemCheckList_BusinessHour" xml:space="preserve">
+    <value>Giờ hoạt động</value>
+  </data>
+  <data name="Master_SystemCheckList_BusinessIssue" xml:space="preserve">
+    <value>Các issue về nghiệp vụ</value>
+  </data>
+  <data name="Master_SystemCheckList_ConCurrentUser" xml:space="preserve">
+    <value>Số người dùng đồng thời</value>
+  </data>
+  <data name="Master_SystemCheckList_DetailReplaceBy" xml:space="preserve">
+    <value>Chi tiết đề xuât thay thế</value>
+  </data>
+  <data name="Master_SystemCheckList_DRTypeId" xml:space="preserve">
+    <value>Loại hình DR</value>
+  </data>
+  <data name="Master_SystemCheckList_HostingLocation" xml:space="preserve">
+    <value>Địa điểm cài đặt hệ thống</value>
+  </data>
+  <data name="Master_SystemCheckList_IsCheckCertification" xml:space="preserve">
+    <value>Yêu cầu xác thực</value>
+  </data>
+  <data name="Master_SystemCheckList_IsCheckRisk" xml:space="preserve">
+    <value>Kiểm tra rũi ro</value>
+  </data>
+  <data name="Master_SystemCheckList_IsCheckSecurityByGolive" xml:space="preserve">
+    <value>Yêu cầu test bảo mật khi golive</value>
+  </data>
+  <data name="Master_SystemCheckList_IsDevTest" xml:space="preserve">
+    <value>Môi trường dev </value>
+  </data>
+  <data name="Master_SystemCheckList_IsReplace" xml:space="preserve">
+    <value>Dự kiến thay thế</value>
+  </data>
+  <data name="Master_SystemCheckList_IsRequirementSecurity" xml:space="preserve">
+    <value>Yêu cầu bảo mật</value>
+  </data>
+  <data name="Master_SystemCheckList_IsRequirementSecurityDesign" xml:space="preserve">
+    <value>Yêu cầu thiết kế bảo mật</value>
+  </data>
+  <data name="Master_SystemCheckList_ITContact" xml:space="preserve">
+    <value>Đầu mối IT</value>
+  </data>
+  <data name="Master_SystemCheckList_LastDateDRTest" xml:space="preserve">
+    <value>Ngày kiểm tra DR gần nhất</value>
+  </data>
+  <data name="Master_SystemCheckList_OwingBusinessUnit" xml:space="preserve">
+    <value>Phòng ban nghiệp vụ phụ trách</value>
+  </data>
+  <data name="Master_SystemCheckList_PerformanceId" xml:space="preserve">
+    <value>Performance hệ thống</value>
+  </data>
+  <data name="Master_SystemCheckList_PerformanceNote" xml:space="preserve">
+    <value>Ghi chú performance</value>
+  </data>
+  <data name="Master_SystemCheckList_QuantityUserActive" xml:space="preserve">
+    <value>Số lượng người dùng kích hoạt</value>
+  </data>
+  <data name="Master_SystemCheckList_RankId" xml:space="preserve">
+    <value>Xếp hạng hệ thống</value>
+  </data>
+  <data name="Master_SystemCheckList_ReplaceBy" xml:space="preserve">
+    <value>Hệ thống dự kiến thay thế</value>
+  </data>
+  <data name="Master_SystemCheckList_RLO" xml:space="preserve">
+    <value>RLO cam kết</value>
+  </data>
+  <data name="Master_SystemCheckList_RPOTypeId" xml:space="preserve">
+    <value>RPO cam kết</value>
+  </data>
+  <data name="Master_SystemCheckList_RTOTypeId" xml:space="preserve">
+    <value>RTO cam kết</value>
+  </data>
+  <data name="Master_SystemCheckList_ScStateId" xml:space="preserve">
+    <value>Trạng thái service continuety</value>
+  </data>
+  <data name="Master_SystemCheckList_SecurityStateId" xml:space="preserve">
+    <value>Xếp loại bảo mật</value>
+  </data>
+  <data name="Master_SystemCheckList_SME" xml:space="preserve">
+    <value>Người nắm rỏ hệ thống</value>
+  </data>
+  <data name="Master_SystemCheckList_StabilityId" xml:space="preserve">
+    <value>Độ ổn định</value>
+  </data>
+  <data name="Master_SystemCheckList_SystemMaintainTime" xml:space="preserve">
+    <value>Thời gian bảo trì hệ thống</value>
+  </data>
+  <data name="Master_SystemCheckList_TechIssue" xml:space="preserve">
+    <value>Các issue về công nghệ</value>
+  </data>
+  <data name="Master_SystemCheckList_YearImplement" xml:space="preserve">
+    <value>Năm triển khai</value>
+  </data>
+  <data name="Master_SystemCheckList_PLName" xml:space="preserve">
+    <value>PL</value>
+  </data>
+  <data name="Master_SystemCheckList_SetOwnerSystem" xml:space="preserve">
+    <value>Gán ower hệ thống</value>
+  </data>
+  <data name="Master_SystemCheckList_ChangeOwnerName" xml:space="preserve">
+    <value>Thiết lập owner hệ thống</value>
+  </data>
+  <data name="Master_SystemCheckList_OwnerName" xml:space="preserve">
+    <value>Owner hệ thống check list</value>
+  </data>
+  <data name="Master_SystemCheckList_PopupAssignUser_Title" xml:space="preserve">
+    <value>Gán owner hệ thông</value>
+  </data>
+  <data name="SystemMngt_AssignOwnerSuccessed" xml:space="preserve">
+    <value>Gán quyền owner hệ thống thành công</value>
+  </data>
+  <data name="Shared_BtnText_Approve" xml:space="preserve">
+    <value>Duyệt</value>
+  </data>
+  <data name="Shared_BtnText_Reject" xml:space="preserve">
+    <value>Ko duyệt</value>
+  </data>
+  <data name="OperationCheckList_Lable_Description" xml:space="preserve">
+    <value>Ghi chú</value>
+  </data>
+  <data name="UserMngt_ListUser_Label_LineManager" xml:space="preserve">
+    <value>Người quản lý</value>
+  </data>
+  <data name="QueuePatient_SettingSortingIndex" xml:space="preserve">
+    <value>Thứ tự sắp xếp bắt buộc phải là số</value>
+  </data>
+  <data name="Report_Label_Title_Address" xml:space="preserve">
+    <value>Địa chỉ</value>
+  </data>
+  <data name="Report_Label_Title_Name" xml:space="preserve">
+    <value>Họ tên</value>
+  </data>
+  <data name="OR_DeleteSurgery" xml:space="preserve">
+    <value>Xóa ca mổ</value>
+  </data>
+  <data name="OR_PopupDeleteSurgery_Description" xml:space="preserve">
+    <value>Khi bạn xóa, thông tin ca mổ sẽ bị xóa khỏi hệ thống&lt;br/&gt;Vẫn tiếp tục xóa ca mổ này?</value>
+  </data>
+  <data name="Shared_Popup_Switch_Site_Title" xml:space="preserve">
+    <value>CHỌN BỆNH VIỆN</value>
+  </data>
+  <data name="AdminTools_Template_KeyWord" xml:space="preserve">
+    <value>KeyWord</value>
+  </data>
+  <data name="Validate_User_InvalidFormat" xml:space="preserve">
+    <value>Tên đăng nhập không hợp lệ</value>
+  </data>
+  <data name="OR_ReceiptSurgery" xml:space="preserve">
+    <value>Phiếu hẹn mổ</value>
+  </data>
+  <data name="OR_AssignPosition" xml:space="preserve">
+    <value>Phân công ekip</value>
+  </data>
+  <data name="Shared_BtnText_ApproveEkip" xml:space="preserve">
+    <value>Ghi nhận ekip</value>
+  </data>
+  <data name="Shared_BtnText_RejectEkip" xml:space="preserve">
+    <value>Không ghi nhận ekip</value>
+  </data>
+</root>

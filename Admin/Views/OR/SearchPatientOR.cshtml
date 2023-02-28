@@ -1,0 +1,549 @@
+﻿@using Admin.Models.OR;
+@using Contract.Enum;
+@model PatientORSyncModel
+@{
+    ViewBag.Title = "Tìm kiếm bệnh nhân";
+    //vutv7 check trường hợp check all ghi nhận ekip theo lô
+    string checkAllStt = string.Empty;
+    int ExprireMonth = Convert.ToInt16(System.Configuration.ConfigurationManager.AppSettings["ExprireMonth"].ToString());
+    int months = 0;
+    if (Model.Data != null && Model.Data.ListServices != null)
+    {
+        var distinctList = Model.Data.ListServices.Services.GroupBy(x => x.ItemName).ToList();
+        if (distinctList.Count() != 1)
+        {
+            checkAllStt = "disabled";
+        }
+        else
+        {
+            foreach (var item in Model.Data.ListServices.Services)
+            {
+                months = (DateTime.Now.Year - item.ChargeDate.Year) * 12 + (DateTime.Now.Month - item.ChargeDate.Month);
+                if (months > ExprireMonth)
+                {
+                    checkAllStt = "disabled";
+                    break;
+                }
+            }
+        }
+    }
+}
+@section styles{
+    @Styles.Render("~/styles_searchfrm")
+    <style>
+        .well.well-sm {
+            display: none;
+        }
+
+        table th {
+            text-align: center;
+        }
+
+        .div_tag_bg {
+            position: relative;
+        }
+
+            .div_tag_bg .bg_div {
+                position: fixed;
+                right: 10px;
+                bottom: 10px;
+                opacity: 0.1;
+                font-size: 160px !important;
+            }
+
+        .well.well-sm {
+            display: none;
+        }
+    </style>
+}
+<div id="main_wrapper">
+    <div class="page_bar clearfix">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="">
+
+                    <h1 class="page_title">LOOKUP PATIENT INFO (TÌM KIẾM THÔNG TIN BỆNH NHÂN)</h1>
+                    <span class="text-muted"></span>
+                </div>
+            </div>
+            <div class="col-md-4 text-right">
+                <div class="div_add_fast">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page_content">
+        <div class="bg_page_fix">
+            <i class="fa fa-window-restore"></i>
+        </div>
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.AntiForgeryToken()
+                            <form action="@Url.Action("SearchPatientOR", "OR")" method="get" id="searchform"
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>Cơ sở vinmec</label>
+                                        @Html.DropDownList("siteId", Model.listSites as List<SelectListItem>, new { tabindex = "1", @disabled = "disabled", @class = "form-control select2 select2-offscreen", onchange = "changeSite(this);" })
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="input-group ">
+                                            <label>Mã bệnh nhân</label>
+                                            <input type="text" id="kw" class="form-control" name="kw" tabindex="4" autofocus
+                                                   data-parsley-length="[0, 200]"
+                                                   data-parsley-errors-container="#kw_parsley_container"
+                                                   autocomplete="off"
+                                                   placeholder="Nhập thông tin PID để tìm kiếm" value="@(Request["kw"] != null ? HttpUtility.UrlDecode(Request["kw"]).Trim(): null)" />
+                                            <a id="kwclear" class="glyphicon glyphicon-remove" style="z-index:5;margin-top:-32px;display:inline;float:right;pointer-events:auto; text-decoration: none;cursor: pointer;color:red;line-height:28px;width:20px;position:relative;"></a>
+                                            <div id="kw_parsley_container"></div>
+                                            <span class="input-group-btn">
+                                                <label>&nbsp;</label>
+                                                <button title="@LayoutResource.CMS_ButtonText_Search" tabindex="5"
+                                                        class="Tip_mouse_on_ne btn btn-master btn-search" style="width: 90px" id="searchSubmit">
+                                                    <i class="fa fa-search"></i> @LayoutResource.CMS_ButtonText_Search
+                                                </button>
+
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-heading" style="font-size:18px;">KẾT QUẢ TÌM KIẾM</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @if (Model != null && Model.Data != null)
+                            {
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h3 class="heading_a" style="color:#32c69a;">THÔNG TIN BỆNH NHÂN</h3>
+                                        <address>
+                                            <p class="addres_name">
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <label>PID</label>
+                                                        @Model.Data.MA_BN
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <label>Họ và tên bệnh nhân </label>
+                                                        @Model.Data.HO_TEN
+                                                    </div>
+                                                    <div class="col-sm-1 div_input_form_control_label">
+                                                        <label>Tuổi</label>
+                                                        @Model.Data.TUOI
+                                                    </div>
+                                                    <div class="col-md-2 div_input_form_control_label">
+                                                        <label>Giới tính</label>
+                                                        <span class="text-normal">@(EnumExtension.GetDescription((SexTypeEnum)@Model.Data.GIOI_TINH))</span>
+                                                    </div>
+                                                    <div class="col-md-2 div_input_form_control_label">
+                                                        <label>Ngày sinh</label>
+                                                        <span class="text-normal">@(Model.Data.NGAY_SINH!=null?Model.Data.NGAY_SINH.Value.ToVEShortDate():"")</span>
+                                                    </div>
+                                                    <div class="col-md-2 div_input_form_control_label">
+                                                        <label>Cơ sở Vinmec khám sau cùng</label>
+                                                        <span class="text-normal">@Model.LastSiteName</span>
+                                                    </div>
+                                                    <div class="col-md-2 div_input_form_control_label">
+                                                        <label>Ngày khám sau cùng</label>
+                                                        <span class="text-normal">@Model.LastVistDate</span>
+                                                    </div>
+                                                </div>
+                                            </p>
+                                        </address>
+                                    </div>
+                                </div>
+                                if (Functions.CheckAllowAction("OR", "ViewORRegistor"))
+                                {
+                                    <div class="btn-wrapper text-right">
+                                        <a class="btn btn-accept Tip_mouse_on" data-event="request-search-patient" data-icontent="@StringHelper.MakeRequestVisitOR(Model.Data,Model.siteId,Model.siteName,Model.sourceClientId)" tabindex="63" style="padding-right:4px;"><i class="fa fa-file"></i>&nbsp; Tạo thông tin mổ</a>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                @Html.Partial("_ErrorOccur", "Không có thông tin bệnh nhân")
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <iframe id="DashboardFrame" style="background:transparent" src="" width="100%" frameborder="0" height="1500px;" scrolling="no"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Xin hãy chọn dịch vụ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @*<div class="row">
+                        <div class="col-lg-2">
+                            Dịch vụ:
+                        </div>
+                        <div class="col-lg-10">
+                            <select name="PatientService" class="form-control" id="PatientService">
+                                @if (Model.Data != null) // & Model.Data.ListServices != null
+                                {
+                                    foreach (var item in Model.Data.ListServices.Services)
+                                    {
+                                        <option value="@item.OrderID//@item.ItemCode//@item.ChargeDetailId">@item.ItemName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" onclick="processSavePatient()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal Choose Surgery type/Chọn loại hình ca phẫu thuật-->
+<div class="modal fade" id="surgeryTypeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="margin-top:150px;" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding-top: 8px;">
+                <h5 class="modal-title" id="surgeryModalLongTitle" style="float:left;width:75%;margin-top: 5px;">Chọn loại ca mổ</h5>
+                <div style="float:right;width:20%;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: 0px;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="modal_block_surgerytype">
+                    <div class="col-12" style="text-align: center;">
+                        <!-- Bootstrap Radio Button Group -->
+                        <div class="btn-group" role="group">
+                            <input type="radio" name="surgeryType" class="btn-check" value="1" id="radMoPhien">
+                            <label class="btn btn-outline-primary btn-with-border" for="radMoPhien">Mổ phiên</label>
+
+                            <input type="radio" name="surgeryType" class="btn-check" value="2" id="radMoCapCuu">
+                            <label class="btn btn-outline-primary btn-with-border" for="radMoCapCuu">Mổ cấp cứu</label>
+
+                            <input type="radio" name="surgeryType" class="btn-check" value="3" id="radThuThuat">
+                            <label class="btn btn-outline-primary btn-with-border" for="radThuThuat">Thủ thuật</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="modal_block_charges" style="display:none;">
+                    <div class="col-lg-2">
+                        Dịch vụ:
+                    </div>
+                    <div class="col-lg-12" style="max-height:350px;overflow-y:auto;">
+                        @*<select name="PatientService" class="form-control" id="PatientService">
+                                @if (Model.Data != null && Model.Data.ListServices != null)
+                                {
+                                    foreach (var item in Model.Data.ListServices.Services)
+                                    {
+                                        <option value="@item.OrderID//@item.ItemCode//@item.ChargeDetailId//@item.DepartmentCode//@item.LocationName//@item.ServiceType//@item.ChargeDate">@item.ItemName</option>
+                                    }
+                                }
+                            </select>*@
+
+                        <table id="example" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="check_all" @checkAllStt class="checkboxes checkbox-custom selected" value="" /></th>
+                                    <th>Tên dịch vụ</th>
+                                    <th style="width:20%">Người chỉ định</th>
+                                    <th style="width:25%">Thời gian chỉ định</th>
+                                </tr>
+                            </thead>
+                            @if (Model.Data != null && Model.Data.ListServices != null)
+                            {
+                                string text = "";
+                                string chboxStatus = "";
+                                foreach (var item in Model.Data.ListServices.Services.OrderByDescending(x => x.ChargeDate))
+                                {
+                                    months = (DateTime.Now.Year - item.ChargeDate.Year) * 12 + (DateTime.Now.Month - item.ChargeDate.Month);
+                                    if (months > ExprireMonth)
+                                    {
+                                        text = "text-decoration:line-through";
+                                        chboxStatus = "disabled";
+                                    }
+                                    else
+                                    {
+                                        text = "";
+                                        chboxStatus = "";
+                                    }
+                                    <tr style="@text">
+                                        <td class="text-center"><input type="checkbox" id="check_@item.ChargeDetailId" onchange="CheckDiffName('@item.ChargeDetailId')" @chboxStatus class="checkboxes checkbox-custom selected checkbox-sigle" value="@item.OrderID//@item.ItemCode//@item.ChargeDetailId//@item.DepartmentCode//@item.LocationName//@item.ServiceType//@item.ChargeDate//@item.ItemName//@item.ChargeBy" /></td>
+                                        <td>@item.ItemName</td>
+                                        <td class="text-center">@item.ChargeBy</td>
+                                        <td class="text-center">@item.ChargeDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                    </tr>
+                                }
+                            }
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Đóng</button>
+                <button type="button" class="btn btn-danger" onclick="GoBookRoom()" id="btnBookRoom"><i class="fa fa-calendar"></i> Đặt lịch mổ</button>
+                <button type="button" class="btn btn-primary" onclick="GoBackFirst()" id="btnBackFirst" style="display:none;"><i class="fa fa-backward"></i> Trở về trước</button>
+                <button type="button" class="btn btn-success" onclick="GoApproveEKip()" id="btnApproveEkip"><i class="fa fa-check-circle"></i> Ghi nhận ekip</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_PopupConfirmDeleteSurgery")
+@section scripts {
+    @Scripts.Render("~/javas_searchfrm")
+
+    <script>
+    $(function () {
+
+        $("#siteId").select2({
+            allowClear: false
+        })
+        $("#kw").on("keypress", function (e) {
+        if (e.which == 13) {
+            $("#searchform").submit();
+        }
+    });
+    $("#searchform").submit(function () {
+        $("#kw").css("color", "white").css("transition-duration", "0").css("-moz-transition-duration", "0").css("-o-transition-duration", "0");
+        $("#kw").val(encodeURIComponent($("#kw").val()));
+    });
+    $("#kw").on("keypress", function (e) {
+        if (e.which == 13) {
+            return false;
+        }
+    });
+    $("input:radio[name='surgeryType']").change(function () {
+        var _val = $(this).val();
+        console.log(_val);
+        if (_val != 2) {
+            $('#btnBookRoom').show();
+        }
+        else {
+            $('#btnBookRoom').hide();
+        }
+    });
+    //Reset table width if < container width
+    if ($("#tbData").css("width") != undefined) {
+        var curWidth = $("#tbData").css("width").replace("px", "");
+        if ($("#tbData").parent().width() > parseInt(curWidth, 10)) {
+            $("#tbData").css("width", $("#tbData").parent().width()).css("maxWidth", $("#tbData").parent().width());;
+        }
+    }
+    itemManager.init();
+
+    $("#DashboardFrame").attr("src", "@Url.Action("ViewPlan", "OR", new { HospitalCode = Model.siteId})");
+
+    });
+
+    var content = null;
+    function processSavePatient() {
+        content.PatientService = $('#PatientService').val();
+        var postData = new Array();
+        postData.push({ name: 'dataJson', value: JSON.stringify(content) });
+        ShowOverlay(true);
+            commonUtils.postAjaxWithToken('/OR/SyncVisitOR/', postData, function (ret) {
+                if (ret.ID == 1) {
+                    window.location.href = '@Url.Action("ViewORRegistor", "OR")';
+                    $('#exampleModalCenter').modal('hide');
+                }
+                else {
+                    ShowNotify('error', ret.Message, 5000);
+                }
+                HideOverlay();
+            });
+    }
+    function GoBookRoom() {
+        var surgeryType = $('input[name="surgeryType"]:checked').val();
+        if (surgeryType == null) {
+            ShowNotify('warning', "Vui lòng chọn loại ca mổ", 5000);
+            return false;
+        }
+        @*content.PatientService = '@JsonConvert.SerializeObject(Model.Data.ListServices.Services)';*@
+        console.log(content.PatientService);
+        content.SurgeryType = surgeryType;
+        var postData = new Array();
+        postData.push({ name: 'dataJson', value: JSON.stringify(content) });
+        ShowOverlay(true);
+            commonUtils.postAjaxWithToken('/OR/SyncVisitOR/', postData, function (ret) {
+                if (ret.ID == 1) {
+                    window.location.href = '@Url.Action("ViewORRegistor", "OR")';
+                    $('#exampleModalCenter').modal('hide');
+                }
+                else {
+                    ShowNotify('error', ret.Message, 5000);
+                }
+                HideOverlay();
+            });
+        }
+
+    function GoApproveEKip() {
+        var surgeryType = $('input[name="surgeryType"]:checked').val();
+        if (surgeryType == null) {
+            ShowNotify('warning', "Vui lòng chọn loại ca mổ", 5000);
+            return false;
+        }
+        if (!$('#modal_block_charges').is(':visible')) {
+            //Show choose charge
+            $('#modal_block_charges').show();
+            $('#surgeryModalLongTitle').html("Chọn chỉ định");
+            $('#btnBackFirst').show();
+            $('#btnBookRoom').hide();
+            return false;
+        }
+
+        var data = "";
+        if (selected.length > 0) {
+            for (var i = 0; i < selected.length; i++) {
+                data += data == "" ? selected[i] : ";" + selected[i];
+            }
+        }
+        //content.PatientService = $('#PatientService').val();
+        content.PatientService = data;
+        content.SurgeryType = surgeryType;
+        var postData = new Array();
+        postData.push({ name: 'dataJson', value: JSON.stringify(content) });
+        postData.push({ name: 'typeAction', value: 2 });
+        ShowOverlay(true);
+            commonUtils.postAjaxWithToken('/OR/SyncVisitOR/', postData, function (ret) {
+                if (ret.ID == 1) {
+                    //Check is Anesth
+                    var arrService = content.PatientService.split('//');
+                    var serviceType = arrService[5];
+                    if (serviceType==2) {
+                        window.location.href = '@Url.Action("ViewORAnesth", "OR", new { actionType = 2})';
+                    } else {
+                        window.location.href = '@Url.Action("ViewORManagement", "OR", new { actionType = 2})';
+                    }
+
+                    $('#exampleModalCenter').modal('hide');
+                }
+                else {
+                    ShowNotify('error', ret.Message, 5000);
+                }
+                HideOverlay();
+            });
+        };
+    //vutv7 - check ghi nhận ekip theo lô
+    var selected = new Array();
+    function CheckDiffName(chargdetail) {
+        var data = $("#check_" + chargdetail).val();
+        if ($("#check_" + chargdetail).is(':checked')) {
+            var splitValue = data.split('//');
+            for (var i = 0; i < selected.length; i++) {
+                var splitItem = selected[i].split('//');
+                if (splitItem.length >= 8 && splitItem[7] != splitValue[7]) {
+                    ShowNotify('error', 'Ghi nhận ekip theo LÔ chỉ được phép chọn cùng dịch vụ. Vui lòng kiểm tra lại!', 5000);
+                    $("#check_" + splitValue[2]).prop("checked", false);
+                    return;
+                }
+            }
+            selected.push(data);
+        }
+        else {
+            if (selected.length >0) {
+                for (var i = 0; i < selected.length; i++) {
+                    if (selected[i].indexOf(data) != -1) {
+                        selected.splice(i, 1);
+                    }
+                }
+            }
+        }
+        }
+
+    $('#check_all').change(function () {
+        $('.checkbox-sigle').prop('checked', this.checked);
+        selected = getvalue_func();
+    });
+
+    $('.checkbox-sigle').change(function () {
+        if ($('.checkbox-sigle:checked').length == $('.checkbox-sigle').length) {
+            $('#check_all').prop('checked', true);
+        }
+        else {
+            $('#check_all').prop('checked', false);
+        }
+    });
+    //vutv7 clear checkbox khi đóng popup
+    $("#surgeryTypeModal").on('hide.bs.modal', function () {
+        $('.checkbox-sigle').prop('checked', false);
+        $('#check_all').prop('checked', false);
+        selected = getvalue_func();
+    });
+
+    function getvalue_func() {
+        return $('#example input:checked').map(function () {
+            return this.value;
+        }).get();
+    }
+
+    function GoBackFirst() {
+        var _surgeryType = $('input[name="surgeryType"]:checked').val();
+        $("#modal_block_charges").hide();
+        $('#btnBackFirst').hide();
+        if (_surgeryType != 2) {
+            $('#btnBookRoom').show();
+        }
+        else {
+            $('#btnBookRoom').hide();
+        }
+        $('#surgeryModalLongTitle').html("Chọn loại ca mổ");
+        $("#surgeryTypeModal").modal('show');
+        return false;
+    };
+
+    var itemManager = {
+        init: function () {
+            $("#kwclear").click(itemManager.TextboxSearchClear);
+            $('[data-event=request-search-patient]').click(itemManager.handlerSearchPatientEvent);
+        },
+        TextboxSearchClear: function () {
+            $('#kw').val('').focus();
+            $(this).show();
+        },
+        handlerSearchPatientEvent: function () {
+            content = $(this).data('icontent');
+            ////Show choose charge
+            //$('#exampleModalCenter').modal('show');
+            //Show popup to choose surgery type
+            GoBackFirst();
+        }
+    };
+    function changeSite() {
+        var url= '@Url.Action("ViewPlan", "OR")'
+        url = url + "?HospitalCode=" + $('#siteId').val();
+        //Check IsLogon
+        if (checkIsLogin()) {
+            $("#DashboardFrame").attr("src", url);
+        }
+    }
+    function ReloadCostPage(){
+        $("#DashboardFrame").attr("src", "@Url.Action("ViewPlan", "OR", new { HospitalCode = Model.siteId})");
+    }
+        //Xem file ViewPlan.cshtml
+    </script>
+}

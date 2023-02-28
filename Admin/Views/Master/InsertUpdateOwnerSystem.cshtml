@@ -1,0 +1,121 @@
+﻿@using Admin.Models.Master
+@model AssignOwnerSystemModel
+@{
+    string errorMessage = ViewBag.ErrorMessage as string;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="modal_booking modal_booking_iframe">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+            ×
+        </button>
+        <h2 class="modal-title title-popup">
+            @LayoutResource.Master_SystemCheckList_ChangeOwnerName
+
+        </h2>
+        <p class="place"></p>
+    </div>
+    <div class="modal-body">
+        <div class="body_booking">
+            @if (string.IsNullOrEmpty(errorMessage) == false)
+            {
+                @Html.Partial("_ErrorOccur", errorMessage)
+            }
+            else if (Model == null)
+            {
+                @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+            }
+            else
+            {
+                <form class="frmUpdateCheckListDetail" action="@Url.Action("AssignUserToSystemCheckList", "Master")" id="frmPopUp" method="post">
+                    @Html.Hidden("SystemId", Model.SystemId)
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.SystemName, new { @class = "req" })
+                            @Html.TextBoxFor(x => x.SystemName, new { tabindex = "1", @class = "form-control", @readonly = "true" })
+                            @Html.ValidationMessageFor(x => x.SystemName)
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.UIds, new { @class = "req" })
+                            @Html.DropDownListFor(x => x.UIds, Model.listUsers, new { tabindex = "3", @class = "form-control select2 select2-offscreen", multiple = "multiple" })
+                            @Html.ValidationMessageFor(x => x.UIds)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group relative not_input_error not_input_error_popup" style="top:0;">
+                            <span id="err_msg" class="field-validation-error" style="display: none"></span>
+                        </div>
+                    </div>
+                    <div class="btn-wrapper text-right">
+                        <button class="btn btn-primary" tabindex="5" id="btnSaveData"><i class="fa fa-save"></i>&nbsp; @LayoutResource.Shared_BtnText_Save </button>
+                    </div>
+                </form>
+
+            }
+        </div>
+
+
+    </div>
+</div>
+
+@section styles{
+    @Styles.Render("~/styles_searchfrm")
+    <style>
+        .select2-results .select2-disabled {
+            display: none;
+        }
+
+        body {
+            min-height: 422px !important;
+        }
+
+        .cke_dialog_ui_labeled_label {
+            font-weight: bold !important;
+            margin-bottom: 5px !important;
+        }
+
+        .cke_dialog_ui_input_file.input {
+            font-size: 12px !important;
+        }
+
+        .cke_dialog_tab {
+            font-weight: bold !important;
+        }
+    </style>
+}
+@Scripts.Render("~/javas_searchfrm")
+@section scripts{
+    <script>
+        $(function() {
+           $('#UIds').select2('val', [@string.Join(",", Model.UIds)]);
+           $("#btnSaveData").click(function(e) {
+                if (!$("#frmPopUp").valid()) return;
+                e.preventDefault();
+                $.ajax({
+                    url: '/Master/AssignUserToSystemCheckList/',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: $("#frmPopUp").serialize(),
+                    success: function(data) {
+                        if ((data.Id ==@((int)ResponseCode.SystemMngt_AssignOwnerSuccessed)))
+                        {
+                            parent.window.location.reload();
+                        }
+                        else if (data.status === 401) {
+                            window.location.href = data.redirect;
+                        }
+                        else {
+                            $("#err_msg").html(data.Message).show();
+                            HideOverlay(0);
+                        }
+                    },
+                    error: function(data) {
+                        $("#err_msg").html(data.Message).show();
+                        HideOverlay(0);
+                    }
+                });
+            });
+        });
+    </script>
+}

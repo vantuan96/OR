@@ -1,0 +1,92 @@
+﻿@using Contract.User
+
+@{
+    ViewBag.Title = LayoutResource.Shared_Homepage_Title;
+}
+
+
+<div id="main_wrapper">
+    @*<div class="page_bar clearfix">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="page_title">@ViewBag.Title</h1>
+            </div>
+            <div class="col-md-6 text-right">
+                <div class="div_add_fast">
+
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+    <div class="page_content">
+        <div class="container-fluid">
+
+              @{
+                  var sessionUserInfo = SessionHelper.GetUserSession(Context.ApplicationInstance.Context);
+                  List<AdminActionContract> listUserAllowAcion = new List<AdminActionContract>();
+
+                  if (sessionUserInfo != null && sessionUserInfo.ListMemberAllowedActions != null)
+                  {
+                      listUserAllowAcion = sessionUserInfo.ListMemberAllowedActions;
+                  }
+                }
+                @if (listUserAllowAcion.IsNotNullAndNotEmpty() && sessionUserInfo.CurrentLocaltion!=null)
+                {
+
+                    var groupedAction = listUserAllowAcion.GroupBy(x => x.ControllerName).Select(x => new { ControllerName = x.Key, ActionList = x.ToList() }).ToList();
+                    string controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+                    string actionName = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
+                    foreach (var groupAction in groupedAction)
+                    {
+                        if (sessionUserInfo.CurrentLocaltion.NameEN.Equals("HTC") && groupAction.ControllerName == "OR")
+                        {
+                            continue;
+                        }
+                        else if (!sessionUserInfo.CurrentLocaltion.NameEN.Equals("HTC") && groupAction.ControllerName == "QueuePatient")
+                        {
+                            continue;
+                        }
+
+                        var controllerIcon = listUserAllowAcion.Where(x => x.ControllerName == groupAction.ControllerName).First().ControllerCssIcon;
+                        var isShowMenuIcon = groupAction.ActionList.Count(x => x.IsShowMenu) > 0;
+                        if (isShowMenuIcon && groupAction.ControllerName != "Home")
+                        {
+                            <div class="panel panel-default">
+                                <div class="panel-heading">@groupAction.ActionList[0].ControllerDisplayName</div>
+                                <div class="panel-body">
+                                    <ul id="glyphicons_list" class="icon-list clearfix">
+                                        @foreach (var action in groupAction.ActionList)
+                                        {
+                                            if (action.IsShowMenu)
+                                            {
+
+                                                <li style="display:list-item; border:none">
+                                                    <div style="background:#e6e6e6; padding:10px 0">
+                                                        <a href="@Url.Action(action.ActionName, groupAction.ControllerName)" class="linkURL">
+                                                            <span class="@controllerIcon"></span><code style="color:#000;">@action.ActionDisplayName</code>
+                                                        </a>
+                                                    </div>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                }
+        </div>
+    </div>
+</div>
+
+@section styles {
+    <style type="text/css">
+        body, html code {
+            font-family: "Roboto", Arial,sans-serif;
+            important;
+            font-size: 11px;
+        }
+    </style>
+}

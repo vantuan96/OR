@@ -1,0 +1,203 @@
+﻿@using Admin.Models.OR;
+@model ORMappingEkipModel
+@{
+    string errorMessage = ViewBag.ErrorMessage as string;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="modal_booking modal_booking_iframe">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+            ×
+        </button>
+        <h2 class="modal-title title-popup">
+             Bổ sung thông tin e kip cho ca mổ
+        </h2>
+        <p class="place"></p>
+    </div>
+    <div class="modal-body">
+        <div class="body_booking">
+
+            @if (string.IsNullOrEmpty(errorMessage) == false)
+            {
+                @Html.Partial("_ErrorOccur", errorMessage)
+            }
+            else if (Model == null)
+            {
+                @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+            }
+            else
+            {
+                <form class="frmUpdateCheckListDetail" id="frmPopUp">
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("Id", Model.Id)
+                    @Html.Hidden("ORAnesthProgessId", Model.ORAnesthProgessId)
+                    @Html.Hidden("TypePageId", Model.TypePageId)
+                    @Html.Hidden("HospitalCode", Model.HospitalCode)
+                    
+                            <div class="row">
+                                <div class="col-sm-12">
+                                        <label class="req">Chức danh ekip</label>
+                                        @Html.DropDownListFor(r => r.PositionId, Model.listPositions, new { @class = "form-control select2-nosearch select2-offscreen", tabindex = "2", onchange = "this.form.submit(); ShowOverlay(true);" })
+                                        @Html.ValidationMessageFor(x => x.PositionId)                               
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="req">Thành viên</label>
+                                    @{
+                                        var dataEkip = Model.listEkips.Select(c => new SelectListItemCustom()
+                                        {
+                                            Selected = (Model.UIdEkip == c.Id),
+                                            Value = c.Id.ToString(),
+                                            Text = c.Name,
+                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+
+                                        }).ToList();
+
+                                        @Html.Raw(Html.DropDownListForCustomExt("UIdEkip", dataEkip, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangeAnesthEkip(this);" }))
+                                        @Html.ValidationMessageFor(x => x.UIdEkip)
+                                    }
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label style="display:inline">Email :</label> <span style="display:inline" class="text-normal" id="spnEmailEkip">@Model.EmailEkip</span>
+                                </div>
+                                <div class="col-md-12">
+                                    <label style="display:inline">Chức danh :</label><span style="display:inline" class="text-normal" id="spnPositionEkip">@Model.PositionEkip</span>
+
+                                </div>
+                                <div class="col-md-12">
+                                    <label style="display:inline">Điện thoại&nbsp;     :</label> <span style="display:inline" class="text-normal" id="spnPhoneEkip">@Model.PhoneEkip</span>
+                                </div>
+                            </div>
+                                          
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label></label>
+                            <div class="form-group relative not_input_error not_input_error_popup" style="top 0;">
+                                <span id="err_msg" class="field-validation-error" style="display: none"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-wrapper text-right">
+                        <button class="btn btn-accept" tabindex="8" id="btnSaveData"><i class="fa fa-save"></i>&nbsp;@LayoutResource.Shared_BtnText_Save </button>
+                    </div>
+                </form>
+
+            }
+        </div>
+
+
+    </div>
+</div>
+
+@section styles{
+    @Styles.Render("~/styles_searchfrm")
+    <style>
+        .select2-results .select2-disabled {
+            display: none;
+        }
+
+        body {
+            min-height: 422px !important;
+        }
+
+        .cke_dialog_ui_labeled_label {
+            font-weight: bold !important;
+            margin-bottom: 5px !important;
+        }
+
+        .cke_dialog_ui_input_file.input {
+            font-size: 12px !important;
+        }
+
+        .cke_dialog_tab {
+            font-weight: bold !important;
+        }
+
+        input[type=checkbox], input[type=radio] {
+            /* Double-sized Checkboxes */
+            -ms-transform: scale(2); /* IE */
+            -moz-transform: scale(2); /* FF */
+            -webkit-transform: scale(2); /* Safari and Chrome */
+            -o-transform: scale(2); /* Opera */
+            padding: 20px;
+        }
+
+        /* Might want to wrap a span around your checkbox text */
+        .checkboxtext {
+            /* Checkbox text */
+            font-size: 110%;
+            display: inline;
+        }
+
+        .checkbox-inline {
+            padding-left: 30px !important;
+            padding-bottom: 10px !important;
+            padding-top: 10px !important;
+        }
+    </style>
+
+}
+
+@Scripts.Render("~/javas_searchfrm")
+@section scripts{
+    <script>
+
+        $(function() {
+            $("#btnSaveData").click(function(e) {
+                if (!$("#frmPopUp").valid()) return;
+
+                //var email = $('#spnEmailEkip').text();
+                //if (email == undefined || email == '') {
+                //    $("#err_msg").html("Bạn chưa chọn thông tin ekip mo").show();
+                //    return false;
+                //}
+
+
+
+                e.preventDefault();
+                $.ajax({
+                    url: '/OR/SaveCUDEkip/',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: $("#frmPopUp").serialize(),
+                    success: function(data) {
+                        if (data.ID>0)
+                        {
+                            if(data.Message==1)
+                                parent.window.location.href = '/phan-cong-va-ghi-nhan-ekip-mo?Id=' + data.ID;
+                            else
+                            parent.window.location.href = '/dieu-phoi-nhan-su-gay-me?Id=' + data.ID;
+                        }
+                        else if (data.status === 401) {
+                            window.location.href = data.redirect;
+                        }
+                        else {
+                            $("#err_msg").html(data.Message).show();
+                            HideOverlay(0);
+                        }
+                    },
+                    error: function(data) {
+                        $("#err_msg").html(data.Message).show();
+                        HideOverlay(0);
+                    }
+                });
+            });
+        });
+
+        function ChangeAnesthEkip() {
+            var ddlUser = $('#UIdEkip').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                var position = ddlUser.attr('position');
+                $('#spnPositionEkip').text(position);
+                $('#spnPhoneEkip').text(phone);
+                $('#spnEmailEkip').text(email);
+            }
+        }
+    </script>
+}

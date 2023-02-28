@@ -1,0 +1,192 @@
+﻿@using Admin.Models.User
+@model CreateUpdatedORModel
+@{
+    string errorMessage = ViewBag.ErrorMessage as string;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    //var positions = ((List<SelectListItem>)Model.ListPositions).Select(x => new SelectListItemCustom()
+    //{
+    //    Selected = false,
+    //    Value = x.Value,
+    //    Text = x.Text,
+    //    itemsHtmlAttributes = new Dictionary<string, string>()
+    //}).ToList();
+}
+
+<div class="modal_booking modal_booking_iframe">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h2 class="modal-title title-popup">
+            <text>Cấu hình tài khoản [OR]</text>
+        </h2>
+        <p class="place"></p>
+    </div>
+    <div class="modal-body">
+        <div class="body_booking">
+            @if (string.IsNullOrEmpty(errorMessage) == false)
+            {
+                @Html.Partial("_ErrorOccur", errorMessage)
+            }
+            else
+            {
+                //using (Ajax.BeginForm("SetAccountOR", "UserMngt", new AjaxOptions { HttpMethod = "Post", OnSuccess = "CreateUpdateFormSubmitSuccess" }, new { onsubmit = "removeDisabled();$('#err_msg').html('').hide();", @id = "searchform" }))
+                //{
+                @Html.Hidden("UserId", Model.UserId)
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-xs-12 div_input_form_control_label">
+                        @Html.LabelFor(x => x.Username, new { @class = "req" })
+                        @Html.TextBoxFor(x => x.Username, new { @class = "form-control", @readonly = true, tabindex = "1" })
+                        @Html.ValidationMessageFor(x => x.Username)
+                    </div>
+                </div>
+
+                if (Model.UserId > 0)
+                {
+
+                    <div class="row">
+                        <div class="col-xs-12 div_input_form_control_label">
+                            @Html.LabelFor(x => x.Email, new { @class = "req" })
+                            @Html.TextBoxFor(x => x.Email, new { @class = "form-control", tabindex = "2" })
+                            @Html.ValidationMessageFor(x => x.Email)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 div_input_form_control_label">
+                            @Html.LabelFor(x => x.Phone, new { @class = "req" })
+                            @Html.TextBoxFor(x => x.Phone, new { @class = "form-control", @readonly = true, tabindex = "3" })
+                            @Html.ValidationMessageFor(x => x.Phone)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 div_input_form_control_label">
+                            @Html.LabelFor(x => x.PositionId, new { @class = "req" })
+                            @Html.DropDownListFor(r => r.PositionId, Model.ListPositions, new { @class = "form-control select2 select2-nosearch select2-offscreen", multiple = "multiple", tabindex = "4" })
+                            @*@Html.DropDownListForCustomExt("PositionId", positions, new { @class = "form-control select2 select2-nosearch select2-offscreen", tabindex = "4", onchange = "ChangePositionId(this);", multiple="multiple" })*@
+                            @Html.ValidationMessageFor(x => x.PositionId)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 div_input_form_control_label">
+                            @Html.LabelFor(x => x.StateId, new { @class = "req" })
+                            @Html.DropDownListFor(r => r.StateId, Model.ListStates, new { @class = "form-control select2 select2-nosearch select2-offscreen", tabindex = "5" })
+                            @Html.ValidationMessageFor(x => x.StateId)
+                        </div>
+                    </div>
+                }
+                <div class="btn-wrapper text-right">
+                    <button class="btn btn-accept" tabindex="8" type="button"><i class="fa fa-save"></i>&nbsp;@LayoutResource.Shared_BtnText_Save</button>
+                </div>
+                @*}*@
+            }
+        </div>
+    </div>
+</div>
+
+@section styles{
+    <style>
+        .select2-results .select2-disabled {
+            display: none;
+        }
+
+        body {
+            min-height: 400px !important;
+        }
+
+        #location_validation .field-validation-error {
+            top: 4px !important;
+        }
+    </style>
+}
+
+@section scripts{
+    @Scripts.Render("~/fctree")
+
+    <script type="text/javascript">
+        function removeDisabled() {
+            $("#Username").removeAttr("disabled");
+            $("#err_msg").html("").hide();
+        }
+        $(document).ready(function () {
+            
+        });
+        @*function ChangeHospitalSite() {
+            var postData = new Array();
+            postData.push({ name: 'SiteId', value:$('#SiteId').val()});
+            postData.push({ name: 'userId', value:@(Model.UserId)});
+            ShowOverlay(true);
+            commonUtils.postAjaxWithToken("/UserMngt/SearchDepartmentBySite/", postData, function (response)
+            {
+                var objectCbo=$("#DeptIds");
+                objectCbo.empty();
+                HideOverlay();
+                if(response!=null&& response.listSiteDepartments!=null && response.listSiteDepartments.length>0){
+                    if(objectCbo!=null){
+                        $(response.listSiteDepartments).each(function(k,item){
+                            objectCbo.append("<option value='"+item.Value+"'>"+ item.Text+"</option>");
+                        });
+                        if(response.DeptIds!=null && response.DeptIds.length>0){
+                            objectCbo.val(response.DeptIds).change();
+                        }else{
+                            objectCbo.val($("#DeptIds option:first").val()).change();
+                        }
+                    }
+                }
+            });
+        }*@
+
+        $(function () {
+            $("#PositionId").select2({
+                placeholder: 'Vui lòng chọn vị trí',
+                allowClear: false
+                ,minimumResultsForSearch: -1
+            })
+
+            $("#StateId").select2({
+                placeholder: 'Select an option',
+                allowClear: false,
+                minimumResultsForSearch: -1
+            })
+
+            $("#PositionId").val(@Html.Raw(Json.Encode(Model.PositionId))).trigger("change");
+            /*Fix loi giao dien hien thi select2*/
+            $("span[data-select2-id]").css("width", "100%");
+            /*.Fix loi giao dien hien thi select2*/
+            $('.btn-accept').click(function () {
+                ShowOverlay(true);
+                $.ajax({
+                    url: '@Url.Action("SetAccountOR", "UserMngt")',
+                    type: "POST",
+                    data: {
+                        "__RequestVerificationToken": $('[name=__RequestVerificationToken]').val(),
+                        userId: @Model.UserId,
+                        username: '@Html.Raw(Model.Username)',
+                        positionId: $("#PositionId").val(),
+                        email: $('#Email').val(),
+                        phone: $('#Phone').val(),
+                        stateId: $("#StateId").val()
+                    },
+                    dataType: 'json',
+                    async: false,
+                    cache: false,
+                    success: function (result) {
+                       HideOverlay();
+                        if (result.ID > 0) {
+                            ShowNotify('success', result.Message, 1000);
+                       }
+                       else {
+                           if (result.status === 401) {
+                               window.location.href = result.redirect;
+                           } else {
+                               ShowNotify('error', result.Message, 1000);
+                           }
+                       }
+                    },
+                    error: function () { ret = msg_lang.CMS_GetRuntimeErrorMsg; }
+                });
+            })
+        })
+    </script>
+
+}

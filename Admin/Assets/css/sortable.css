@@ -1,0 +1,85 @@
+.listmenuitem_approved {
+    background: #f5f5f5;
+}
+
+.listmenuitem , .sortAbleOpen .listmenuitem {
+    list-style-type: none;
+    margin: 0;
+    padding: 5px;
+}
+
+    .listmenuitem li , listmenuitem .listmenuitem li  {
+        position: relative;
+        margin: 0 0 5px 0;
+        padding: 5px;
+        background: #ccc;
+    }
+
+        .listmenuitem li:last-child {
+            margin-bottom: 0;
+        }
+
+.sTree2 ul, .sTree2 li {
+    list-style-type: none;
+}
+
+
+
+.sTree2 ul, .sTree2, #sTreePlus {
+    padding: 10px 5px;
+    background-color: #ccc;
+}
+
+    .sTree2 li, #sTreePlus li, ul#sortableListsBase li, .sortableListsPlaceholder, .currElemClass {
+        padding-left: 50px;
+        margin: 5px;
+        background-color: #e4e4e4;
+        list-style: none;
+        display: block;
+        border: solid 1px #ccc;
+    }
+
+.currElemClass {
+    height: 30px;
+}
+
+.sTree2 .row {
+    margin: 0;
+}
+
+.sTree2 li div {
+    padding: 7px;
+    background-color: #fff;
+}
+
+.sTree2, #sTreePlus {
+    margin: 10px auto;
+}
+
+
+    .sTree2 .sortAbleOpen {
+        display: inline-block; 
+        float: left;
+        width: 18px;
+        height: 18px;
+        margin-left: -35px;
+        margin-right: 5px;
+        margin-top: 10px;
+    }
+    
+            .sortableListsHint{height:auto !important}
+            .sortableListsCurrent {
+                height: auto;
+                padding:5px;
+                border:none
+            }
+
+            #sTree2{background-color:white;margin: 0; padding: 0;}
+
+#sTree2 > li {
+    font-weight:bold;
+}
+
+#sTree2 li .row {
+    min-height:48px
+}

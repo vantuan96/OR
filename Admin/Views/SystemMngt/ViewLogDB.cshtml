@@ -1,0 +1,154 @@
+﻿@model Admin.Models.SystemMngt.ViewLogDbVM
+@{
+    ViewBag.Title = "Quản lý log hệ thống";
+}
+
+@section styles{
+    @Styles.Render("~/styles_searchfrm")
+}
+@section scripts {
+    @Scripts.Render("~/javas_searchfrm")
+    <script type="text/javascript">
+        @{
+            string initFromdate = Model.FromDate.ToVEShortDate();
+            string initTodate = Model.ToDate.ToVEShortDate();
+        }
+        $(function () {
+            if ($('#reportrange').length > 0) {
+                $('#reportrange').data('daterangepicker').setStartDate('@initFromdate');
+                $('#reportrange').data('daterangepicker').setEndDate('@initTodate');
+            }
+
+            $('#logTypeId').select2({ allowClear: false })
+            $('#sourceId').select2({ allowClear: false })
+        });
+    </script>
+}
+<div id="main_wrapper">
+    <div class="page_bar clearfix">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="">
+                    <h1 class="page_title">@ViewBag.Title</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page_content">
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.AntiForgeryToken()
+                        <form action="@Url.Action("ViewLogDB")" method="get">
+                            <div class="row">
+                                @if (Model != null && Model.Clients.IsNotNullAndNotEmpty() && Model.SourceError.IsNotNullAndNotEmpty())
+                                {
+                                    <div class="col-md-3 col-sm-3 col-xs-4">
+                                        @Html.DropDownList("logTypeId", Model.SourceError,
+                                        new
+                                        {
+                                            @class = "form-control select2-nosearch select2-offscreen",
+                                            onchange = "this.form.submit(); ShowOverlay(true);",
+                                            tabindex = "-1"
+                                        })
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-4">
+                                        @Html.DropDownList("sourceId", Model.Clients,
+                                        new
+                                        {
+                                            @class = "form-control select2-nosearch select2-offscreen",
+                                            onchange = "this.form.submit(); ShowOverlay(true);",
+                                            tabindex = "-1"
+                                        })
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-3">
+                                        <div id="reportrange" class="btn btn-master btn-search col-md-12 reportrange">
+                                            <i class="fa fa-calendar"></i>
+                                            <span>@Model.FromDateToDateText</span>
+                                            <b class="caret"></b>
+                                            <input id="from_date" class="fromDateHidden" type="hidden" name="frda" value="@Model.FromDateHidden" />
+                                            <input id="to_date" class="toDateHidden" type="hidden" name="toda" value="@Model.ToDateHidden" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-sm-2 col-xs-2">
+                                        <input id="p" type="hidden" name="p" value="1" />
+                                        <button id="view" type="submit" class="btn btn-master btn-search"><i class="fa fa-search"></i></button>
+                                    </div>
+                                }
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="bg_page_fix"><i class="fa fa-inbox"></i></div>
+                    <div class="col-lg-12">
+                        <div class="relative">
+
+                            @if (Model != null && Model.ListRuntimeError.IsNotNullAndNotEmpty())
+                            {
+                                <div class="panel-group panel-group-error" id="accordion_a">
+                                    @foreach (var _error in Model.ListRuntimeError)
+                                    {
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion_a" href="#accordion_a_@_error.Id" class="collapsed">
+                                                        ClientId: @_error.LogTypeId -
+                                                        UserId: @_error.UserId -
+                                                        @_error.CreatedDate.ToString("dd/MM/yyyy HH:mm:ss") -
+                                                        @{
+                                                            var logTitle = _error.Title.Replace("<br/>", " ");
+                                                            logTitle = logTitle.Replace("&nbsp;&nbsp;&nbsp;&nbsp;"," ");
+                                                        }
+                                                        @logTitle
+                                                            @*@if (logTitle.Length > 150)
+                                                        {
+                                                            <i>
+                                                                @logTitle.Substring(0, 150)
+                                                            </i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i>
+                                                                @logTitle
+                                                            </i>
+                                                        }*@
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="accordion_a_@_error.Id" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <p><strong>ClientId:</strong> @_error.LogTypeId</p>
+                                                    <p><strong>UserId:</strong> @_error.UserId</p>
+                                                    <p>
+                                                        @*@Html.Raw(_error.LogContent)*@
+                                                        @_error.LogContent
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                                @Helpers.Paging(Model.TotalCount, Model.PageNumber, true, Model.PageCount)
+
+                            }
+                            else
+                            {
+                                @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,37 @@
+﻿@{ 
+    var SessionUserInfo = MvcHelper.GetUserSession(Context.ApplicationInstance.Context);
+}
+<style>
+    #div-listsite .site-list {
+        background-color: #337ab7 !important;
+        border: none !important;
+    }
+    #div-listsite .site-list li a {
+        color: #fff;
+    }
+    #div-listsite .site-list li:hover {
+        background-color: #e51c23 !important;
+    }
+</style>
+<div class="modal fade modal_booking" id="popup_switch_site" aria-hidden="true" data-backdrop="static" style="display: none;">
+    <div class="modal-dialog" style="width:300px !important;top:80px;">
+        <div class="modal-content" style="width:300px;border: 1px solid #999;">
+            <div class="modal-header" style="text-align:center;background:#1c81d8 !important;padding: 8px 15px 8px;">
+                @*<button type="button" class="close" data-dismiss="modal">×</button>*@
+                <h2 class="modal-title title-popup" style="width:auto !important;color:white;font-weight:bold;font-size:18px;">@LayoutResource.Shared_Popup_Switch_Site_Title</h2>
+            </div>
+            <div class="modal-body" style="padding:unset;">
+                <div class="body_booking" style="margin:unset;">
+                    <div id="div-listsite">
+                        <ul class="site-list" style="margin-bottom:unset;">
+                            @foreach (var item in SessionUserInfo.Locations)
+                            {
+                                <li><a id="hos_@item.LocationId" data-id="@item.LocationId" href="javascript:switchSite('hos_@item.LocationId')" class="btn-social btn-dropbox"><i class="fa fa-hospital-o"></i>@item.NameVN</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

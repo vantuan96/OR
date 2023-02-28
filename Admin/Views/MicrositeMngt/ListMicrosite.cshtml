@@ -1,0 +1,198 @@
+﻿@using Contract.Microsite;
+@model List<MicrositeContract>
+@{
+
+    ViewBag.Title = LayoutResource.MicrositeMngt_ListMicrosite_PageTitle;
+}
+
+<div id="main_wrapper">
+    <div class="page_bar clearfix">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="">
+                    <h1 class="page_title">@LayoutResource.MicrositeMngt_ListMicrosite_PageTitle</h1>
+                </div>
+            </div>
+            <div class="col-md-6 text-right">
+                <div class="div_add_fast">
+                    @if (Functions.CheckAllowAction("MicrositeMngt", "CreateUpdateMicrosite"))
+                    {
+                        @*<a class="btn btn-accept"
+                           data-toggle="modal"
+                           data-target="#iframePopup"
+                           data-iframe-size="lg"
+                           data-modal-src="@Url.Action("CreateUpdateMicrosite", "MicrositeMngt")"
+                           data-iframe-height="650">
+                            <i class="fa fa-plus"></i>&nbsp;<span class="text">@LayoutResource.MicrositeMngt_BtnText_CreateMicrosite</span>
+                        </a>*@
+                        @Html.CreateToPopupBtn(height: 650, href: @Url.Action("CreateUpdateMicrosite", "MicrositeMngt"), text: @LayoutResource.MicrositeMngt_BtnText_CreateMicrosite)
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="page_content">
+        <div class="bg_page_fix"><i class="fa fa-window-restore"></i></div>
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">@LayoutResource.Shared_BtnText_Search</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.AntiForgeryToken()
+                            <div>
+                                <div class="row">
+                                    <div class="col-sm-8 col-md-6">
+                                        <div class="input-group ">
+                                            <label>@LayoutResource.MicrositeMngt_ListMicrosite_Label_Title</label>
+                                            <input tabindex="8" type="text" id="txt_keyword" class="form-control" name="keyword" tabindex="1" autofocus />
+                                            <span class="input-group-btn">
+                                                <label>&nbsp;</label>
+                                                <button title="@LayoutResource.CMS_ButtonText_ClearFilter" tabindex="100"
+                                                        class="Tip_mouse_on_ne btn btn-danger btn-search" style=""
+                                                        id="clearFilter">
+                                                    <i class="fa fa-remove"></i>
+                                                </button>
+                                                <button title="@LayoutResource.CMS_ButtonText_Search" tabindex="10"
+                                                        class="Tip_mouse_on_ne btn btn-master btn-search"
+                                                        style="width: 90px" id="searchSubmit">
+                                                    <i class="fa fa-search"></i> @LayoutResource.CMS_ButtonText_Search
+                                                </button>
+
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-heading">@LayoutResource.MicrositeMngt_ListMicrosite_List</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @if (Model != null && Model.Any())
+                            {
+                                <div class="table-responsive">
+                                    <table id="dt_basic" class="table table-striped info-table margin_b0 table_booking table_week">
+                                        <thead>
+                                            <tr>
+                                                <th class="sub_col" style="max-width: 60px;width:30px">@LayoutResource.Shared_Label_SortNumber</th>
+                                                <th searchable class="sub_col">@LayoutResource.MicrositeMngt_ListMicrosite_Label_Title</th>
+                                                <th class="sub_col" style="max-width: 85px;width:85px">@LayoutResource.MicrositeMngt_ListMicrosite_Label_Status</th>
+                                                <th class="sub_col" style="max-width: 100px;width:100px">@LayoutResource.MicrositeMngt_ListMicrosite_Label_CreatedDate</th>
+                                                <th class="sub_col" style="max-width: 100px;width:100px">@LayoutResource.MicrositeMngt_ListMicrosite_Label_LastUpdatedDate</th>
+                                                <th class="sub_col" style="max-width: 100px;width:100px"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{ var rownumber = 0;}
+                                            @foreach (var ms in Model)
+                                            {
+                                                <tr>
+                                                    <td class="sub_col">
+                                                        <span>@(++rownumber)</span>
+                                                    </td>                                                    
+                                                    <td class="">
+                                                        @ms.Title
+                                                    </td>                                                   
+                                                    <td>
+                                                        <div class="label @Html.StatusClass(ms.Status)">@StringHelper.GetResourceFromDesc(typeof(LayoutResource), (ObjectStatus)ms.Status)</div>
+                                                    </td>
+                                                    <td>
+                                                        @ms.CreatedDate.ToVEFullDateTime()
+                                                    </td>
+                                                    <td>
+                                                        @ms.LastUpdatedDate.ToVEFullDateTime()
+                                                    </td>
+
+                                                    <td class="text-center">
+                                                        @if (Functions.CheckAllowAction("MicrositeMngt", "CreateUpdateMicrosite"))
+                                                        {
+                                                            var linkEdit = Url.RouteUrl("CreateUpdateMicrosite", new { msId = ms.MsId });
+                                                            @Html.EditToPopupBtn(title: LayoutResource.MicrositeMngt_ViewMicrositeDetail_PageTitle, href: linkEdit);
+                                                        }
+                                                        @if (Functions.CheckAllowAction("MicrositeMngt", "DeleteMicrosite"))
+                                                        {
+                                                            @Html.DeleteBtn(isShowLoading: false, href: "javascript:DeleteMicrosite(" + ms.MsId + ")");
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                                }
+                                                else
+                                                {
+                                                    @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+                                                }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    @Scripts.Render("~/Datatables")
+
+    <script>
+        var deleteMicrositeUrl = '@Url.Action("DeleteMicrosite")';
+
+        $(document).ready(function () {
+            // sort duoi client
+            oTable = initDataTable('#dt_basic', '', @AdminConfiguration.Paging_PageSize, false);
+            //oTable = $('#dt_basic').dataTable({ "iDisplayLength": displayLengh, bFilter: false, bPaginate: isShowPagination });
+            oTable.fnSort([[0, 'asc']]);
+
+            $("#txt_keyword").on("keyup", function (e) {
+                if (e.which == 13) {
+                    return false;    //<---- Add this line
+                }
+            });
+
+            $("#clearFilter").on("click", function (e) {
+                $("#txt_keyword").val("");
+                $("#searchSubmit").trigger('click');
+            });
+
+            $("#searchSubmit").on('click', function() {
+                console.log('search');
+                $('#dt_basic').DataTable().search($("#txt_keyword").val().trim()).draw();
+            });
+        });
+
+        function DeleteMicrosite(id) {
+            bootbox.confirm({
+                title: layout_lang.Shared_PopupConfirmTitle,
+                message: msg_lang.MicrositeMngt_ListMicrosite_DeleteMicrositeConfirmText,
+                callback: function (confirm) {
+                    if (confirm) {
+                        ShowOverlay(true);
+                        $.post(deleteMicrositeUrl, { id: id }, function (result) {
+                            if (result.ID == 1) {
+                                ReloadWithMasterDB();
+                            }
+                            else {
+                                ShowNotify('error', result.Message);
+                                HideOverlay();
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    </script>
+}
+
+@section style{
+    <style>
+        .well.well-sm {
+            display: none;
+        }
+    </style>
+}

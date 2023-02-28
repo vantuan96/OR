@@ -1,0 +1,272 @@
+﻿`@using Contract.MasterData;
+@model List<DvhcContract>
+@{
+    ViewBag.Title = @LayoutResource.Dvhc_ListPage_PageTitle;
+}
+
+<div id="main_wrapper">
+    <div class="page_bar clearfix">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="">
+                    <h1 class="page_title">@LayoutResource.Dvhc_ListPage_PageTitle</h1>
+                </div>
+            </div>
+            <div class="col-md-6 text-right">
+                <div class="div_add_fast">
+                    @if (Functions.CheckAllowAction("Master", "CreateUpdateRootDvhc"))
+                    {
+                        @Html.CreateToPopupBtn(href: @Url.Action("CreateUpdateDvhc", "Master"),
+                            text: @LayoutResource.Location_BtnText_CreateNew)
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="page_content">
+        <div class="bg_page_fix"><i class="fa fa-users"></i></div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">@LayoutResource.Shared_BtnText_Search</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="searchform">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="input-group">
+                                                    <label>@LayoutResource.Shared_SearchText</label>
+                                                    <input tabindex="8" type="text" id="kw" class="form-control"
+                                                           name="kw" autofocus
+                                                           autocomplete="off"
+                                                           placeholder="@LayoutResource.Shared_SearchText" value="@HttpUtility.UrlDecode(Request["kw"])" />
+                                                    <span class="input-group-btn">
+                                                        <label>&nbsp;</label>
+                                                        <button title="@LayoutResource.CMS_ButtonText_ClearFilter" tabindex="100"
+                                                                class="Tip_mouse_on_s btn btn-danger btn-search " style="" id="clearFilter">
+                                                            <i class="fa fa-remove"></i>
+                                                        </button>
+                                                        <button class="btn btn-accept btn-search tabindex" tabindex="17">
+                                                            <i class="fa fa-search"></i> @LayoutResource.Shared_BtnText_Search
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-heading">@LayoutResource.Dvhc_ListPage_ListTitle</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12 div_input_form_control_label">
+                                    <div class="table-responsive">
+                                        <table id="tree3" class="table table-striped info-table margin_b0 table_booking table_week">
+                                            <colgroup>
+                                                <col width="50px"></col>
+                                                <col width="*"></col>
+                                                @*<col></col>
+                                                    <col></col>*@
+                                                <col width="130px"></col>
+                                            </colgroup>
+                                            <thead>
+                                                <tr>
+                                                    <th class='text-center' style="max-width: 100px;width:30px">#</th>
+                                                    <th class='text-center'>@LayoutResource.Shared_Label_Dvhc</th>
+                                                    <th class='text-center' style="max-width: 150px;width:150px">@LayoutResource.Master_Dvhc_Label_Title_Prefix</th>
+                                                    <th class='text-center' style="max-width: 150px;width:150px">@LayoutResource.Master_Dvhc_Label_Title_Parent</th>
+                                                    <th class='text-center' style="max-width: 128px;width:128px"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section styles {
+    <style type="text/css">
+        .bootbox-body {
+            padding-top: 12px;
+        }
+
+            .bootbox-body div {
+                margin-bottom: 5px;
+            }
+    </style>
+}
+
+@section scripts{
+    @Scripts.Render("~/fctree")
+
+    <script>
+
+        $(function () {
+            $("#kw").focus();
+            var json = @Html.Raw(JsonConvert.SerializeObject(CommonHelper.ConvertToListDvhcTreeViewModel(Model, null)));
+
+            var url = '@Url.Action("CreateUpdateDvhc", "Master")';
+            var urlDel = '@Url.Action("DeleteDvhc", "Master")';
+            var allowRootUpdate = 1==@(Functions.CheckAllowAction("Master", "CreateUpdateRootDvhc") ? 1 : 0);
+
+            $("#tree3").fancytree({
+                extensions: ["filter", "table"],
+                quicksearch: true,
+                checkbox: false,
+                //selectMode: 1,
+                source: json,
+                filter: {
+                    autoApply: true,   // Re-apply last filter if lazy data is loaded
+                    autoExpand: false, // Expand all branches that contain matches while filtered
+                    counter: false,     // Show a badge with number of matching child nodes near parent icons
+                    fuzzy: false,      // Match single characters in order, e.g. 'fb' will match 'FooBar'
+                    hideExpandedCounter: true,  // Hide counter badge if parent is expanded
+                    hideExpanders: false,       // Hide expanders if all child nodes are hidden by filter
+                    highlight: true,   // Highlight matches by wrapping inside <mark> tags
+                    leavesOnly: false, // Match end nodes only
+                    nodata: true,      // Display a 'no data' status node if result is empty
+                    mode: "hide"       // Grayout unmatched nodes (pass "hide" to remove unmatched node instead)
+                },
+                table: {
+                    indentation: 20,      // indent 20px per node level
+                    nodeColumnIdx: 1,     // render the node title into the 2nd column
+                    checkboxColumnIdx: null  // render the checkboxes into the 1st column
+                },
+                renderColumns: function (event, data) {
+                    var node = data.node,
+                      $tdList = $(node.tr).find(">td");
+                    console.log(node);
+                    // (index #0 is rendered by fancytree by adding the checkbox)
+                    $tdList.eq(0).text(node.getIndexHier()).addClass("alignRight");
+                    $tdList.eq(2).html(node.data.prefix);
+                    $tdList.eq(3).html(node.data.parentcode);
+                    @if (Functions.CheckAllowAction("Master", "CreateUpdateRootDvhc"))
+                    {
+                        <text>
+                    $tdList.eq(4).html('<a class="btn btn-success Tip_mouse_on_s" id="btn_add_' + node.key + '" data-toggle="modal" data-target="#iframePopup"' +
+                                                    'title="@LayoutResource.Location_BtnText_CreateNew" data-modal-src="' + url + '?pid=' + node.key + '" data-iframe-height="600">' +
+                                                    '<i class="fa fa-plus "></i> </a>' +
+                                                '<a class="btn btn-accept Tip_mouse_on_s" id="btn_edit_' + node.key + '" data-toggle="modal" data-target="#iframePopup"' +
+                                                    'title="@LayoutResource.CMS_ButtonText_Edit" data-modal-src="' + url + '?id=' + node.key + '" data-iframe-height="600">' +
+                                                    '<i class="fa fa-pencil "></i> </a>' +
+                                                '<a class="btn btn-danger Tip_mouse_on_s btn_del" id="btn_del_' + node.key + '"' +
+                                                    'title="@LayoutResource.CMS_ButtonText_Delete" data-id="' + node.key + '">' +
+                                                    '<i class="fa fa-trash-o"></i> </a>'
+                                                );
+                    </text>
+                    }
+                    else if (Functions.CheckAllowAction("Master", "CreateUpdateDvhc"))
+                    {
+                        <text>
+                    if(node.data.level>1 || allowRootUpdate){
+                        $tdList.eq(6).html('<a class="btn btn-success Tip_mouse_on_s" id="btn_add_' + node.key + '" data-toggle="modal" data-target="#iframePopup"' +
+                                                'title="@LayoutResource.Location_BtnText_CreateNew" data-modal-src="' + url + '?pid=' + node.key + '" data-iframe-height="600">' +
+                                                '<i class="fa fa-plus "></i> </a>' +
+                                            '<a class="btn btn-accept Tip_mouse_on_s" id="btn_edit_' + node.key + '" data-toggle="modal" data-target="#iframePopup"' +
+                                                'title="@LayoutResource.CMS_ButtonText_Edit" data-modal-src="' + url + '?id=' + node.key + '" data-iframe-height="600">' +
+                                                '<i class="fa fa-pencil "></i> </a>' +
+                                            '<a class="btn btn-danger Tip_mouse_on_s btn_del" id="btn_del_' + node.key + '"' +
+                                                'title="@LayoutResource.CMS_ButtonText_Delete" data-id="' + node.key + '">' +
+                                                '<i class="fa fa-trash-o"></i> </a>'
+                                            );
+                    }
+                    else{
+                        $tdList.eq(6).html('<a class="btn btn-success Tip_mouse_on_s" id="btn_add_' + node.key + '" data-toggle="modal" data-target="#iframePopup"' +
+                                                'title="@LayoutResource.Location_BtnText_CreateNew" data-modal-src="' + url + '?pid=' + node.key + '" data-iframe-height="600">' +
+                                                '<i class="fa fa-plus "></i> </a>' +
+                                            '<a class="btn btn-danger Tip_mouse_on_s btn_del" id="btn_del_' + node.key + '"' +
+                                                'title="@LayoutResource.CMS_ButtonText_Delete" data-id="' + node.key + '">' +
+                                                '<i class="fa fa-trash-o"></i> </a>'
+                                            );
+                    }
+                    </text>
+                    }
+
+                }
+            });
+
+            var tree = $("#tree3").fancytree("getTree");
+
+            $("#kw").keyup(function (e) {
+                var n,
+                  tree = $.ui.fancytree.getTree(),
+                  args = "autoApply autoExpand fuzzy hideExpanders highlight leavesOnly nodata".split(" "),
+                  opts = {},
+                  filterFunc = $("#branchMode").is(":checked") ? tree.filterBranches : tree.filterNodes,
+                  match = $(this).val();
+
+                $.each(args, function (i, o) {
+                    opts[o] = $("#" + o).is(":checked");
+                });
+                //opts.mode = $("#hideMode").is(":checked") ? "hide" : "dimm";
+
+                if (e && e.which === $.ui.keyCode.ESCAPE || $.trim(match) === "") {
+                    $("#clearFilter").click();
+                    return;
+                }
+                if ($("#regex").is(":checked")) {
+                    // Pass function to perform match
+                    n = filterFunc.call(tree, function (node) {
+                        return new RegExp(match, "i").test(node.title);
+                    }, opts);
+                } else {
+                    // Pass a string to perform case insensitive matching
+                    n = filterFunc.call(tree, match, opts);
+                }
+            });
+
+            $("#clearFilter").click(function (e) {
+                $("#kw").val("");
+                tree.clearFilter();
+                e.preventDefault();
+                return false;
+            });
+
+            $('[data-target="#iframePopup"]').click(function (e) {
+                loadIframePopup($(this));
+            });
+
+            if ($('.Tip_mouse_on_s').length) {
+                $.fn.powerTip.smartPlacementLists.n = ['n', 's', 'e', 'w'];
+                $('.Tip_mouse_on_s').powerTip({
+                    placement: 'n',
+                    smartPlacement: true
+                });
+            }
+
+            $(".btn_del").click(function () {
+                var id = $(this).data('id');
+                bootbox.confirm("@LayoutResource.Dvhc_ConfirmDel", function(result){
+                    if(result)
+                    {
+                        var postData = new Array();
+                        postData.push({ name: 'id', value: id });
+                        ShowOverlay(true);
+                        commonUtils.postAjaxWithToken(urlDel, postData, function (ret) {
+                            if (ret.Id == @((int)ResponseCode.Dvhc_SuccessDelete)) {
+                                parent.window.location.reload();
+                        }
+                        else {
+                                ShowNotify(ret.Id == @((int)ResponseCode.Dvhc_SuccessDelete) ? 'success' : 'error', ret.Message, 5000);
+                    }
+                    HideOverlay();
+                });
+            }
+            });
+
+        });
+        });
+    </script>
+}

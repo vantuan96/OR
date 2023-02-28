@@ -1,0 +1,13 @@
+﻿
+/*No script*/
+.bg_black_noscript {background: #000; width: 100%; height: 100%; display: block; position: fixed; z-index: 1031; top: 0; font-family: Arial;opacity:0.8;filter: alpha(opacity = 80);}
+.noscript {   width: 100%;   height: 100%;   display: block;   position: fixed;   z-index: 1032;   top: 0;font-family: Arial;}
+.noscript .main_wrapper {margin: 200px auto 0 auto; width: 100%; text-align: center; color: #ffffff; position: absolute; top: 50%;font-family: Arial; margin-top: -114px; left: 0;}
+.noscript .main_wrapper h1 {font-size: 101px; font-weight: 100; margin-bottom: 0; margin-top: 0; letter-spacing: -3px;font-family: Arial;  line-height: 1.1;}
+.noscript .main_wrapper h1 sub { font-size: 24px; position: absolute; left: 50%; margin-left: 270px; top: 83px; letter-spacing: 0;}
+.noscript .main_wrapper h1 sub span { font-size: 15px; font-style: italic;}
+.noscript .main_wrapper h4 {font-weight: normal;}
+
+.ul_logo {margin:52px auto;display:block;}
+.ul_logo li {display:inline;list-style-type:none;margin:0 27px;}
+.logo_browser {width:128px;height:128px;display:inline-block; cursor:pointer;}

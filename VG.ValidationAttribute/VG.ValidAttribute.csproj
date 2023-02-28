@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4BD9A32D-368F-454C-BC9D-42F26F496790}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VG.ValidAttribute</RootNamespace>
+    <AssemblyName>VG.ValidAttribute</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Enums\ValueComparison.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation\IntNumberADRAttribute.cs" />
+    <Compile Include="Validation\AMultipleOfTenADRAttribute.cs" />
+    <Compile Include="Validation\DateADRAttribute.cs" />
+    <Compile Include="Validation\DateCompareADRAttribute.cs" />
+    <Compile Include="Validation\DateFormatADRAttribute.cs" />
+    <Compile Include="Validation\DateInFutureADRAttribute.cs" />
+    <Compile Include="Validation\DenySomeCharacterADRAttribute.cs" />
+    <Compile Include="Validation\EmailAddressADRAttribute.cs" />
+    <Compile Include="Validation\EqualLengthADRAttribute.cs" />
+    <Compile Include="Validation\FaxADRAttribute.cs" />
+    <Compile Include="Validation\MaxLengthADRAttribute.cs" />
+    <Compile Include="Validation\MaxNumberADRAttribute.cs" />
+    <Compile Include="Validation\MinLengthADRAttribute.cs" />
+    <Compile Include="Validation\MinNumberADRAttribute.cs" />
+    <Compile Include="Validation\MobileADRAttribute.cs" />
+    <Compile Include="Validation\NoMarkADRAttribute.cs" />
+    <Compile Include="Validation\NoTrimAttribute.cs" />
+    <Compile Include="Validation\PasswordADRAttribute.cs" />
+    <Compile Include="Validation\PasswordFullADRAttribute.cs" />
+    <Compile Include="Validation\PhoneNumberADRAttribute.cs" />
+    <Compile Include="Validation\PropertyValidationAttribute.cs" />
+    <Compile Include="Validation\RangeNumberADRAttribute.cs" />
+    <Compile Include="Validation\RequiredIfADRAttribute.cs" />
+    <Compile Include="Validation\StringADRAttribute.cs" />
+    <Compile Include="Validation\StringLengthADRAttribute.cs" />
+    <Compile Include="Validation\TaxCodeADRAttribute.cs" />
+    <Compile Include="Validation\TelephoneADRAttribute.cs" />
+    <Compile Include="Validation\ValueComparisonADRAttribute.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,310 @@
+﻿@using Admin.Models.OR
+@using Contract.OR
+@model ORTrackingModel
+@{
+    ViewBag.Title = LayoutResource.SystemMngt_ListUserTracking_PageTitle;
+}
+
+<div id="main_wrapper">
+    <div class="page_bar clearfix">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="">
+                    <h1 class="page_title">OR Tracking</h1>
+                </div>
+            </div>
+            <div class="col-md-6 text-right">
+                <div class="div_add_fast">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page_content">
+        <div class="bg_page_fix"><i class="fa fa-users"></i></div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">@LayoutResource.ArticlePosition_Search</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.AntiForgeryToken()
+                                    <form action="@Url.Action("ListORTracking", "OR")" id="searchform">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Cơ sở vinmec</label>
+                                                @Html.DropDownList("siteId", Model.listSites as List<SelectListItem>, new { tabindex = "1", @disabled = "disabled", @class = "form-control select2 select2-offscreen", onchange = "this.form.submit(); ShowOverlay(true);" })
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label>@LayoutResource.Shared_DateRange</label>
+                                                <div class="btn btn-master btn-search col-md-12 reportrange" data-rangedateopen="left">
+                                                    <i class="fa fa-calendar"></i>
+                                                    <span>@Model.FromDateToDateText</span>
+                                                    <b class="caret"></b>
+                                                    <input class="fromDateHidden" type="hidden" name="fromDate" value="@Model.FromDateHidden" />
+                                                    <input class="toDateHidden" type="hidden" name="toDate" value="@Model.ToDateHidden" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-group ">
+                                                    <label>@LayoutResource.Shared_SearchText</label>
+                                                    <input tabindex="8" type="text" id="txt_keyword" class="form-control" name="kw" autofocus
+                                                           autocomplete="off"
+                                                           placeholder=""
+                                                           value="@HttpUtility.UrlDecode(Request["kw"])" />
+                                                    <span class="input-group-btn">
+                                                        <label>&nbsp;</label>
+                                                        <button title="@LayoutResource.CMS_ButtonText_ClearFilter" tabindex="100"
+                                                                class="Tip_mouse_on_ne btn btn-danger btn-search" style="" id="clearFilter">
+                                                            <i class="fa fa-remove"></i>
+                                                        </button>
+                                                        <button title="@LayoutResource.CMS_ButtonText_Search" tabindex="10"
+                                                                class="Tip_mouse_on_ne btn btn-master btn-search" style="width: 90px" id="searchSubmit">
+                                                            <i class="fa fa-search"></i> @LayoutResource.CMS_ButtonText_Search
+                                                        </button>
+
+                                                        @if (Model != null && Model.ListTracking.Count > 0)
+                                                        {
+                                                            <button type="submit" class="btn btn-search btn-success linkURL"
+                                                                    formtarget="_blank" name="export" value="True"
+                                                                    onclick="HideOverlay(4000)">
+                                                                <i class="fa fa-file-excel-o"></i>
+                                                            </button>
+                                                        }
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-heading">@LayoutResource.SystemMngt_ListUserTracking_List</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @if (Model.ListTracking != null && Model.ListTracking.Count > 0)
+                                    {
+                                        <div class="table-responsive">
+                                            <table class="table table-striped info-table margin_b0 table_booking table_week">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:30px" class="sub_col">@LayoutResource.Shared_Label_SortNumber</th>
+                                                        <th class="sub_col">@LayoutResource.SystemMngt_ListUserTracking_UserId</th>
+                                                        <th style="min-width:70px;">@LayoutResource.SystemMngt_ListUserTracking_FullName</th>
+                                                        <th>@LayoutResource.SystemMngt_ListUserTracking_Email</th>
+                                                        <th class="sub_col">Thông tin </th>
+                                                        <th>@LayoutResource.SystemMngt_ListUserTracking_Content</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{ int rownumber = (Model.PageNumber - 1) * Model.PageCount; }
+                                                    @foreach (var item in Model.ListTracking)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-right">
+                                                                <span>@(++rownumber)</span>
+                                                            </td>
+                                                            <td class="sub_col">@item.UserId</td>
+                                                            <td>@item.FullName</td>
+                                                            <td>@item.Email</td>
+                                                            <td style="min-width:150px!important;" class="sub_col">
+                                                                ORId: @item.ORId <br />
+                                                                Trạng thái: @(EnumExtension.GetDescription((ORLogStateEnum)item.State))
+                                                            </td>
+                                                            <td>
+                                                                @*@item.CreatedDate.ToVEFullDateTime()
+        <br />*@
+                                                                @{
+                                                                    //item.ContentTracking = item.ContentTracking.Replace("\"", "");
+                                                                    var trackings = item.ContentTracking.Split(new string[] { "\"" }, StringSplitOptions.RemoveEmptyEntries);
+                                                                    if (trackings.Length > 2)
+                                                                    {
+                                                                        @*<ul class="guarantees">
+                                                                            <li><i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">Ngày tạo</span>: <b style="color:#2180e0;">@item.Name</b></li>
+                                                                            <li style="padding-top:2px!important;">
+                                                                                <i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">Loại phòng</span>: @EnumExtension.GetDescription((RoomTypeEnum)@item.TypeRoom)
+                                                                            </li>
+                                                                            <li style="padding-top:2px!important;">
+                                                                                <i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">Vị trí ưu tiên</span>: <span class="badge" style="background-color:crimson;">@item.Sorting</span>
+                                                                            </li>
+                                                                        </ul>*@
+                                                                        <table style="width:100%">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        Ngày tạo
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        @item.CreatedDate.ToVEFullDateTime()
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        Bệnh nhân
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        @ReturnHTMLInTable(trackings, "PId", "Patient Id")
+
+                                                                                        @ReturnHTMLInTable(trackings, "HoTen", "Họ và tên")
+
+                                                                                        @ReturnHTMLInTable(trackings, "NgaySinh", "Ngày sinh")
+
+                                                                                        @ReturnHTMLInTable(trackings, "Address", "Địa chỉ")
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        Bác sỹ phụ trách
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        @ReturnHTMLInTable(trackings, "NamePTVMain", "PTV chính")
+
+                                                                                        @ReturnHTMLInTable(trackings, "NamePTVSub1", "PTV phụ 1")
+
+                                                                                        @ReturnHTMLInTable(trackings, "NamePTVSub2", "PTV phụ 2")
+
+                                                                                        @ReturnHTMLInTable(trackings, "NamePTVSub3", "PTV phụ 3")
+                                                                                        @ReturnHTMLInTable(trackings, "NamePTVSub4", "PTV phụ 4")
+                                                                                        @ReturnHTMLInTable(trackings, "NamePTVSub5", "PTV phụ 5")
+                                                                                        @ReturnHTMLInTable(trackings, "NamePTVSub6", "PTV phụ 6")
+                                                                                        @ReturnHTMLInTable(trackings, "NamePTVSub7", "PTV phụ 7")
+                                                                                        @ReturnHTMLInTable(trackings, "NamePTVSub8", "PTV phụ 8")
+
+                                                                                        @ReturnHTMLInTable(trackings, "NameCECDoctor", "PTV CEC")
+
+                                                                                        @ReturnHTMLInTable(trackings, "NameNurseTool1", "Điều dưỡng dụng cụ 1")
+
+                                                                                        @ReturnHTMLInTable(trackings, "NameNurseTool2", "Điều dưỡng dụng cụ 2:")
+
+                                                                                        @ReturnHTMLInTable(trackings, "NameNurseOutRun1", "Điều dưỡng chạy ngoài 1")
+
+                                                                                        @ReturnHTMLInTable(trackings, "NameNurseOutRun2", "Điều dưỡng chạy ngoài 2")
+                                                                                        @ReturnHTMLInTable(trackings, "NameNurseOutRun3", "Điều dưỡng chạy ngoài 3")
+                                                                                        @ReturnHTMLInTable(trackings, "NameNurseOutRun4", "Điều dưỡng chạy ngoài 4")
+                                                                                        @ReturnHTMLInTable(trackings, "NameNurseOutRun5", "Điều dưỡng chạy ngoài 5")
+                                                                                        @ReturnHTMLInTable(trackings, "NameNurseOutRun6", "Điều dưỡng chạy ngoài 6")
+
+                                                                                        @ReturnHTMLInTable(trackings, "NameKTVSubSurgery", "KTV phụ mổ")
+                                                                                        @ReturnHTMLInTable(trackings, "NameKTVDiagnose", "KTV CĐHA")
+                                                                                        @ReturnHTMLInTable(trackings, "NameKTVCEC", "KTV chạy máy CEC")
+                                                                                        @ReturnHTMLInTable(trackings, "NameDoctorDiagnose", "BS CĐHA")
+                                                                                        @ReturnHTMLInTable(trackings, "NameDoctorNewBorn", "BS sơ sinh")
+                                                                                        @ReturnHTMLInTable(trackings, "NameMidwives", "Nữ hộ sinh")
+
+                                                                                        @ReturnHTMLInTable(trackings, "NameMainAnesthDoctor", "Bác sỹ gây mê")
+
+                                                                                        @ReturnHTMLInTable(trackings, "NameSubAnesthDoctor", "Bác sỹ phụ mê 1")
+                                                                                        @ReturnHTMLInTable(trackings, "NameSubAnesthDoctor2", "Bác sỹ phụ mê 2")
+                                                                                        @ReturnHTMLInTable(trackings, "NameAnesthesiologist", "BS khám gây mê")
+
+                                                                                        @ReturnHTMLInTable(trackings, "NameAnesthNurse1", "Điều dưỡng phụ mê 1")
+
+                                                                                        @ReturnHTMLInTable(trackings, "NameAnesthNurse2", "Điều dưỡng phụ mê 2")
+                                                                                        @ReturnHTMLInTable(trackings, "NameAnesthNurseRecovery", "Điều dưỡng hồi tỉnh")
+
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    }
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        @Helpers.Paging(Model.TotalCount, Model.PageNumber, true, Model.PageCount)
+                                    }
+                                    else
+                                    {
+                                        @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@helper ReturnHTMLInTable(string[] trackings, string key, string label)
+{
+
+    var idx = Array.IndexOf(trackings, key);
+    if (idx > -1)
+    {
+        var str = string.Empty;
+
+        if (!string.IsNullOrEmpty(trackings[idx + 1]) && trackings[idx + 1].Equals(":"))
+        {
+            if (!string.IsNullOrEmpty(trackings[idx + 1]) && !trackings[idx + 1].Equals(":null,"))
+            {
+                str = trackings[idx + 2];
+            }
+        }
+        else if (!string.IsNullOrEmpty(trackings[idx + 1]) && trackings[idx + 1].Equals(":null,"))
+        {
+            str = string.Empty;
+        }
+        else
+        {
+            str = trackings[idx + 1];
+        }
+
+        System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex(@"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}");
+        System.Text.RegularExpressions.Match m = r.Match(str);
+        if (m.Success)
+        {
+            if (!string.IsNullOrEmpty(str))
+            {
+                
+                str = DateTime.Parse(str).Year >= 1900 ? DateTime.Parse(str).ToString("dd/MM/yyyy") : string.Empty;
+            }
+        }
+
+        if (str != string.Empty)
+        {
+            <p>@label: <strong>@str</strong></p>
+        }
+    }
+}
+
+@section styles{
+    @Styles.Render("~/styles_searchfrm")
+}
+@section scripts {
+    @Scripts.Render("~/javas_searchfrm")
+    <script type="text/javascript">
+        $(function () {
+             $("#siteId").select2({
+                allowClear: false
+             })
+
+            $("#searchform").submit(function () {
+                $("#txt_keyword").css("color", "white").css("transition-duration", "0").css("-moz-transition-duration", "0").css("-o-transition-duration", "0");
+                $("#txt_keyword").val(encodeURIComponent($("#txt_keyword").val()));
+            });
+            $("#txt_keyword").on("keypress", function (e) {
+                if (e.which == 13) {
+                    return false;    //<---- Add this line
+                }
+            });
+            $("#clearFilter").on("click", function (e) {
+                $("#txt_keyword").val("");
+            });
+            if ($('#reportrange').length > 0) {
+                $('#reportrange').data('daterangepicker').setStartDate('@Model.FromDateHidden');
+                $('#reportrange').data('daterangepicker').setEndDate('@Model.ToDateHidden');
+            }
+        });
+    </script>
+}

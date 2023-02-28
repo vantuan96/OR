@@ -1,0 +1,156 @@
+﻿@model UserTrackingModel
+@{
+    ViewBag.Title = LayoutResource.SystemMngt_ListUserTracking_PageTitle;
+}
+
+<div id="main_wrapper">
+    <div class="page_bar clearfix">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="">
+                    <h1 class="page_title">@LayoutResource.SystemMngt_ListUserTracking_PageTitle</h1>
+                </div>
+            </div>
+            <div class="col-md-6 text-right">
+                <div class="div_add_fast">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page_content">
+        <div class="bg_page_fix"><i class="fa fa-users"></i></div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">@LayoutResource.ArticlePosition_Search</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.AntiForgeryToken()
+                                    <form action="@Url.Action("ListUserTracking", "SystemMngt")" id="searchform">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>@LayoutResource.Shared_DateRange</label>
+                                                <div class="btn btn-master btn-search col-md-12 reportrange" data-rangedateopen="left">
+                                                    <i class="fa fa-calendar"></i>
+                                                    <span>@Model.FromDateToDateText</span>
+                                                    <b class="caret"></b>
+                                                    <input class="fromDateHidden" type="hidden" name="fromDate" value="@Model.FromDateHidden" />
+                                                    <input class="toDateHidden" type="hidden" name="toDate" value="@Model.ToDateHidden" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="input-group ">
+                                                    <label>@LayoutResource.Shared_SearchText</label>
+                                                    <input tabindex="8" type="text" id="txt_keyword" class="form-control" name="kw" autofocus
+                                                           autocomplete="off"
+                                                           placeholder=""
+                                                           value="@HttpUtility.UrlDecode(Request["kw"])" />
+                                                    <span class="input-group-btn">
+                                                        <label>&nbsp;</label>
+                                                        <button title="@LayoutResource.CMS_ButtonText_ClearFilter" tabindex="100"
+                                                                class="Tip_mouse_on_ne btn btn-danger btn-search" style="" id="clearFilter">
+                                                            <i class="fa fa-remove"></i>
+                                                        </button>
+                                                        <button title="@LayoutResource.CMS_ButtonText_Search" tabindex="10"
+                                                                class="Tip_mouse_on_ne btn btn-master btn-search" style="width: 90px" id="searchSubmit">
+                                                            <i class="fa fa-search"></i> @LayoutResource.CMS_ButtonText_Search
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-heading">@LayoutResource.SystemMngt_ListUserTracking_List</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @if (Model.ListTracking != null && Model.ListTracking.Count > 0)
+                                    {
+                                        <div class="table-responsive">
+                                            <table class="table table-striped info-table margin_b0 table_booking table_week">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:30px" class="sub_col">@LayoutResource.Shared_Label_SortNumber</th>
+                                                        <th class="sub_col">@LayoutResource.SystemMngt_ListUserTracking_UserId</th>
+                                                        <th style="min-width:70px;">@LayoutResource.SystemMngt_ListUserTracking_FullName</th>
+                                                        <th>@LayoutResource.SystemMngt_ListUserTracking_Email</th>
+                                                        <th>@LayoutResource.SystemMngt_ListUserTracking_Content</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{ int rownumber = (Model.PageNumber - 1) * Model.PageCount; }
+                                                    @foreach (var item in Model.ListTracking)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-right">
+                                                                <span>@(++rownumber)</span>
+                                                            </td>
+                                                            <td class="sub_col">@item.UserId</td>
+                                                            <td>@item.FullName</td>
+                                                            <td>@item.Email</td>
+                                                            <td>
+                                                                @item.CreatedDate.ToVEFullDateTime() 
+                                                                <br />
+                                                            @item.ContentTracking
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        @Helpers.Paging(Model.TotalCount, Model.PageNumber, true, Model.PageCount)
+                                    }
+                                    else
+                                    {
+                                        @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section styles{
+    @Styles.Render("~/styles_searchfrm")
+}
+
+@section scripts {
+    @Scripts.Render("~/javas_searchfrm")
+    <script type="text/javascript">
+        $(function () {
+            $("#searchform").submit(function () {
+                $("#txt_keyword").css("color", "white").css("transition-duration", "0").css("-moz-transition-duration", "0").css("-o-transition-duration", "0");
+                $("#txt_keyword").val(encodeURIComponent($("#txt_keyword").val()));
+            });
+
+            $("#txt_keyword").on("keypress", function (e) {
+                if (e.which == 13) {
+                    return false;    //<---- Add this line
+                }
+            });
+
+            $("#clearFilter").on("click", function (e) {
+                $("#txt_keyword").val("");
+            });
+
+            if ($('#reportrange').length > 0) {
+                $('#reportrange').data('daterangepicker').setStartDate('@Model.FromDateHidden');
+                $('#reportrange').data('daterangepicker').setEndDate('@Model.ToDateHidden');
+            }
+
+        });
+    </script>
+}

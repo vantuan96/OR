@@ -1,0 +1,168 @@
+﻿@*@model Admin.Models.Master.CreateUpdatePnLBuListModel*@
+
+@using Admin.Models.Master
+@model CreateUpdatePnLBuListModel
+@{
+    string errorMessage = ViewBag.ErrorMessage as string;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    //var listGroup = (List<SelectListItem>)ViewBag.ListType;
+}
+
+<div class="modal_booking modal_booking_iframe">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h2 class="modal-title title-popup">
+            @if (Model == null || (Model != null && Model.PnLBUListId == 0))
+            {
+                @(LayoutResource.Master_PopupCreatePnLBUlist_Title)
+            }
+            else
+            {
+                @(LayoutResource.Master_PopupUpdatePnLBUlist_Title)
+            }
+        </h2>
+        <p class="place"></p>
+    </div>
+    <div class="modal-body">
+        <div class="body_booking">
+
+            @if (string.IsNullOrEmpty(errorMessage) == false)
+            {
+                @Html.Partial("_ErrorOccur", errorMessage)
+            }
+            else if (Model == null)
+            {
+                @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+            }
+            else
+            {
+                using (Ajax.BeginForm("CreateUpdatePnLBuList", "Master", new AjaxOptions { HttpMethod = "Post", OnSuccess = "SaveResult" }, new { onsubmit = "removeDisabled();$('#err_msg').html('').hide();" }))
+                {
+                    @Html.Hidden("Id", Model.Id)
+                    @Html.Hidden("PnLBuListId", Model.PnLBUListId)
+                    @Html.AntiForgeryToken()
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.LabelFor(x => x.PnLBUListCode, "Code", new { @class = "req" })
+                            @Html.TextBoxFor(x => x.PnLBUListCode, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.PnLBUListCode)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.LabelFor(x => x.Description, "Description")
+                            @Html.TextBoxFor(x => x.Description, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.LabelFor(x => x.PnLListId, "PnL Code", new { @class = "req" })
+                            @Html.DropDownListFor(x => x.PnLListId, new SelectList(Model.ListPnLList, "PnLListId", "PnLListName"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.PnLListId)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group relative not_input_error not_input_error_popup" style="top: 0;">
+                            <span id="err_msg" class="field-validation-error" style="display:none"></span>
+                        </div>
+                    </div>
+                    <div class="btn-wrapper text-right">
+                        <button class="btn btn-accept" tabindex="8" type="submit"><i class="fa fa-save"></i>&nbsp;@LayoutResource.Shared_BtnText_Save</button>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@section styles{
+    <style>
+        .select2-results .select2-disabled {
+            display: none;
+        }
+    </style>
+}
+@section scripts{
+    @if (ViewBag.IsSuccess != null && (bool)ViewBag.IsSuccess)
+    {
+        TempData[AdminGlobal.ActionMessage] = ViewBag.ActionMessage;
+
+        <script type="text/javascript">
+            parent.window.location.reload();
+        </script>
+    }
+
+    <script>
+        $(function () {
+            @*var dropzone = $("div#dropzone").dropzone({
+                url: urlUploadedFile,
+                dictDefaultMessage: "@LayoutResource.Shared_Upload_Image.ToUpper()",
+                thumbnailWidth: 98,
+                thumbnailHeight: 98,
+                maxFiles: 1,
+                acceptedFiles: "@AdminGlobal.AllowUploadImageExt",
+                thumbnailMethod: 'contain',
+                success: function (file) {
+                    var response = JSON.parse(file.xhr.response);
+                    var path = photoDomain + response.Message;
+                    $("#microsite_Image").attr("src", path);
+                    $("#ImageUrl").val(response.Message);
+
+                    Dropzone.forElement("#dropzone").removeAllFiles(true);
+                },
+                error: function (file) {
+                    Dropzone.forElement("#dropzone").removeAllFiles(true);
+                },
+            });
+
+
+
+            var dropzoneMobile = $("div#dropzoneMobile").dropzone({
+                url: urlUploadedFile,
+                dictDefaultMessage: "@LayoutResource.Shared_Upload_Image.ToUpper()",
+                thumbnailWidth: 98,
+                thumbnailHeight: 98,
+                maxFiles: 1,
+                acceptedFiles: "@AdminGlobal.AllowUploadImageExt",
+                thumbnailMethod: 'contain',
+                success: function (file) {
+                    var response = JSON.parse(file.xhr.response);
+                    var path = photoDomain + response.Message;
+                    $("#microsite_BannerUrl").attr("src", path);
+                    $("#BannerUrl").val(response.Message);
+
+                    Dropzone.forElement("#dropzoneMobile").removeAllFiles(true);
+                },
+                error: function (file) {
+                    Dropzone.forElement("#dropzoneMobile").removeAllFiles(true);
+                },
+            });*@
+        });
+
+
+        function removeDisabled() {
+            $("#PnLBUListCode,#Description,#PnLBuListId").removeAttr("disabled");
+            $("#err_msg").html("").hide();
+        }
+
+        function SaveResult(data){
+            if(!data.Id){
+                $("#err_msg").html(msg_lang.Shared_SystemErrorMessage).show();
+                HideOverlay(0);
+            }
+            else if(data.Id==@((int)ResponseCode.PnLBuList_SuccessUpdate) || data.Id == @((int)ResponseCode.PnLBuList_SuccessCreate)){
+                parent.window.location.reload();
+        }
+        else{
+                $("#err_msg").html(data.Message).show();
+        HideOverlay(0);
+        }
+        }
+
+
+    </script>
+
+}

@@ -1,0 +1,354 @@
+﻿@using Admin.Models.OR;
+@using Contract.Enum;
+@using Contract.OR;
+@model SearchORRoomModel
+@{
+    ViewBag.Title = "Danh sách phòng mổ ";
+    var canUpdate = Functions.CheckAllowAction("OR", "CUDORRoom");
+    var canHideOrShow = Functions.CheckAllowAction("OR", "HideOrShowRoom");
+    var canDeleted = Functions.CheckAllowAction("OR", "DeleteRoom");
+}
+@section styles{
+    @Styles.Render("~/styles_searchfrm")
+    <style>
+        .well.well-sm {
+            display: none;
+        }
+
+        table th {
+            text-align: center;
+        }
+
+        .div_tag_bg {
+            position: relative;
+        }
+
+            .div_tag_bg .bg_div {
+                position: fixed;
+                right: 10px;
+                bottom: 10px;
+                opacity: 0.1;
+                font-size: 160px !important;
+            }
+
+        .well.well-sm {
+            display: none;
+        }
+
+        table.table.table-striped > thead > tr > th {
+            height: 25px;
+            background-color: #dbdbdb;
+        }
+
+
+        .guarantees .bootstrap-themes-icon-check-circle {
+            margin-right: 3px !important;
+            font-size: 12px !important;
+            color: #2AD8A2 !important;
+            margin-top: 0px;
+            margin-bottom: 0px !important;
+            padding-bottom: 0px !important;
+            padding-top: 0px !important;
+        }
+
+        ul, menu, dir {
+            display: block;
+            list-style-type: none;
+            -webkit-margin-before: 1em;
+            -webkit-margin-after: 1em;
+            -webkit-margin-start: 0px;
+            -webkit-margin-end: 0px;
+            -webkit-padding-start: 5px;
+            margin-top: 0px;
+            margin-bottom: 0px !important;
+            padding-bottom: 0px !important;
+            padding-top: 0px !important;
+        }
+
+        li {
+            display: list-item;
+            text-align: -webkit-match-parent;
+        }
+
+        .bootstrap-themes-icon-check-circle:before {
+            content: '\e804';
+        }
+
+        [class^="bootstrap-themes-icon-"]:before, [class*=" bootstrap-themes-icon-"]:before {
+            font-family: "bootstrap-themes" !important font-style: normal;
+            font-weight: normal;
+            speak: none;
+            display: inline-block;
+            text-decoration: inherit;
+            width: 1em;
+            margin-right: .2em;
+            text-align: center;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1em;
+            margin-left: .2em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+}
+<div id="main_wrapper">
+    <div class="page_bar clearfix">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="">
+                    <h1 class="page_title">DANH SÁCH PHÒNG MỔ</h1>
+                    <span class="text-muted"></span>
+                </div>
+            </div>
+            <div class="col-md-6 text-right">
+                <div class="div_add_fast">
+                    @if (canUpdate)
+                    {
+                        @Html.CreateToPopupBtn(href: @Url.Action("CUDORRoom", "OR", new { Id = 0 }), text: @LayoutResource.Shared_BtnText_Add)
+                    }
+                    @if (Functions.CheckAllowAction("OR", "ClearCachingAll"))
+                    {
+                        <a class="btn btn-danger Tip_mouse_on"
+                           title="Xóa caching master data"
+                           id="btnDeleteCaching">
+                            <i class="fa fa-trash-o">&nbsp; Xóa Caching</i>
+                        </a>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="page_content">
+        <div class="bg_page_fix">
+            <i class="fa fa-window-restore"></i>
+        </div>
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.AntiForgeryToken()
+                            <form action="@Url.Action("RoomList", "OR")" method="get" id="searchform">
+                                @Html.Hidden("sourceClientId", Model.sourceClientId)
+
+                                <div class="row">
+                                    @*<div class="col-md-4">
+                                            <label>Cơ sở vinmec</label>
+                                            @Html.DropDownList("siteId", Model.listSites as List<SelectListItem>, new { tabindex = "1", @disabled = "disabled", @class = "form-control select2 select2-offscreen", onchange = "this.form.submit(); ShowOverlay(true);" })
+                                        </div>*@
+                                    <div class="col-md-3">
+                                        <label>Loại phòng</label>
+                                        @Html.DropDownList("RoomType", Model.listRoomTypes as List<SelectListItem>, new { tabindex = "1", @class = "form-control select2 select2-offscreen", onchange = "this.form.submit(); ShowOverlay(true);" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Trạng thái</label>
+                                        @Html.DropDownList("State", Model.listStates as List<SelectListItem>, new { tabindex = "2", @class = "form-control select2 select2-offscreen", onchange = "this.form.submit(); ShowOverlay(true);" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group ">
+                                            <label>Từ khóa</label>
+                                            <input type="text" id="kw" class="form-control" name="kw" tabindex="3" autofocus
+                                                   data-parsley-length="[0, 200]"
+                                                   data-parsley-errors-container="#kw_parsley_container"
+                                                   autocomplete="off"
+                                                   placeholder="Tên phòng mổ" value="@HttpUtility.UrlDecode(Request["kw"])" />
+                                            <a id="kwclear" class="glyphicon glyphicon-remove" style="z-index:5;margin-top:-32px;display:inline;float:right;pointer-events:auto; text-decoration: none;cursor: pointer;color:red;line-height:28px;width:20px;position:relative;"></a>
+                                            <div id="kw_parsley_container"></div>
+                                            <span class="input-group-btn">
+                                                <label>&nbsp;</label>
+                                                <button title="@LayoutResource.CMS_ButtonText_Search" tabindex="5"
+                                                        class="Tip_mouse_on_ne btn btn-master btn-search" style="width: 90px" id="searchSubmit">
+                                                    <i class="fa fa-search"></i> @LayoutResource.CMS_ButtonText_Search
+                                                </button>
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-heading">KẾT QUẢ</div>
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            @if (Model != null && Model.listData != null && Model.listData.Count > 0)
+                            {
+                                <div class="table-responsive">
+                                    <table class="table table-striped info-table margin_b0 table_booking table_week">
+                                        <thead>
+                                            <tr>
+                                                <th class="sub_col" style="max-width: 60px;width:30px">@LayoutResource.Shared_Label_SortNumber</th>
+                                                <th searchable class="sub_col">Thông tin chung</th>
+                                                @*<th searchable class="sub_col">Vị trí ưu tiên</th>*@
+                                                <th class="sub_col">Thông tin tạo</th>
+                                                <th class="sub_col">Thông tin cập nhật</th>
+                                                <th class="sub_col">Trạng thái</th>
+                                                <th class="sub_col" style="max-width: 135px;width:135px"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tlbContent">
+                                            @{
+                                                //var rownumber = 0;
+                                                var rownumber = (Model.PageNumber - 1) * Model.PageCount;
+                                            }
+                                            @foreach (var item in Model.listData.ToList())
+                                            {
+                                                <tr>
+                                                    <td class="sub_col">
+                                                        <span>@(++rownumber)</span>
+                                                    </td>
+                                                    <td class="">
+                                                        <ul class="guarantees">
+                                                            <li><i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">Tên phòng</span>: <b style="color:#2180e0;">@item.Name</b></li>
+                                                            <li style="padding-top:2px!important;">
+                                                                <i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">Loại phòng</span>: @EnumExtension.GetDescription((RoomTypeEnum)@item.TypeRoom)
+                                                            </li>
+                                                            <li style="padding-top:2px!important;">
+                                                                <i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">Vị trí ưu tiên</span>: <span class="badge" style="background-color:crimson;">@item.Sorting</span>
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    @*<td style="text-align:center">
+                                                        @item.Sorting
+                                                    </td>*@
+                                                    <td>
+                                                        <ul class="guarantees">
+                                                            <li><i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">Người tạo</span>: @item.CreatedByName</li>
+                                                            <li style="padding-top:2px!important;">
+                                                                <i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">Thời gian</span>: <span class="badge badge-danger">@(item.CreatedDate.ToString("dd/MM/yyyy HH:mm"))</span>
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        <ul class="guarantees">
+                                                            <li><i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">Người cập nhật</span>: @item.UpdatedByName</li>
+                                                            <li style="padding-top:2px!important;">
+                                                                <i class="bootstrap-themes-icon-check-circle"></i><span style="font-weight:bold;">Thời gian</span>: <span class="badge badge-success">@(item.UpdatedDate.ToString("dd/MM/yyyy HH:mm"))</span>
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    <td class="sub_col">
+                                                        @if (item.IsDisplay != "1")
+                                                        {
+                                                            <div style="font-size: 9px;" class="label label-danger">Ẩn</div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div style="font-size: 9px;" class="label label-success">Hiển thị</div>
+                                                        }
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @if (canHideOrShow)
+                                                        {
+                                                            if (item.IsDisplay == "1")
+                                                            {
+                                                                <a data-event="hide-show-room" data-id="@item.Id" data-name="@item.Name" data-action="act-hide" class="btn btn-danger Tip_mouse_on" data-toggle="modal" title="Ẩn">
+                                                                    <i class="fa fa-eye-slash"></i>
+                                                                </a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a data-event="hide-show-room" data-id="@item.Id" data-name="@item.Name" data-action="act-show" class="btn btn-success Tip_mouse_on" data-toggle="modal" title="Hiển thị">
+                                                                    <i class="fa fa-eye"></i>
+                                                                </a>
+                                                            }
+                                                        }
+                                                        @if (canUpdate)
+                                                        {
+                                                            @Html.EditToPopupBtn(height: 650, href: Url.Action("CUDORRoom", "OR", new { id = item.Id }))
+                                                        }
+                                                        @if (canDeleted)
+                                                        {
+                                                            <a data-event="delete-room" data-id="@item.Id" data-name="@item.Name" class="btn btn-danger Tip_mouse_on" data-toggle="modal" title="Xóa">
+                                                                <i class="fa fa-trash-o"></i>
+                                                            </a>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                @Helpers.Paging(Model.TotalCount, Model.PageNumber, true, Model.PageCount)
+                            }
+                            else
+                            {
+                                @Html.Partial("_ErrorOccur", "Không có thông tin phòng mổ.")
+                            }
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/javas_searchfrm")
+    <script>
+        var _hideOrShowUrl = '@Url.Action("HideOrShowRoom")';
+        var _deleteUrl = '@Url.Action("DeleteRoom")';
+        $(function () {
+             $("#siteId").select2({
+                allowClear: false
+            })
+            $("#State").select2({
+                allowClear: false
+            })
+            $("#RoomType").select2({
+                allowClear: false
+            })
+
+         $("#kw").on("keypress", function (e) {
+            if (e.which == 13) {
+                $("#searchform").submit();
+            }
+        });
+        $("#searchform").submit(function () {
+            $("#kw").css("color", "white").css("transition-duration", "0").css("-moz-transition-duration", "0").css("-o-transition-duration", "0");
+            $("#kw").val(decodeURIComponent($("#kw").val()));
+        });
+        //Reset table width if < container width
+        if ($("#tbData").css("width") != undefined) {
+            var curWidth = $("#tbData").css("width").replace("px", "");
+            if ($("#tbData").parent().width() > parseInt(curWidth, 10)) {
+                $("#tbData").css("width", $("#tbData").parent().width()).css("maxWidth", $("#tbData").parent().width());;
+            }
+        }
+        $("#btnDeleteCaching").on('click', function () {
+            var postData = new Array();
+            ShowOverlay(true);
+            commonUtils.postAjaxWithToken("/OR/ClearCachingAll/", postData, function (response) {
+                HideOverlay();
+                if (response != null) {
+                    if (response.ID > 0) {
+                        ShowNotify('success', 'Đã xóa caching thành công', 1000);
+                    } else {
+                        ShowNotify('success', 'Đã xóa caching thất bại', 1000);
+                    }
+                }
+            });
+        });
+
+        itemManager.init();
+        });
+        var itemManager = {
+            init: function () {
+                $("#kwclear").click(itemManager.TextboxSearchClear);
+            },
+            TextboxSearchClear: function () {
+                $('#kw').val('').focus();
+                $(this).show();
+            },
+          };
+
+    </script>
+    @Scripts.Render("~/roommanager")
+}
+

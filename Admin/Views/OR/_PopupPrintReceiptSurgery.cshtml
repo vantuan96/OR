@@ -1,0 +1,242 @@
+﻿@Scripts.Render("~/printsurgeryJS")
+@Styles.Render("~/printsurgery")
+<div class="modal fade" id="print_receipt_surgery" aria-hidden="true" data-backdrop="static" style="display: none;">
+    <div class="modal-dialog" style="width: 800px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="btn-wrapper text-right" style="float:right;width:49%;">
+                    <button class="btn btn-primary" type="button" id="btnPrint" tabindex="7"><i class="fa fa-print"></i>&nbsp;In</button>
+                    <button class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i>&nbsp;Đóng</button>
+                </div>
+                <h2 class="modal-title title-popup" style="float:left;width:49%;">In phiếu hẹn mổ </h2>
+            </div>
+            <div class="modal-body" id="printReceiptSurgery">
+                <div id="mainReport" style="width:100%; height:800px;text-align:left;padding:0;margin:0 auto;background:white;">
+                    <!--Top header-->
+                    <div class="row" style="padding-right:10px;">
+                        <!--Logo-->
+                        <div class="col-md-3" style="float:left;">
+                            <div class="logo">
+                                <img src="~/Assets/img/logo/vm-logo-171x103.jpg" />
+                            </div>
+                        </div>
+                        <!--Title report-->
+                        <div class="col-md-6" id="reportTitle" style="text-align:center;top:30px;">
+                            <h4>
+                                PHIẾU HẸN MỔ
+                            </h4>
+                            <h4>
+                                <i style="color:#0000ff !important;">RECEIPT SURGERY</i>
+                            </h4>
+                        </div>
+                        <!--Barcode-->
+                        <div class="col-md-3" style="float:right;text-align:right;">
+                            <input type="hidden" id="data-pg-id" value="">
+                            <div class="box-paper">
+                                <svg class="barcode" style="width:142px;height:80px;"
+                                        @*jsbarcode-value="200476707"*@
+                                        jsbarcode-textmargin="0"
+                                        @*jsbarcode-fontoptions="bold"*@
+                                        jsbarcode-height="60">
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Content block-->
+                    <div class="row" id="print_content" style="margin-top:20px;padding-left:30px;padding-right:30px;">
+                        @*<address>*@
+                        <div class="row">
+                            <label class="control-label print-label"> Họ và tên<i>/Full name:</i> <span id="print_FullName" style="color:#0000ff;"></span></label>
+                        </div>
+                        <div class="row">
+                            <label class="control-label print-label"> Giới tính<i>/Sex:</i> <span id="print_Sex"></span></label>
+                        </div>
+                        <div class="row">
+                            <label class="control-label print-label"> Ngày sinh<i>/D.O.B:</i> <span id="print_DOB"></span></label>
+                        </div>
+                        <div class="row">
+                            <label class="control-label print-label"> Chẩn đoán<i>/Diagnosis:</i> <span id="print_Diagnosis"></span></label>
+                        </div>
+                        <div class="row">
+                            <label class="control-label print-label"> Chỉ định<i>/Indication:</i> <span id="print_Indication"></span></label>
+                        </div>
+                        <div class="row">
+                            <label class="control-label print-label"> Bác sĩ thực hiện<i>/Surgeon:</i> <span id="print_Surgeon"></span></label>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6" style="padding:unset;margin-bottom:unset !important;">
+                                <label class="control-label print-label"> Dự kiến thời gian phẫu thuật<i>/Surgery planned:</i></label>
+                            </div>
+                            <div class="col-lg-3" style="margin-bottom:unset !important;">
+                                <label class="control-label print-label"> Ngày<i>/Date:</i> <span id="print_Operation_Date"></span></label>
+                            </div>
+                            <div class="col-lg-3" style="margin-bottom:unset !important;">
+                                <label class="control-label print-label"> Giờ<i>/Time:</i> <span id="print_Operation_Time"></span></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6" style="padding:unset;margin-bottom:unset !important;">
+                                <label class="control-label print-label"> Dự kiến thời gian nhập viện<i>/Admission plannned:</i></label>
+                            </div>
+                            <div class="col-lg-3" style="margin-bottom:unset !important;">
+                                <label class="control-label print-label"> Ngày<i>/Date:</i> <span id="print_Admission_Date"></span></label>
+                            </div>
+                            <div class="col-lg-3" style="margin-bottom:unset !important;">
+                                <label class="control-label print-label"> Giờ<i>/Time:</i> <span id="print_Admission_Time"></span></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="control-label print-label"> Địa điểm nhập viện/<i>/Admission ward:</i> <span id="print_AdmissionWard">Khu điều trị nội trú Sản 2</span></label>
+                        </div>
+                        <div class="row">
+                            <label class="control-label print-label" style="text-align:justify;">
+                                Ghi chú/<i>/Note:</i>
+                                <span id="print_RegNote">
+                                    
+                                </span>
+                            </label>
+                        </div>
+                        <div class="row">
+                            <label class="control-label print-label" style="text-align:center;"><span style="color:black !important;">*Để thực hiện được phẫu thuật hay thủ thuật này khách hàng vui lòng tuân thủ các chỉ định nhịn ăn, uống của bác sỹ Gây mê để ca phẫu thuật hay thủ thuật được thành công!</span></label>
+                        </div>
+                        <div class="row">
+                            <label class="control-label print-label" style="text-align:center;"><span style="color:black !important;"><i>To perform this surgery or procedure, please follow the instructions of fasting and drinking of the Anesthesiologist!</i></span></label>
+                        </div>
+                        <div class="row">
+                            <label class="control-label print-label no-bold">1. Tắm bằng xà phòng tối ngày trước phẫu thuật<i>/Shower with soap in the evening before surgery</i></label>
+                        </div>
+                        <div class="row">
+                            <label class="control-label print-label no-bold">2. Không tự ý cạo lông vùng phẫu thuật, không sơn móng tay, chân, không đeo đồng hồ trang sức<i>/Do not shave hair at the surgical site, do not paint nails, do not wear jewery.</i></label>
+                        </div>
+                        <div class="row">
+                            <label class="control-label print-label no-bold">3. Nhịn ăn hoàn toàn ít nhất từ<i>/No food intake from:</i> 
+                            <span id="print_NoFoodFrom" class="editable editable-click editValueReceiptSurgery"
+                                      data-type="text" data-pk="1" data-key="print_NoFoodFrom">17:00 20/02/2022</span>
+                            </label>
+                        </div>
+                        <div class="row">
+                            <label class="control-label print-label no-bold">4. Nhịn uống hoàn toàn ít nhất từ<i>/No drink intake from:</i> 
+                                <span id="print_NoDrinkFrom" class="editable editable-click editValueReceiptSurgery"
+                                      data-type="text" data-pk="1" data-key="print_NoDrinkFrom">17:00 20/02/2022</span>
+                            </label>
+                        </div>
+                        <div class="row">
+                            <label class="control-label print-label no-bold">5. Tạm ứng<i>/Advance amount:</i> 
+                                <span id="print_AdvanceAmount" class="editable editable-click editValueReceiptSurgery"
+                                      data-type="text" data-pk="1" data-key="print_AdvanceAmount"></span> <span style="color:black !important;"> Tại quầy lễ tân tầng 1<i>/at the reception counter on the 1st floor.</i></span>
+                            </label>
+                        </div>
+                        <div class="row">
+                            <label class="control-label print-label no-bold">6. Nhập viện tại<i>/Hospital admission at:</i> 
+                                <span id="print_AdmissionWard" class="editable editable-click editValueReceiptSurgery"
+                                      data-type="text" data-pk="1" data-key="print_AdmissionWard">
+                                </span>
+                            </label>
+                        </div>
+                        <div class="row" id="doctor-signature">
+                            <table style="width:100%;border:none !important;">
+                                <thead>
+                                    <tr>
+                                        <td></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border:none !important;">
+                                        <td style="border:none !important;">
+                                            <div class="signature">
+                                                <label class="control-label print-label" style="margin-bottom:unset;">Bác sỹ<i>/Doctor</i></label>
+                                                <div class="doctor-sign" style="height:80px;">
+                                                    <i style="font-family:Times New Roman, sans-serif !important;font-size:13px !important;">
+                                                        (Ký và ghi rõ họ tên/Signature & Full name)
+                                                    </i>
+                                                </div>
+                                                <div>
+                                                    <label id="print_Surgeon" class="control-label print-label" style="text-align:center;"></label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        @*</address>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/javas_x_editable")
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //JsBarcode(".barcode", "200476707", {height: 60});
+        //JsBarcode(".barcode").init();
+    });
+    //$('.editValueReceiptSurgery').editable({
+    //    validate: function (value) {
+    //        var result = UpdateReceiptSurgery($('#data-pg-id').val(),$(this).data("key"), $.trim(value.replace(",", "")));
+    //            if (result != "") return result;
+    //    }
+    //});
+    function UpdateReceiptSurgery(pgid,key, settingValue) {
+        var url = "@Url.Action("UpdateReceiptSurgery")";
+        var ret = "";
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: {
+                pgid: pgid,
+                key: key,
+                value: settingValue,
+                "__RequestVerificationToken": $('[name=__RequestVerificationToken]').val()
+            },
+            dataType: 'json',
+            async: false,
+            cache: false,
+            success: function (result) {
+                if (result.status.toLowerCase() == "ok") {
+                    ret = "";
+                }
+                else if (result.status === 401) {
+                    window.location.href = result.redirect;
+                }
+                else {
+                    ret = result.message;
+                }
+            },
+            error: function () { ret = msg_lang.CMS_GetRuntimeErrorMsg; }
+        });
+        return ret;
+    }
+    $("#btnPrint").click(function () {
+        //printpagev2('printReceiptSurgery');
+        //printDiv();
+        printpage('printReceiptSurgery');
+    });
+    function printpage(controlName) {
+        var contents = $("#" + controlName).html();
+        var frame1 = $('<iframe />');
+        frame1[0].name = "frame1";
+        //frame1.css({ "position": "absolute", "top": "-1000000px" });
+        $("body").append(frame1);
+        var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+        frameDoc.document.open();
+        //Create a new HTML document.
+        frameDoc.document.write('<html moznomarginboxes mozdisallowselectionprint><head><title>DIV Contents</title>');
+        frameDoc.document.write('</head><body>');
+        //Append the external CSS file.
+        frameDoc.document.write('<link href="/Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />');
+        frameDoc.document.write('<link href="/Assets/css/ReceiptSurgery.css" rel="stylesheet" type="text/css" />');
+        //Append the DIV contents.
+        frameDoc.document.write(contents);
+        frameDoc.document.write('</body></html>');
+        //frameDoc.document.title = "";
+        frameDoc.document.close();
+        setTimeout(function () {
+            window.frames["frame1"].focus();
+            window.frames["frame1"].print();
+            frame1.remove();
+        }, 500);
+    }
+</script>

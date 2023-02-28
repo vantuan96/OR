@@ -1,0 +1,164 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var SessionUserInfo = MvcHelper.GetUserSession(Context.ApplicationInstance.Context);
+
+    string countNotification = string.Empty;
+    string logo = ViewBag.Logo ?? "";
+
+    var currentLoc = SessionUserInfo.CurrentLocaltion;
+}
+@if (!MvcHelper.IsIEBrowser(Context.ApplicationInstance.Context))
+{
+    <header class="navbar navbar-fixed-top" role="banner">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="/" class="navbar-brand" draggable="false">
+                    @if (logo.EndsWith(".png"))
+                    {
+                        <img src="~/Assets/img/@logo" width="142" height="42" alt="">
+                    }
+                    else
+                    {
+                        @(logo)
+                    }
+                </a>
+            </div>
+            <div class="div_menu">
+                @if (ViewBag.HideMenu == null)
+                {
+                    <a href="javascript:void(0)" class="slidebar-toggle slidebar-toggle_menu Tip_mouse_on">
+                        <span class="navbar_el_icon ion-navicon"></span>
+                    </a>
+                }
+                <p class="title-site">@ViewBag.ToolName</p>
+            </div>
+            <ul class="nav navbar-nav navbar-right nav_right_menu">
+                <li class="li_border switch-site">
+                    <a class="dropdown-toggle" data-toggle="dropdown" style="padding:10px 7px;">
+                        <span class="navbar_el_title" style="max-width:unset;"><span class="text-site" style="font-size:14px;">@currentLoc.NameVN</span></span>
+                        @if (SessionUserInfo.Locations != null && SessionUserInfo.Locations.Count > 1)
+                        {
+                            <span class="caret" style="float: right;margin-top: 10px;margin-left:7px"></span>
+                        }
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right site-list">
+                        @foreach (var item in SessionUserInfo.Locations)
+                        {
+                            if (item.LocationId != SessionUserInfo.CurrentLocationId)
+                            {
+                                <li><a id="hos_@item.LocationId" data-id="@item.LocationId" href="javascript:switchSite('hos_@item.LocationId')" class="btn-social btn-dropbox"><i class="fa fa-hospital-o"></i>@item.NameVN</a></li>
+                            }
+                        }
+                    </ul>
+                </li>
+            </ul>
+            @*<ul class="nav navbar-nav navbar-right nav_right_menu" style="width:1350px;">
+            <div class="progress" style="background:white!important;height:50px;">
+                <div class="progress-bar progress-bar-info"  role="progressbar" style="width:18.2%;line-height:50px!important;font-size:15px;">
+                    Chuẩn bị xuống PM(On the Way)
+                </div>
+                <div class="progress-bar " role="progressbar" style="width:16.2%;line-height:50px!important;font-size:15px;background-color:darkmagenta">
+                    Phòng tiếp đón(Holding bay)
+                </div>
+                <div class="progress-bar progress-bar-primary" role="progressbar" style="width:16.4%;line-height:50px!important;font-size:15px;">
+                    Trong phòng mổ(Inside OR)
+                </div>
+                <div class="progress-bar progress-bar-success" role="progressbar" style="width:14.2%;line-height:50px!important;font-size:15px;">
+                    Ra phòng mổ(Out of the OR)
+                </div>
+
+                <div class="progress-bar progress-bar-warning" role="progressbar" style="width:10%;line-height:50px!important;font-size:15px;">
+                    Hoãn mổ(Cancel)
+                </div>
+                <div class="progress-bar progress-bar-danger" role="progressbar" style="width:14.2%;line-height:50px!important;font-size:15px;">
+                    Cấp cứu(Emergency)
+                </div>
+                <div class="progress-bar progress-bar-danger" role="progressbar" style="width:10%;line-height:50px!important;font-size:15px;background-color:chartreuse">
+                    Phát sinh(Aniesing)
+                </div>
+
+            </div>
+        </ul>*@
+        </div>
+    </header>
+    @RenderBody()
+    <script type="text/javascript">
+          @Html.JsMinify(@<text>
+
+        _isIframe = false;
+
+
+            $(function () { $(window).scroll(function () { if ($(this).scrollTop() != 0) { $('#bttop').stop(true, false).slideDown(); } else { $('#bttop').stop(true, false).slideUp(); } }); $('#bttop').click(function () { $('body,html').animate({ scrollTop: 0 }, 800); }); });
+
+            $(window).load(function () {
+                HideOverlay();
+            });
+            </text>)
+    </script>
+    <div id='bttop' style="display: none" class="btn btn-master hvr-bob"><i class="fa fa-angle-double-up" style=""></i></div>
+}
+else
+{
+
+    <style type="text/css">
+        /*No script*/
+        .noscript {width: 100%;height: 100%;display: block;position: fixed;z-index: 1032;top: 0;font-family: Arial;}.noscript .main_wrapper {margin: 200px auto 0 auto;width: 100%;text-align: center;color: #ffffff;position: absolute;top: 50%;font-family: Arial;margin-top: -114px;left: 0;}.noscript .main_wrapper h1 {font-size: 101px;font-weight: 100;margin-bottom: 0;margin-top: 0;letter-spacing: -3px;font-family: Arial;line-height: 1.1;}.noscript .main_wrapper h1 sub {font-size: 24px;position: absolute;left: 50%;margin-left: 270px;top: 83px;letter-spacing: 0;}.noscript .main_wrapper h1 sub span {font-size: 15px;font-style: italic;}.noscript .main_wrapper h4 {font-weight: normal;}.ul_logo {margin: 52px auto;display: block;}.ul_logo li {display: inline;list-style-type: none;margin: 0 27px;}.logo_browser {width: 128px;height: 128px;display: inline-block;cursor: pointer;}
+    </style>
+    <div>
+        <div class="bg_black_noscript"></div>
+        <div class="noscript">
+            <div class="main_wrapper">
+                <h1>Oops!..<sub><span> @LayoutResource.Shared_BrowserNotSupported</span></sub></h1>
+                <h4>
+                    @Html.Raw(LayoutResource.Shared_BrowserNotSupportedDetail)
+                </h4>
+                <ul class="ul_logo">
+                    <li>
+                        <a class="logo_browser logo_ie" target="_blank" href="http://www.microsoft.com/vi-vn/download/details.aspx?id=40902" title="Nâng cấp phiên bản mới nhất của Internet Explorer">
+                            <img src="~/assets/img/logo_ie.png" />
+                        </a>
+                    </li>
+                    <li>
+                        <a class="logo_browser logo_chrome" target="_blank" href="https://www.google.com/intl/vi/chrome/browser/desktop/index.html" title="Tải về Chrome">
+                            <img src="~/assets/img/logo_chrome.png" />
+                        </a>
+                    </li>
+                    <li>
+                        <a class="logo_browser logo_firefox" target="_blank" href="https://www.mozilla.org/vi/firefox/new/" title="Tải về Firefox">
+                            <img src="~/assets/img/logo_firefox.png" />
+                        </a>
+                    </li>
+                    <li>
+                        <a class="logo_browser logo_opera" target="_blank" href="http://www.opera.com/vi/computer/windows" title="Tải về Opera">
+                            <img src="~/assets/img/logo_opera.png" />
+                        </a>
+                    </li>
+                    <li>
+                        <a class="logo_browser logo_safari" target="_blank" href="https://support.apple.com/kb/DL1531?locale=en_US" title="Tải về Safari">
+                            <img src="~/assets/img/logo_safari.png" />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="hidden">
+        @RenderBody()
+    </div>
+}
+
+@section styles{
+    @RenderSection("styles", required: false)
+    @RenderSection("style", required: false)
+}
+
+@section scripts{
+    @RenderSection("scripts", required: false)
+    @RenderSection("script", required: false)
+
+}
+<script type="text/javascript">
+    var default_url = '@Url.Action(SessionUserInfo.DefaultAction.ActionName, SessionUserInfo.DefaultAction.ControllerName)';
+    var switch_site_url = '@Url.Action("ChangeSite", "UserProfile")';
+    var checklogin_url = '@Url.Action("CheckLogin", "Authen")';
+</script>

@@ -1,0 +1,383 @@
+﻿@model DataAccess.Models.Patient
+@using DataAccess.Models
+@{
+    var genders = new List<SimpleItem> { new SimpleItem { Id = 0, Name = "Chưa xác định" }, new SimpleItem { Id = 1, Name = "Nam" }, new SimpleItem { Id = 2, Name = "Nữ" } };
+    var healthCheckTypes = new List<SimpleItem> { new SimpleItem { Id = 1, Name = "Nội trú" }, new SimpleItem { Id = 2, Name = "Ngoại trú" }, new SimpleItem { Id = 3, Name = "Khám bệnh" } };
+    var states = new List<PatientState>();
+    states.AddRange((IEnumerable<PatientState>)ViewBag.States);
+
+    var rooms = new List<RoomHospital>();
+    rooms.AddRange((IEnumerable<RoomHospital>)ViewBag.Rooms);
+
+    if (Model.StartDate.Year == 1)
+    {
+        Model.StartDate = DateTime.Now;
+    }
+    if (Model.EndDate.Year == 1)
+    {
+        Model.EndDate = DateTime.Now;
+    }
+    var listBlockTime = ((List<Contract.OR.Blocktime_view>)ViewBag.ListBlockTime).Select(x => new SelectListItemCustom()
+    {
+        Selected = false,
+        Value = x.id.ToString(),
+        Text = x.TenDv,
+        itemsHtmlAttributes = new Dictionary<string, string>()
+    }).ToList();
+
+    //var listHpServiceContract = ((List<Contract.OR.HpServiceContract>)ViewBag.ListHpServiceContract).Where(x => x.Type == 1).Select(x => new SelectListItemCustom()
+    //{
+    //    //Selected = false,
+    //    Selected=(Model.ServiceName == x.Name),
+    //    Value = x.Name,
+    //    Text = x.Name,
+    //    itemsHtmlAttributes = new Dictionary<string, string>()
+    //}).ToList();
+    //if (listHpServiceContract != null && listHpServiceContract.Count > 0)
+    //{
+    //    listHpServiceContract.Insert(0, new SelectListItemCustom()
+    //    {
+    //        Value = "-1",
+    //        Text = "Chọn dịch vụ",
+    //        itemsHtmlAttributes = new Dictionary<string, string>()
+    //    });
+    //}
+}
+    <link href="~/Assets/lib/jquery-datetimepicker/jquery.datetimepicker.css" rel="stylesheet" />
+@section scripts {
+
+    <script src="~/Assets/js/jquery.mask.js"></script>
+    <script src="~/Assets/lib/jquery-datetimepicker/jquery.datetimepicker.js"></script>
+    <script>
+        $(function () {
+            $("#ServiceNames").select2(
+                {
+                placeholder: 'Nhập tối thiểu 3 ký tự để tìm dịch vụ',
+                minimumInputLength: 3,
+                ajax: {
+                    url: '@Url.Action("SearchHpServiceByName", "QueuePatient")',
+                    dataType: 'json',
+                    type: "GET",
+                    delay: 250,
+                    data: function (params) {
+                        var query = {
+                            kw: params.term,
+                            page: params.page || 1
+                        }
+                        return query;
+                    },
+                    processResults: function (data) {
+                        var res = data.map(function (item) {
+                            return {
+                                id: item.Id,
+                                text: item.Name,
+                                anesthesiaTime: item.AnesthesiaTime
+                            };
+                        });
+                        return {
+                            results: res
+                        };
+                    }
+                },
+
+            });
+
+            var serviceName = '@Html.Raw(Model.ServiceName)';
+            if ( serviceName != '') {
+                var data = {
+                    text: serviceName
+                };
+
+
+                var newOption = new Option(data.text, data.id, false, false);
+                $('#ServiceNames').append(newOption).trigger('change');
+            }
+
+            $(".time").mask("00/00/0000 00:00");
+            @*$("#StartDate").datetimepicker({
+                useCurrent: false,
+                dateFormat: 'dd/mm/yy',
+                step: 30,
+                defaultDate: '@Model.StartDate'
+            });
+            $("#EndDate").datetimepicker({
+                dateFormat: 'dd/mm/yy',
+                step: 30
+            });*@
+            $("#SaveChangeId").click(function (event) {
+                var startDate = $("#ShowStartDate").val();
+                var newStartDate = verifyDate(startDate);
+                if (newStartDate == '') {
+                    bootbox.alert("Ngày bắt đầu không hợp lệ");
+                    event.preventDefault();
+                } else {
+                    $("#StartDate").val(newStartDate);
+                }
+                var endDate = $("#ShowEndDate").val();
+                var newEndDate = verifyDate(endDate);
+                if (newEndDate == '') {
+                    bootbox.alert("Ngày kết thúc không hợp lệ");
+                    event.preventDefault();
+                } else {
+                    $("#EndDate").val(newEndDate);
+                }
+
+            })
+
+            if (typeof SaveSuccessMessage != 'undefined' && SaveSuccessMessage != "")
+                ShowNotify('success', SaveSuccessMessage, 3000);
+            if (typeof SaveFailMessage != 'undefined' && SaveFailMessage != "")
+                ShowNotify('warning', SaveFailMessage, 3000);
+
+        });
+
+        function verifyDate(datevalue) {
+            var returnDate = '';
+            if (datevalue == null || datevalue == '')
+                return returnDate;
+
+            var dateTime = datevalue.split(' ');
+            var date = dateTime[0];
+            var time = dateTime[1];
+
+            var tmp = date.split('/');
+            var day = tmp[0];
+            var month = tmp[1];
+            var year = tmp[2];
+            var fromYear = 1900;
+            var now = new Date();
+
+            var tmp2 = time.split(':');
+            var hour = tmp2[0];
+            var minutes = tmp2[1];
+
+            if (day >= 1 && day <= 31) {
+                if (month >= 1 && month <= 12) {
+                    if (year >= fromYear && year <= now.getFullYear()) {
+                        if (hour >= 0 && hour <= 23) {
+                            if (minutes >= 0 && minutes <= 59) {
+                                returnDate = month + '/' + day + '/' + year + ' ' + time;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return returnDate;
+
+        }
+
+
+        @{
+            if(ViewBag.SaveSuccessMessage != null)
+            {
+                <text>var SaveSuccessMessage = "@ViewBag.SaveSuccessMessage";</text>;
+            }
+
+            if(ViewBag.SaveFailMessage != null)
+            {
+                <text>var SaveFailMessage = "@ViewBag.SaveFailMessage";</text>;
+            }
+        }
+
+        function ChangeHpService() {
+            var dataService = $('#ServiceNames').select2('data');
+            if (dataService != undefined) {
+                $('#ServiceName').val(dataService[0].text);
+            }
+        }
+
+    </script>
+
+}
+<div id="main_wrapper">
+    <div class="page_content">
+        <div class="bg_page_fix"><i class="fa fa-users"></i></div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(model => model.Id, new { @class = "form-control", Value = Model.Id })
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label>PID(Mã bệnh nhân) (<i class="fa fa-asterisk text-danger"></i>)</label>
+                                        @if (Model.Id > 0)
+                                        {
+                                            @Html.EditorFor(model => model.PId, new { htmlAttributes = new { @class = "form-control", required = "", @readonly = true, tabindex = "1" } })
+                                        }
+                                        else
+                                        {
+                                            @Html.EditorFor(model => model.PId, new { htmlAttributes = new { @class = "form-control", required = "", tabindex = "1" } })
+                                        }
+
+                                        @Html.ValidationMessageFor(model => model.PId, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Patient(Họ tên) (<i class="fa fa-asterisk text-danger"></i>)</label>
+                                        @Html.EditorFor(model => model.PatientName, new { htmlAttributes = new { @class = "form-control", required = "", tabindex = "2" } })
+                                        @Html.ValidationMessageFor(model => model.PatientName, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Sex(Giới tính)</label>
+                                        @if (Model.Id > 0)
+                                        {
+                                            @Html.DropDownListFor(model => model.Sex, new SelectList(genders, "Id", "Name", Model.Sex), new { tabindex = "3", @class = "form-control", @readonly = true })
+                                        }
+                                        else
+                                        {
+                                            @Html.DropDownListFor(model => model.Sex, new SelectList(genders, "Id", "Name", Model.Sex), new { tabindex = "3", @class = "form-control" })
+                                        }
+                                        @Html.ValidationMessageFor(model => model.Sex, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Age(Tuổi) (<i class="fa fa-asterisk text-danger"></i>)</label>
+                                        @if (Model.Id > 0)
+                                        {
+                                            @Html.EditorFor(model => model.Age, new { htmlAttributes = new { @class = "form-control", required = "", @readonly = true, tabindex = "4" } })
+                                        }
+                                        else
+                                        {
+                                            @Html.EditorFor(model => model.Age, new { htmlAttributes = new { @class = "form-control", required = "", tabindex = "4" } })
+                                        }
+
+                                        @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label>StartTime(Giờ bắt đầu) (dd/mm/yyyy hh:mm)</label>
+                                        @*@Html.TextBoxFor(x => x.StartDate, "{0:dd/MM/yyyy HH:mm}", new { @class = "form-control time" })
+                                        @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })*@
+                                        <input class="form-control time" id="ShowStartDate" value="@Model.StartDate.ToString("dd/MM/yyyy HH:mm")" />
+                                        <input type="hidden" id="StartDate" name="StartDate" value="@Model.StartDate.ToString("MM/dd/yyyy HH:mm")" />
+                                        @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label>EstimateTime(Dự kiến kết thúc) (Ehos)</label>
+                                        @if (Model.IntendTime != null)
+                                        {
+                                            DateTime originalTime = (DateTime)Model.IntendTime;
+                                            <input class="form-control" name="ShowIntendTime" value="@originalTime.ToString("dd/MM/yyyy HH:mm")" readonly="readonly" />
+                                            <input type="hidden" name="IntendTime" value="@originalTime.ToString("MM/dd/yyyy HH:mm")" />
+                                        }
+                                        else
+                                        {
+                                            <input class="form-control" name="ShowIntendTime" value="" readonly="readonly" />
+                                            <input type="hidden" name="IntendTime" value="" />
+                                        }
+
+                                        @Html.ValidationMessageFor(model => model.IntendTime, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>EndTime(Thực tế kết thúc) (dd/mm/yyyy hh:mm)</label>
+                                        @*@Html.TextBoxFor(x => x.EndDate, "{0:dd/MM/yyyy HH:mm}", new { @class = "form-control time" })
+                                        @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })*@
+                                        <input class="form-control time" id="ShowEndDate" value="@Model.EndDate.ToString("dd/MM/yyyy HH:mm")" />
+                                        <input type="hidden" id="EndDate" name="EndDate" value="@Model.EndDate.ToString("MM/dd/yyyy HH:mm")" />
+                                        @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>OperationRoom(Phòng mổ)</label>
+                                        @Html.DropDownListFor(model => model.RoomId, new SelectList(rooms, "Id", "Name", Model.RoomId), new { tabindex = "6", @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.RoomId, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label>Surgeon(Ekip phẩu thuật)</label>
+                                        @Html.EditorFor(model => model.EkipName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.EkipName, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Anesth(Ekip phẩu thuật)</label>
+                                        @Html.EditorFor(model => model.EKipAnesth, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.EKipAnesth, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Type of Anesth(Loại gây mê)</label>
+                                        @Html.EditorFor(model => model.TypeName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.TypeName, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Procedure(Tên phẩu thuật)</label>
+                                        @*@Html.Raw(Html.DropDownListForCustomExt("ServiceName", listHpServiceContract, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangeHpService(this);" }))*@
+                                        <select id="ServiceNames" class="form-control select2 select2-offscreen" tabindex="6" onchange="ChangeHpService(this);"></select>
+                                        @Html.HiddenFor(x => x.ServiceName)
+                                        @Html.ValidationMessageFor(x => x.ServiceName)
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label>Ward(Khu nội trú)</label>
+                                        @Html.EditorFor(model => model.AreaName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.AreaName, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Readline(Trạng Thái)</label>
+                                        @Html.DropDownListFor(model => model.State, new SelectList(states, "Id", "Name", Model.State), new { tabindex = "6", @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Sorting(Thứ tự phẩu thuật)</label>
+                                        @Html.EditorFor(model => model.Sorting, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Sorting, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>OperationType(Loại KCB)</label>
+                                        @Html.DropDownListFor(model => model.TypeKcbId, new SelectList(healthCheckTypes, "Id", "Name", Model.TypeKcbId), new { tabindex = "6", @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.TypeKcbId, "", new { @class = "text-danger" })
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label>Remarks(Ghi chú)</label>
+                                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="checkbox">
+                                            @Html.CheckBoxFor(x => x.IsEmergence, new { tabindex = "17", @class = "css-checkbox" })
+                                            @Html.ValidationMessageFor(model => model.IsEmergence)
+                                            <label style="margin-top:20px;margin-right:3px;">(Emergency)Cấp cứu</label>
+                                            <input id="SaveChangeId" type="submit" value="Save change(Lưu)" class="btn btn-primary" style="margin-top:-6px!important;" />
+                                            <a class="btn btn-warning" href="@Url.Action("SearchPatients", "QueuePatient")" style="margin-top:-6px!important;margin-left:3px;width:120px;">@*<i class="fa fa fa-undo"></i>*@Return(Quay về)</a>
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-horizontal">
+
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section styles{
+    <style>
+
+        .checkbox input[type=checkbox] {
+            margin-left: 0px !important;
+            margin-top: 22px !important;
+        }
+    </style>
+
+}
+

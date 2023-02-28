@@ -1,0 +1,135 @@
+﻿@model Contract.User.UserProfileContract
+@{
+    ViewBag.Title = LayoutResource.Shared_ToolTitle_UserProfilePage;
+    Model.Locations = Model.Locations.OrderBy(x => x.LevelPath).ToList();
+}
+
+<div id="main_wrapper">
+    <div class="page_bar clearfix">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="page_title">@LayoutResource.Shared_ToolTitle_UserProfilePage</h1>
+            </div>
+            <div class="col-md-6 text-right">
+                <div class="div_add_fast">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page_content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel panel-body">
+                            <div class="col-md-3 col-xs-12">
+                                <div class="avatar_div">
+                                    <div class="avatar">
+                                        <img src="/Assets/img/no-profile-img.gif" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-9 col-xs-12">
+                                <div class="body_booking body_booking_profile">
+                                    <table class="table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <td class="bold" style="width:150px">@LayoutResource.UserProfile_Label_UserName</td>
+                                                <td>@Model.FullName</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="bold">@LayoutResource.UserProfile_Label_Email</td>
+                                                <td><a href="mailto:@Model.Email">@Model.Email</a></td>
+                                            </tr>          
+                                            @if (Model.Roles.IsNotNullAndNotEmpty())
+                                            {
+                                                <tr>
+                                                    <td class="bold">@LayoutResource.UserProfile_Label_Role</td>
+                                                    <td>@string.Join(", ", Model.Roles.Select(r => r.RoleName))</td>
+                                                </tr>
+                                            }
+                                            @if (Model.Locations.IsNotNullAndNotEmpty())
+                                            {
+                                                <tr>
+                                                    <td class="bold">@LayoutResource.Shared_Label_Location</td>
+                                                    <td>
+                                                        <div id="tree3"></div>
+                                                        @*<a href="#" onclick="bootbox.alert('@(string.Join("", Model.Locations.Select(r => "<div class=\"col-sm-6\"><div style=\"display:block;font-size:12px;text-align:left\" class=\"label label-primary\"><p style=\"font-size:13px;font-weight:bold\">" + r.NameVN + "</p>"  + "</div></div>")))');return false;">
+                                                            @Model.Locations.Count @LayoutResource.Shared_Label_Location
+                                                        </a>*@
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section styles {
+    <style>
+        .avatar {
+            width: 98px;
+            height: 98px;
+            -moz-border-radius: 96px;
+            -webkit-border-radius: 96px;
+            border-radius: 96px;
+            overflow: hidden;
+            display: block;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+        }
+        .avatar img {
+            width: 96px;
+        }
+        .bootbox-body {
+            padding-top: 12px;
+        }
+        .bootbox-body div {
+            margin-bottom: 5px;
+        }
+    </style>
+}
+
+
+@section scripts{
+    @Scripts.Render("~/fctree")
+
+    <script type="text/javascript">
+       
+        var json = @Html.Raw(
+                JsonConvert.SerializeObject(
+                    CommonHelper.ConvertToListLocationTreeViewModel(
+                        (List<Contract.User.LocationContract>)ViewBag.AllLocation,
+                        Model.Locations.Select(l=>l.LocationId).ToList())));
+
+        $(function() {
+            $("#tree3").fancytree({                
+                checkbox: true,
+                selectMode: 3,
+                source: json,
+                init: function(event, data) {
+                    // Set key from first part of title (just for this demo output)
+                    data.tree.visit(function(n) {
+                        //n.key = n.title.split(" ")[0];
+                        n.unselectableStatus = true;
+                        n.unselectable = true;
+                        n.unselectableIgnore = true;
+                    });
+                }
+            });
+
+            $(".fancytree-container").addClass("fancytree-connectors");
+            $("#tree3 .fancytree-active").removeClass("fancytree-active");
+        })
+    </script>
+
+}

@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html class="@(ViewBag.HideMenu == null ? "show_menu_tree": "hide_menu_tree")" target="_top">
+<head>
+    <meta charset="utf-8" />
+    <title>
+        @{
+            if (ViewBag.Title != null)
+            {
+                <text>@ViewBag.Title - @ViewBag.ToolName</text>
+            }
+            else
+            {
+                <text>@ViewBag.ToolName</text>
+            }
+        }
+    </title>
+    <meta name="viewport" content="initial-scale=1.0,width=device-width,maximum-scale=1.0,user-scalable=no">
+    <link rel="shortcut icon" href="~/assets/img/ficon.ico" />
+    <script src="~/Assets/js/jquery.min.js"></script>
+    @Styles.Render("~/basecss")
+    @Styles.Render("~/extcss")
+    @RenderSection("styles", required: false)
+    <script>
+        var _isIframe = true;
+        var maxFileUploadSize = @(AdminGlobal.MaxImageSize/1024/1024);
+    </script>
+    @Scripts.Render("~/javas")
+    @Scripts.Render("~/lang")
+    @Scripts.Render("~/shareJS")
+</head>
+<body style="height:auto">
+    @{ Html.RenderPartial("_SingleSignOut"); }
+    <noscript>
+        <div class="bg_black_noscript"></div>
+        <div class="noscript">
+            <div class="main_wrapper">
+                <h1>Ơ khóa rồi !<sub style=""><span> Javascript. Oops!</span></sub></h1>
+                <h4>@Html.Raw(MessageResource.Shared_RequestEnableScript)</h4>
+            </div>
+        </div>
+    </noscript>
+
+    <div id="shadowOverlay" class="ui-ios-overlay-shadow">
+        <div id="shadowProgress" class="progress" style="display:none">
+            <div class="progress-bar" style="width: 0;"></div>
+        </div>
+        <div class="ui-ios-overlay ios-overlay-show">
+            <div class="icon-holder">
+                <div class="host1">
+                    <div class="loading-a loading-0"></div>
+                    <div class="loading-a loading-1"></div>
+                    <div class="loading-a loading-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade modal_booking" id="iframePopup" aria-hidden="true" data-backdrop="static" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+    @RenderBody()
+    <script type="text/javascript">
+        var urlUploadedFileFromCKEditor = '@Url.Action("UploadedFileFromCKEditor", "SystemMngt")';
+        var urlUploadedFile = '@Url.Action("UploadedFile", "SystemMngt")';
+        var urlUploadedMediaFile = '@Url.Action("UploadedMediaFile", "SystemMngt")';
+        var allowUploadImageExt = '@AdminGlobal.AllowUploadImageExt';
+
+        @if (TempData[AdminGlobal.ActionMessage] != null)
+        {
+            ActionMessage msg = (ActionMessage)TempData[AdminGlobal.ActionMessage];
+            <text>ShowNotify('@((msg.ID > 0 && msg.ID != (int)ResponseCode.Error) ? "success" : "error")', '@msg.Message', @((TempData["SettingNotiOneSecond"] != null && (int)TempData["SettingNotiOneSecond"] != 0) ? (int)TempData["SettingNotiOneSecond"] : 0));</text>
+
+        }
+
+        @{
+            string photoDomain = AdminConfiguration.DomainPhotoURI;
+            <text>var photoDomain = '@photoDomain';</text>
+        }
+
+        window.CKEDITOR_BASEPATH = '/Assets/lib/ckeditor/';
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

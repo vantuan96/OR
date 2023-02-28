@@ -1,0 +1,196 @@
+﻿@using Admin.Models.CheckList
+@model CreateUpdateCheckListModel
+@{
+    string errorMessage = ViewBag.ErrorMessage as string;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="modal_booking modal_booking_iframe">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+            ×
+        </button>
+        <h2 class="modal-title title-popup">
+            @if (Model == null || (Model != null && Model.CheckListId == 0))
+            {
+                @(LayoutResource.CheckList_PopupCreate_Title)
+            }
+            else
+            {
+                @(LayoutResource.CheckList_PopupUpdate_Title)
+
+            }
+
+        </h2>
+        <p class="place"></p>
+    </div>
+    <div class="modal-body">
+        <div class="body_booking">
+
+            @if (string.IsNullOrEmpty(errorMessage) == false)
+            {
+                @Html.Partial("_ErrorOccur", errorMessage)
+            }
+            else if (Model == null)
+            {
+                @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+            }
+            else
+            {
+                <form class="frmUpdateCheckListDetail" action="@Url.Action("CreateUpdateCheckList", "CheckList")" id="frmPopUp" method="post">
+                    @Html.AntiForgeryToken()
+                    @if (Model.CheckListId > 0)
+                    {
+                        @Html.Hidden("CheckListId", Model.CheckListId)
+                    }
+                    <div class="row">
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.CheckListName, new { @class = "req" })
+                            @Html.TextBoxFor(x => x.CheckListName, new { tabindex = "1", @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.CheckListName)
+                        </div>
+                        <div class="col-sm-6">
+                            <label>@LayoutResource.CheckList_Lable_System</label>
+                            @Html.DropDownList("SystemId", Model.listSystems, new { tabindex = "2", @class = "form-control select2 select2-offscreen" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.CLItemIds, new { @class = "req" })
+                            @Html.DropDownListFor(r => r.CLItemIds, Model.listClItems, new { tabindex = "3", @class = "form-control select2-nosearch select2-offscreen", multiple = "multiple" })
+                            @Html.ValidationMessageFor(x => x.CLItemIds)
+                        </div>
+                        <div class="col-sm-6">
+                            <label>@LayoutResource.CheckList_Lable_CheckListType</label>
+                            @Html.DropDownListFor(x => x.CheckListTypeId, Model.listCheckListTypes, new { tabindex = "4", @class = "form-control select2 select2-offscreen" })
+                            @Html.ValidationMessageFor(x => x.CheckListTypeId)
+                           
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 div_input_form_control_label">
+                            @Html.LabelFor(x => x.showSetupDateFrom, new { @class = "req" })
+                            @Html.TextAreaFor(x => x.showSetupDateFrom, new { tabindex = "5", @class = "form-control", placeholder = @LayoutResource.CheckList_Label_SetupDateFrom, @rows = 1 })
+                            @Html.ValidationMessageFor(x => x.showSetupDateFrom)
+                            @Html.HiddenFor(x => x.SetupDateFrom)
+                        </div>
+                        <div class="col-sm-6">
+                            @Html.LabelFor(x => x.State, new { @class = "req" })
+                            @Html.DropDownListFor(x => x.State, Model.listStates, new { tabindex = "6", @class = "form-control select2 select2-offscreen" })
+                            @Html.ValidationMessageFor(x => x.State)
+
+                           
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                         
+
+                            @Html.LabelFor(x => x.Description)
+                            @Html.TextAreaFor(x => x.Description, new { tabindex = "7", @class = "form-control", placeholder = @LayoutResource.Share_Label_TextDescription, @rows = 7 })
+                            @Html.ValidationMessageFor(x => x.Description)
+
+                          
+                        </div>
+                        <div class="col-sm-6">
+                            <label></label>
+                            <div class="form-group relative not_input_error not_input_error_popup" style="top 0;">
+                                <span id="err_msg" class="field-validation-error" style="display: none"></span>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="btn-wrapper text-right">
+
+                        <button class="btn btn-accept" tabindex="8" id="btnSaveData"><i class="fa fa-save"></i>&nbsp; @LayoutResource.Shared_BtnText_Save </button>
+                    </div>
+               </form>
+
+            }
+        </div>
+
+
+    </div>
+</div>
+
+@section styles{
+    @Styles.Render("~/styles_searchfrm")
+    <style>
+        .select2-results .select2-disabled {
+            display: none;
+        }
+
+        body {
+            min-height: 422px !important;
+        }
+
+        .cke_dialog_ui_labeled_label {
+            font-weight: bold !important;
+            margin-bottom: 5px !important;
+        }
+
+        .cke_dialog_ui_input_file.input {
+            font-size: 12px !important;
+        }
+
+        .cke_dialog_tab {
+            font-weight: bold !important;
+        }
+    </style>
+
+}
+
+@Scripts.Render("~/javas_searchfrm")
+@section scripts{
+    <script>
+
+        $(function() {
+            $('#CLItemIds').select2('val', [@string.Join(",", Model.CLItemIds)]);
+            $("#btnSaveData").click(function(e) {
+                if (!$("#frmPopUp").valid()) return;
+                e.preventDefault();
+                
+
+                $.ajax({
+                    url: '/CheckList/CreateUpdateCheckList/',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: $("#frmPopUp").serialize(),
+                    success: function(data) {
+                        if (data.ID ==@((int)ResponseCode.CheckList_SuccessUpdate) || data.ID==@((int)ResponseCode.CheckList_SuccessCreate))
+                        {
+                            parent.window.location.reload();
+                        }
+                        else if (data.status === 401) {
+                            window.location.href = data.redirect;
+                        }
+                        else {
+                            $("#err_msg").html(data.Message).show();
+                            HideOverlay(0);
+                        }
+                    },
+                    error: function(data) {
+                        $("#err_msg").html(data.Message).show();
+                        HideOverlay(0);
+                    }
+                });
+            });
+
+            if ($('#showSetupDateFrom').length > 0)
+            {
+                $('#showSetupDateFrom').datetimepicker(
+                {
+                    minDate:0,
+                    onChangeDateTime:function(dp,$input)
+                    {
+                        var d = moment($input.val(), momentDateFormat);
+                        $('#SetupDateFrom').val(FormatDateTime(d.toDate(), systemDateFormat));                       
+                    }
+                });
+            }  
+            
+
+        });
+    </script>
+}

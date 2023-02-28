@@ -1,0 +1,238 @@
+﻿@model DashboardModel
+@using Admin.Models.Report
+@{
+    ViewBag.Title = "Dashboard checklist";    
+}
+@section styles{
+    @Styles.Render("~/styles_searchfrm")
+   
+    <style>
+        table.table.table-striped > thead > tr > th {
+            height: 25px;
+            background-color: #dbdbdb;
+        }
+    </style>
+}
+<div id="main_wrapper">
+    <div class="page_bar clearfix">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="">
+                    <h1 class="page_title">Dashboard tháng @DateTime.Now.Month</h1>
+                    <span class="text-muted"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page_content">
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                     @foreach (var ms in Model.listSummarys)
+                     {
+                           <div class="col-lg-2 col-md-6">
+                            <div class="panel panel-default">
+                                <div class="stat_box ">
+                                    <div class="stat_ico color_a"><i class="ion-clipboard"></i></div>
+                                    <div class="stat_content">
+                                        <span class="stat_name">@ms.ReportCheckListTypeName hoàn thành</span>
+                                        <span class="stat_count">@ms.TotalFinishCheckList/@ms.TotalCheckList </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     }
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="heading_b" style="font-weight:bold">Loại checklist</div>
+                                    <div class="row">
+                                      
+                                        <div class="col-md-7">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="sub_col">Loại</th>
+                                                        <th class="col_md sub_col">Chờ xử lý</th>
+                                                        <th class="col_md sub_col">Thành công </th>
+                                                        <th class="col_md sub_col">Quá hạn</th>
+                                                        <th class="col_md sub_col">Tổng</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var ms in Model.listCheckLists)
+                                                    {
+                                                        <tr>
+                                                            <td class="sub_col" style="min-width:150px;width:200px;">
+                                                                @ms.CheckListTypeName
+                                                            </td>
+                                                            <td class="sub_col">
+                                                                @ms.TotalInprocess
+                                                            </td>
+                                                            <td class="sub_col">
+                                                                @ms.TotalFinish
+                                                            </td>
+                                                            <td class="sub_col">
+                                                                @ms.OverDeadline
+                                                            </td>
+                                                            <td class="sub_col">
+                                                                @ms.TotalCheckList
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div id="divChartCheckLists" class="chart" style="height: 240px; width: 100%; padding: 0px; position: relative;">
+                                            </div>
+                                        </div>
+                                      
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                           
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="heading_b" style="font-weight:bold">Hệ thống</div>
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="sub_col">Hệ thống</th>
+                                                        <th class="col_md sub_col">Chờ xử lý</th>
+                                                        <th class="col_md sub_col">Thành công </th>
+                                                        <th class="col_md sub_col">Quá hạn</th>
+                                                        <th class="col_md sub_col">Tổng</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var ms in Model.listSystems)
+                                                    {
+                                                        <tr>
+                                                            <td class="sub_col">
+                                                                @ms.SystemName
+                                                            </td>
+                                                            <td class="sub_col">
+                                                                @ms.TotalInprocess
+                                                            </td>
+                                                            <td class="sub_col">
+                                                                @ms.TotalFinish
+                                                            </td>
+                                                            <td class="sub_col">
+                                                                @ms.OverDeadline
+                                                            </td>
+                                                            <td class="sub_col">
+                                                                @ms.TotalCheckList
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div id="divChartSystem" class="chart" style="height: 240px; width: 100%; padding: 0px; position: relative;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            
+            
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts {
+        @Scripts.Render("~/javas_searchfrm")
+        @Scripts.Render("~/NewHightChart")
+        <script>
+            $(function() {
+
+                var listSystems =@HtmlExtensions.SerializeObject(@Model.listSystems);
+                Highcharts.chart('divChartSystem', {
+                    chart: {
+                        type: 'pie'
+                    },
+                    title: { text: 'Biểu đồ checklist theo hệ thống' },
+                    subtitle: { text: 'Click chuột để xem chi tiết' },
+                    plotOptions: {
+                        series: {
+                            dataLabels: {
+                                enabled: true,
+                                format: '{point.name}: {point.y}'
+                            }
+                        }
+                    },
+                    tooltip: {
+                        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b><br/>'
+                    },
+                    series:[
+                        {
+                            name :'checklist',
+                            colorByPoint: true,
+                            data: [@Html.Raw(string.Join(",", Model.listSystems.Select(dic => "{ name: '" + dic.SystemName + "', y:" + (dic.TotalCheckList) + ", drilldown: '" + dic.SystemId + "'}")))],
+
+                        }
+                    ],
+                    drilldown:
+                    {
+                        series: [@Html.Raw(string.Join(",", Model.listSystems.Select(dic => "{ name:'" + dic.SystemName + "', id:'" + dic.SystemId + "', data: [['Hoàn tất',"+ dic.TotalFinish+ "],['Đang xử lý'," + dic.TotalInprocess + "],['Quá hạn deadline', " + dic.OverDeadline + "]]}")))],
+                    }
+                });
+
+           
+
+                var listCheckLists =@HtmlExtensions.SerializeObject(@Model.listCheckLists);
+                Highcharts.chart('divChartCheckLists', {
+                    chart: {
+                        type: 'pie'
+                    },
+                    title: { text: 'Biểu đồ theo loại' },
+                    subtitle: { text: 'Click chuột để xem chi tiết' },
+                    plotOptions: {
+                        series: {
+                            dataLabels: {
+                                enabled: true,
+                                format: '{point.name}: {point.y}'
+                            }
+                        }
+                    },
+                    tooltip: {
+                        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> <br/>'
+                    },
+                    series:[
+                        {
+                            name :'checklist',
+                            colorByPoint: true,
+                            data: [@Html.Raw(string.Join(",", Model.listCheckLists.Select(dic => "{ name: '" + dic.CheckListTypeName + "', y:" + (dic.TotalCheckList) + ", drilldown: '" + dic.CheckListType + "'}")))],
+
+                        }
+                    ],
+                    drilldown:
+                    {
+                        series: [@Html.Raw(string.Join(",", Model.listCheckLists.Select(dic => "{ name:'" + dic.CheckListTypeName + "', id:'" + dic.CheckListType + "', data: [['Hoàn tất',"+ dic.TotalFinish+ "],['Đang xử lý'," + dic.TotalInprocess + "],['Quá hạn deadline', " + dic.OverDeadline + "]]}")))],
+                    }
+                });
+            });
+
+</script>
+
+    }

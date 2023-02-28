@@ -1,0 +1,92 @@
+﻿@*@model Contract.OR.SyncData.BenhNhanOR*@
+<!-- Modal -->
+<style>
+    .cus-margin {
+        margin: 5px;
+    }
+</style>
+<div class="modal" id="div-patient-info" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">x</button>
+                    <h2 class="modal-title" id="exampleModalLabel">Modal title</h2>*@
+                <button type="button" id="close-div-patient-info" class="close" data-dismiss="modal">×</button>
+                <h2 class="modal-title title-popup">
+                    Thông tin bệnh nhân
+                </h2>
+            </div>
+            <form method="post" action="OR/UpdatePatientInfo">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <div class="col-md-12 form-group">
+                        <div class="col-md-12 cus-margin">
+                            <div class="col-md-3">
+                                <label class="control-label ">Tên</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input class="form-control" id="pName" name="pName" value="ádgsd" readonly />
+                                <input type="hidden" class="form-control" id="pMa" name="pMa" value="ádgsd" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-12 cus-margin">
+                            <div class="col-md-3">
+                                <label class="control-label">Giới tính</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input class="form-control" id="pSexTxt" name="pSexTxt" value="Nam" readonly />
+                                <input type="hidden" class="form-control" id="pSex" name="pSex" value="Nam" readonly />
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 cus-margin">
+                            <div class="col-md-3">
+                                <label class="control-label">Ngày sinh</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input class="form-control" id="pBirthday" name="pBirthday" value="ádgsd" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-12 cus-margin">
+                            <div class="col-md-3">
+                                <label class="control-label">Tuổi</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input class="form-control" id="pAge" name="pAge" value="ádgsd" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-12 cus-margin">
+                            <div class="col-md-3">
+                                <label class="control-label">Điện thoại</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input class="form-control" id="pPhone" name="pPhone" value="ádgsd" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-12 cus-margin">
+                            <div class="col-md-3">
+                                <label class="control-label">Quốc tịch</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input class="form-control" id="pNational" name="pNational" value="sadgerggrwhtrht" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-12 cus-margin">
+                            <div class="col-md-3">
+                                <label class="control-label">Địa chỉ</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input class="form-control" id="pAddress" name="pAddress" value="sadgsdgergrt" readonly />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" onclick="cusQuickSubmit(this)">Lưu thông tin</button>
+                    <button type="button" id="btn-close-div-patient-info" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+﻿@using Contract.User
+@{
+    var sessionMember = MvcHelper.GetUserSession(Context.ApplicationInstance.Context);
+    <nav id="side_nav" class="mCustomScrollbar">
+        <ul class="ul_side_inner">
+            @*@if (ViewBag.HasGlobalSearch == "1") {
+        <li class="nav_trigger li_search_global">
+                <div class="div_search_global">
+                    <input  class="form-control valid" type="text" data-provide="typeahead" autocomplete="off" id="globalsearchkw" placeholder="@FormResource.CMS_GlobalSearchPlaceHolder">
+                    <div class="div_icon_search_global">
+                        <i class="ion-android-search"></i>
+                    </div>
+                </div>
+            </li>
+        }*@
+            @{
+                if (sessionMember.CurrentLocaltion != null)
+                {
+                    List<AdminActionContract> lstPermission = new List<AdminActionContract>();
+                    //var list = sessionMember.ListMemberAllowedActions.Where(n => n.IsShowMenu == true).OrderBy(x => x.ControllerSort).ThenBy(x => x.ControllerName).Select(n=>n.ControllerName).Distinct();
+                    foreach (var ctrName in sessionMember.ListMemberAllowedActions.Where(n => n.IsShowMenu == true).OrderBy(x => x.ControllerSort).ThenBy(x => x.ControllerName).Select(n => n.ControllerName).Distinct())
+                    {
+                        if (sessionMember.CurrentLocaltion.NameEN.Equals("HTC") && ctrName == "OR")
+                        {
+                            continue;
+                        }
+                        else if (!sessionMember.CurrentLocaltion.NameEN.Equals("HTC") && ctrName == "QueuePatient")
+                        {
+                            continue;
+                        }
+                        lstPermission = sessionMember.ListMemberAllowedActions.Where(n => n.ControllerName == ctrName).ToList();
+                        <text>
+                            <li class="nav_trigger">
+                                @if (lstPermission.Count(l => l.IsShowMenu == true) > 1)
+                                {
+                                    <a>
+                                        <span class="@lstPermission[0].ControllerCssIcon"></span>
+                                        <span class="nav_title">@lstPermission[0].ControllerDisplayName</span>
+                                        <span class="ico_tree fa fa-plus-square-o pull-right text-right"></span>
+                                    </a>
+                                    <div class="sub_panel">
+                                        <div class="side_inner">
+                                            <ul>
+                                                @foreach (var subRole in lstPermission.Where(n => n.IsShowMenu == true).OrderBy(x => x.ActionSort))
+                                                {
+                                                    <li>
+                                                        <a href="@Url.Action(subRole.ActionName, subRole.ControllerName)" class="linkURL">
+                                                            <span class="@subRole.ActionCssIcon"></span>@subRole.ActionDisplayName
+                                                        </a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                }
+                                else if (lstPermission.Count(l => l.IsShowMenu == true) == 1)
+                                {
+                                    var action = lstPermission.Single(l => l.IsShowMenu == true);
+                                    <a href="@Url.Action(action.ActionName, action.ControllerName)" class="linkURL">
+                                        <span class="@action.ControllerCssIcon"></span>
+                                        <span class="nav_title">@action.ActionDisplayName</span>
+                                    </a>
+                                }
+                            </li>
+                        </text>
+                    }
+                }
+                if (sessionMember.ListMemberAllowedActions.Any(x => x.ControllerName == "SystemMngt" && x.ActionName == "ToolAbout"))
+                {
+                    var toolAbout = sessionMember.ListMemberAllowedActions.SingleOrDefault(x => x.ControllerName == "SystemMngt" && x.ActionName == "ToolAbout");
+                    <li id="mn-about" class="nav_trigger">
+                        <a data-toggle="modal"
+                           data-target="#iframePopup"
+                           data-modal-src="@Url.Action("ToolAbout", "SystemMngt")"
+                           data-title="@LayoutResource.Shared_AboutTitle.ToUpper()"
+                           data-iframe-height="379">
+                            <span class="ion-android-information"></span><span class="nav_title">@LayoutResource.Shared_AboutTitle</span>
+                        </a>
+                    </li>
+                }
+            }
+        </ul>
+    </nav>
+}

@@ -1,0 +1,265 @@
+﻿@{
+    /**/
+
+    ViewBag.Title = LayoutResource.CMS_SettingList_PageTitle;
+    string deDefaultPassword = string.Empty;
+    var SessionUserInfo = MvcHelper.GetUserSession(Context.ApplicationInstance.Context);
+}
+
+@model List<Contract.SystemSetting.SystemSettingContract>
+
+@section styles{
+    <style>
+        .panel-heading {
+            font-weight: bold !important;
+        }
+
+        .editable-click {
+            cursor: pointer;
+        }
+
+        .div_tag_bg {
+            position: relative;
+        }
+
+            .div_tag_bg .bg_div {
+                position: fixed;
+                right: 10px;
+                bottom: 0px;
+                opacity: 0.1;
+                font-size: 160px !important;
+            }
+
+        table.table.table-striped > thead > tr > th {
+            height: auto;
+        }
+    </style>
+
+}
+
+<div class="div_tag_bg">
+
+    <div id="main_wrapper">
+        <div class="page_bar clearfix">
+            <div class="row">
+                <div class="col-md-10">
+                    <h1 class="page_title">@LayoutResource.CMS_Layout_Setting_Title</h1>
+                    <p class="text-muted">@LayoutResource.CMS_Layout_Setting_SubTitle</p>
+                </div>
+            </div>
+        </div>
+        @Html.AntiForgeryToken()
+        <div class="page_content">
+            <div class="bg_page_fix"><i class="ion ion-settings"></i></div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="todo_section panel panel-default box_shadow">
+                            <div class="panel-heading" style="margin-bottom: 15px;">@LayoutResource.CMS_Layout_Setting_Parameters</div>
+                            <table class="table table-striped">
+                                @if (Model != null)
+                                {
+                                    int numOrder = 1;
+                                    var settings = Model.Where(n => !n.IsAdminConfig);
+                                    if (settings.Any())
+                                    {
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align: center; border-left: none; width: 60px">@LayoutResource.CMS_Layout_Setting_No</th>
+                                                <th>@LayoutResource.CMS_Layout_Setting_ParameterType</th>
+                                                <th style="text-align: center">@LayoutResource.CMS_Layout_Setting_Value</th>
+                                                <th style="text-align: center;width:30%">@LayoutResource.CMS_Layout_Setting_LatedUpdate</th>
+                                            </tr>
+                                        </thead>
+
+
+                                        foreach (var item in settings)
+
+                                        {
+
+                                            string rowId = "row_" + @item.Id;
+                                            <tr id="@rowId">
+                                                <td style="text-align: center">
+                                                    @numOrder
+                                                </td>
+                                                <td>
+                                                    @item.Name
+                                                    <sup style="color:red" class="Tip_mouse_on" title="@item.Description">[?]</sup>
+                                                </td>
+                                                <td style="text-align: center; width: 200px">
+                                                    <a id="@item.Id.ToString()" data-type="text" data-pk="1" data-key="@item.Key"
+                                                       data-placeholder="Bắt buộc"
+                                                       data-title="Nhập giá trị" class="editable editable-click settingvalue"
+                                                       data-original-title="" title=""
+                                                       style="background-color: rgba(0, 0, 0, 0);">@(item.Key.Equals("User.DefaultPassword") ? VG.EncryptLib.EncryptLib.Security.Decrypt(VG.Common.AppUtils.SecuKey, item.Value) : @item.Value)</a>
+
+                                                </td>
+                                                <td>
+                                                    @{
+                                                        var lastupdatedDate = @item.LastUpdatedDate.ToVnShortDateTimeString();
+                                                        //var lastupdatedName = (string.IsNullOrEmpty(item.UpdateByName) ? "" : "bởi " + item.UpdateByName);
+                                                        <text>@lastupdatedDate</text>
+                                                    }
+                                                </td>
+                                            </tr>
+                                            numOrder++;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+                                    }
+                                }
+
+                            </table>
+                        </div>
+                    </div>
+                    @if (ViewBag.CanUpdateAdminSetting == "1")
+                    {
+                        <div class="col-lg-12">
+                            <div class="todo_section panel panel-default box_shadow">
+                                <div class="panel-heading" style="margin-bottom: 15px;">@LayoutResource.CMS_Setting_AdminSystemConfigTitle</div>
+                                <table class="table table-striped">
+                                    @if (Model != null)
+                                    {
+                                        int numOrder = 1;
+                                        var adminSettings = Model.Where(n => n.IsAdminConfig);
+                                        if (adminSettings.Any())
+                                        {
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align: center; border-left: none; width: 60px">@LayoutResource.CMS_Layout_Setting_No</th>
+                                                    <th>@LayoutResource.CMS_Layout_Setting_ParameterType</th>
+                                                    <th style="text-align: center">@LayoutResource.CMS_Layout_Setting_Value</th>
+                                                    <th style="text-align: center;width:30%">@LayoutResource.CMS_Layout_Setting_LatedUpdate</th>
+                                                </tr>
+                                            </thead>
+
+                                            foreach (var item in adminSettings)
+                                            {
+                                                string rowId = "row_" + @item.Id;
+                                                <tr id="@rowId">
+                                                    <td style="text-align: center">
+                                                        @numOrder
+                                                    </td>
+                                                    <td>
+                                                        @item.Name
+                                                        <sup style="color:red" class="Tip_mouse_on" title="@item.Description">[?]</sup>
+                                                    </td>
+                                                    <td style="text-align: center; width: 200px">
+                                                        @{
+                                                            string strValue = item.Value;
+                                                            if (item.Key.Equals("User.DefaultPassword"))
+                                                            {
+                                                                deDefaultPassword = strValue;
+                                                                foreach (char c in item.Value)
+                                                                {
+                                                                    strValue = strValue.Replace(c, '*');
+                                                                }
+                                                                <a id="@item.Id.ToString()" data-type="text" data-pk="1" data-key="@item.Key"
+                                                                   data-id="@item.Key.Replace(".","")"
+                                                                   data-placeholder="Bắt buộc"
+                                                                   data-title="Nhập giá trị" class="editable editable-click settingvalue"
+                                                                   data-original-title="" title=""
+                                                                   data-show="true"
+                                                                   data-event="comfirm-show-default-password"
+                                                                   style="background-color: rgba(0, 0, 0, 0);">@strValue</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a id="@item.Id.ToString()" data-type="text" data-pk="1" data-key="@item.Key"
+                                                                   data-placeholder="Bắt buộc"
+                                                                   data-title="Nhập giá trị" class="editable editable-click settingvalue"
+                                                                   data-original-title="" title=""
+                                                                   style="background-color: rgba(0, 0, 0, 0);">@strValue</a>
+                                                            }
+                                                        }
+
+
+                                                    </td>
+                                                    <td>
+                                                        @{
+                                                            var lastupdatedDate = @item.LastUpdatedDate.ToVnShortDateTimeString();
+                                                            //var lastupdatedName = (string.IsNullOrEmpty(item.UpdateByName) ? "" : "bởi " + item.UpdateByName);
+                                                            <text>@lastupdatedDate</text>
+                                                        }
+                                                    </td>
+                                                </tr>
+
+                                                numOrder++;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+                                        }
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("_PopupShowDefaultPassword", deDefaultPassword)
+@section scripts {
+
+    @if (ViewBag.CanUpdateSetting == "1")
+    {
+        @Scripts.Render("~/javas_x_editable")
+        <script>
+            var _confirmShowDefaultPasswordUrl = '@Url.Action("ReCheckCurrentUserPass")';
+            $('.settingvalue').editable({
+                validate: function (value) {
+                    //if (isNaN(value))
+                    //    return frm_lang.CMS_SystemMngt_InputNumber;
+                    //else
+                    if ($.trim(value) == '')
+                        return '@Html.Raw(LayoutResource.CMS_SettingList_Require)';
+                    else if (confirm(layout_lang.CMS_SystemMngt_ConfirmChanging))
+                    {
+                        var result = UpdateSettingValue($(this).data("key"), $.trim(value.replace(",", "")));
+                        if (result != "") return result;
+                        $(this).parent().parent().find("td").last().html("<i>@Html.Raw(LayoutResource.CMS_SettingList_JustAminuteByYou)</i>");
+                    } else {
+                        return "@Html.Raw(LayoutResource.CMS_SettingList_CancelByYouInAminute)";
+                    }
+                    return "";
+                }
+            });
+            function UpdateSettingValue(key, settingValue) {
+                var url = "@Url.Action("UpdateSetting")";
+                var ret = "";
+
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: {
+                        key: key,
+                        value: settingValue,
+                        "__RequestVerificationToken": $('[name=__RequestVerificationToken]').val()
+                    },
+                    dataType: 'json',
+                    async: false,
+                    cache: false,
+                    success: function (result) {
+                        if (result.status.toLowerCase() == "ok") {
+                            ret = "";
+                        }
+                        else if (result.status === 401) {
+                            window.location.href = result.redirect;
+                        }
+                        else {
+                            ret = result.message;
+                        }
+                    },
+                    error: function () { ret = msg_lang.CMS_GetRuntimeErrorMsg; }
+                });
+                return ret;
+            }
+
+        </script>
+    }
+}

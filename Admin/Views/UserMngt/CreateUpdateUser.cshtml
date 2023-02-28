@@ -1,0 +1,234 @@
+﻿@using Admin.Models.User
+@model CreateUpdateUserModel
+@{
+    string errorMessage = ViewBag.ErrorMessage as string;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (Model.ListUsers != null)
+    {
+        Model.ListUsers.Insert(0, new SelectListItem() { Value = "0", Text = "Selection LineManager" });
+    }
+}
+
+<div class="modal_booking modal_booking_iframe">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h2 class="modal-title title-popup">
+            @if (Model.UserId == 0)
+            {
+                <text>@LayoutResource.UserMngt_PopupCreate_Title</text>
+            }
+            else
+            {
+                <text>@LayoutResource.UserMngt_PopupUpdate_Title</text>
+            }
+        </h2>
+        <p class="place"></p>
+    </div>
+    <div class="modal-body">
+        <div class="body_booking">
+            @if (string.IsNullOrEmpty(errorMessage) == false)
+            {
+                @Html.Partial("_ErrorOccur", errorMessage)
+            }
+            else
+            {
+                using (Ajax.BeginForm("CreateUpdateUser", "UserMngt", new AjaxOptions { HttpMethod = "Post", OnSuccess = "CreateUpdateFormSubmitSuccess" }, new { onsubmit = "removeDisabled();$('#err_msg').html('').hide();" }))
+                {
+                    @Html.Hidden("UserId", Model.UserId)
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-xs-12 div_input_form_control_label">
+                            <div class="col-xs-6 align-left">
+                                @Html.LabelFor(x => x.Username, new { @class = "req", @style= "margin-left: -4%;"})
+                            </div>
+                            @*linhht*@
+                            <div class="col-xs-6 align-right">
+                                <button type="button" id="btn-update-AD" class="btn btn-danger"  style="margin-bottom: 2%;">
+                                    Cập nhật
+                                </button>
+                            </div>
+                            @if (Model.UserId != 0)
+                            {
+                                @Html.TextBoxFor(x => x.Username, new { @class = "form-control", disabled = "disabled", tabindex = "1" })
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(x => x.Username, new { @class = "form-control", tabindex = "1" })
+                            }
+
+                            @Html.ValidationMessageFor(x => x.Username)
+                        </div>
+
+                    </div>
+
+                    if (Model.UserId > 0)
+                    {
+                        <div class="row">
+                            <div class="col-xs-12 div_input_form_control_label">
+                                @Html.LabelFor(x => x.FullName, new { @class = "req" })
+                                @Html.TextBoxFor(x => x.FullName, new { @class = "form-control", @*disabled = "disabled",*@ tabindex = "2" })
+                                @Html.ValidationMessageFor(x => x.FullName)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 div_input_form_control_label">
+                                @Html.LabelFor(x => x.Email, new { @class = "req" })
+                                @Html.TextBoxFor(x => x.Email, new { @class = "form-control", tabindex = "3" }) @*disabled = "disabled",*@
+
+                            </div>
+                        </div>
+                        @*<div class="row">
+                                <div class="col-xs-12 div_input_form_control_label">
+                                    @Html.LabelFor(x => x.LineManagerUser, new { @class = "req" })
+                                    @Html.DropDownListFor(r => r.LineManagerUser, Model.ListUsers , new { @class = "form-control select2 select2-nosearch select2-offscreen", tabindex = "5" })
+                                    @Html.ValidationMessageFor(x => x.LineManagerUser)
+                                </div>
+                            </div>*@
+                    }
+
+                    <div class="row">
+                        <div class="col-xs-12 div_input_form_control_label">
+                            @Html.LabelFor(x => x.RoleId, new { @class = "req" })
+                            @Html.DropDownListFor(r => r.RoleId, new SelectList(Model.ListRoles, "RoleId", "RoleName"),
+                           new { @class = "form-control select2 select2-nosearch select2-offscreen", multiple = "multiple", tabindex = "5" })
+                            @Html.ValidationMessageFor(x => x.RoleId)
+                        </div>
+                    </div>
+
+                    if (Model.ListLocations != null && Model.ListLocations.Count > 0)
+                    {
+                        <div class="row">
+                            <div class="col-md-12 div_input_form_control_label">
+                                @Html.LabelFor(r => r.Location, new { @class = "req" })
+                                @{
+                                    var isCheckAll = Model.ListLocations.Any(r => r.selected == false) == false;
+                                }
+
+                                <div class="input-group">
+                                    <div id="tree3"></div>
+                                    <div id="location_validation" style="clear:both; height:1px; position: relative">
+                                        @Html.ValidationMessageFor(x => x.Location)
+                                    </div>
+                                    <span class="input-group-addon" style="border: solid 1px #aaa; border-left:none;">
+                                        <input type="checkbox" @(isCheckAll ? "checked=\"checked\"" : "") onclick="fnCheckAll()" name="chkAllSite" id="chkAllSite" />
+                                    </span>
+                                </div>
+                                @Html.TextBoxFor(r => r.Location, new { @class = "form-control", style = "visibility: hidden;position:absolute", tabindex = "6" })
+                            </div>
+                        </div>
+                    }
+
+                    <div class="btn-wrapper text-right">
+                        <button class="btn btn-accept" tabindex="8" type="submit"><i class="fa fa-save"></i>&nbsp;@LayoutResource.Shared_BtnText_Save</button>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@section styles{
+    <style>
+        .select2-results .select2-disabled {
+            display: none;
+        }
+
+        body {
+            min-height: 400px !important;
+        }
+
+        /*.select2-results {
+            max-height: 150px !important;
+        }*/
+
+        #location_validation .field-validation-error {
+            top: 4px !important;
+        }
+    </style>
+}
+
+@section scripts{
+    @Scripts.Render("~/fctree")
+
+    <script type="text/javascript">
+        function removeDisabled() {
+            $("#Username").removeAttr("disabled");
+            $("#err_msg").html("").hide();
+        }
+
+        function fnCheckAll() {
+            if ($("#chkAllSite").is(':checked')) {
+                $("#tree3").fancytree("getTree").visit(function(node){
+                    node.setSelected(true);
+                });
+            } else {
+                $("#tree3").fancytree("getTree").visit(function(node){
+                    node.setSelected(false);
+                });
+            }
+        }
+
+        var json = @Html.Raw(JsonConvert.SerializeObject(Model.ListLocations));
+
+        $(function() {
+
+            $("#Username").focus();
+            $("#RoleId").val(@Html.Raw(Json.Encode(Model.RoleId))).trigger("change");
+            //$("#Location").select2('val', @("[" + string.Join(",", Model.Location) + "]"));
+            $("#RoleId").select2({ allowClear: false});
+            $("#LineManagerUser").select2({ allowClear: false});
+            /*Fix loi giao dien hien thi select2*/
+            $("span[data-select2-id]").css("width", "100%");
+            /*.Fix loi giao dien hien thi select2*/
+            $("#tree3").fancytree({
+                checkbox: true,
+                selectMode: 3,
+                source: json,
+                init: function(event, data) {
+                    // Set key from first part of title (just for this demo output)
+                    data.tree.visit(function(n) {
+                        //n.key = n.title.split(" ")[0];
+                        //n.expanded = true;
+                    });
+                },
+                loadChildren: function(event, ctx) {
+                    //ctx.node.fixSelection3AfterClick();
+                },
+                select: function(event, data) {
+                    // Get a list of all selected nodes, and convert to a key array:
+                    var selKeys = $.map(data.tree.getSelectedNodes(), function(node){
+                        return node.key;
+                    });
+                    $("#Location").val(selKeys.join(",")).trigger("change");
+                },
+                // The following options are only required, if we have more than one tree on one page:
+                cookieId: "fancytree-Cb3",
+                idPrefix: "fancytree-Cb3-"
+            });
+
+            $(".fancytree-container").addClass("fancytree-connectors");
+
+            //linhht
+            $('#btn-update-AD').on('click', function () {
+                openLoading();
+                var formdata = {
+                    Username: $('#Username').val(),
+                    Location: $('#Location').val(),
+                    UserId: $('#UserId').val(),
+                    Email: $('#Email').val(),
+                    PhoneNumber: $('#PhoneNumber').val(),
+                    RoleId: $('#RoleId').val(),
+                    __RequestVerificationToken: $('[name=__RequestVerificationToken]').val()
+                };
+                getDataJson('/UserMngt/GetUInfoFromAD', formdata, function (data) {
+                    if (data) {
+                        $('#FullName').val(data.Fullname);
+                        $('#Email').val(data.Email);
+                    }
+                    closeLoading();
+                }, false);
+            });
+        })
+    </script>
+
+}

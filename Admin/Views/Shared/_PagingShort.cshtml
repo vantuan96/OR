@@ -1,0 +1,120 @@
+﻿@model PagingObj
+@{
+    var curAction = ViewContext.RouteData.GetRequiredString("action");
+    var curController = ViewContext.RouteData.GetRequiredString("controller");
+    
+    var startIndex = 1;
+    var endIndex = 1;
+    var totalCount = 1;
+
+    startIndex = ((Model.PageNumber - 1) * Model.RowPerPage) + 1;
+    endIndex = startIndex + Model.RowPerPage - 1;
+
+    totalCount = Model.TotalCount;
+
+    endIndex = endIndex >= totalCount ? totalCount : endIndex;
+
+    var startNum = 0;
+    var endNum = 0;
+
+    if(Model.CountShowPage <= Model.TotalPage){
+    startNum = Model.PageNumber <= (int)Math.Ceiling((decimal)Model.CountShowPage / 2) ? 1 : Model.PageNumber - 1;
+    endNum = startNum + Model.CountShowPage < Model.TotalPage ? startNum + Model.CountShowPage : Model.TotalPage + 1;
+    startNum = endNum == Model.TotalPage + 1 ? ((Model.TotalPage + 1) - Model.CountShowPage + (int)Math.Ceiling((decimal)Model.CountShowPage / 2) == Model.TotalPage ? (Model.TotalPage + 1) - Model.CountShowPage - 1 : (Model.TotalPage + 1) - Model.CountShowPage) : startNum;
+    }
+    else{
+        startNum = 1;
+        endNum = Model.TotalPage + 1;
+    }
+}
+
+@if (ViewData["IsShowCount"] != null && Model.TotalPage >= 1)
+{
+    <div class="col-md-4 clearfix">
+        <div class="dataTables_info">Từ @startIndex đến @endIndex trong @totalCount bản ghi</div>
+    </div>
+}
+
+@if (Model.PageNumber != 0 && Model.TotalPage > 1)
+{
+    if (ViewData["HasLink"] == null)
+    {       
+        <div class="col-md-8 clearfix">
+            <div class="dataTables_paginate paging_simple_numbers">
+                <ul class="pagination pagination-sm">
+                    <li class="paginate_button previous @(Model.PageNumber == 1 ? "disabled" : "")">
+                        <a href="@(Model.PageNumber == 1 ? "#" : Url.Action(curAction, curController, new { p = Model.PageNumber - 1, rpp = Model.RowPerPage, kw = Request.Params["kw"] }))"><</a>
+                    </li>
+                    @if (startNum > 1)
+                    {
+                        <li class="paginate_button"><a href="@Url.Action(curAction, curController, new { p = 1, rpp = Model.RowPerPage, kw = Request.Params["kw"] })">1</a></li>
+                        @*<li class="paginate_button disabled"><a>…</a></li>*@
+                    }
+                    @for (int i = startNum; i < endNum; i++)
+                    {
+                        if (Model.PageNumber == i)
+                        {
+                            <text>
+                            <li class="paginate_button active"><a href="#">@Model.PageNumber</a></li>
+                            </text>
+                        }
+                        else
+                        {
+                            <text>
+                            <li class="paginate_button"><a href="@Url.Action(curAction, curController, new { p = i, rpp = Model.RowPerPage, kw = Request.Params["kw"] })">@i</a></li>
+                            </text>
+                        }
+                    }
+                    @if (endNum < Model.TotalPage)
+                    {
+                        @*<li class="paginate_button disabled"><a>…</a></li>*@
+                        <li class="paginate_button"><a href="@Url.Action(curAction, curController, new { p = Model.TotalPage, rpp = Model.RowPerPage, kw = Request.Params["kw"] })">@Model.TotalPage</a></li>
+                    }
+                    <li class="paginate_button next @(Model.PageNumber >= Model.TotalPage ? "disabled" : "")">
+                        <a href="@(Model.PageNumber >= Model.TotalPage ? "#" : Url.Action(curAction, curController, new { p = Model.PageNumber + 1, rpp = Model.RowPerPage, kw = Request.Params["kw"] }))">></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    }
+    else {
+       
+        <div class="col-md-8 clearfix">
+            <div class="dataTables_paginate paging_simple_numbers">
+                <ul class="pagination pagination-sm">
+                    <li class="paginate_button previous @(Model.PageNumber == 1 ? "disabled" : "")">
+                        <a @(Model.PageNumber == 1 ? "" : "data-p="+(Model.PageNumber - 1))></a>
+                    </li>
+                    @if (startNum > 1)
+                    {
+                        <li class="paginate_button"><a data-p="1">1</a></li>
+                        @*<li class="paginate_button disabled"><a>…</a></li>*@
+                    }
+                    @for (int i = startNum; i < endNum; i++)
+                    {
+                        if (Model.PageNumber == i)
+                        {
+                            <text>
+                            <li class="paginate_button active"><a>@Model.PageNumber</a></li>
+                            </text>
+                        }
+                        else
+                        {
+                            <text>
+                            <li class="paginate_button"><a data-p="@i">@i</a></li>
+                            </text>
+                        }
+                    }
+                    @if (endNum < Model.TotalPage)
+                    {
+                        @*<li class="paginate_button disabled"><a>…</a></li>*@
+                        <li class="paginate_button"><a data-p="@Model.TotalPage">@Model.TotalPage</a></li>
+                    }
+                    <li class="paginate_button next @(Model.PageNumber >= Model.TotalPage ? "disabled" : "")">
+                        <a @(Model.PageNumber >= Model.TotalPage ? "" : "data-p="+(Model.PageNumber + 1))></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    }
+}

@@ -1,0 +1,14 @@
+﻿@model Admin.Models.Report.BaseReportModel
+
+<div class="row">
+    <div class="bg_page_fix"><i class="fa fa-inbox"></i></div>
+    <div class="col-lg-12">
+        <div id="tableDiv" style="font-size: 9px;overflow: auto; width: 100%;" class="table-responsive">
+            @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+        </div>
+        @if (Model != null && Model.TableContent != null)
+            {
+            @Helpers.Paging(Model.TotalRows, Model.PageNumber, true, Model.PageSize)
+        }
+    </div>
+</div>

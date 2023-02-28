@@ -1,0 +1,204 @@
+﻿@using Contract.OR;
+@{
+    ViewBag.Title = "Thông tin lượt khám";
+}
+@model ORVisitModel
+
+@section styles{
+    <style>
+        .panel-heading {
+            font-weight: bold !important;
+        }
+
+        .editable-click {
+            cursor: pointer;
+        }
+
+        .div_tag_bg {
+            position: relative;
+        }
+
+            .div_tag_bg .bg_div {
+                position: fixed;
+                right: 10px;
+                bottom: 0px;
+                opacity: 0.1;
+                font-size: 160px !important;
+            }
+
+        table.table.table-striped > thead > tr > th {
+            height: auto;
+        }
+    </style>
+
+}
+
+<div class="div_tag_bg">
+
+    <div id="main_wrapper">
+        <div class="page_bar clearfix">
+            <div class="row">
+                <div class="col-md-10">
+                    <h1 class="page_title">Bệnh nhân</h1>
+                </div>
+            </div>
+        </div>
+        @Html.AntiForgeryToken()
+        <div class="page_content">
+            <div class="bg_page_fix"><i class="ion ion-settings"></i></div>
+            <div class="container-fluid">
+                @if (Model != null)
+                {
+                    <div class="row">
+
+
+                        <div class="col-lg-12">
+                            <div class="todo_section panel panel-default box_shadow">
+                                <div class="panel-heading" style="margin-bottom: 15px;">Thông tin lượt khám</div>
+                                <table class="table table-striped">
+                                    @if (Model != null)
+                                    {
+                                        <thead>
+                                            <tr>
+                                                <th h style="width:200px">Thông tin</th>
+                                                <th style="text-align: center">Giá trị</th>
+                                            </tr>
+                                        </thead>
+                                        <tr>
+                                            <td>
+                                                Họ tên người bệnh/Patient’s Name
+                                            </td>
+                                            <td>
+                                                @Model.HO_TEN
+                                            </td>
+                                        </tr>
+                                            <tr>
+                                                <td>
+                                                    Ngày sinh/D.O.B
+                                                </td>
+                                                <td>
+                                                    @{
+                                                        var lastupdatedDate = Model.NGAY_SINH.ToVnShortDateString();
+                                                        <text>@lastupdatedDate</text>
+                                                    }
+                                                </td>
+                                            </tr>
+                                                <tr>
+                                                    <td>
+                                                        Giới tính/Gender
+                                                    </td>
+                                                    <td>
+                                                        @{
+                                                            <text>@(Model.GIOI_TINH == 1 ? "Nam" : "Nữ")</text>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Quốc tịch/Nationality
+                                                    </td>
+                                                    <td>
+                                                        @Model.QUOC_TICH
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Số đăng ký/PID
+                                                    </td>
+                                                    <td>
+                                                        @Model.MA_BN
+                                                    </td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td>
+                                                        Mã lượt khám (Visit code)
+                                                    </td>
+                                                    <td>
+                                                        @Model.VISIT_CODE
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Địa chỉ/Address:
+                                                    </td>
+                                                    <td>
+                                                        @Model.DIA_CHI
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Email:
+                                                    </td>
+                                                    <td>
+                                                        @Model.Email
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Điện thoại/ Phone:
+                                                    </td>
+                                                    <td>
+                                                        @Model.PatientPhone
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Tuổi/ Ages:
+                                                    </td>
+                                                    <td>
+                                                        @Model.Age
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Cân nặng/ Weight:
+                                                    </td>
+                                                    <td>
+                                                        @Model.Weight
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Chiều cao/ Height:
+                                                    </td>
+                                                    <td>
+                                                        @Model.Height
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        BMI:
+                                                    </td>
+                                                    <td>
+                                                        @Model.BMI
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Pulse:
+                                                    </td>
+                                                    <td>
+                                                        @Model.Pulse
+                                                    </td>
+                                                </tr>
+
+
+                                                            }
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row" style="float:right;">
+                        <div class="col-md-12" style="float:right;">
+                            <a href="@Url.Action("ViewORRegistor", "OR")" class="btn btn-accept"><i class="fa fa-file-pdf-o"></i>&nbsp; OR Registor</a>
+                          
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

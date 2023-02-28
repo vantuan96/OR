@@ -1,0 +1,1678 @@
+﻿@using Admin.Models.OR;
+@using Contract.Enum;
+@using Contract.OR;
+@model ORAnesthManagementModel
+@{
+    string errorMessage = ViewBag.ErrorMessage as string;
+    var canCUDAction = Functions.CheckAllowAction("OR", "SaveORManagementByJson");
+    var canCUDAnesthEkip = Functions.CheckAllowAction("OR", "CUDAnesthEkip");
+    var actionType = (int)ViewBag.ActionType;
+    //var dataPTVs = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.PTVMain || t.PositionId == 0 || t.PositionId == (int)ORPositionEnum.PTVSub1 || t.PositionId == (int)ORPositionEnum.PTVSub2 || t.PositionId == (int)ORPositionEnum.PTVSub3 || t.PositionId == (int)ORPositionEnum.CECDoctor || t.PositionId == (int)ORPositionEnum.MainAnesthDoctor || t.PositionId == (int)ORPositionEnum.SubAnesthDoctor)).ToList();
+
+    //var listNurses = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.NurseOutRun1 || t.PositionId == (int)ORPositionEnum.NurseOutRun2 || t.PositionId == 0 || t.PositionId == (int)ORPositionEnum.NurseTool1 || t.PositionId == (int)ORPositionEnum.NurseTool2 || t.PositionId == (int)ORPositionEnum.AnesthNurse1 || t.PositionId == (int)ORPositionEnum.AnesthNurse2)).ToList();
+    //vutv7 check trường hợp chỉ định quá hạn
+    bool checkExprireMonth = false;
+    if (Model.ChargeDetailId != null && Model.ChargeDate != null)
+    {
+        int ExprireMonth = Convert.ToInt16(System.Configuration.ConfigurationManager.AppSettings["ExprireMonth"].ToString());
+        int months = (DateTime.Now.Year - Model.ChargeDate.Value.Year) * 12 + (DateTime.Now.Month - Model.ChargeDate.Value.Month);
+        if (months > ExprireMonth)
+        {
+            checkExprireMonth = true;
+        }
+    }
+}
+
+}
+<div id="main_wrapper">
+    <div class="page_bar clearfix">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="">
+                    <h1 class="page_title">PHÂN CÔNG & GHI NHẬN EKIP MỔ</h1>
+                    <span class="text-muted"></span>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<form class="frmCUDInPatientReport" id="frmPopUp" method="post">*@
+    <div class="page_content" style="padding-bottom:10px;">
+        <div class="bg_page_fix"><i class="fa fa-users"></i></div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            @if (string.IsNullOrEmpty(errorMessage) == false)
+                            {
+                                @Html.Partial("_ErrorOccur", errorMessage)
+                            }
+                            else if (Model == null)
+                            {
+                                @Html.Partial("_ErrorOccur", LayoutResource.Shared_NoRowFound)
+                            }
+                            else
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("VisitCode", Model.VisitCode)
+                                @Html.Hidden("PId", Model.PId)
+                                @Html.Hidden("HoTen", Model.HoTen)
+                                @Html.Hidden("Ages", Model.Ages)
+
+                                @Html.Hidden("HospitalCode", Model.HospitalCode)
+                                @Html.Hidden("HospitalName", Model.HospitalName)
+                                @Html.Hidden("Address", Model.Address)
+                                @Html.Hidden("Email", Model.Email)
+                                @Html.Hidden("PatientPhone", Model.PatientPhone)
+                                @Html.Hidden("UIdSurgeryDoctorManager", Model.UIdSurgeryDoctorManager)
+                                @Html.Hidden("Id", Model.Id)
+                                @Html.Hidden("HpServiceName", Model.HpServiceName)
+                                @Html.Hidden("ORRoomName", Model.ORRoomName)
+                                @Html.Hidden("OrderID", Model.OrderID)
+                                @Html.Hidden("ChargeDetailId", Model.ChargeDetailId)
+                                @Html.Hidden("DepartmentCode", Model.DepartmentCode)
+                                @Html.Hidden("AdmissionWard", Model.AdmissionWard)
+                                @*@Html.Hidden("ChargeDate", Model.ChargeDate)*@
+                                @Html.Hidden("ChargeDate", Model.ChargeDateStr)
+                                @Html.Hidden("ChargeBy", Model.ChargeBy)
+                                @Html.Hidden("ChargesReplaceCount", Model.ChargesReplace.Count())
+                                @Html.Hidden("checkExprireMonth", checkExprireMonth)
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <h3 class="heading_a" style="color:#32c69a">THÔNG TIN BỆNH NHÂN</h3>
+                                            </div>
+                                            <div class="col-lg-6" style="text-align:right;">
+                                                <!-- Bootstrap Radio Button Group -->
+                                                <div class="btn-group lockhover" role="group">
+                                                    <input type="radio" name="surgeryType" class="btn-check" value="1" checked="@(Model.SurgeryType == 1)" disabled id="radMoPhien">
+                                                    <label class="btn btn-outline-primary btn-with-border" for="radMoPhien">Mổ phiên</label>
+
+                                                    <input type="radio" name="surgeryType" class="btn-check" value="2" checked="@(Model.SurgeryType == 2)" disabled id="radMoCapCuu">
+                                                    <label class="btn btn-outline-primary btn-with-border" for="radMoCapCuu">Mổ cấp cứu</label>
+
+                                                    <input type="radio" name="surgeryType" class="btn-check" value="3" checked="@(Model.SurgeryType == 3)" disabled id="radThuThuat">
+                                                    <label class="btn btn-outline-primary btn-with-border" for="radThuThuat">Thủ thuật</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <address>
+                                            <p class="addres_name">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>PID</label>
+                                                        @Model.PId
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <label>Họ và tên bệnh nhân </label>
+                                                        @Model.HoTen
+                                                    </div>
+                                                    <div class="col-sm-1 div_input_form_control_label">
+                                                        <label>Tuổi</label>
+                                                        @(Model.Ages ?? "unknown")
+                                                    </div>
+                                                    <div class="col-md-1 div_input_form_control_label">
+                                                        <label>Giới tính</label>
+                                                        <span class="text-normal">@(EnumExtension.GetDescription((SexTypeEnum)Model.Sex))</span>
+                                                    </div>
+                                                    <div class="col-md-1 div_input_form_control_label">
+                                                        <label>Ngày sinh</label>
+                                                        <span class="text-normal">@Model.ShowNgaySinh</span>
+                                                    </div>
+                                                    <div class="col-md-2 div_input_form_control_label">
+                                                        <label>Công ty PL</label>
+                                                        <span class="text-normal">@Model.HospitalName</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Tên dịch vụ mổ</label>
+                                                        @Model.HpServiceName
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <label>Phòng mỗ yêu cầu </label>
+                                                        @Model.ORRoomName
+                                                    </div>
+                                                    <div class="col-md-1 div_input_form_control_label">
+                                                        <label>Thời gian gây mê</label>
+                                                        @Model.TimeAnesth
+                                                    </div>
+                                                    <div class="col-sm-1 div_input_form_control_label">
+                                                        <label>Thời gian bắt đầu</label>
+                                                        @(Model.ShowdtStart)
+                                                    </div>
+                                                    <div class="col-md-1 div_input_form_control_label">
+                                                        <label>Ngày kết thúc</label>
+                                                        <span class="text-normal">@Model.ShowdtEnd</span>
+                                                    </div>
+
+                                                    <div class="col-md-2 div_input_form_control_label">
+                                                        <label>Ngày thực hiện ca mổ</label>
+                                                        <span class="text-normal">@Model.ShowdtOperation</span>
+                                                    </div>
+
+                                                </div>
+                                                @*vutv7*@
+                                                @if (Model.ChargeDate != null && !string.IsNullOrEmpty(Model.ChargeBy))
+                                                {
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <label>Ngày chỉ định</label>
+                                                            @Model.ChargeDate.Value.ToString("dd/MM/yyyy HH:mm")
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <label>Người chỉ định</label>
+                                                            @Model.ChargeBy
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                            </p>
+                                        </address>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h3 class="heading_a" style="color:#32c69a">DANH SÁCH THÀNH VIÊN TRONG EKIP ĐƯỢC ĐIỀU PHỐI THAM GIA CA MỔ</h3>
+                                        <address>
+                                            <p class="addres_name">
+                                                <div class="row">
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="col_md" style="text-align:left;max-width:5px;">Vai trò</th>
+                                                                <th class="col_md sub_col">Họ và tên</th>
+                                                                <th class="col_md sub_col">Địa chỉ Email </th>
+                                                                <th class="col_md sub_col">Điện thoại</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="bodyEkip">
+                                                            <!--1-->
+                                                            <tr>
+                                                                <td class="text-left col-sm-3" style="max-width:10px;">
+                                                                    <span class="text-center" style="font-weight:bold;color:red">PTV chính</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" width="100px;">
+                                                                    @{
+                                                                        var dataPTVMains = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.PTVMain) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = ((Model.UIdPTVMain != 0 && Model.UIdPTVMain == c.Id) || (Model.UIdPTVMain == 0 && Model.CreatedBy == c.Id)),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdPTVMain", dataPTVMains, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangePTVMain(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdPTVMain)
+
+                                                                    }
+
+                                                                </td>
+                                                                <td class="sub_col col-sm-3" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailPTVMain, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col col-sm-3" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhonePTVMain, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+
+                                                            </tr>
+                                                            <!--2-->
+                                                            <tr>
+
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;">PTV phụ 1</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataPTVSub1s = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.PTVSub1) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdPTVSub1 == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdPTVSub1", dataPTVSub1s, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangePTVSub1(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdPTVSub1)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailPTVSub1, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhonePTVSub1, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+
+                                                            </tr>
+
+                                                            <!--3-->
+                                                            <tr>
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;">PTV phụ 2</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataPTVSub2s = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.PTVSub2) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdPTVSub2 == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdPTVSub2", dataPTVSub2s, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangePTVSub2(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdPTVSub2)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailPTVSub2, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhonePTVSub2, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+                                                            </tr>
+                                                            <!--4-->
+                                                            <tr>
+
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;">PTV phụ 3</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataPTVSub3s = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.PTVSub3) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdPTVSub3 == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdPTVSub3", dataPTVSub3s, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangePTVSub3(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdPTVSub3)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailPTVSub3, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhonePTVSub3, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+
+                                                            </tr>
+
+                                                            <!--4.4-->
+                                                            <tr>
+
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;">PTV phụ 4</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataPTVSub4s = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.PTVSub4) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdPTVSub4 == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdPTVSub4", dataPTVSub4s, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangePTVSub4(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdPTVSub4)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailPTVSub4, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhonePTVSub4, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+
+                                                            </tr>
+
+                                                            <!--4.5-->
+                                                            <tr>
+
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;">PTV phụ 5</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataPTVSub5s = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.PTVSub5) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdPTVSub5 == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdPTVSub5", dataPTVSub5s, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangePTVSub5(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdPTVSub5)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailPTVSub5, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhonePTVSub5, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+
+                                                            </tr>
+
+                                                            <!--4.6-->
+                                                            <tr>
+
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;">PTV phụ 6</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataPTVSub6s = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.PTVSub6) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdPTVSub6 == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdPTVSub6", dataPTVSub6s, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangePTVSub6(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdPTVSub6)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailPTVSub6, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhonePTVSub6, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+
+                                                            </tr>
+                                                            <!--4.7-->
+                                                            <tr>
+
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;">PTV phụ 7</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataPTVSub7s = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.PTVSub7) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdPTVSub6 == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdPTVSub7", dataPTVSub7s, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangePTVSub7(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdPTVSub7)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailPTVSub7, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhonePTVSub7, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+
+                                                            </tr>
+
+                                                            <!--4.8-->
+                                                            <tr>
+
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;">PTV phụ 8</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataPTVSub8s = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.PTVSub8) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdPTVSub6 == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdPTVSub8", dataPTVSub7s, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangePTVSub8(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdPTVSub8)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailPTVSub8, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhonePTVSub8, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+                                                            </tr>
+
+                                                            <!--5-->
+                                                            <tr>
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;">PTV CEC</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataCECDoctors = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.CECDoctor) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdCECDoctor == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdCECDoctor", dataCECDoctors, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangeCECDoctor(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdCECDoctor)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailCECDoctor, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhoneCECDoctor, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+                                                            </tr>
+                                                            <!--6-->
+                                                            <tr>
+
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;color:red">Điều dưỡng dụng cụ 1</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataNurseTool1s = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.NurseTool1) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdNurseTool1 == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdNurseTool1", dataNurseTool1s, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangeNurseTool1(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdNurseTool1)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailNurseTool1, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhoneNurseTool1, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+
+                                                            </tr>
+
+                                                            <!--7-->
+                                                            <tr>
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;">Điều dưỡng dụng cụ 2</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataNurseTool2s = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.NurseTool2) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdNurseTool2 == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdNurseTool2", dataNurseTool2s, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangeNurseTool2(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdNurseTool2)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailNurseTool2, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhoneNurseTool2, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+
+                                                            </tr>
+                                                            <!--8-->
+                                                            <tr>
+
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;color:red">Điều dưỡng chạy ngoài 1</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataNurseOutRun1s = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.NurseOutRun1) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdNurseOutRun1 == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdNurseOutRun1", dataNurseOutRun1s, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangeNurseOutRun1(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdNurseOutRun1)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailNurseOutRun1, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhoneNurseOutRun1, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+
+                                                            </tr>
+                                                            <!--9-->
+                                                            <tr>
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;">Điều dưỡng chạy ngoài 2</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataNurseOutRun2s = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.NurseOutRun2) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdNurseOutRun2 == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdNurseOutRun2", dataNurseOutRun2s, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangeNurseOutRun2(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdNurseOutRun2)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailNurseOutRun2, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhoneNurseOutRun2, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+                                                            </tr>
+                                                            <!--10-->
+                                                            <tr>
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;">Điều dưỡng chạy ngoài 3</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataNurseOutRun3s = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.NurseOutRun3) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdNurseOutRun3 == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdNurseOutRun3", dataNurseOutRun3s, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangeNurseOutRun3(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdNurseOutRun3)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailNurseOutRun3, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhoneNurseOutRun3, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+                                                            </tr>
+                                                            <!--11-->
+                                                            <tr>
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;">Điều dưỡng chạy ngoài 4</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataNurseOutRun4s = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.NurseOutRun4) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdNurseOutRun4 == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdNurseOutRun4", dataNurseOutRun4s, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangeNurseOutRun4(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdNurseOutRun4)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailNurseOutRun4, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhoneNurseOutRun4, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+                                                            </tr>
+                                                            <!--12-->
+                                                            <tr>
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;">Điều dưỡng chạy ngoài 5</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataNurseOutRun5s = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.NurseOutRun5) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdNurseOutRun5 == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdNurseOutRun5", dataNurseOutRun5s, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangeNurseOutRun5(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdNurseOutRun5)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailNurseOutRun5, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhoneNurseOutRun5, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+                                                            </tr>
+                                                            <!--12-->
+                                                            <tr>
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;">Điều dưỡng chạy ngoài 6</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataNurseOutRun6s = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.NurseOutRun6) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdNurseOutRun6 == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdNurseOutRun6", dataNurseOutRun6s, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangeNurseOutRun6(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdNurseOutRun6)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailNurseOutRun6, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhoneNurseOutRun6, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+                                                            </tr>
+                                                            <!--14-->
+                                                            <tr>
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;">KTV phụ mổ</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataKTVSubSurgery = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.KTVSubSurgery) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdKTVSubSurgery == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdKTVSubSurgery", dataKTVSubSurgery, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangeKTVSubSurgery(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdKTVSubSurgery)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailKTVSubSurgery, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhoneKTVSubSurgery, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+                                                            </tr>
+                                                            <!--15-->
+                                                            <tr>
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;">KTV CĐHA</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataKTVDiagnose = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.KTVDiagnose) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdKTVDiagnose == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdKTVDiagnose", dataKTVDiagnose, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangeKTVDiagnose(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdKTVDiagnose)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailKTVDiagnose, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhoneKTVDiagnose, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+                                                            </tr>
+                                                            <!--16-->
+                                                            <tr>
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;">KTV chạy máy CEC</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataKTVCEC = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.KTVCEC) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdKTVCEC == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdKTVCEC", dataKTVCEC, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangeKTVCEC(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdKTVCEC)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailKTVCEC, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhoneKTVCEC, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+                                                            </tr>
+                                                            <!--17-->
+                                                            <tr>
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;">BS CĐHA</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataDoctorDiagnose = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.DoctorDiagnose) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdDoctorDiagnose == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdDoctorDiagnose", dataDoctorDiagnose, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangeDoctorDiagnose(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdDoctorDiagnose)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailDoctorDiagnose, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhoneDoctorDiagnose, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+                                                            </tr>
+                                                            <!--18-->
+                                                            <tr>
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;">BS sơ sinh</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataDoctorNewBorn = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.DoctorNewBorn) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdDoctorNewBorn == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdDoctorNewBorn", dataDoctorNewBorn, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangeDoctorNewBorn(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdDoctorNewBorn)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailDoctorNewBorn, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhoneDoctorNewBorn, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+                                                            </tr>
+                                                            <!--19-->
+                                                            <tr>
+                                                                <td class="text-left">
+                                                                    <span class="text-center" style="font-weight:bold;">Nữ hộ sinh</span>
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;" text>
+                                                                    @{
+                                                                        var dataMidwives = Model.listEkips.Where(t => (t.PositionId == (int)ORPositionEnum.Midwives) || t.PositionId == 0).Select(c => new SelectListItemCustom()
+                                                                        {
+                                                                            Selected = (Model.UIdMidwives == c.Id),
+                                                                            Value = c.Id.ToString(),
+                                                                            Text = !string.IsNullOrEmpty(c.Name) ? c.Name + " (" + c.Username + ")" : c.Name,
+                                                                            itemsHtmlAttributes = new Dictionary<string, string> { { "Email", c.Email }, { "Phone", c.Phone }, { "Position", c.PositionName } }
+                                                                        }).ToList();
+
+                                                                        @Html.Raw(Html.DropDownListForCustomExt("UIdMidwives", dataMidwives, new { @class = "form-control select2 select2-offscreen", tabindex = "6", onchange = "ChangeMidwives(this);" }))
+                                                                        @Html.ValidationMessageFor(x => x.UIdMidwives)
+                                                                    }
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.EmailMidwives, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'email');", @onkeyup = "editEmailOrPhone(this,'email');" })
+                                                                </td>
+                                                                <td class="sub_col" style="text-align:left;">
+                                                                    @Html.TextBoxFor(x => x.PhoneMidwives, new { @class = "form-control", @onchange = "editEmailOrPhone(this,'phone');", @onkeyup = "editEmailOrPhone(this,'phone');" })
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                            </p>
+                                        </address>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <address>
+                                            <p class="addres_name">
+                                                <div class="row">
+                                                    <div class="col-sm-12 div_input_form_control_label">
+                                                        <label>Ghi chú</label>
+                                                        @Html.TextAreaFor(x => x.SurgeryDescription, new { tabindex = "8", @class = "form-control", @rows = 3 })
+                                                        @Html.ValidationMessageFor(x => x.SurgeryDescription)
+                                                    </div>
+                                                </div>
+
+
+                                            </p>
+                                        </address>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <address>
+                                            <p class="addres_name">
+                                                <div class="row">
+                                                    <label style="color:red;font-style:italic"> &nbsp;&nbsp; &nbsp;(Thông tin màu đỏ là thông tin bắt buộc phải có)</label>
+                                                </div>
+                                            </p>
+                                        </address>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top:10px;">
+                                    <div class="col-sm-12">
+                                        <div class="form-group relative not_input_error not_input_error_popup" style="margin-top:0px;">
+                                            <span id="err_msg" class="field-validation-error" style="display: none;left:0px;"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btn-wrapper text-right">
+                                    @if ((Model.State == (int)ORProgressStateEnum.NoApproveSurgeryManager) || Constant.ListStateAllowCoordinator.Contains(Model.State) || (Model.State == 0 && actionType == 2))
+                                    {
+                                        if (actionType != 2 && (Model.State == 0 || Model.State == (int)ORProgressStateEnum.Registor || Model.State == (int)ORProgressStateEnum.AssignEkip))
+                                        {
+                                            <button class="btn btn-accept" id="btnAssignPosition" tabindex="8"><i class="fa fa-save"></i>&nbsp;@LayoutResource.OR_AssignPosition</button>
+                                        }
+                                        <button class="btn btn-success" id="btnSaveData" tabindex="9"><i class="fa fa-save"></i>&nbsp;@LayoutResource.Shared_BtnText_ApproveEkip</button>
+                                        if (Model.State == (int)ORProgressStateEnum.Registor || Model.State == (int)ORProgressStateEnum.NoApproveSurgeryManager || Model.State == (int)ORProgressStateEnum.AssignEkip)
+                                        {
+                                            <button class="btn btn-danger" id="btnRejectData" tabindex="10"><i class="fa fa-undo"></i>&nbsp;@LayoutResource.Shared_BtnText_RejectEkip</button>
+                                        }
+                                    }
+                                    <a href="@Url.Action("SearchSurgeryRole", "OR")" tabindex="63" class="btn btn-warning" style="padding-right:4px;"><i class="fa fa-undo"></i>&nbsp; Quay về </a>
+                                </div>
+
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*</form>*@
+</div>
+<!--Modal to choose charge-->
+<div class="modal fade" id="chargesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="margin-top:150px;" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding-top: 8px;">
+                <h5 class="modal-title" id="surgeryModalLongTitle" style="float:left;width:75%;margin-top: 5px;">Chọn chỉ định</h5>
+                <div style="float:right;width:20%;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: 0px;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="modal_block_charges">
+                    <div class="col-lg-2">
+                        Dịch vụ:
+                    </div>
+                    <div class="col-lg-10">
+                        <select name="PatientService" class="form-control" id="PatientService">
+                            @if (string.IsNullOrEmpty(Model.ChargeDetailId) && Model.Charges != null) // & Model.Data.ListServices != null
+                            {
+                                foreach (var item in Model.Charges)
+                                {
+                                    <option value="@item.OrderID//@item.ItemCode//@item.ChargeDetailId//@item.DepartmentCode//@item.LocationName//@item.ServiceType//@item.ChargeDate//@item.ItemName//@item.ChargeBy">@item.ItemName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Đóng</button>
+                <button type="button" class="btn btn-success" id="btnApproveEkip"><i class="fa fa-check-circle"></i> Ghi nhận ekip</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Vutv7 Modal to choose charge replace-->
+<div class="modal fade" id="chargesReplaceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="margin-top:150px;" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding-top: 8px;">
+                <h5 class="modal-title" id="surgeryModalLongTitle" style="float:left;width:75%;margin-top: 5px;">Chọn chỉ định thay thế</h5>
+                <div style="float:right;width:20%;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: 0px;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="modal_block_charges">
+                    <div class="col-lg-2">
+                        Dịch vụ:
+                    </div>
+                    <div class="col-lg-10">
+                        <select name="PatientServiceReplace" class="form-control" id="PatientServiceReplace">
+                            @if (Model.ChargesReplace != null && Model.ChargesReplace.Count() > 0) // & Model.Data.ListServices != null
+                            {
+                                foreach (var item in Model.ChargesReplace)
+                                {
+                                    //var itemText = item.ItemName + "(" + item.ChargeDate.ToString("dd/MM/yyyy HH:mm") + "-" + item.ChargeBy + ")";
+                                    <option value="@item.OrderID//@item.ItemCode//@item.ChargeDetailId//@item.DepartmentCode//@item.LocationName//@item.ServiceType//@item.ChargeDate//@item.ItemName//@item.ChargeBy">@item.ItemName</option>
+                                }
+                            }
+                        </select>
+                        <div class="row" style="margin-top: 45px;">
+                            <div class="col-lg-4">
+                                <label>Thời gian chỉ định</label>
+                                <span id="text-chargeDate"></span>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>Người chỉ định</label>
+                                <span id="text-chargeBy"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Đóng</button>
+                <button type="button" class="btn btn-success" id="btnApproveEkipReplace"><i class="fa fa-check-circle"></i> Ghi nhận ekip</button>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("_PopupConfirmDeleteEkipInfo")
+
+@section styles{
+    @Styles.Render("~/styles_searchfrm")
+}
+@Scripts.Render("~/javas_searchfrm")
+@section scripts{
+    <script>
+        var siteRedirect = '@Url.Action("SearchSurgeryRole", "OR")' + '?siteId=' + '@Model.HospitalCode';
+        var Id = '@Model.Id';
+        var emailRegex = /^[a-zA-Z]+[a-zA-Z0-9._]+@@[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,4}){1,2}$/;
+         @*'&kw=' + '@HttpUtility.UrlDecode(Model.PId)';*@
+        $(document).ready(function () {
+            // Fill data for PTV Main when had selected
+            ChangePTVMain();
+        });
+        $(function () {
+
+            pageManager.init();
+            $('#UIdPTVMain').select2({ allowClear: false})
+            $('#UIdPTVSub1').select2({ placeholder: "Chọn người phụ trách", allowClear: true})
+            $('#UIdPTVSub2').select2({ placeholder: "Chọn người phụ trách", allowClear: true})
+            $('#UIdPTVSub3').select2({ placeholder: "Chọn người phụ trách", allowClear: true })
+            $('#UIdPTVSub4').select2({ placeholder: "Chọn người phụ trách", allowClear: true })
+            $('#UIdPTVSub5').select2({ placeholder: "Chọn người phụ trách", allowClear: true })
+            $('#UIdPTVSub6').select2({ placeholder: "Chọn người phụ trách", allowClear: true })
+            $('#UIdPTVSub7').select2({ placeholder: "Chọn người phụ trách", allowClear: true })
+            $('#UIdPTVSub8').select2({ placeholder: "Chọn người phụ trách", allowClear: true})
+            $('#UIdCECDoctor').select2({ placeholder: "Chọn người phụ trách", allowClear: true})
+            $('#UIdNurseTool1').select2({ allowClear: false})
+            $('#UIdNurseTool2').select2({ placeholder: "Chọn người phụ trách", allowClear: true})
+            $('#UIdNurseOutRun1').select2({ allowClear: false})
+            $('#UIdNurseOutRun2').select2({ placeholder: "Chọn người phụ trách", allowClear: true })
+            $('#UIdNurseOutRun3').select2({ placeholder: "Chọn người phụ trách", allowClear: true })
+            $('#UIdNurseOutRun4').select2({ placeholder: "Chọn người phụ trách", allowClear: true })
+            $('#UIdNurseOutRun5').select2({ placeholder: "Chọn người phụ trách", allowClear: true })
+            $('#UIdNurseOutRun6').select2({ placeholder: "Chọn người phụ trách", allowClear: true })
+            $('#UIdKTVSubSurgery').select2({ placeholder: "Chọn người phụ trách", allowClear: true })
+            $('#UIdKTVDiagnose').select2({ placeholder: "Chọn người phụ trách", allowClear: true })
+            $('#UIdKTVCEC').select2({ placeholder: "Chọn người phụ trách", allowClear: true })
+            $('#UIdDoctorDiagnose').select2({ placeholder: "Chọn người phụ trách", allowClear: true })
+            $('#UIdDoctorNewBorn').select2({ placeholder: "Chọn người phụ trách", allowClear: true })
+            $('#UIdMidwives').select2({ placeholder: "Chọn người phụ trách", allowClear: true })
+        });
+        function Validate(UserId){
+            if (typeof UserId === "undefined") {
+                return;
+            }
+            console.log(UserId);
+            var postData = new Array();
+            postData.push({ name: 'Id', value: Id });
+            postData.push({ name: 'UId', value: UserId });
+            ShowOverlay(true);
+            commonUtils.postAjaxWithToken("/OR/CheckExistPositionByScheduler/", postData, function (response) {
+                HideOverlay();
+                if (response != null) {
+                    if (response.ID == 0) {
+                        $("#err_msg").html('Thành viên ekip vừa chọn đã là thành viên trong ekip khác với khung thời gian trên').show();
+                    } else {
+                        $("#err_msg").html('').hide();
+                    }
+                }
+            });
+        }
+
+        function ChangePTVMain() {
+            var ddlUser = $('#UIdPTVMain').find('option:selected');
+            if(ddlUser!=undefined){
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#EmailPTVMain').val(email);
+                $('#PhonePTVMain').val(phone);
+
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+
+        }
+
+        function ChangePTVSub1() {
+            var ddlUser = $('#UIdPTVSub1').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhonePTVSub1').val(phone);
+                $('#EmailPTVSub1').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+        function ChangePTVSub2() {
+            var ddlUser = $('#UIdPTVSub2').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhonePTVSub2').val(phone);
+                $('#EmailPTVSub2').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+        function ChangePTVSub3() {
+            var ddlUser = $('#UIdPTVSub3').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhonePTVSub3').val(phone);
+                $('#EmailPTVSub3').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+
+        function ChangePTVSub4() {
+            var ddlUser = $('#UIdPTVSub4').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhonePTVSub4').val(phone);
+                $('#EmailPTVSub4').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+
+        function ChangePTVSub5() {
+            var ddlUser = $('#UIdPTVSub5').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhonePTVSub5').val(phone);
+                $('#EmailPTVSub5').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+
+        function ChangePTVSub6() {
+            var ddlUser = $('#UIdPTVSub6').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhonePTVSub6').val(phone);
+                $('#EmailPTVSub6').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+
+        function ChangePTVSub7() {
+            var ddlUser = $('#UIdPTVSub7').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhonePTVSub7').val(phone);
+                $('#EmailPTVSub7').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+
+        function ChangePTVSub8() {
+            var ddlUser = $('#UIdPTVSub8').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhonePTVSub8').val(phone);
+                $('#EmailPTVSub8').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+
+        function ChangeCECDoctor() {
+            var ddlUser = $('#UIdCECDoctor').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhoneCECDoctor').val(phone);
+                $('#EmailCECDoctor').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+        function ChangeNurseTool1() {
+            var ddlUser = $('#UIdNurseTool1').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhoneNurseTool1').val(phone);
+                $('#EmailNurseTool1').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+
+        function ChangeNurseTool2() {
+            var ddlUser = $('#UIdNurseTool2').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhoneNurseTool2').val(phone);
+                $('#EmailNurseTool2').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+
+        function ChangeNurseOutRun1() {
+            var ddlUser = $('#UIdNurseOutRun1').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhoneNurseOutRun1').val(phone);
+                $('#EmailNurseOutRun1').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+
+        function ChangeNurseOutRun2() {
+            var ddlUser = $('#UIdNurseOutRun2').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhoneNurseOutRun2').val(phone);
+                $('#EmailNurseOutRun2').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+        function ChangeNurseOutRun3() {
+            var ddlUser = $('#UIdNurseOutRun3').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhoneNurseOutRun3').val(phone);
+                $('#EmailNurseOutRun3').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+        function ChangeNurseOutRun4() {
+            var ddlUser = $('#UIdNurseOutRun4').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhoneNurseOutRun4').val(phone);
+                $('#EmailNurseOutRun4').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+        function ChangeNurseOutRun5() {
+            var ddlUser = $('#UIdNurseOutRun5').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhoneNurseOutRun5').val(phone);
+                $('#EmailNurseOutRun5').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+        function ChangeNurseOutRun6() {
+            var ddlUser = $('#UIdNurseOutRun6').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhoneNurseOutRun6').val(phone);
+                $('#EmailNurseOutRun6').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+        //vutv7
+        function ChangeKTVSubSurgery() {
+            var ddlUser = $('#UIdKTVSubSurgery').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhoneKTVSubSurgery').val(phone);
+                $('#EmailKTVSubSurgery').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+        function ChangeKTVDiagnose() {
+            var ddlUser = $('#UIdKTVDiagnose').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhoneKTVDiagnose').val(phone);
+                $('#EmailKTVDiagnose').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+        function ChangeKTVCEC() {
+            var ddlUser = $('#UIdKTVCEC').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhoneKTVCEC').val(phone);
+                $('#EmailKTVCEC').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+        function ChangeDoctorDiagnose() {
+            var ddlUser = $('#UIdDoctorDiagnose').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhoneDoctorDiagnose').val(phone);
+                $('#EmailDoctorDiagnose').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+        function ChangeDoctorNewBorn() {
+            var ddlUser = $('#UIdDoctorNewBorn').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhoneDoctorNewBorn').val(phone);
+                $('#EmailDoctorNewBorn').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+        function ChangeMidwives() {
+            var ddlUser = $('#UIdMidwives').find('option:selected');
+            if (ddlUser != undefined) {
+                var email = ddlUser.attr('email');
+                var phone = ddlUser.attr('phone');
+                $('#PhoneMidwives').val(phone);
+                $('#EmailMidwives').val(email);
+                //suggest trung thoi gian mo
+                Validate(ddlUser.val());
+            }
+        }
+        var pageManager={
+            init: function () {
+                $("#btnAssignPosition").click(pageManager.SaveORManagement);
+                $("#btnSaveData").click(pageManager.SaveORManagement);
+                $("#btnRejectData").click(pageManager.SaveORManagement);
+                $("#btnApproveEkip").click(pageManager.SaveORManagement);
+                $("#btnApproveEkipReplace").click(pageManager.SaveORManagement);
+                $('[data-event=delete-item]').click(pageManager.onShowPopupDelete);
+                $('#notice_delete_item .btn-submit').click(pageManager.handlerActiveEvent);
+                $('#notice_delete_item .btn-cancel').click(pageManager.hidePopup);
+            },
+            onShowPopupDelete: function () {
+                var name = $(this).data('name');
+                var content = $(this).data('content');
+                var box = $('#notice_delete_item');
+                $('#notice_delete_item .btn-submit').attr('data-id', $(this).data('id'));
+                $('#notice_delete_item .user_fullname').text(name);
+                $('#notice_delete_item .user_email').text(content);
+                box.modal('show');
+            },
+            hidePopup: function () {
+                $(this).closest('.modal_booking').find('.close').trigger('click');
+            },
+            handlerActiveEvent: function () {
+                var postData = new Array();
+                var id = $(this).data('id');
+                postData.push({ name: 'Id', value: id });
+                ShowOverlay(true);
+                commonUtils.postAjaxWithToken('/OR/DeleteAnesthEkip/', postData, function (ret) {
+                    if ((ret.ID > 0)) {
+                        ShowNotify('success', 'Xóa thông tin thành công', 5000);
+                        window.location.reload();
+                    }
+                    else {
+                        ShowNotify('error', 'Xóa thông tin thất bại', 5000);
+                    }
+                    HideOverlay();
+                });
+            },
+            SaveORManagement: function (e) {
+                var isNotError = true;
+                var typeId = (this.id == 'btnSaveData' || this.id == 'btnApproveEkip' || this.id == 'btnAssignPosition' || this.id == 'btnApproveEkipReplace') ? 3 : 2;
+                //console.log(@Model.State);
+                var state = '@(Model.State == 0 || Model.State == 1 || Model.State == 33)' == 'True' ? typeId : @Model.State;
+                state = this.id == 'btnAssignPosition' ? 33 : state;
+                console.log(this.id);
+                if (typeId == 3) {
+                    var email = $('#EmailPTVMain').val();
+                    if (!email) {
+                        $("#err_msg").html("Bạn chưa chọn thông tin PTV chính hoặc địa chỉ email PTV chính chưa cấu hình").show();
+                        return false;
+                    }
+                    //else {
+                    //    isNotError = checkEmailRegex($('#EmailPTVMain').val(), 'Email PTV chính sai định dạng');
+                    //    if (!isNotError)
+                    //        return false;
+                    //}
+
+                    if($('#EmailPTVSub1').val())
+                        isNotError = checkEmailRegex($('#EmailPTVSub1').val(), 'Email PTV phụ 1 sai định dạng');
+                    if($('#EmailPTVSub2').val())
+                        isNotError = checkEmailRegex($('#EmailPTVSub2').val(), 'Email PTV phụ 2 sai định dạng');
+                    if ($('#EmailPTVSub3').val()) {
+                        isNotError = checkEmailRegex($('#EmailPTVSub3').val(), 'Email PTV phụ 3 sai định dạng');
+                    }
+
+                    if($('#EmailCECDoctor').val())
+                        isNotError = checkEmailRegex($('#EmailCECDoctor').val(), 'Email PTV CEC sai định dạng');
+
+                    var email = $('#EmailNurseTool1').val();
+                    if (!email) {
+                        $("#err_msg").html("Bạn chưa chọn thông tin Điều dưỡng dụng cụ 1 hoặc địa chỉ email Điều dưỡng dụng cụ 1 chưa cấu hình").show();
+                        return false;
+                    }
+                    //else {
+                    //    isNotError = checkEmailRegex($('#EmailNurseTool1').val(), 'Email điều dưỡng dụng cụ 1 sai định dạng');
+                    //    if (!isNotError)
+                    //        return false;
+                    //}
+
+                     if($('#EmailNurseTool2').val())
+                        isNotError = checkEmailRegex($('#EmailNurseTool2').val(), 'Email điều dưỡng dụng cụ 2 sai định dạng');
+
+                    var email = $('#EmailNurseOutRun1').val();
+                    if (!email) {
+                        $("#err_msg").html("Bạn chưa chọn thông tin Điều dưỡng chạy ngoài 1 hoặc địa chỉ email Điều dưỡng chạy ngoài 1 chưa cấu hình").show();
+                        return false;
+                    }
+                    //else {
+                    //    isNotError = checkEmailRegex($('#EmailNurseOutRun1').val(), 'Email điều dưỡng chạy ngoài 1 sai định dạng');
+                    //    if (!isNotError)
+                    //        return false;
+                    //}
+
+                    if($('#EmailNurseOutRun2').val())
+                        isNotError = checkEmailRegex($('#EmailNurseOutRun2').val(), 'Email điều dưỡng chạy ngoài 2 sai định dạng');
+                    //vutv7
+                    if ($("#checkExprireMonth").val() == 'True' && this.id != 'btnApproveEkipReplace') {
+                        var message = "Chỉ định cho ca mổ này đã vượt quá 2 tháng cho phép để ghi nhận doanh thu theo quy định.";
+                        ShowNotify('error', message, 5000);
+                        $("#err_msg").css('display', 'inline-block');
+                        $("#err_msg").html(message).show();
+                        if ($("#ChargesReplaceCount").val() != "0") {
+                            $('#chargesReplaceModal').modal({ backdrop: 'static', keyboard: false });
+                            //show thông tin thời gian và người chỉ định trên popup
+                            var arrService = $('#PatientServiceReplace').val().split('//');
+                            var date = new Date(arrService[6]);
+                            var chargeDate = date.getDate().toString().padStart(2, '0') + "/" + (date.getMonth() + 1).toString().padStart(2, '0') + "/" + date.getFullYear().toString().padStart(4, '0') + " " + date.getHours().toString().padStart(2, '0') + ":" + date.getMinutes().toString().padStart(2, '0');
+                            var chargeBy = arrService[8];
+                            $('#text-chargeDate').text(chargeDate);
+                            $('#text-chargeBy').text(chargeBy);
+                        }
+                        return false;
+                    }
+                    if (this.id == 'btnApproveEkip') {
+                        if ($('#chargesModal').is(':visible') && $('#PatientService').val() !=null) {
+                            var arrService = $('#PatientService').val().split('//');
+                            var orderId = arrService[0];
+                            var chargeid = arrService[2];
+                            var departmentCode = arrService[3];
+                            var locationName = arrService[4];
+                            //vutv7
+                            var chargeDate = arrService[6];
+                            var chargeBy = arrService[8];
+                            $('#ChargeDetailId').val(chargeid);
+                            $('#OrderID').val(orderId);
+                            $('#DepartmentCode').val(departmentCode);
+                            $('#AdmissionWard').val(locationName);
+                            //vutv7
+                            $('#ChargeDate').val(chargeDate);
+                            $('#ChargeBy').val(chargeBy);
+                        }
+                    }
+                    //vutv7
+                    if (this.id == 'btnApproveEkipReplace') {
+                        if ($('#chargesReplaceModal').is(':visible') && $('#PatientServiceReplace').val() !=null) {
+                            var arrService = $('#PatientServiceReplace').val().split('//');
+                            var orderId = arrService[0];
+                            var chargeid = arrService[2];
+                            var departmentCode = arrService[3];
+                            var locationName = arrService[4];
+                            //vutv7
+                            var chargeDate = arrService[6];
+                            var chargeBy = arrService[8];
+                            $('#ChargeDetailId').val(chargeid);
+                            $('#OrderID').val(orderId);
+                            $('#DepartmentCode').val(departmentCode);
+                            $('#AdmissionWard').val(locationName);
+                            //vutv7
+                            $('#ChargeDate').val(chargeDate);
+                            $('#ChargeBy').val(chargeBy);
+                        }
+                    }
+                    if ($('#ChargeDetailId').val()=="" && this.id == 'btnSaveData') {
+                        $('#chargesModal').modal({backdrop: 'static', keyboard: false});
+                        return false;
+                    }
+                }
+                //console.log($('#UIdPTVSub3').val());
+                var postData =new Array();
+                postData.push({ name: 'UIdPTVMain', value: $('#UIdPTVMain').val() });
+                postData.push({ name: 'UIdPTVSub1', value: ($('#UIdPTVSub1').val() != null) ? $('#UIdPTVSub1').val() : -1 });
+                postData.push({ name: 'UIdPTVSub2', value: ($('#UIdPTVSub2').val() != null) ? $('#UIdPTVSub2').val() : -1 });
+                postData.push({ name: 'UIdPTVSub3', value: ($('#UIdPTVSub3').val() != null) ? $('#UIdPTVSub3').val() : -1 });
+                postData.push({ name: 'UIdPTVSub4', value: ($('#UIdPTVSub4').val() != null) ? $('#UIdPTVSub4').val() : -1 });
+                postData.push({ name: 'UIdPTVSub5', value: ($('#UIdPTVSub5').val() != null) ? $('#UIdPTVSub5').val() : -1 });
+                postData.push({ name: 'UIdPTVSub6', value: ($('#UIdPTVSub6').val() != null) ? $('#UIdPTVSub6').val() : -1 });
+                postData.push({ name: 'UIdPTVSub7', value: ($('#UIdPTVSub7').val() != null) ? $('#UIdPTVSub7').val() : -1 });
+                postData.push({ name: 'UIdPTVSub8', value: ($('#UIdPTVSub8').val() != null) ? $('#UIdPTVSub8').val() : -1 });
+                postData.push({ name: 'UIdCECDoctor', value: ($('#UIdCECDoctor').val() != null) ? $('#UIdCECDoctor').val() : -1 });
+                postData.push({ name: 'UIdNurseTool1', value: $('#UIdNurseTool1').val() });
+                postData.push({ name: 'UIdNurseTool2', value: ($('#UIdNurseTool2').val() != null) ? $('#UIdNurseTool2').val() : -1 });
+                postData.push({ name: 'UIdNurseOutRun1', value: $('#UIdNurseOutRun1').val() });
+                postData.push({ name: 'UIdNurseOutRun2', value: ($('#UIdNurseOutRun2').val() != null) ? $('#UIdNurseOutRun2').val() : -1 });
+                postData.push({ name: 'UIdNurseOutRun3', value: ($('#UIdNurseOutRun3').val() != null) ? $('#UIdNurseOutRun3').val() : -1 });
+                postData.push({ name: 'UIdNurseOutRun4', value: ($('#UIdNurseOutRun4').val() != null) ? $('#UIdNurseOutRun4').val() : -1 });
+                postData.push({ name: 'UIdNurseOutRun5', value: ($('#UIdNurseOutRun5').val() != null) ? $('#UIdNurseOutRun5').val() : -1 });
+                postData.push({ name: 'UIdNurseOutRun6', value: ($('#UIdNurseOutRun6').val() != null) ? $('#UIdNurseOutRun6').val() : -1 });
+                //vutv7
+                postData.push({ name: 'UIdKTVSubSurgery', value: ($('#UIdKTVSubSurgery').val() != null) ? $('#UIdKTVSubSurgery').val() : -1 });
+                postData.push({ name: 'UIdKTVDiagnose', value: ($('#UIdKTVDiagnose').val() != null) ? $('#UIdKTVDiagnose').val() : -1 });
+                postData.push({ name: 'UIdKTVCEC', value: ($('#UIdKTVCEC').val() != null) ? $('#UIdKTVCEC').val() : -1 });
+                postData.push({ name: 'UIdDoctorDiagnose', value: ($('#UIdDoctorDiagnose').val() != null) ? $('#UIdDoctorDiagnose').val() : -1 });
+                postData.push({ name: 'UIdDoctorNewBorn', value: ($('#UIdDoctorNewBorn').val() != null) ? $('#UIdDoctorNewBorn').val() : -1 });
+                postData.push({ name: 'UIdMidwives', value: ($('#UIdMidwives').val() != null) ? $('#UIdMidwives').val() : -1 });
+
+                postData.push({ name: 'EmailPTVMain', value: $('#EmailPTVMain').val() });
+                postData.push({ name: 'EmailPTVSub1', value: $('#EmailPTVSub1').val() });
+                postData.push({ name: 'EmailPTVSub2', value: $('#EmailPTVSub2').val() });
+                postData.push({ name: 'EmailPTVSub3', value: $('#EmailPTVSub3').val() });
+                postData.push({ name: 'EmailCECDoctor', value: $('#EmailCECDoctor').val() });
+                postData.push({ name: 'EmailNurseTool1', value: $('#EmailNurseTool1').val() });
+                postData.push({ name: 'EmailNurseTool2', value: $('#EmailNurseTool2').val() });
+                postData.push({ name: 'EmailNurseOutRun1', value: $('#EmailNurseOutRun1').val() });
+                postData.push({ name: 'EmailNurseOutRun2', value: $('#EmailNurseOutRun2').val() });
+                postData.push({ name: 'EmailNurseOutRun3', value: $('#EmailNurseOutRun3').val() });
+                postData.push({ name: 'EmailNurseOutRun4', value: $('#EmailNurseOutRun4').val() });
+                postData.push({ name: 'EmailNurseOutRun5', value: $('#EmailNurseOutRun5').val() });
+                postData.push({ name: 'EmailNurseOutRun6', value: $('#EmailNurseOutRun6').val() });
+                //vutv7
+                postData.push({ name: 'EmailKTVSubSurgery', value: $('#EmailKTVSubSurgery').val() });
+                postData.push({ name: 'EmailKTVDiagnose', value: $('#EmailKTVDiagnose').val() });
+                postData.push({ name: 'EmailKTVCEC', value: $('#EmailKTVCEC').val() });
+                postData.push({ name: 'EmailDoctorDiagnose', value: $('#EmailDoctorDiagnose').val() });
+                postData.push({ name: 'EmailDoctorNewBorn', value: $('#EmailDoctorNewBorn').val() });
+                postData.push({ name: 'EmailMidwives', value: $('#EmailMidwives').val() });
+
+                postData.push({ name: 'PhonePTVMain', value: $('#PhonePTVMain').val() });
+                postData.push({ name: 'PhonePTVSub1', value: $('#PhonePTVSub1').val() });
+                postData.push({ name: 'PhonePTVSub2', value: $('#PhonePTVSub2').val() });
+                postData.push({ name: 'PhonePTVSub3', value: $('#PhonePTVSub3').val() });
+                postData.push({ name: 'PhoneCECDoctor', value: $('#PhoneCECDoctor').val() });
+                postData.push({ name: 'PhoneNurseTool1', value: $('#PhoneNurseTool1').val() });
+                postData.push({ name: 'PhoneNurseTool2', value: $('#PhoneNurseTool2').val() });
+                postData.push({ name: 'PhoneNurseOutRun1', value: $('#PhoneNurseOutRun1').val() });
+                postData.push({ name: 'PhoneNurseOutRun2', value: $('#PhoneNurseOutRun2').val() });
+                postData.push({ name: 'PhoneNurseOutRun3', value: $('#PhoneNurseOutRun3').val() });
+                postData.push({ name: 'PhoneNurseOutRun4', value: $('#PhoneNurseOutRun4').val() });
+                postData.push({ name: 'PhoneNurseOutRun5', value: $('#PhoneNurseOutRun5').val() });
+                postData.push({ name: 'PhoneNurseOutRun6', value: $('#PhoneNurseOutRun6').val() });
+                //vutv7
+                postData.push({ name: 'PhoneKTVSubSurgery', value: $('#PhoneKTVSubSurgery').val() });
+                postData.push({ name: 'PhoneKTVDiagnose', value: $('#PhoneKTVDiagnose').val() });
+                postData.push({ name: 'PhoneKTVCEC', value: $('#PhoneKTVCEC').val() });
+                postData.push({ name: 'PhoneDoctorDiagnose', value: $('#PhoneDoctorDiagnose').val() });
+                postData.push({ name: 'PhoneDoctorNewBorn', value: $('#PhoneDoctorNewBorn').val() });
+                postData.push({ name: 'PhoneMidwives', value: $('#PhoneMidwives').val() });
+
+                postData.push({ name: 'State', value: state });
+                postData.push({ name: 'Id', value:$('#Id').val()});
+                postData.push({ name: 'PId', value:$('#PId').val()});
+                postData.push({ name: 'SurgeryDescription', value: $('#SurgeryDescription').val() });
+                //postData.push({ name: 'model', value: '@JsonConvert.SerializeObject(Model)' });
+                postData.push({ name: 'surgeryType', value: $('input[name="surgeryType"]:checked').val() });
+                postData.push({ name: 'ChargeDetailId', value: $('#ChargeDetailId').val() });
+                postData.push({ name: 'OrderID', value: $('#OrderID').val() });
+                postData.push({ name: 'DepartmentCode', value: $('#DepartmentCode').val() });
+                postData.push({ name: 'AdmissionWard', value: $('#AdmissionWard').val() });
+                postData.push({ name: 'actionType', value: @actionType });
+                //vutv7
+                postData.push({ name: 'ChargeDate', value: $('#ChargeDate').val() });
+                postData.push({ name: 'ChargeBy', value: $('#ChargeBy').val() });
+                ShowOverlay(true);
+                commonUtils.postAjaxWithToken("/OR/SaveORManagementByJson/", postData, function (response) {
+                    HideOverlay();
+                    //console.log(response);
+                    if(response!=null){
+                        if (response.ID >0)
+                        {
+                            ShowNotify('success', 'Lưu thông tin thành công', 1000);
+                            if (@actionType== 2) {
+                                window.location.href = siteRedirect + '&State=0&&kw=' + $('#PId').val();
+                            }
+                            else {
+                                window.location.href = siteRedirect;
+                            }
+                           // parent.window.location.reload();
+                        }
+                        else {
+                            if (response.ID == -1001171) {
+                                ShowNotify('warning', response.Message, 5000);
+                                $('#chargesModal').modal({backdrop: 'static', keyboard: false});
+                                return false;
+                            }
+                            else {
+                                ShowNotify('error', response.Message, 5000);
+                                $("#err_msg").css('display', 'inline-block');
+                                $("#err_msg").html(response.Message).show();
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        $('#PatientService').on('change', function() {
+            var arrService = this.value.split('//');
+            var orderId = arrService[0];
+            var chargeid = arrService[2];
+            var departmentCode = arrService[3];
+            var locationName = arrService[4];
+            //vutv7
+            var chargeDate = arrService[6];
+            var chargeBy = arrService[8];
+            $('#ChargeDetailId').val(chargeid);
+            $('#OrderID').val(orderId);
+            $('#DepartmentCode').val(departmentCode);
+            $('#AdmissionWard').val(locationName);
+            //vutv7
+            $('#ChargeDate').val(chargeDate);
+            $('#ChargeBy').val(chargeBy);
+        });
+        //vutv7
+        $('#PatientServiceReplace').on('change', function () {
+            var arrService = this.value.split('//');
+            var orderId = arrService[0];
+            var chargeid = arrService[2];
+            var departmentCode = arrService[3];
+            var locationName = arrService[4];
+            //vutv7
+            var chargeDate = arrService[6];
+            var chargeBy = arrService[8];
+            $('#ChargeDetailId').val(chargeid);
+            $('#OrderID').val(orderId);
+            $('#DepartmentCode').val(departmentCode);
+            $('#AdmissionWard').val(locationName);
+            //vutv7
+            $('#ChargeDate').val(chargeDate);
+            $('#ChargeBy').val(chargeBy);
+
+            //show thông tin thời gian và người chỉ định trên popup
+            var date = new Date(arrService[6]);
+            var chargeDateText = date.getDate().toString().padStart(2, '0') + "/" + (date.getMonth() + 1).toString().padStart(2, '0') + "/" + date.getFullYear().toString().padStart(4, '0') + " " + date.getHours().toString().padStart(2, '0') + ":" + date.getMinutes().toString().padStart(2, '0');
+            $('#text-chargeDate').text(chargeDateText);
+            $('#text-chargeBy').text(chargeBy);
+        });
+        function checkEmailRegex(value, messageError) {
+            if (!emailRegex.test(value)) {
+                $("#err_msg").css('display', 'inline-block');
+                $("#err_msg").html(messageError).show();
+                return false;
+            }
+            return true;
+        }
+        $('option').each(function () {
+            var optionText = this.text;
+            if (optionText.length > 75) {
+                var newOption = optionText.substring(0, 75);
+                $(this).text(newOption + '...');
+            }
+        });
+    </script>
+}
+
+
+
+

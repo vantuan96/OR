@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = @LayoutResource.Shared_AboutTitle;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="modal_booking modal_booking_iframe">
+    <div class="modal-header">
+        <button id="close-iframe-id" type="button" class="close" data-dismiss="modal">×</button>
+        <h2 class="modal-title title-popup">@LayoutResource.Shared_AboutTitle</h2>
+    </div>
+    <div class="modal-body" style="padding-bottom: 5px">
+        <div class="body_booking body_booking_soft">
+            <div class="row">
+                <div class="col-md-12 ">
+                    <h2 class="center name_soft">@ViewBag.ToolName</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 ">
+                    <p class="center ver_soft"><i> @ViewBag.ToolName @ViewContext.Controller.GetType().Assembly.GetName().Version</i></p>
+                </div>
+            </div>
+            <div class="row" style="margin: 20px 0 0 0">
+                <div class="col-md-12 ">
+                    <p class="text-center">
+                        @ViewBag.ToolDescription
+                        <br />
+                        <br />
+                    </p>
+                   
+                    <br />
+                    <br />
+                    <p class="text-center">
+                        @LayoutResource.About_BrowserSupport
+                    </p>
+
+                    <p class="line_icon_browser text-center">
+                        <a class="icon_browser ie" target="_blank" href="http://www.microsoft.com/vi-vn/download/details.aspx?id=40902" title="Nâng cấp phiên bản mới nhất của Internet Explorer"></a>
+                        <a class="icon_browser chrome" target="_blank" href="https://www.google.com/intl/vi/chrome/browser/desktop/index.html" title="Tải về Chrome"></a>
+                        <a class="icon_browser firefox" target="_blank" href="https://www.mozilla.org/vi/firefox/new/" title="Tải về Firefox"></a>
+                        <a class="icon_browser opera" target="_blank" href="http://www.opera.com/vi/computer/windows" title="Tải về Opera"></a>
+                        <a class="icon_browser safari" target="_blank" href="javascript:void(0);"></a>
+                    </p>
+                </div>
+            </div>
+            <div class="btn-wrapper">
+                <p class="text-center" style="font-size: 10px;">Copyright © 2018 Vinmec</p>
+            </div>
+        </div>
+    </div>
+</div>
